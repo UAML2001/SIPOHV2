@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SIPOH", "SIPOH\SIPOH.csproj", "{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SIPOHUT", "SIPOHUT\SIPOHUT.csproj", "{BD6ACC6B-7E1E-4CD4-897F-0C57E4B3E441}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD6ACC6B-7E1E-4CD4-897F-0C57E4B3E441}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD6ACC6B-7E1E-4CD4-897F-0C57E4B3E441}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD6ACC6B-7E1E-4CD4-897F-0C57E4B3E441}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD6ACC6B-7E1E-4CD4-897F-0C57E4B3E441}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {87F187A1-5F90-4A2E-94F9-6BDD40BCC5DA}
+	EndGlobalSection
+EndGlobal

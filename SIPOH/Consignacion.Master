@@ -1,0 +1,681 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Consignacion.master.cs" Inherits="SIPOH.Consignacion" %>
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="Content/bootstrap.css" rel="stylesheet" />
+    <link href="Content/css/sb-admin-2.css" rel="stylesheet" />
+    <link href="Content/css/sb-admin-2.min.css" rel="stylesheet" />
+    <link href="Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://rawgit.com/RobinHerbots/Inputmask/5.x/dist/jquery.inputmask.js"></script>
+
+    <!-- Estilos de admin lte agregue para el calendario by brayan -->
+    <link href="Content/css/main.css" rel="stylesheet" />
+    <link href="Content/css/all.min.css" rel="stylesheet" />
+    <link href="Content/css/Iniciales.css" rel="stylesheet" />
+    <!-- Estilos de admin lte agregue para el calendario by brayan -->
+
+    <link href="Content/css/Agenda.css" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+
+    <body id="page-top">
+        <!-- Page Wrapper -->
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <ul class="navbar-nav bg-gradient-white sidebar sidebar-danger accordion" id="accordionSidebar">
+                <!-- Sidebar - Brand -->
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" style="background-color: #3F5259;" href="index.html">
+              
+                    <div class="sidebar-brand-text mx-3"><img src="http://drive.google.com/uc?export=view&id=1rjBJM5f5dGJOfoLvCwXpA3XVvF73pCy8" alt="" width="130" height="50" /></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <li class="nav-item">
+                <a class="nav-link" href="Error.aspx">
+                <div class="row text-center">
+                    <div class="col-12" >
+                        <asp:Label CssClass="text-break text-capitalize" ID="NombreJuzgado" runat="server"></asp:Label>
+                        <br />
+                        <asp:Label CssClass="text-break text-capitalize" ID="tipoCircuito" runat="server"></asp:Label>
+                    </div>
+                </div>
+                    </a>
+                </li>
+                <!-- Divider -->
+                <hr class="sidebar-divider my-0">
+                <!-- Nav Item - Dashboard -->
+                <asp:Panel ID="OpcionesConjunto" runat="server"  CssClass="nav-item active">
+                    <a class="nav-link" href="Estadistica.aspx">
+                        <i class="fas fa-fw fa-chart-bar"></i>
+                        <span>Estadística</span>
+                    </a>
+                </asp:Panel>
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    MODULOS
+                </div>
+                <!-- Nav Item - Pages Collapse Menu Control Distrito-->
+                 <asp:Panel ID="OpcionesControl" runat="server" CssClass="nav-item">
+                
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-landmark "></i>
+                        <span>Control</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Opciones de Control:</h6>                         
+                            <a class="collapse-item" href="Agenda.aspx">Agenda</a>
+                            <a class="collapse-item" href="Consulta.aspx">Consultas</a>
+                            <a class="collapse-item" href="HistoricosCtrl.aspx">Históricos</a>
+                            <a class="collapse-item" href="Consignaciones.aspx">Consignaciones</a>
+                            <a class="collapse-item" href="PromocionesCtrl.aspx">Promociones</a>
+                            <a class="collapse-item" href="ReportesCtrl.aspx">Reportes</a>
+                            <a class="collapse-item" href="SolicitudCDs.aspx">Solicitud de CDs</a>
+                        </div>
+                    </div>
+                </asp:Panel>
+                <!-- FIN Nav Item - Pages Collapse Menu Control Circuito--><!-- Nav Item - Pages Collapse Menu Control Distrito-->
+                 <asp:Panel ID="OpcionesControlCircuito" runat="server" CssClass="nav-item">
+                
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-landmark "></i>
+                        <span>Control</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Opciones de Control:</h6>                         
+                            <a class="collapse-item" href="Agenda.aspx">Agenda</a>
+                            <a class="collapse-item" href="Consulta.aspx">Consultas</a>
+                            <a class="collapse-item" href="HistoricosCtrl.aspx">Históricos</a>
+                            <a class="collapse-item" href="Consignaciones.aspx">Consignaciones</a>
+                            <a class="collapse-item" href="PromocionesCtrl.aspx">Promociones</a>
+                            <a class="collapse-item" href="ReportesCtrl.aspx">Reportes</a>
+                            <a class="collapse-item" href="SolicitudCDs.aspx">Solicitud de CDs</a>
+                        </div>
+                    </div>
+                      <li ID="Panel1" runat="server" CssClass="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                        aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-gavel"></i>
+                        <span>Ejecucion</span>
+                    </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Opciones de Ejecucion:</h6>
+                            <a class="collapse-item" href="Iniciales.aspx">Iniciales</a>
+                            <a class="collapse-item" href="Promociones.aspx">Promociones</a>
+                            <a class="collapse-item" href="Busqueda.aspx">Búsquedas</a>
+                            <a class="collapse-item" href="ConsignacionesHistorica.aspx">Consignaciones Históricas</a>
+                            <a class="collapse-item" href="Reportes.aspx">Reportes</a>
+                        </div>
+                    </div>
+                </li>
+                </asp:Panel>
+                <!-- FIN Nav Item - Pages Collapse Menu Control Circuito-->
+
+                <!-- Nav Item - Utilities Collapse Menu -->
+                <asp:Panel ID="OpcionesEjecucion" runat="server" CssClass="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                        aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-gavel"></i>
+                        <span>Ejecucion</span>
+                    </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Opciones de Ejecucion:</h6>
+                            <a class="collapse-item" href="Iniciales.aspx">Iniciales</a>
+                            <a class="collapse-item" href="Promociones.aspx">Promociones</a>
+                            <a class="collapse-item" href="Busqueda.aspx">Búsquedas</a>
+                            <a class="collapse-item" href="ConsignacionesHistorica.aspx">Consignaciones Históricas</a>
+                            <a class="collapse-item" href="Reportes.aspx">Reportes</a>
+                        </div>
+                    </div>
+                </asp:Panel>
+                <hr class="sidebar-divider">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                SOPORTE TÉCNICO
+            </div>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link" href="Error.aspx">
+                   <i class="fas fa-ticket-alt"></i>
+                    <span>Contactar a Soporte</span>
+                </a>
+            </li>
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" href="Error.aspx">
+                    <i class="fas fa-book-open"></i>
+                    <span>Manual de Usuario</span></a>
+            </li>
+            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="Error.aspx">
+                    <i class="fas fa-bug"></i>
+                    <span>Reportar un Error</span></a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+        
+            </ul>
+            <!-- INICIO DE TODO EL CONTENIDO DE LA SECCION PAGINA -->
+            <div id="content-wrapper" class="d-flex flex-column">
+                <!-- Main Content -->
+                <div id="content">
+                    <!-- Topbar -->
+                    <nav class="navbar navbar-expand navbar-light  topbar mb-4 static-top shadow" style="background-color: #3F5259;">
+                        <!-- Sidebar Toggle (Topbar) -->
+                        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <!-- Topbar Search -->
+                        <div class="d-none d-sm-inline-block form-inline mr-6 ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+
+                            <div class="input-group">
+                                 <i class="fas fa-fw fa-landmark text-white" style="padding-top:7px; padding-right:7px; "></i> <input type="text" class="form-control bg-light border-0 small rounded"
+                                    placeholder=" JUZGADO PENAL ACUSATORIO Y ORAL" aria-label="Search"
+                                    aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                            
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Topbar Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                            <li class="nav-item dropdown no-arrow d-sm-none">
+                                <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-search fa-fw"></i>
+                                </a>
+                                <!-- Dropdown - Messages -->
+                                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                    aria-labelledby="searchDropdown">
+                                    <div class="form-inline mr-auto w-100 navbar-search">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control bg-light border-0 small"
+                                                placeholder="Search for..." aria-label="Search"
+                                                aria-describedby="basic-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" type="button">
+                                                    <i class="fas fa-search fa-sm"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Nav Item - Alerts -->
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-bell fa-fw"></i>
+                                    <!-- Counter - Alerts -->
+                                    <span class="badge badge-danger badge-counter">3+</span>
+                                </a>
+                                <!-- Dropdown - Alerts -->
+                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in "
+                                    aria-labelledby="alertsDropdown">
+                                    <h6 class="dropdown-header" style="background-color: #3F5259;">Centro de Alertas
+                                    </h6>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-danger">
+                                                <i class="fas fa-file-alt text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">Septiembre 12, 2023</div>
+                                            <span class="font-weight-bold">Peticion de Exhorto en Juzgado Tizayuca</span>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-success">
+                                                <i class="fas fa-donate text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">Septiembre 8, 2023</div>
+                                            Cambio de guardia del juez del juzgado de tulancingo!
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="mr-3">
+                                            <div class="icon-circle bg-warning">
+                                                <i class="fas fa-exclamation-triangle text-white"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500">Agosto 29, 2023</div>
+                                            Asignacion de nuevas causas a turnar.
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item text-center small text-gray-500" href="#">Mostrar Todo</a>
+                                </div>
+                            </li>
+                            <!-- Nav Item - Messages -->
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-envelope fa-fw"></i>
+                                    <!-- Counter - Messages -->
+                                    <span class="badge badge-danger badge-counter">7</span>
+                                </a>
+                                <!-- Dropdown - Messages -->
+                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                    aria-labelledby="messagesDropdown">
+                                    <h6 class="dropdown-header" style="background-color: #3F5259;">Centro de Mensajes
+                                    </h6>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image mr-3">
+                                            <img class="rounded-circle" src="Content/img/PoderJudicialHgo.png" alt="...">
+                                            <div class="status-indicator bg-success"></div>
+                                        </div>
+                                        <div class="font-weight-bold">
+                                            <div class="text-truncate">
+                                                Nuevo Correo de juan@poderjudicial.gob.mx
+                                            </div>
+                                            <div class="small text-gray-500">Juan Perez Montaño · 58m</div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image mr-3">
+                                            <img class="rounded-circle" src="Content/img/PoderJudicialHgo.png" alt="...">
+                                            <div class="status-indicator"></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-truncate">
+                                                Nuevo correo de Josue@poderjudicial.gob.mx
+                                            </div>
+                                            <div class="small text-gray-500">Josue Gomez · 1d</div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-list-image mr-3">
+                                            <img class="rounded-circle" src="Content/img/PoderJudicialHgo.png" alt="...">
+                                            <div class="status-indicator bg-warning"></div>
+                                        </div>
+                                        <div>
+                                            <div class="text-truncate">
+                                                Nuevo correo de Soporte@poderjudicial.gob.mx
+                                            </div>
+                                            <div class="small text-gray-500">Soporte FEJH · 2d</div>
+                                        </div>
+                                    </a>
+                          
+                                    <a class="dropdown-item text-center small text-gray-500" href="#">Read More
+                                            Messages</a>
+                                </div>
+                            </li>
+                            <div class="topbar-divider d-none d-sm-block"></div>
+                            <!-- Nav Item - User Information -->
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                    
+                                    <asp:Label class="mr-2 d-none d-lg-inline text-white small text-capitalize" ID="userName" runat="server"></asp:Label>
+                                    <img class="img-profile rounded-circle" src="Content/img/undraw_profile.svg">
+                                </a>
+                                <!-- Dropdown - User Information -->
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                    aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#ProfileModal">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400" ></i>
+                                        Perfil
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Configuracion
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" data-toggle="modal"
+                                        data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Cerrar Sesión
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- End of Topbar -->
+                    <%--Main--%>
+                    <form id="form1" runat="server" class="main  section">
+                        <div>
+                            <asp:ContentPlaceHolder ID="ContentCausa" runat="server">
+                            </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentCupre" runat="server">
+                            </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentEstadistica" runat="server">
+                            </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentAgenda" runat="server">
+                            </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentEIniciales" runat="server">
+                            </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentEPromociones" runat="server">
+                            </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentEPReportes" runat="server">
+                            </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentECHistorica" runat="server">
+                            </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentBusquedas11" runat="server">
+                            </asp:ContentPlaceHolder>
+                             <asp:ContentPlaceHolder ID="ContentPermisos" runat="server">
+                             </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentError" runat="server">
+                             </asp:ContentPlaceHolder>
+                            <!-- Estilos de admin lte agregue para el calendario by brayan -->
+                            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">¿Seguro de cerrar sesion?</h5>
+                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">Hasta luego, regresa pronto!.</div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                                            <%@ Register Src="~/Views/ConsignacionElements/CerrarSesion.ascx" TagPrefix="uc1" TagName="CerrarSesion" %>
+                                            <uc1:CerrarSesion runat="server" id="CerrarSesion" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                    <%--End Main--%>
+
+                <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; 2023 Poder Judicial del Estado de Hidalgo - SIPOH PJEH</span>
+                    </div>
+                </div>
+            </footer>
+                </div>
+            <!-- End of Footer -->
+
+                <%--modal profile--%>
+                <div class="modal fade" id="ProfileModal" tabindex="-1" role="dialog" aria-labelledby="ProfileModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <div class="row d-flex align-items-center justify-content-center text-center col-12">
+                                                <i class="bi bi-person text-success pr-2" style="font-size: 56px;"></i>
+                                                <h4 class="modal-title text-secondary ">Usuario:</h4>
+                                            </div>
+                                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body d-flex flex-column">
+                                            <div class="">
+                                                <span class="text-dark fw-bold">Perfil: </span>
+                                                <asp:Label CssClass="text-break text-capitalize text-success" ID="LabelProfile" runat="server"></asp:Label>
+                                            </div>
+                                            <div class="">
+                                                <span class="text-dark fw-bold">Direccion: </span>
+                                                <asp:Label CssClass="text-break text-capitalize text-success" ID="LabelAddress" runat="server"></asp:Label>
+                                            </div>
+                                            <div class="">
+                                                <span class="text-dark fw-bold">Numero celular:</span>
+                                                <asp:Label CssClass="text-break text-capitalize text-success" ID="LabelPhoneNum" runat="server"></asp:Label>
+                                            </div>
+                                            <div class="">
+                                                <span class="text-dark fw-bold">Circuito:</span>
+                                                <asp:Label CssClass="text-break text-capitalize text-success" ID="LabelTCircuito" runat="server"></asp:Label>
+                                            </div>
+                                            <div class="">
+                                                <asp:Label CssClass="text-break text-capitalize text-success" ID="LabelUserName" runat="server"></asp:Label>
+                                            </div>
+                                            <div class="">
+                                                
+                                                <span class="text-dark fw-bold">Nombre:</span>
+                                                <asp:Label CssClass="text-break text-capitalize text-success" ID="LabelName" runat="server"></asp:Label>
+                                            </div>
+                                            <div class="">
+                                                <span class="text-dark fw-bold">Apellidos:</span>
+                                                <asp:Label CssClass="text-break text-capitalize text-success" ID="LabelFistName" runat="server"></asp:Label>
+                                                <asp:Label CssClass="text-break text-capitalize text-success" ID="LabelLastName" runat="server"></asp:Label>
+                                            </div>
+                                            
+                                            <div class="">
+                                                <span class="text-dark fw-bold">Juzgado:</span>
+                                                <asp:Label CssClass="text-break text-capitalize text-success" ID="LabelJuzgado" runat="server"></asp:Label>
+                                            </div>
+                                            <div class="">
+                                                <span class="text-dark fw-bold">Correo:</span>
+                                                <asp:Label CssClass="text-break text-capitalize text-success" ID="LabelEmail" runat="server"></asp:Label>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                <!-- Bootstrap core JavaScript-->
+                <script src="Content/vendor/jquery/jquery.min.js"></script>
+                <script src="Content/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                
+
+                <!-- Core plugin JavaScript-->
+                <script src="Content/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+                <!-- Custom scripts for all pages-->
+                <script src="Scripts/js/sb-admin-2.min.js"></script>
+                <script src="Scripts/Ejecucion/Tabs.js"></script>
+                <script src="Scripts/Ejecucion/Inicial.js"></script>
+                <!-- Page level plugins -->
+                <script src="Content/vendor/chart.js/Chart.min.js"></script>
+
+                <!-- Page level custom scripts -->
+                <script src="Scripts/js/demo/chart-area-demo.js"></script>
+                <script src="Scripts/js/demo/chart-pie-demo.js"></script>
+                <script src="Scripts/js/demo/chart-bar-demo.js"></script>
+                <!-- Estilos de admin lte agregue para el calendario by brayan -->
+                <script src="Scripts/js/adminlte.min.js"></script>
+                <script src="Scripts/js/moment.min.js"></script>
+                <script src="Scripts/js/main.min.js"></script>
+                <script src="Scripts/js/jquery.min.js"></script>
+                <script src="Scripts/js/jquery-ui.min.js"></script>
+                
+                
+                
+
+
+                <script>
+          $(function () {
+
+            /* initialize the external events
+             -----------------------------------------------------------------*/
+            function ini_events(ele) {
+              ele.each(function () {
+
+                // create an Event Object (https://fullcalendar.io/docs/event-object)
+                // it doesn't need to have a start or end
+                var eventObject = {
+                  title: $.trim($(this).text()) // use the element's text as the event title
+                }
+
+                // store the Event Object in the DOM element so we can get to it later
+                $(this).data('eventObject', eventObject)
+
+                // make the event draggable using jQuery UI
+                $(this).draggable({
+                  zIndex        : 1070,
+                  revert        : true, // will cause the event to go back to its
+                  revertDuration: 0  //  original position after the drag
+                })
+
+              })
+            }
+
+            ini_events($('#external-events div.external-event'))
+
+            /* initialize the calendar
+             -----------------------------------------------------------------*/
+            //Date for the calendar events (dummy data)
+            var date = new Date()
+            var d    = date.getDate(),
+                m    = date.getMonth(),
+                y    = date.getFullYear()
+
+            var Calendar = FullCalendar.Calendar;
+            var Draggable = FullCalendar.Draggable;
+
+            var containerEl = document.getElementById('external-events');
+            var checkbox = document.getElementById('drop-remove');
+            var calendarEl = document.getElementById('calendar');
+
+            // initialize the external events
+            // -----------------------------------------------------------------
+
+            new Draggable(containerEl, {
+              itemSelector: '.external-event',
+              eventData: function(eventEl) {
+                return {
+                  title: eventEl.innerText,
+                  backgroundColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
+                  borderColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
+                  textColor: window.getComputedStyle( eventEl ,null).getPropertyValue('color'),
+                };
+              }
+            });
+
+            var calendar = new Calendar(calendarEl, {
+              headerToolbar: {
+                left  : 'prev,next today',
+                center: 'title',
+                right : 'dayGridMonth,timeGridWeek,timeGridDay'
+              },
+              themeSystem: 'bootstrap',
+              //Random default events
+              events: [
+                {
+                  title          : 'Audiencia 1023/2023',
+                  start          : new Date(y, m, 1),
+                  backgroundColor: '#f56954', //red
+                  borderColor    : '#f56954', //red
+                  allDay         : true
+                },
+                {
+                  title          : 'Audiencia 0356/2023',
+                  start          : new Date(y, m, d - 5),
+                  end            : new Date(y, m, d - 2),
+                  backgroundColor: '#f39c12', //yellow
+                  borderColor    : '#f39c12' //yellow
+                },
+                {
+                  title          : 'Audiencia 0896/2023',
+                  start          : new Date(y, m, d, 10, 30),
+                  allDay         : false,
+                  backgroundColor: '#0073b7', //Blue
+                  borderColor    : '#0073b7' //Blue
+                },
+                {
+                  title          : 'Audiencia 0489/2023',
+                  start          : new Date(y, m, d, 12, 0),
+                  end            : new Date(y, m, d, 14, 0),
+                  allDay         : false,
+                  backgroundColor: '#00c0ef', //Info (aqua)
+                  borderColor    : '#00c0ef' //Info (aqua)
+                },
+                {
+                  title          : 'Audiencia 0265/2023',
+                  start          : new Date(y, m, d + 1, 19, 0),
+                  end            : new Date(y, m, d + 1, 22, 30),
+                  allDay         : false,
+                  backgroundColor: '#00a65a', //Success (green)
+                  borderColor    : '#00a65a' //Success (green)
+                }
+              ],
+              editable  : true,
+              droppable : true, // this allows things to be dropped onto the calendar !!!
+              drop      : function(info) {
+                // is the "remove after drop" checkbox checked?
+                if (checkbox.checked) {
+                  // if so, remove the element from the "Draggable Events" list
+                  info.draggedEl.parentNode.removeChild(info.draggedEl);
+                }
+              }
+            });
+
+            calendar.render();
+            // $('#calendar').fullCalendar()
+
+            /* ADDING EVENTS */
+            var currColor = '#3c8dbc' //Red by default
+            // Color chooser button
+            $('#color-chooser > li > a').click(function (e) {
+              e.preventDefault()
+              // Save color
+              currColor = $(this).css('color')
+              // Add color effect to button
+              $('#add-new-event').css({
+                'background-color': currColor,
+                'border-color'    : currColor
+              })
+            })
+            $('#add-new-event').click(function (e) {
+              e.preventDefault()
+              // Get value and make sure it is not null
+              var val = $('#new-event').val()
+              if (val.length == 0) {
+                return
+              }
+
+              // Create events
+              var event = $('<div />')
+              event.css({
+                'background-color': currColor,
+                'border-color'    : currColor,
+                'color'           : '#fff'
+              }).addClass('external-event')
+              event.text(val)
+              $('#external-events').prepend(event)
+
+              // Add draggable funtionality
+              ini_events(event)
+
+              // Remove event from text input
+              $('#new-event').val('')
+            })
+          })
+    </script>
+    </body>
+</html>
