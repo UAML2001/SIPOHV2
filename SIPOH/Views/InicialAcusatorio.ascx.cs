@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Services.Description;
 
 namespace SIPOH.Views
 {
@@ -151,8 +152,6 @@ namespace SIPOH.Views
             string tipoBusqueda = inputIncomJuzgado.Value;
             string numeroCausaNuc = inputNuc.Value;
             Session["NumeroCausaNuc"] = numeroCausaNuc;
-
-
             // Verificar si se seleccionó un juzgado válido
             if (juzgadoSeleccionado == "Seleccionar" || string.IsNullOrEmpty(juzgadoSeleccionado))
             {
@@ -178,7 +177,7 @@ namespace SIPOH.Views
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                     con.Open();
-                    string query = $"SELECT A.Numero AS NumeroCausa, C.NUC, A.IdJuzgado AS NumeroJuzgado, " +
+                    string query = $"SELECT A.IdAsunto, A.Numero AS NumeroCausa, C.NUC, A.IdJuzgado AS NumeroJuzgado, " +
                                    $"dbo.FConcatenarNombres(A.IdAsunto, 'V', 'O') AS NombreOfendido, " +
                                    $"dbo.FConcatenarNombres(A.IdAsunto, 'I', 'I') AS NombreInculpado, " +
                                    $"dbo.FConcatenarDelitos(A.IdAsunto) AS NombreDelito " +
@@ -188,7 +187,7 @@ namespace SIPOH.Views
                                    $"LEFT OUTER JOIN P_PartesAsunto AS IC ON A.IdAsunto = IC.IdAsunto AND IC.TipoParte = 'I' " +
                                    $"LEFT OUTER JOIN P_AsuntoDelito AS AD ON A.IdAsunto = AD.IdAsunto " +
                                    $"LEFT OUTER JOIN P_CatDelitos AS CD ON AD.IdDelito = CD.IdDelito " +
-                                   $"GROUP BY A.Numero, C.NUC, A.IdJuzgado, dbo.FConcatenarNombres(A.IdAsunto, 'V', 'O'), " +
+                                   $"GROUP BY A.IdAsunto, A.Numero, C.NUC, A.IdJuzgado, dbo.FConcatenarNombres(A.IdAsunto, 'V', 'O'), " +
                                    $"dbo.FConcatenarNombres(A.IdAsunto, 'I', 'I'), dbo.FConcatenarDelitos(A.IdAsunto) " +
                                    $"HAVING (A.IdJuzgado = {juzgadoSeleccionado}) AND (A.Numero = '{numeroCausaNuc}')";
                     Debug.WriteLine($"Consulta SQL: {query}");
@@ -213,6 +212,8 @@ namespace SIPOH.Views
                                 htmlTable.Append("<tbody>");
                                 while (dr.Read())
                                 {
+                                    int idAsunto = Convert.ToInt32(dr["IdAsunto"]);
+                                    Session["IdAsunto"] = idAsunto; 
                                     htmlTable.Append("<tr>");
                                     if (tipoBusqueda == "2")
                                     {
@@ -284,26 +285,41 @@ namespace SIPOH.Views
             string apMaterno = inputApMaterno.Value;
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             string query = @"SELECT P_Ejecucion.NoEjecucion, P_CatJuzgados.Nombre as Juzgado, 
-                 P_Ejecucion.BeneficiarioNombre as Nombre, P_Ejecucion.BeneficiarioApellidoPaterno as ApPaterno, 
-                 P_Ejecucion.BeneficiarioApellidoMaterno as ApMaterno, P_Ejecucion.FechaEjecucion as FechaEjecucion 
-                 FROM P_Ejecucion 
-                 INNER JOIN P_CatJuzgados ON P_Ejecucion.IdJuzgado = P_CatJuzgados.IdJuzgado 
-                 WHERE SOUNDEX(BeneficiarioNombre) = SOUNDEX(@nombre) AND SOUNDEX(BeneficiarioApellidoPaterno) = SOUNDEX(@apPaterno) AND SOUNDEX(BeneficiarioApellidoMaterno) = SOUNDEX(@apMaterno)";
+                P_Ejecucion.BeneficiarioNombre as Nombre, P_Ejecucion.BeneficiarioApellidoPaterno as ApPaterno, 
+                P_Ejecucion.BeneficiarioApellidoMaterno as ApMaterno, P_Ejecucion.FechaEjecucion as FechaEjecucion 
+                FROM P_Ejecucion 
+                INNER JOIN P_CatJuzgados ON P_Ejecucion.IdJuzgado = P_CatJuzgados.IdJuzgado 
+                WHERE (BeneficiarioNombre LIKE @nombre OR @nombre IS NULL) AND 
+               (BeneficiarioApellidoPaterno LIKE @apPaterno OR @apPaterno IS NULL) AND 
+               (BeneficiarioApellidoMaterno LIKE @apMaterno OR @apMaterno IS NULL)";
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@nombre", nombre);
-                    cmd.Parameters.AddWithValue("@apPaterno", apPaterno);
-                    cmd.Parameters.AddWithValue("@apMaterno", apMaterno);
+                    cmd.Parameters.AddWithValue("@nombre", nombre == null ? (object)DBNull.Value : $"%{nombre}%");
+                    cmd.Parameters.AddWithValue("@apPaterno", apPaterno == null ? (object)DBNull.Value : $"%{apPaterno}%");
+                    cmd.Parameters.AddWithValue("@apMaterno", apMaterno == null ? (object)DBNull.Value : $"%{apMaterno}%");
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
-                    GridView1.DataSource = reader;
-                    GridView1.DataBind();
+                    if (reader.HasRows)
+                    {
+                        GridView1.DataSource = reader;
+                        GridView1.DataBind();
+                        string mensaje = "Se encontraron resultados semejantes verifica si es el que necesitas antes de guardar nueva informacion.";
+                        string scriptToast = $"toastInfo('{mensaje}');";
+                        ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
+                    }
+                    else
+                    {
+                        string mensaje = "No se encontro registro de la busqueda.";
+                        string script = $"toastError('{mensaje}');";
+                        ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+                    }
                 }
             }
-
         }
+
+
         private void CargarSolicitantes()
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
@@ -415,6 +431,8 @@ namespace SIPOH.Views
                 try
                 {
                     InsertarDatosAcusatorio(conn, transaction);
+                    int idAsunto = Convert.ToInt32(Session["IdAsunto"]);
+                    InsertarEnEjecucionAsunto(conn, transaction, GlobalesId.IdEjecucion, idAsunto);
 
                     List<Sala> salas = ViewState["salas"] as List<Sala>;
                     if (salas != null)
@@ -468,12 +486,19 @@ namespace SIPOH.Views
                         "CerrarModalGuardarDatos();",
                         true
                     );
-                    string script = "mostrarToast();";
-                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+                    string scriptToast = "mostrarToast();";
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", scriptToast, true);
+
+                    // Recargar la página después de un tiempo determinado (por ejemplo, 5 segundos)
+                    string scriptRecarga = "setTimeout(function(){ window.location.href = window.location.href; }, 5000);";
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "recargaPaginaScript", scriptRecarga, true);
                 }
                 catch (Exception ex)
                 {
-                    transaction.Rollback();
+                    if (transaction != null && transaction.Connection != null)
+                    {
+                        transaction.Rollback();
+                    }
                     ScriptManager.RegisterStartupScript(
                         this.UpdateAcusatorio,
                         this.UpdateAcusatorio.GetType(),
@@ -545,6 +570,29 @@ namespace SIPOH.Views
             }
             return idJuzgado;
         }
+        private void InsertarEnEjecucionAsunto(SqlConnection conn, SqlTransaction transaction, int idEjecucion, int idAsunto)
+        {
+            string query = @"INSERT INTO [SIPOH].[dbo].[P_EjecucionAsunto] (IdEjecucion, IdAsunto)
+                     VALUES (@IdEjecucion, @IdAsunto)";
+            using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+            {
+                cmd.Parameters.AddWithValue("@IdEjecucion", idEjecucion);
+                cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                int rowsAffected = cmd.ExecuteNonQuery();
+
+                if (rowsAffected == 0)
+                {
+                    // La inserción falló, mostrar un mensaje de error
+                    string mensaje = "Error al insertar en la tabla P_EjecucionAsunto.";
+                    string script = $"toastError('{mensaje}');";
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastErrorScript", script, true);
+
+                    // Puedes decidir si lanzar una excepción aquí para manejar el rollback en el bloque try-catch
+                    throw new Exception("Error al insertar en P_EjecucionAsunto");
+                }
+            }
+        }
+
         private void InsertarDatosAcusatorio(SqlConnection conn, SqlTransaction transaction)
         {
             GridViewRow primeraFila = GridView1.Rows[0];

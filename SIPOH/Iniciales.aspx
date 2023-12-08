@@ -77,6 +77,9 @@
                     function toastError(mensaje) {
                         toastr.error(mensaje, "Error");
                     }
+                    function toastInfo(mensaje) {
+                        toastr.info(mensaje, "Informacion");
+                    }
                 </script>
             </div>
 </asp:Content>
