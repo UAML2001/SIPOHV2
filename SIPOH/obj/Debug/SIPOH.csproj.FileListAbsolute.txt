@@ -376,6 +376,8 @@ C:\Users\braya\OneDrive\Documentos\GitHub\SIPOH\SIPOH\obj\Debug\SIPOH.dll
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOH\SIPOH\obj\Debug\SIPOH.pdb
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOH\SIPOH\bin\System.Data.SqlClient.dll
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOH\SIPOH\bin\System.Data.SqlClient.xml
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.AssemblyReference.cache
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.CoreCompileInputs.cache
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\SIPOH.dll.config
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\SIPOH.dll
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\SIPOH.pdb
@@ -466,8 +468,6 @@ C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\es\System.Web.Webpag
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\es\System.Web.Webpages.Razor.resources.dll
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\es\System.Web.Helpers.resources.dll
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\es\System.Web.Mvc.resources.dll
-C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.AssemblyReference.cache
-C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.CoreCompileInputs.cache
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.CopyComplete
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.dll
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.pdb

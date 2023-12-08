@@ -13,7 +13,7 @@
 
 
 
-<asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
 <asp:UpdatePanel ID="updPanel" runat="server" EnableViewState="true" >
     <ContentTemplate>
 

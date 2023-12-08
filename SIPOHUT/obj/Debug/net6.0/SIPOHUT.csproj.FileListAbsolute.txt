@@ -276,3 +276,12 @@ C:\Users\braya\OneDrive\Documentos\GitHub\SIPOH\SIPOHUT\obj\Debug\net6.0\refint\
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOH\SIPOHUT\obj\Debug\net6.0\SIPOHUT.pdb
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOH\SIPOHUT\obj\Debug\net6.0\SIPOHUT.genruntimeconfig.cache
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOH\SIPOHUT\obj\Debug\net6.0\ref\SIPOHUT.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOHUT\obj\Debug\net6.0\SIPOHUT.csproj.AssemblyReference.cache
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOHUT\obj\Debug\net6.0\SIPOHUT.csproj.ResolveComReference.cache
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOHUT\obj\Debug\net6.0\SIPOHUT.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOHUT\obj\Debug\net6.0\SIPOHUT.AssemblyInfoInputs.cache
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOHUT\obj\Debug\net6.0\SIPOHUT.AssemblyInfo.cs
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOHUT\obj\Debug\net6.0\SIPOHUT.csproj.CoreCompileInputs.cache
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOHUT\obj\Debug\net6.0\SIPOHUT.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOHUT\obj\Debug\net6.0\refint\SIPOHUT.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOHUT\obj\Debug\net6.0\SIPOHUT.pdb

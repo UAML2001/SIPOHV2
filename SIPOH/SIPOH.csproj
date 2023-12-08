@@ -2411,6 +2411,7 @@
     <Compile Include="Views\InicialTradicional.ascx.designer.cs">
       <DependentUpon>InicialTradicional.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Views\RegistroIniciales.cs" />
     <Compile Include="Views\ReportesControl.ascx.cs">
       <DependentUpon>ReportesControl.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

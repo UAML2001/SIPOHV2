@@ -44,6 +44,7 @@
 
                     <div class="card-body mt-0 pt-0">
                         <!-- Tab panes -->
+                        <asp:ScriptManager ID="ScriptManagerConsignaciones" runat="server"></asp:ScriptManager>
                         <div class="tab-content ">
                             <div class="tab-pane active" id="amparo" role="tabpanel">
                                 <%--Importacion de Controles--%>
