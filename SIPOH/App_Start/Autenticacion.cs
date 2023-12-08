@@ -26,6 +26,7 @@ public class Autenticacion
                     if (reader.Read())
                     {
                         // Asignación de valores a las variables de sesión 
+                        HttpContext.Current.Session["IdUsuario"] = reader["IdUsuario"].ToString();
                         HttpContext.Current.Session["UserName"] = reader["Usuario"].ToString();
                         HttpContext.Current.Session["IdPerfil"] = reader["IdPerfil"].ToString();
                         HttpContext.Current.Session["Name"] = reader["Nombre"].ToString();

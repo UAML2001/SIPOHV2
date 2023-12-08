@@ -78,13 +78,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.TextBox fojas1;
 
         /// <summary>
-        /// Control ddlDelitos.
+        /// Control ddlDelitos1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDelitos;
+        protected global::System.Web.UI.WebControls.DropDownList ddlDelitos1;
 
         /// <summary>
         /// Control modalParte.
@@ -231,49 +231,49 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Panel Panel2;
 
         /// <summary>
-        /// Control TextBox1.
+        /// Control numdesp.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox numdesp;
 
         /// <summary>
-        /// Control TextBox2.
+        /// Control quejoso.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox2;
+        protected global::System.Web.UI.WebControls.TextBox quejoso;
 
         /// <summary>
-        /// Control TextBox3.
+        /// Control fecha2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox3;
+        protected global::System.Web.UI.WebControls.TextBox fecha2;
 
         /// <summary>
-        /// Control TextBox4.
+        /// Control numdocenv.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox4;
+        protected global::System.Web.UI.WebControls.TextBox numdocenv;
 
         /// <summary>
-        /// Control DropDownList2.
+        /// Control ddlDelitos2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList2;
+        protected global::System.Web.UI.WebControls.DropDownList ddlDelitos2;
 
         /// <summary>
         /// Control Button1.
@@ -285,13 +285,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Button Button1;
 
         /// <summary>
-        /// Control GridView1.
+        /// Control gvPartes2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.WebControls.GridView gvPartes2;
 
         /// <summary>
         /// Control Button2.
@@ -303,13 +303,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Button Button2;
 
         /// <summary>
-        /// Control GridView2.
+        /// Control gvDelitos2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView2;
+        protected global::System.Web.UI.WebControls.GridView gvDelitos2;
 
         /// <summary>
         /// Control RadioButtonList1.
@@ -321,13 +321,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList1;
 
         /// <summary>
-        /// Control TextBox5.
+        /// Control observa2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox5;
+        protected global::System.Web.UI.WebControls.TextBox observa2;
 
         /// <summary>
         /// Control Button3.
@@ -339,67 +339,67 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Button Button3;
 
         /// <summary>
-        /// Control DropDownList3.
+        /// Control parte2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList3;
+        protected global::System.Web.UI.WebControls.DropDownList parte2;
 
         /// <summary>
-        /// Control TextBox6.
+        /// Control espeParte2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox6;
+        protected global::System.Web.UI.WebControls.TextBox espeParte2;
 
         /// <summary>
-        /// Control TextBox7.
+        /// Control nom3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox7;
+        protected global::System.Web.UI.WebControls.TextBox nom3;
 
         /// <summary>
-        /// Control TextBox8.
+        /// Control ap3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox8;
+        protected global::System.Web.UI.WebControls.TextBox ap3;
 
         /// <summary>
-        /// Control TextBox9.
+        /// Control am3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox9;
+        protected global::System.Web.UI.WebControls.TextBox am3;
 
         /// <summary>
-        /// Control DropDownList4.
+        /// Control sexo2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList4;
+        protected global::System.Web.UI.WebControls.DropDownList sexo2;
 
         /// <summary>
-        /// Control TextBox10.
+        /// Control espeSexo2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox10;
+        protected global::System.Web.UI.WebControls.TextBox espeSexo2;
 
         /// <summary>
         /// Control Button4.
@@ -420,49 +420,49 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Panel Panel3;
 
         /// <summary>
-        /// Control TextBox11.
+        /// Control numtoca.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox11;
+        protected global::System.Web.UI.WebControls.TextBox numtoca;
 
         /// <summary>
-        /// Control TextBox12.
+        /// Control salaproc.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox12;
+        protected global::System.Web.UI.WebControls.TextBox salaproc;
 
         /// <summary>
-        /// Control TextBox13.
+        /// Control fecha3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox13;
+        protected global::System.Web.UI.WebControls.TextBox fecha3;
 
         /// <summary>
-        /// Control TextBox14.
+        /// Control numdocenv1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox14;
+        protected global::System.Web.UI.WebControls.TextBox numdocenv1;
 
         /// <summary>
-        /// Control DropDownList5.
+        /// Control ddlDelitos3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList5;
+        protected global::System.Web.UI.WebControls.DropDownList ddlDelitos3;
 
         /// <summary>
         /// Control Button5.
@@ -474,13 +474,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Button Button5;
 
         /// <summary>
-        /// Control GridView3.
+        /// Control gvPartes3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView3;
+        protected global::System.Web.UI.WebControls.GridView gvPartes3;
 
         /// <summary>
         /// Control Button6.
@@ -492,13 +492,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Button Button6;
 
         /// <summary>
-        /// Control GridView4.
+        /// Control gvDelitos3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView4;
+        protected global::System.Web.UI.WebControls.GridView gvDelitos3;
 
         /// <summary>
         /// Control RadioButtonList2.
@@ -510,13 +510,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList2;
 
         /// <summary>
-        /// Control TextBox15.
+        /// Control observa3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox15;
+        protected global::System.Web.UI.WebControls.TextBox observa3;
 
         /// <summary>
         /// Control Button7.
@@ -528,67 +528,67 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Button Button7;
 
         /// <summary>
-        /// Control DropDownList6.
+        /// Control parte3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList6;
+        protected global::System.Web.UI.WebControls.DropDownList parte3;
 
         /// <summary>
-        /// Control TextBox16.
+        /// Control espeParte3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox16;
+        protected global::System.Web.UI.WebControls.TextBox espeParte3;
 
         /// <summary>
-        /// Control TextBox17.
+        /// Control nom4.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox17;
+        protected global::System.Web.UI.WebControls.TextBox nom4;
 
         /// <summary>
-        /// Control TextBox18.
+        /// Control ap4.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox18;
+        protected global::System.Web.UI.WebControls.TextBox ap4;
 
         /// <summary>
-        /// Control TextBox19.
+        /// Control am4.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox19;
+        protected global::System.Web.UI.WebControls.TextBox am4;
 
         /// <summary>
-        /// Control DropDownList7.
+        /// Control sexo3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList7;
+        protected global::System.Web.UI.WebControls.DropDownList sexo3;
 
         /// <summary>
-        /// Control TextBox20.
+        /// Control espeSexo3.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox20;
+        protected global::System.Web.UI.WebControls.TextBox espeSexo3;
 
         /// <summary>
         /// Control Button8.
