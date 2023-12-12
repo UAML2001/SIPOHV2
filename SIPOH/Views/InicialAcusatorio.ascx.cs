@@ -8,6 +8,8 @@ using System.Web.UI.HtmlControls;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Services.Description;
+using System.Text.RegularExpressions;
+using System.Web;
 
 namespace SIPOH.Views
 {
@@ -80,24 +82,84 @@ namespace SIPOH.Views
         protected void AgregarSalaATabla(object sender, EventArgs e)
         {
             string sala = selectSalas.SelectedItem.Text;
+            string valorSala = selectSalas.SelectedItem.Value; // Obtiene el valor del item seleccionado
             string numeroToca = inputNumeroToca.Text;
             List<Sala> salas = ViewState["salas"] as List<Sala> ?? new List<Sala>();
-            salas.Add(new Sala { NombreSala = sala, NumeroToca = numeroToca });
-            ViewState["salas"] = salas;
-            tablaSalas.DataSource = salas;
-            tablaSalas.DataBind();
-            ActualizarVisibilidadTitulo();
+
+            // Verificar si se seleccionó la opción "Seleccionar"
+            if (valorSala.Equals("Seleccionar", StringComparison.OrdinalIgnoreCase))
+            {
+                // Manejar el caso de opción "Seleccionar" seleccionada
+                string mensaje = "Debes seleccionar una sala válida";
+                string script = $"toastError('{mensaje}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+                return; // Finaliza la ejecución de la función
+            }
+
+            // Verificar si los campos no están vacíos
+            if (!string.IsNullOrWhiteSpace(sala) && !string.IsNullOrWhiteSpace(numeroToca))
+            {
+                // Verificar si la sala ya existe
+                if (!salas.Any(s => s.NombreSala == sala && s.NumeroToca == numeroToca))
+                {
+                    salas.Add(new Sala { NombreSala = sala, NumeroToca = numeroToca });
+                    ViewState["salas"] = salas;
+                    tablaSalas.DataSource = salas;
+                    tablaSalas.DataBind();
+                    ActualizarVisibilidadTitulo();
+                }
+                else
+                {
+                    // Manejar el caso de sala duplicada
+                    string mensaje = "No puedes guardar salas y tocas repetidas";
+                    string script = $"toastError('{mensaje}');";
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+                }
+            }
+            else
+            {
+                // Manejar el caso de campos vacíos
+                string mensaje = "No puedes dejar campos vacíos";
+                string script = $"toastError('{mensaje}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+            }
         }
+
+
         protected void AgregarSentenciaATabla(object sender, EventArgs e)
         {
             string sentencia = inputSentencia.Text;
-            List<string> sentencias = (List<string>)ViewState["sentencias"];
-            sentencias.Add(sentencia);
-            ViewState["sentencias"] = sentencias;
-            tablaSentencias.DataSource = sentencias.Select(x => new { Sentencia = x }).ToList();
-            tablaSentencias.DataBind();
-            ActualizarVisibilidadTitulo();
+            List<string> sentencias = (List<string>)ViewState["sentencias"] ?? new List<string>();
+
+            // Verificar si el campo no está vacío
+            if (!string.IsNullOrWhiteSpace(sentencia))
+            {
+                // Verificar si la sentencia ya existe
+                if (!sentencias.Contains(sentencia))
+                {
+                    sentencias.Add(sentencia);
+                    ViewState["sentencias"] = sentencias;
+                    tablaSentencias.DataSource = sentencias.Select(x => new { Sentencia = x }).ToList();
+                    tablaSentencias.DataBind();
+                    ActualizarVisibilidadTitulo();
+                }
+                else
+                {
+                    // Manejar el caso de sentencia duplicada
+                    string mensaje = "No puedes guardar sentencias iguales";
+                    string script = $"toastError('{mensaje}');";
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+                }
+            }
+            else
+            {
+                // Manejar el caso de campo vacío
+                string mensaje = "No puedes dejar el campo de sentencia vacío";
+                string script = $"toastError('{mensaje}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+            }
         }
+
         protected void BorrarSala(object sender, GridViewDeleteEventArgs e)
         {
             List<Sala> salas = (List<Sala>)ViewState["salas"];
@@ -146,6 +208,7 @@ namespace SIPOH.Views
                 }
             }
         }
+        
         protected void btnBuscar_Click(object sender, EventArgs e)
         {
             string juzgadoSeleccionado = inputRadicacion.Value;
@@ -177,22 +240,16 @@ namespace SIPOH.Views
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                     con.Open();
-                    string query = $"SELECT A.IdAsunto, A.Numero AS NumeroCausa, C.NUC, A.IdJuzgado AS NumeroJuzgado, " +
-                                   $"dbo.FConcatenarNombres(A.IdAsunto, 'V', 'O') AS NombreOfendido, " +
-                                   $"dbo.FConcatenarNombres(A.IdAsunto, 'I', 'I') AS NombreInculpado, " +
-                                   $"dbo.FConcatenarDelitos(A.IdAsunto) AS NombreDelito " +
-                                   $"FROM dbo.P_Asunto AS A " +
-                                   $"LEFT OUTER JOIN P_Causa AS C ON A.IdAsunto = C.IdAsunto " +
-                                   $"LEFT OUTER JOIN P_PartesAsunto AS [OF] ON A.IdAsunto = [OF].IdAsunto AND [OF].TipoParte = 'V' " +
-                                   $"LEFT OUTER JOIN P_PartesAsunto AS IC ON A.IdAsunto = IC.IdAsunto AND IC.TipoParte = 'I' " +
-                                   $"LEFT OUTER JOIN P_AsuntoDelito AS AD ON A.IdAsunto = AD.IdAsunto " +
-                                   $"LEFT OUTER JOIN P_CatDelitos AS CD ON AD.IdDelito = CD.IdDelito " +
-                                   $"GROUP BY A.IdAsunto, A.Numero, C.NUC, A.IdJuzgado, dbo.FConcatenarNombres(A.IdAsunto, 'V', 'O'), " +
-                                   $"dbo.FConcatenarNombres(A.IdAsunto, 'I', 'I'), dbo.FConcatenarDelitos(A.IdAsunto) " +
-                                   $"HAVING (A.IdJuzgado = {juzgadoSeleccionado}) AND (A.Numero = '{numeroCausaNuc}')";
+                    string query = $"[dbo].[Ejecucion_ConsultarCausa]";
+
                     Debug.WriteLine($"Consulta SQL: {query}");
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@Juzgado", System.Data.SqlDbType.Int).Value = juzgadoSeleccionado;
+                        cmd.Parameters.Add("@Numero", System.Data.SqlDbType.VarChar).Value = numeroCausaNuc;
+
+
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
                             if (dr.HasRows)
@@ -278,27 +335,29 @@ namespace SIPOH.Views
             }
             return null;
         }
+ 
         protected void BuscarPartes_Click(object sender, EventArgs e)
         {
             string nombre = InputNombreBusqueda.Value;
             string apPaterno = InputApPaternoBusqueda.Value;
             string apMaterno = inputApMaterno.Value;
+            int Circuito= 1;
+            int Opcion = (!string.IsNullOrWhiteSpace(nombre) &&
+                 !string.IsNullOrWhiteSpace(apPaterno) &&
+                 !string.IsNullOrWhiteSpace(apMaterno)) ? 2 : 1;
+
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
-            string query = @"SELECT P_Ejecucion.NoEjecucion, P_CatJuzgados.Nombre as Juzgado, 
-                P_Ejecucion.BeneficiarioNombre as Nombre, P_Ejecucion.BeneficiarioApellidoPaterno as ApPaterno, 
-                P_Ejecucion.BeneficiarioApellidoMaterno as ApMaterno, P_Ejecucion.FechaEjecucion as FechaEjecucion 
-                FROM P_Ejecucion 
-                INNER JOIN P_CatJuzgados ON P_Ejecucion.IdJuzgado = P_CatJuzgados.IdJuzgado 
-                WHERE (BeneficiarioNombre LIKE @nombre OR @nombre IS NULL) AND 
-               (BeneficiarioApellidoPaterno LIKE @apPaterno OR @apPaterno IS NULL) AND 
-               (BeneficiarioApellidoMaterno LIKE @apMaterno OR @apMaterno IS NULL)";
+            string query = $"[dbo].[Ejecucion_ConsultarBeneficiario]";
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    cmd.Parameters.AddWithValue("@nombre", nombre == null ? (object)DBNull.Value : $"%{nombre}%");
-                    cmd.Parameters.AddWithValue("@apPaterno", apPaterno == null ? (object)DBNull.Value : $"%{apPaterno}%");
-                    cmd.Parameters.AddWithValue("@apMaterno", apMaterno == null ? (object)DBNull.Value : $"%{apMaterno}%");
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.Add("@nombre", System.Data.SqlDbType.VarChar).Value = nombre;
+                    cmd.Parameters.Add("@apellidoPaterno", System.Data.SqlDbType.VarChar).Value = apPaterno;
+                    cmd.Parameters.Add("@apellidoMaterno", System.Data.SqlDbType.VarChar).Value = apMaterno;
+                    cmd.Parameters.Add("@idCircuito", System.Data.SqlDbType.Int).Value = Circuito;
+                    cmd.Parameters.Add("@opcion", System.Data.SqlDbType.Int).Value = Opcion;
                     con.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     if (reader.HasRows)
@@ -311,14 +370,15 @@ namespace SIPOH.Views
                     }
                     else
                     {
-                        string mensaje = "No se encontro registro de la busqueda.";
-                        string script = $"toastError('{mensaje}');";
+                        GridView1.DataSource = null;
+                        GridView1.DataBind();
+                        string mensaje = "No se encontro registro, puedes guardar un nuevo dato pero verifica antes que sea correcto.";
+                        string script = $"toastWarning('{mensaje}');";
                         ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
                     }
                 }
             }
         }
-
 
         private void CargarSolicitantes()
         {
@@ -430,6 +490,7 @@ namespace SIPOH.Views
 
                 try
                 {
+                 
                     InsertarDatosAcusatorio(conn, transaction);
                     int idAsunto = Convert.ToInt32(Session["IdAsunto"]);
                     InsertarEnEjecucionAsunto(conn, transaction, GlobalesId.IdEjecucion, idAsunto);
@@ -506,6 +567,8 @@ namespace SIPOH.Views
                         "CerrarModalGuardarDatos();",
                         true
                     );
+
+                    Debug.WriteLine("NO JALO LA WEA DE JOSUE POR: " + HttpContext.Current.Session["IdUsuario"]);
                     string mensaje = "Falto algun dato que es necesario para guardar revisa por favor";
                     string script = $"toastError('{mensaje}');";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
@@ -543,6 +606,7 @@ namespace SIPOH.Views
             int idJuzgado = 0;
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             string query = "SELECT IdJuzgado FROM [SIPOH].[dbo].[P_CatJuzgados] WHERE Nombre = @NombreJuzgado";
+
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
@@ -555,21 +619,27 @@ namespace SIPOH.Views
                         if (result != null && result != DBNull.Value)
                         {
                             idJuzgado = Convert.ToInt32(result);
-                            System.Diagnostics.Debug.WriteLine("Id del juzgado en if: " + idJuzgado);
                         }
                         else
                         {
+                            // No se encontró el juzgado
                             System.Diagnostics.Debug.WriteLine("No se encontró un IdJuzgado para el nombre proporcionado: " + nombreJuzgado);
+                            idJuzgado = -1; // O cualquier otro valor que indique una situación anómala
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                // Considera lanzar la excepción o manejarla según sea necesario para tu aplicación
+                // Aquí puedes manejar la excepción y registrar el error
+                System.Diagnostics.Debug.WriteLine("Error al obtener IdJuzgado: " + ex.Message);
+                // Decide si quieres retornar un valor específico en caso de excepción
+                idJuzgado = -1; // O cualquier otro valor que indique error
             }
+
             return idJuzgado;
         }
+
         private void InsertarEnEjecucionAsunto(SqlConnection conn, SqlTransaction transaction, int idEjecucion, int idAsunto)
         {
             string query = @"INSERT INTO [SIPOH].[dbo].[P_EjecucionAsunto] (IdEjecucion, IdAsunto)
@@ -595,9 +665,9 @@ namespace SIPOH.Views
 
         private void InsertarDatosAcusatorio(SqlConnection conn, SqlTransaction transaction)
         {
-            GridViewRow primeraFila = GridView1.Rows[0];
-            string noEjecucion = primeraFila.Cells[0].Text;
-            string fechaEjecucion = primeraFila.Cells[5].Text; // Asumiendo que es una fecha en formato correcto para SQL Server
+            //GridViewRow primeraFila = GridView1.Rows[0];
+            string noEjecucion = "0000/0000";
+            string fechaEjecucion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string nombreSolicitanteSeleccionado = CatSolicitantesDD.SelectedItem.Text;
             string nombreSolicitudSeleccionado = CatSolicitudDD.SelectedItem.Text;
             string cveSolicitante = ObtenerClavePorNombre(nombreSolicitanteSeleccionado, "P_EjecucionCatSolicitante", "Solicitante", "CveSolicitante");
@@ -610,20 +680,30 @@ namespace SIPOH.Views
                 return; // Detiene la ejecución si el campo está vacío
             }
 
+            //string idusuario= (string)Session["IdUsuario"];
             string detalleSolicitante = detalleSolicitantes.Value;
             string otraSolicitud = InputOtraSolicitud.Value;
             string interno = siInterno.Checked ? "S" : "N"; // Asumiendo que solo hay dos opciones "S" o "N"
-            string nombreBeneficiario = primeraFila.Cells[2].Text;
-            string apellidoPaternoBeneficiario = primeraFila.Cells[3].Text;
-            string apellidoMaternoBeneficiario = primeraFila.Cells[4].Text;
-            string nombreJuzgadoHtml = primeraFila.Cells[1].Text;
-            string nombreJuzgado = System.Web.HttpUtility.HtmlDecode(nombreJuzgadoHtml);
+            string nombreBeneficiario = InputNombreBusqueda.Value;
+            string apellidoPaternoBeneficiario = InputApPaternoBusqueda.Value;
+            string apellidoMaternoBeneficiario = inputApMaterno.Value;
+            if (string.IsNullOrWhiteSpace(nombreBeneficiario) ||
+            string.IsNullOrWhiteSpace(apellidoPaternoBeneficiario))
+            {
+                string mensaje = "El nombre y apellido paterno son obligatorios, llenalos de nuevo y vuelve a generar la consulta de busqueda";
+                string script = $"toastError('{mensaje}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+                return; // Salir del método si alguno de los campos obligatorios está vacío
+            }
+            apellidoMaternoBeneficiario = string.IsNullOrWhiteSpace(apellidoMaternoBeneficiario) ? "-" : apellidoMaternoBeneficiario;
+            //string nombreJuzgadoHtml = primeraFila.Cells[1].Text;
+            string nombreJuzgado = "JUZGADO PRIMERO DE EJECUCIÓN DEL SISTEMA PROCESAL PENAL ACUSATORIO ORAL";
             int idJuzgado = ObtenerIdJuzgadoPorNombre(nombreJuzgado);
             string query = @"INSERT INTO [SIPOH].[dbo].[P_Ejecucion]
                      ([NoEjecucion], [FechaEjecucion], [CveSolicitante], [DetalleSolicitante], [CveSolicitud], [OtroSolicita], [BeneficiarioNombre], [BeneficiarioApellidoPaterno], [BeneficiarioApellidoMaterno], [IdJuzgado], [Interno], [IdUser], [Tipo])
                      VALUES
                      (@NoEjecucion, @FechaEjecucion, @CveSolicitante, @DetalleSolicitante, @CveSolicitud, @OtroSolicita, @BeneficiarioNombre, @BeneficiarioApellidoPaterno,
-                      @BeneficiarioApellidoMaterno, @IdJuzgado, @Interno, 3, 'Ejecución');
+                      @BeneficiarioApellidoMaterno, @IdJuzgado, @Interno, @IdUser, 'Ejecución');
                      SELECT CAST(scope_identity() AS int);";
             using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
             {
@@ -633,6 +713,7 @@ namespace SIPOH.Views
                 cmd.Parameters.AddWithValue("@DetalleSolicitante", detalleSolicitante);
                 cmd.Parameters.AddWithValue("@CveSolicitud", cveSolicitud);
                 cmd.Parameters.AddWithValue("@OtroSolicita", string.IsNullOrEmpty(otraSolicitud) ? (object)DBNull.Value : otraSolicitud);
+                cmd.Parameters.AddWithValue("@IdUser", HttpContext.Current.Session["IdUsuario"]);
                 cmd.Parameters.AddWithValue("@BeneficiarioNombre", nombreBeneficiario);
                 cmd.Parameters.AddWithValue("@BeneficiarioApellidoPaterno", apellidoPaternoBeneficiario);
                 cmd.Parameters.AddWithValue("@BeneficiarioApellidoMaterno", apellidoMaternoBeneficiario);
@@ -672,35 +753,24 @@ namespace SIPOH.Views
             }
             return idCatAnexo;
         }
-        private void InsertarDatosAnexos(SqlConnection conn, SqlTransaction transaction, string descripcionAnexo, int cantidad)
+        private void InsertarDatosAnexos(SqlConnection conn, SqlTransaction transaction, string nombreAnexo, int cantidad)
         {
-            int idCatAnexoEjecucion = ObtenerIdCatAnexoPorDescripcion(descripcionAnexo);
-
             string query = @"
-        INSERT INTO [SIPOH].[dbo].[P_EjecucionAnexos]
-        (IdEjecucion, IdCatAnexoEjecucion, OtroAnexoEjecucion, Cantidad)
-        VALUES
-        (@IdEjecucion, @IdCatAnexoEjecucion, @OtroAnexoEjecucion, @Cantidad)";
+                INSERT INTO [SIPOH].[dbo].[P_EjecucionAnexos]
+                (IdEjecucion, Detalle, Cantidad)
+                VALUES
+                (@IdEjecucion, @Detalle, @Cantidad)";
 
             using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
             {
                 int idEjecucion = GlobalesId.IdEjecucion;
                 cmd.Parameters.AddWithValue("@IdEjecucion", idEjecucion);
-                cmd.Parameters.AddWithValue("@IdCatAnexoEjecucion", idCatAnexoEjecucion);
-
-                if (idCatAnexoEjecucion == 8) // ID para "OTRO"
-                {
-                    cmd.Parameters.AddWithValue("@OtroAnexoEjecucion", descripcionAnexo);
-                }
-                else
-                {
-                    cmd.Parameters.AddWithValue("@OtroAnexoEjecucion", DBNull.Value);
-                }
-
+                cmd.Parameters.AddWithValue("@Detalle", nombreAnexo);
                 cmd.Parameters.AddWithValue("@Cantidad", cantidad);
                 cmd.ExecuteNonQuery();
             }
         }
+
         private void InsertarDatosEjecucionOriToca(SqlConnection conn, SqlTransaction transaction, string numeroDeToca, int idJuzgado)
         {
             string query = @"INSERT INTO [SIPOH].[dbo].[P_EjecucionOriToca] ([IdEjecucion], [NumeroDeToca], [IdJuzgado])
@@ -764,20 +834,20 @@ namespace SIPOH.Views
         //FUNCION QUE GUARDA DATOS QUE INSERTARA PARA LUEGO MOSTRAR EN EL INSERT
         public void RecolectarDatosParaModal()
         {
-            if (GridView1.Rows.Count == 0)
-            {
-                // Si no hay filas, muestra la alerta de error y retorna de la función
-                string mensaje = "No Se podra guardar nada porque no has generado la busqueda del sentenciado / beneficiario";
-                string script = $"toastError('{mensaje}');";
-                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
-                return; // Importante para detener la ejecución de la función aquí
-            }
-            GridViewRow primeraFila = GridView1.Rows[0];
-            
-            string fechaEjecucion = primeraFila.Cells[5].Text;
-            string nombreBeneficiario = primeraFila.Cells[2].Text;
-            string apellidoPaternoBeneficiario = primeraFila.Cells[3].Text;
-            string apellidoMaternoBeneficiario = primeraFila.Cells[4].Text;
+            //if (GridView1.Rows.Count == 0)
+            //{
+            //    // Si no hay filas, muestra la alerta de error y retorna de la función
+            //    string mensaje = "No Se podra guardar nada porque no has generado la busqueda del sentenciado / beneficiario";
+            //    string script = $"toastError('{mensaje}');";
+            //    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+            //    return; // Importante para detener la ejecución de la función aquí
+            //}
+            //GridViewRow primeraFila = GridView1.Rows[0];
+
+            string fechaEjecucion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string nombreBeneficiario = InputNombreBusqueda.Value;
+            string apellidoPaternoBeneficiario = InputApPaternoBusqueda.Value;
+            string apellidoMaternoBeneficiario = inputApMaterno.Value;
             string nombreSolicitanteSeleccionado = CatSolicitantesDD.SelectedItem.Text;
             string nombreSolicitudSeleccionado = CatSolicitudDD.SelectedItem.Text;
             string detalleSolicitante = detalleSolicitantes.Value;

@@ -31,7 +31,7 @@
 
                         <div class="card-body">
                             <!-- Tab panes -->
-                            <asp:ScriptManager ID="ScriptManagerIniciales" runat="server"></asp:ScriptManager>
+                            <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
                             <div class="tab-content ">
                                 <div class="tab-pane active" id="IAcusatorio" role="tabpanel">
                                     <%@ Register Src="~/Views/InicialAcusatorio.ascx" TagPrefix="uc1" TagName="InicialAcusatorio" %>
@@ -79,6 +79,9 @@
                     }
                     function toastInfo(mensaje) {
                         toastr.info(mensaje, "Informacion");
+                    }
+                    function toastWarning(mensaje) {
+                        toastr.warning(mensaje, "Atención");
                     }
                 </script>
             </div>
