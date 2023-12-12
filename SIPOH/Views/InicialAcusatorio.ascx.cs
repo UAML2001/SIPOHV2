@@ -567,8 +567,6 @@ namespace SIPOH.Views
                         "CerrarModalGuardarDatos();",
                         true
                     );
-
-                    Debug.WriteLine("NO JALO LA WEA DE JOSUE POR: " + HttpContext.Current.Session["IdUsuario"]);
                     string mensaje = "Falto algun dato que es necesario para guardar revisa por favor";
                     string script = $"toastError('{mensaje}');";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
