@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web.Services.Description;
 using System.Text.RegularExpressions;
 using System.Web;
+using System.Data;
 
 namespace SIPOH.Views
 {
@@ -480,6 +481,30 @@ namespace SIPOH.Views
             public string Descripcion { get; set; }
             public int Cantidad { get; set; }
         }
+
+        public static class StorageFolio
+        {
+            public static (int idJuzgadoFolio, int folio) EjecutarEjecucionAsignarFolioXJuzgado(SqlTransaction transaction, int circuito)
+            {
+                using (SqlCommand cmd = new SqlCommand("Ejecucion_AsignarFolioXJuzgado", transaction.Connection, transaction))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Circuito", circuito);
+                    cmd.Parameters.Add("@juzgado", SqlDbType.Int).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@folio", SqlDbType.Int).Direction = ParameterDirection.Output; // Nuevo parámetro de salida para folio
+
+                    cmd.ExecuteNonQuery();
+
+                    int idJuzgadoFolio = (int)cmd.Parameters["@juzgado"].Value;
+                    int folio = (int)cmd.Parameters["@folio"].Value;  // Captura el valor del folio
+                    Debug.WriteLine($"Folio obtenido: {folio}");
+                    return (idJuzgadoFolio, folio);  // Devuelve ambos valores
+                }
+            }
+        }
+
+
+
         protected void btnGuardarAcusatorio_Click(object sender, EventArgs e)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
@@ -490,8 +515,10 @@ namespace SIPOH.Views
 
                 try
                 {
-                 
-                    InsertarDatosAcusatorio(conn, transaction);
+                    int circuito = 1;
+                    var (idJuzgadoFolio, folio) = StorageFolio.EjecutarEjecucionAsignarFolioXJuzgado(transaction, circuito);
+
+                    InsertarDatosAcusatorio(conn, transaction, circuito);
                     int idAsunto = Convert.ToInt32(Session["IdAsunto"]);
                     InsertarEnEjecucionAsunto(conn, transaction, GlobalesId.IdEjecucion, idAsunto);
 
@@ -539,6 +566,9 @@ namespace SIPOH.Views
                             }
                         }
                     }
+                   
+                    ActualizarFolios(conn, transaction, idJuzgadoFolio);
+
                     transaction.Commit();
                     ScriptManager.RegisterStartupScript(
                         this.UpdateAcusatorio,
@@ -661,10 +691,14 @@ namespace SIPOH.Views
             }
         }
 
-        private void InsertarDatosAcusatorio(SqlConnection conn, SqlTransaction transaction)
+        private void InsertarDatosAcusatorio(SqlConnection conn, SqlTransaction transaction, int circuito)
         {
             //GridViewRow primeraFila = GridView1.Rows[0];
-            string noEjecucion = "0000/0000";
+            
+            var (idJuzgado, folio) = StorageFolio.EjecutarEjecucionAsignarFolioXJuzgado(transaction, circuito);
+            folio += 1;
+            int añoActual = DateTime.Now.Year;
+            string noEjecucion = $"{folio:0000}/{añoActual}";
             string fechaEjecucion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string nombreSolicitanteSeleccionado = CatSolicitantesDD.SelectedItem.Text;
             string nombreSolicitudSeleccionado = CatSolicitudDD.SelectedItem.Text;
@@ -695,8 +729,9 @@ namespace SIPOH.Views
             }
             apellidoMaternoBeneficiario = string.IsNullOrWhiteSpace(apellidoMaternoBeneficiario) ? "-" : apellidoMaternoBeneficiario;
             //string nombreJuzgadoHtml = primeraFila.Cells[1].Text;
-            string nombreJuzgado = "JUZGADO PRIMERO DE EJECUCIÓN DEL SISTEMA PROCESAL PENAL ACUSATORIO ORAL";
-            int idJuzgado = ObtenerIdJuzgadoPorNombre(nombreJuzgado);
+            //string nombreJuzgado = "JUZGADO PRIMERO DE EJECUCIÓN DEL SISTEMA PROCESAL PENAL ACUSATORIO ORAL";
+            
+
             string query = @"INSERT INTO [SIPOH].[dbo].[P_Ejecucion]
                      ([NoEjecucion], [FechaEjecucion], [CveSolicitante], [DetalleSolicitante], [CveSolicitud], [OtroSolicita], [BeneficiarioNombre], [BeneficiarioApellidoPaterno], [BeneficiarioApellidoMaterno], [IdJuzgado], [Interno], [IdUser], [Tipo])
                      VALUES
@@ -792,6 +827,20 @@ namespace SIPOH.Views
                 cmd.ExecuteNonQuery();
             }
         }
+        private void ActualizarFolios(SqlConnection conn, SqlTransaction transaction, int idJuzgado)
+        {
+            string query = @"
+        UPDATE [SIPOH].[dbo].[P_Folios]
+        SET Folio = Folio + 1, frecuencia = frecuencia + 1
+        WHERE IdJuzgado = @IdJuzgado AND Tipo = 'EJ'";
+
+            using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+            {
+                cmd.Parameters.AddWithValue("@IdJuzgado", idJuzgado);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         // HASTA AQUI EL INSERT
         //Nuevas funcionalidades
         private void ActualizarVisibilidadTitulo()
