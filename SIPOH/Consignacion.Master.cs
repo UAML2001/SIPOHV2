@@ -14,6 +14,11 @@ namespace SIPOH
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+            NombreJuzgado.Text = HttpContext.Current.Session["NombreJuzgado"] as string;
+            LabelJuzgado.Text = HttpContext.Current.Session["NombreJuzgado"] as string;
+            LabelTCircuito.Text = HttpContext.Current.Session["IdCircuito"] as string; 
+            //Debug.WriteLine("Los valores de los datos en conjunto: " + Session["NombreJuzgado"] + " " + Session["IdCircuito"]);
             /// Datos usuario
             LabelProfile.Text = HttpContext.Current.Session["Perfil"] as string;
             LabelAddress.Text = HttpContext.Current.Session["Address"] as string;
@@ -23,10 +28,7 @@ namespace SIPOH
             LabelFistName.Text = HttpContext.Current.Session["FistName"] as string;
             LabelLastName.Text = HttpContext.Current.Session["LastName"] as string;
             userName.Text = HttpContext.Current.Session["Name"] as string;
-            NombreJuzgado.Text = Autenticacion.getJuzgado();
-            LabelJuzgado.Text = Autenticacion.getJuzgado();
             string circuito = HttpContext.Current.Session["TCircuito"] as string;
-            LabelTCircuito.Text = circuito; 
             tipoCircuito.Text = circuito == "c" || circuito == "d" ? "Atencion Ciudadana" : "Ejecucion";
             MostrarOpcionesConjunto(circuito);            
             MostrarOpcionesPorRol(circuito, OpcionesEjecucion, "e");
