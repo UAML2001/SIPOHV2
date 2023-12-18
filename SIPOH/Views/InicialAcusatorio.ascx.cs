@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Web.UI.WebControls;
-using System.Text;
 using System.Diagnostics;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Services.Description;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Data;
 
@@ -342,7 +338,8 @@ namespace SIPOH.Views
             string nombre = InputNombreBusqueda.Value;
             string apPaterno = InputApPaternoBusqueda.Value;
             string apMaterno = inputApMaterno.Value;
-            int Circuito= 1;
+
+            int Circuito = Convert.ToInt32(HttpContext.Current.Session["IdCircuito"]);
             int Opcion = (!string.IsNullOrWhiteSpace(nombre) &&
                  !string.IsNullOrWhiteSpace(apPaterno) &&
                  !string.IsNullOrWhiteSpace(apMaterno)) ? 2 : 1;
@@ -515,7 +512,7 @@ namespace SIPOH.Views
 
                 try
                 {
-                    int circuito = 1;
+                    int circuito = Convert.ToInt32(HttpContext.Current.Session["IdCircuito"]);
                     var (idJuzgadoFolio, folio) = StorageFolio.EjecutarEjecucionAsignarFolioXJuzgado(transaction, circuito);
 
                     InsertarDatosAcusatorio(conn, transaction, circuito);
@@ -939,5 +936,8 @@ namespace SIPOH.Views
             ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "abrirModal", "abrirModalGuardarDatos();", true);
         }
         //FIN de funcion que guarda los datos para luego mostrar en el modal
+        //INICIO PDF
+
+        //FINAL PDF
     }
 }
