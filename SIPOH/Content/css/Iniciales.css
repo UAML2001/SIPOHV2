@@ -28,3 +28,12 @@
     font-size:16px;
     font-weight:600;
 }
+/*.custom-gridview-header {
+    background-color: red !important;*/ /* Color de fondo para el encabezado */
+    /*color: white !important;*/ /* Color del texto */
+    /*font-size: 14px !important;*/ /* Tamaño de la fuente */
+
+.custom-gridview {
+    font-size: 14px !important;
+}
+
