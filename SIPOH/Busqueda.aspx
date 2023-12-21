@@ -9,7 +9,7 @@
          <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
          <link href="Content/css/Iniciales.css" rel="stylesheet" />
         <div>
-            <h1 style="margin-left: 5%" class="h5">Busqueda <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold">Partes de la Causa</span> </h1>
+            <h1 style="margin-left: 5%" class="h5">Busqueda <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-success fw-bold">Partes de la Causa</span> </h1>
         </div>
         <div class="m-0">
             <div class="row">
