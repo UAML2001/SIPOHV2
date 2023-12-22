@@ -88,7 +88,7 @@
 
             <div class="row">
                 <div class="mb-5 col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                    <label class="form-label-sm text-secondary">Salas Disponibles (CAMBIAR QUERY)</label>
+                    <label class="form-label-sm text-secondary">Salas Disponibles</label>
                     <asp:DropDownList ID="selectSalasTradicional" runat="server" CssClass="form-select form-select-sm">
                         <asp:ListItem Text="Seleccionar" />
                     </asp:DropDownList>

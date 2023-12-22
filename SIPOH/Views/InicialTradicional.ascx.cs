@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using System.Linq;
 using static SIPOH.Views.InicialAcusatorio;
 using System.Collections;
+using System.Configuration;
+using System.Web;
 
 namespace SIPOH.Views
 {
@@ -52,12 +54,17 @@ namespace SIPOH.Views
         //FUNCION PARA CARGAR LOS DROPDOWN DE BUSQUEDA INICIAL DINAMICOS EL UNO DEL OTRO
         protected void LoadDistritos()
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT IdDistrito, nombre FROM P_CatDistritos";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlCommand cmd = new SqlCommand("Ejecucion_Cat_Distritos", conn))
                 {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    // Asegúrate de obtener el IdCircuito de algún lugar, como una variable de sesión
+                    int idCircuito = Convert.ToInt32(HttpContext.Current.Session["IdCircuito"]);
+                    cmd.Parameters.AddWithValue("@IdCircuito", idCircuito);
+
                     conn.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -67,9 +74,11 @@ namespace SIPOH.Views
                         InDistritoTra.DataBind();
                     }
                 }
-                InDistritoTra.Items.Insert(0, new ListItem("Seleccionar", "0"));
             }
+            InDistritoTra.Items.Insert(0, new ListItem("Seleccionar", "0"));
         }
+
+
 
         protected void InDistritoTra_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -79,13 +88,14 @@ namespace SIPOH.Views
 
         protected void LoadJuzgados(int distritoId)
         {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
+            string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT IdJuzgado, Nombre FROM P_CatJuzgados WHERE IdDistrito = @DistritoId AND SubTipo = 'T' AND Tipo NOT IN('T')";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlCommand cmd = new SqlCommand("Ejecucion_Cat_Juzgados", conn))
                 {
-                    cmd.Parameters.AddWithValue("@DistritoId", distritoId);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdDistrito", distritoId);
+
                     conn.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -95,9 +105,11 @@ namespace SIPOH.Views
                         InJuzgadoProcedenciaTra.DataBind();
                     }
                 }
-                InJuzgadoProcedenciaTra.Items.Insert(0, new ListItem("Seleccionar", "0"));
             }
+            InJuzgadoProcedenciaTra.Items.Insert(0, new ListItem("Seleccionar", "0"));
         }
+
+
         //FUNCION PARA BUSCAR POR IDJUZGADO Y NUC Y MOSTRAR EN TABLA
         protected void btnBuscarTradicional_Click(object sender, EventArgs e)
         {

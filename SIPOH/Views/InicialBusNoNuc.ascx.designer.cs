@@ -33,6 +33,15 @@ namespace SIPOH.Views
         protected global::System.Web.UI.HtmlControls.HtmlSelect InputDistritoProcedencia;
 
         /// <summary>
+        /// Control inputNucBusqueda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText inputNucBusqueda;
+
+        /// <summary>
         /// Control btnBuscarPCausa4.
         /// </summary>
         /// <remarks>
@@ -49,5 +58,41 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btnLimpiar4;
+
+        /// <summary>
+        /// Control tituloPartesCausa4.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label tituloPartesCausa4;
+
+        /// <summary>
+        /// Control GridViewPCausa4.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GridViewPCausa4;
+
+        /// <summary>
+        /// Control tituloDetalles4.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label tituloDetalles4;
+
+        /// <summary>
+        /// Control detallesConsulta4.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl detallesConsulta4;
     }
 }
