@@ -50,6 +50,8 @@ namespace SIPOH
                 CargarAnexos();
                 OtroAnexo.Disabled = true;
                 TablasAnexos.Visible = false;
+                VerificarCamposYDeshabilitarBoton();
+                ScriptManager.RegisterStartupScript(this, GetType(), "verificarCampos", "verificarCampos();", true);
             }
         }
         //
@@ -297,7 +299,16 @@ namespace SIPOH
             ViewState["anexos"] = salas;
             tablaDatos.DataSource = salas;
             tablaDatos.DataBind();
+
+            // Verificar si la tabla aún tiene elementos después de borrar la fila
+            if (salas.Count == 0)
+            {
+                // Si no tiene elementos, oculta la tabla y el botón de guardar
+                TablasAnexos.Visible = false;
+                BotonGuardarDiv.Style.Add("display", "none");
+            }
         }
+
         protected void tablaDatos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -325,6 +336,10 @@ namespace SIPOH
 
                 // Guardar el IdEjecucion en ViewState o en otro lugar para su uso posterior
                 ViewState["IdEjecucionSeleccionado"] = idEjecucion;
+            }
+            if (e.Row.RowType == DataControlRowType.DataRow || e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.Cells[0].Style.Add("display", "none");
             }
         }
 
@@ -461,7 +476,16 @@ namespace SIPOH
             }
         }
 
-
+        private void VerificarCamposYDeshabilitarBoton()
+        {
+            var nombre = inPromoventeNombre.Value;
+            var apellidoPaterno = inPromoventePaterno.Value;
+            var apellidoMaterno = inPromoventeMaterno.Value;
+            // Deshabilitar el botón si alguno de los campos está vacío
+            btnGuardarDatosModal.Enabled = !string.IsNullOrWhiteSpace(nombre) &&
+                                           !string.IsNullOrWhiteSpace(apellidoPaterno) &&
+                                           !string.IsNullOrWhiteSpace(apellidoMaterno);
+        }
 
 
         //

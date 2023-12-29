@@ -108,16 +108,16 @@
                                         <form class="container-lg col-xxl-12">
                                             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                 <label for="labelPromoNombre" class="form-label text-secondary">Promovente Nombre(s)</label>
-                                                <input type="text" class="form-control form-control-sm" id="inPromoventeNombre" runat="server">
+                                                <input type="text" class="form-control form-control-sm" id="inPromoventeNombre" runat="server" onkeyup="verificarCampos()">
                                             </div>
                                             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                 <label for="LabelPromoApellidoP" class="form-label text-secondary">Apellido Paterno</label>
-                                                <input type="text" class="form-control form-control-sm" id="inPromoventePaterno" runat="server">
+                                                <input type="text" class="form-control form-control-sm" id="inPromoventePaterno" runat="server" onkeyup="verificarCampos()">
                                             </div>
                                             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                 <label for="LabelPromoApellidoM" class="form-label text-secondary">Apellido Materno</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control form-control-sm" id="inPromoventeMaterno" clientidmode="Static" runat="server">
+                                                    <input type="text" class="form-control form-control-sm" id="inPromoventeMaterno" clientidmode="Static" runat="server" onkeyup="verificarCampos()">
                                                 </div>
                                             </div>
                                         </form>
@@ -164,11 +164,12 @@
                                             </asp:GridView>
                                         </div>
                                     </div>
-
-                                    <div class="row justify-content-md-center" id="BotonGuardarDiv" runat="server">
+                                    <div class="container" id="BotonGuardarDiv" runat="server">
+                                    <div class="row justify-content-md-center">
                                         <div class="col-xl-2 col-sm-12 col-md-2">
                                             <asp:Button ID="btnGuardarDatosModal" runat="server" Text="Guardar Datos" CssClass="btn btn-outline-secondary btn-sm col-12" OnClick="btnModalPromociones_Click" />
                                         </div>
+                                    </div>
                                     </div>
 
                                 </div>
@@ -231,6 +232,37 @@
                 $('body').removeClass('modal-open').css('overflow', ''); // Restablece el overflow
                 $('.modal-backdrop').remove();
             }
+        </script>
+<script type="text/javascript">
+    function verificarCampos() {
+        var nombre = document.getElementById('<%= inPromoventeNombre.ClientID %>').value;
+        var apellidoPaterno = document.getElementById('<%= inPromoventePaterno.ClientID %>').value;
+        var apellidoMaterno = document.getElementById('<%= inPromoventeMaterno.ClientID %>').value;
+
+        var botonGuardar = document.getElementById('<%= btnGuardarDatosModal.ClientID %>');
+
+        if (nombre.trim() !== '' && apellidoPaterno.trim() !== '' && apellidoMaterno.trim() !== '') {
+            botonGuardar.disabled = false;
+        } else {
+            botonGuardar.disabled = true;
+        }
+    }
+</script>
+<script type="text/javascript">
+    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(endRequestHandler);
+
+    function endRequestHandler(sender, args) {
+        verificarCampos(); // Llamar a verificarCampos después de cada postback parcial
+    }
+</script>
+        <script>
+            window.addEventListener('keydown', function (e) {
+                var node = (e.target) ? e.target : ((e.srcElement) ? e.srcElement : null);
+                if ((e.keyCode == 13) && (node.type == "text")) {
+                    e.preventDefault();
+                    return false;
+                }
+            }, true);
         </script>
     </div>
 </asp:Content>
