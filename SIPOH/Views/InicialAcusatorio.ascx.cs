@@ -514,6 +514,7 @@ namespace SIPOH.Views
                 {
                     int circuito = Convert.ToInt32(HttpContext.Current.Session["IdCircuito"]);
                     var (idJuzgadoFolio, folio) = StorageFolio.EjecutarEjecucionAsignarFolioXJuzgado(transaction, circuito);
+                    string nombreJuzgado = ObtenerNombreJuzgadoPorID(idJuzgadoFolio.ToString());
 
                     InsertarDatosAcusatorio(conn, transaction, circuito);
                     int idAsunto = Convert.ToInt32(Session["IdAsunto"]);
@@ -563,7 +564,15 @@ namespace SIPOH.Views
                             }
                         }
                     }
-                   
+                    int totalAnexos = GlobalAnexosDetalles
+                    .Select(anexo => {
+                        var partes = anexo.Split(new[] { " - " }, StringSplitOptions.None);
+                        return partes.Length == 2 && int.TryParse(partes[1], out int cantidad) ? cantidad : 0;
+                    })
+                    .Sum();
+
+
+
                     ActualizarFolios(conn, transaction, idJuzgadoFolio);
 
                     transaction.Commit();
@@ -580,6 +589,12 @@ namespace SIPOH.Views
                     // Recargar la página después de un tiempo determinado (por ejemplo, 5 segundos)
                     string scriptRecarga = "setTimeout(function(){ window.location.href = window.location.href; }, 5000);";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "recargaPaginaScript", scriptRecarga, true);
+                    //SEGUN YO AQUI VA EL TICKET DE EXITO YA NO RECUERDO QUE HICE JAJAJA
+                    string datosAnexos = String.Join(", ", GlobalAnexosDetalles.Select(a => $"\"{a}\""));
+                    string script = $"generarSELLO('{nombreJuzgado}', '{GlobalNoEjecucion}', '{GlobalFechaEjecucion}', '{GlobalesId.IdEjecucion}', [{datosAnexos}], {totalAnexos});";
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "llamarGenerarPDF", script, true);
+
+
                 }
                 catch (Exception ex)
                 {
@@ -751,6 +766,8 @@ namespace SIPOH.Views
                 cmd.Parameters.AddWithValue("@Interno", interno);
                 int idEjecucion = (int)cmd.ExecuteScalar();
                 GlobalesId.IdEjecucion = idEjecucion;
+
+                ProcesarDatosDeInsercion(idJuzgado, noEjecucion, idEjecucion, fechaEjecucion);
             }
         }
         private int ObtenerIdCatAnexoPorDescripcion(string descripcionAnexo)
@@ -798,6 +815,9 @@ namespace SIPOH.Views
                 cmd.Parameters.AddWithValue("@Detalle", nombreAnexo);
                 cmd.Parameters.AddWithValue("@Cantidad", cantidad);
                 cmd.ExecuteNonQuery();
+
+                ProcesarDetalleAnexo(nombreAnexo, cantidad);
+
             }
         }
 
@@ -840,6 +860,26 @@ namespace SIPOH.Views
 
         // HASTA AQUI EL INSERT
         //Nuevas funcionalidades
+        public static string GlobalNoEjecucion;
+        public static string GlobalFechaEjecucion;
+        public static string GlobalIdJuzgado;
+        public static List<string> GlobalAnexosDetalles = new List<string>();
+
+        private void ProcesarDatosDeInsercion(int idJuzgado, string noEjecucion, int idEjecucion, string fechaEjecucion)
+        {
+            GlobalIdJuzgado = idJuzgado.ToString();
+            GlobalNoEjecucion = noEjecucion;
+            GlobalFechaEjecucion = fechaEjecucion;
+            // Nota: idEjecucion se almacena en GlobalesId.IdEjecucion AQUI ANDO
+        }
+
+
+        private void ProcesarDetalleAnexo(string nombreAnexo, int cantidad)
+        {
+            string detalle = $"{nombreAnexo} - {cantidad}";
+            GlobalAnexosDetalles.Add(detalle);
+        }
+
         private void ActualizarVisibilidadTitulo()
         {
             bool haySalas = tablaSalas.Rows.Count > 0;
@@ -878,16 +918,6 @@ namespace SIPOH.Views
         //FUNCION QUE GUARDA DATOS QUE INSERTARA PARA LUEGO MOSTRAR EN EL INSERT
         public void RecolectarDatosParaModal()
         {
-            //if (GridView1.Rows.Count == 0)
-            //{
-            //    // Si no hay filas, muestra la alerta de error y retorna de la función
-            //    string mensaje = "No Se podra guardar nada porque no has generado la busqueda del sentenciado / beneficiario";
-            //    string script = $"toastError('{mensaje}');";
-            //    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
-            //    return; // Importante para detener la ejecución de la función aquí
-            //}
-            //GridViewRow primeraFila = GridView1.Rows[0];
-
             string fechaEjecucion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string nombreBeneficiario = InputNombreBusqueda.Value;
             string apellidoPaternoBeneficiario = InputApPaternoBusqueda.Value;
