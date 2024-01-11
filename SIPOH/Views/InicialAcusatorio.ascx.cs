@@ -595,7 +595,7 @@ namespace SIPOH.Views
                     LimpiarViewState();
                     string datosAnexos = String.Join(", ", GlobalAnexosDetalles.Select(a => $"\"{a}\""));
                     string ticket = CrearTicketSELLO();
-                    TicketDiv.InnerHtml = Server.HtmlEncode(ticket).Replace(Environment.NewLine, "<br style='margin-bottom: -5px !important;'>");
+                    TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
                     ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
 
 
@@ -1015,18 +1015,28 @@ namespace SIPOH.Views
             }).ToList();
             int totalAnexos = anexos.Sum(a => a.Cantidad);
 
-            ticket.AppendLine("TRIBUNAL SUPERIOR DE JUSTICIA");
-            ticket.AppendLine("DEL ESTADO DE HIDALGO");
-            ticket.AppendLine("ATENCION CIUDADANA");
-            ticket.AppendLine("SENTENCIA EJECUTORIADA");
-            ticket.AppendLine("INICIAL");
+            string[] lines = {
+                "TRIBUNAL SUPERIOR DE JUSTICIA",
+                "DEL ESTADO DE HIDALGO",
+                "ATENCION CIUDADANA",
+                "SENTENCIA EJECUTORIADA",
+                "INICIAL"
+            };
+            int maxLength = lines.Max(line => line.Length);
+            foreach (string line in lines)
+            {
+                int totalPadding = maxLength - line.Length;
+                int padLeft = totalPadding / 2 + line.Length;
+                string centeredLine = line.PadLeft(padLeft).PadRight(maxLength);
+                ticket.AppendLine(centeredLine);
+            }
             ticket.AppendLine("-----------------------------------");
             foreach (string linea in lineasNombreJuzgado)
             {
                 ticket.AppendLine(linea);
             }
             ticket.AppendLine("-----------------------------------");
-            ticket.AppendLine($"Número de Ejecución: {GlobalNoEjecucion}");
+            ticket.AppendLine($"Numero de Ejecucion: {GlobalNoEjecucion}");
             ticket.AppendLine($"Folio: {GlobalesId.IdEjecucion}");
             ticket.AppendLine($"Fecha: {GlobalFechaEjecucion}");
             foreach (var anexo in anexos)
@@ -1034,7 +1044,6 @@ namespace SIPOH.Views
                 ticket.AppendLine($"{anexo.Descripcion}: {anexo.Cantidad}");
             }
             ticket.AppendLine($"Total: {totalAnexos}");
-
             return ticket.ToString();
         }
         

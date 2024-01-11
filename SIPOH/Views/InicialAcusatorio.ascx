@@ -360,7 +360,7 @@
     </div>
         </div>
 
-    <div id="TicketDiv" runat="server"></div>
+    <pre id="TicketDiv" runat="server"></pre>
 
     </ContentTemplate>
     </asp:UpdatePanel>
@@ -466,14 +466,24 @@
         //TICKET// ... resto del código ...
         //}
 
-            function imprimirTicket() {
+        function imprimirTicket() {
             var contenido = document.getElementById('<%= TicketDiv.ClientID %>').innerHTML;
-               var ventanaImpresion = window.open('', '_blank');
-               ventanaImpresion.document.write(contenido);
-               ventanaImpresion.document.close();
-               ventanaImpresion.print();
-               ventanaImpresion.onfocus = function () {setTimeout(function () { ventanaImpresion.close(); }, 500); }
+            var ventanaImpresion = window.open('', '_blank');
+
+            var estilos = `<style>
+                pre {
+                    font-family: monospace;
+                    white-space: pre;
+                    margin: 1em 0;
+                }
+            </style>`;
+
+            ventanaImpresion.document.write(estilos + '<pre>' + contenido + '</pre>');
+            ventanaImpresion.document.close();
+            ventanaImpresion.print();
+            ventanaImpresion.onfocus = function () { setTimeout(function () { ventanaImpresion.close(); }, 500); }
         }
+
 
         //let anexosPrueba = [
         //    "Anexo 1 - Cantidad: 3",
