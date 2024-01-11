@@ -360,16 +360,16 @@
     </div>
         </div>
 
+    <div id="TicketDiv" runat="server"></div>
 
     </ContentTemplate>
     </asp:UpdatePanel>
-<button onclick="generarSELLO()">Generar Ticket PDF</button>
 
+    <asp:Button ID="btnImprimir" runat="server" Text="Imprimir Ticket" OnClick="btnImprimir_Click" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
-
+   
 
 
     <script>
@@ -399,71 +399,81 @@
         }
 
     // Función para generar sello
-        function dividirTexto(texto, maxCaracteres) {
-            const lineas = [];
-            while (texto.length > 0) {
-                if (texto.length <= maxCaracteres) {
-                    lineas.push(texto);
-                    break;
-                }
-                let corte = texto.substring(0, maxCaracteres);
-                let espacio = corte.lastIndexOf(' ');
-                let corteFinal = espacio > -1 ? espacio : maxCaracteres;
-                lineas.push(texto.substring(0, corteFinal).trim());
-                texto = texto.substring(corteFinal).trim();
-            }
-            return lineas;
+        //function dividirTexto(texto, maxCaracteres) {
+        //    const lineas = [];
+        //    while (texto.length > 0) {
+        //        if (texto.length <= maxCaracteres) {
+        //            lineas.push(texto);
+        //            break;
+        //        }
+        //        let corte = texto.substring(0, maxCaracteres);
+        //        let espacio = corte.lastIndexOf(' ');
+        //        let corteFinal = espacio > -1 ? espacio : maxCaracteres;
+        //        lineas.push(texto.substring(0, corteFinal).trim());
+        //        texto = texto.substring(corteFinal).trim();
+        //    }
+        //    return lineas;
+        //}
+        //function generarSELLO(nombreJuzgado, noEjecucion, fechaEjecucion, folio, anexos, totalAnexos) {
+        //    const { jsPDF } = window.jspdf;
+        //    const doc = new jsPDF();
+
+        //    doc.setFontSize(9);
+        //    doc.setFont("helvetica", "bold");
+        //    doc.text("TRIBUNAL SUPERIOR DE JUSTICIA ", 10, 5);
+        //    doc.text("INICIAL", 27, 25);
+        //    // Dividir el nombre del juzgado en líneas
+        //    let lineasNombreJuzgado = dividirTexto(nombreJuzgado, 30);
+        //    let y = 35;
+        //    lineasNombreJuzgado.forEach(linea => {
+        //        doc.text(linea, 10, y);
+        //        y += 5;
+        //    });
+        //    // Incremento adicional para separar secciones
+        //    y += 1;
+        //    // A partir de aquí, todos los elementos subsiguientes usan 'y' como referencia
+        //    doc.text("DEL ESTADO DE HIDALGO", 16, 10);
+        //    doc.setFont("helvetica", "normal");
+        //    doc.text("ATENCION CIUDADANA", 16, 15);
+        //    doc.text("SENTENCIA EJECUTORIADA", 13, 20);
+        //    doc.text("--------------------------------------", 15,30);
+        //    doc.text("--------------------------------------", 15, y);
+        //    y += 5;
+        //    doc.text(`Número de Ejecución: ${noEjecucion}`, 10, y);
+        //    y += 5;
+        //    doc.text(`Folio: ${folio}`, 10, y);
+        //    y += 5;
+        //    doc.text(`Fecha: ${fechaEjecucion}`, 10, y);
+        //    y += 5;
+        //    doc.setFont("helvetica", "bold");
+        //    doc.text("ANEXOS:", 10, y);
+        //    y += 5;
+        //    doc.setFont("helvetica", "normal");
+        //    anexos.forEach(anexo => {
+        //        doc.text(anexo, 10, y);
+        //        y += 5;
+        //    });
+        //    doc.text(`Total: ${totalAnexos}`, 10, y);
+        //    y += 5;
+
+        //    const blob = doc.output('blob');
+        //    const url = URL.createObjectURL(blob);
+        //    const pdfWindow = window.open(url);
+        //    setTimeout(() => {
+        //        pdfWindow.print();
+        //    }, 500);
+        //}
+        //TICKET// ... resto del código ...
+        //}
+
+            function imprimirTicket() {
+            var contenido = document.getElementById('<%= TicketDiv.ClientID %>').innerHTML;
+               var ventanaImpresion = window.open('', '_blank');
+               ventanaImpresion.document.write(contenido);
+               ventanaImpresion.document.close();
+               ventanaImpresion.print();
+               ventanaImpresion.onfocus = function () {setTimeout(function () { ventanaImpresion.close(); }, 500); }
         }
-        function generarSELLO(nombreJuzgado, noEjecucion, fechaEjecucion, folio, anexos, totalAnexos) {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-
-            doc.setFontSize(9);
-            doc.setFont("helvetica", "bold");
-            doc.text("TRIBUNAL SUPERIOR DE JUSTICIA ", 10, 5);
-            doc.text("INICIAL", 27, 25);
-            // Dividir el nombre del juzgado en líneas
-            let lineasNombreJuzgado = dividirTexto(nombreJuzgado, 30);
-            let y = 35;
-            lineasNombreJuzgado.forEach(linea => {
-                doc.text(linea, 10, y);
-                y += 5;
-            });
-            // Incremento adicional para separar secciones
-            y += 1;
-            // A partir de aquí, todos los elementos subsiguientes usan 'y' como referencia
-            doc.text("DEL ESTADO DE HIDALGO", 16, 10);
-            doc.setFont("helvetica", "normal");
-            doc.text("ATENCION CIUDADANA", 16, 15);
-            doc.text("SENTENCIA EJECUTORIADA", 13, 20);
-            doc.text("--------------------------------------", 15,30);
-            doc.text("--------------------------------------", 15, y);
-            y += 5;
-            doc.text(`Número de Ejecución: ${noEjecucion}`, 10, y);
-            y += 5;
-            doc.text(`Folio: ${folio}`, 10, y);
-            y += 5;
-            doc.text(`Fecha: ${fechaEjecucion}`, 10, y);
-            y += 5;
-            doc.setFont("helvetica", "bold");
-            doc.text("COPIA CERTIFICADA DE AUTO DE:", 10, y);
-            y += 5;
-            doc.setFont("helvetica", "normal");
-            anexos.forEach(anexo => {
-                doc.text(anexo, 10, y);
-                y += 5;
-            });
-            doc.text(`Total: ${totalAnexos}`, 10, y);
-            y += 5;
-
-            const blob = doc.output('blob');
-            const url = URL.createObjectURL(blob);
-            const pdfWindow = window.open(url);
-            setTimeout(() => {
-                pdfWindow.print();
-            }, 500);
-        }
-
 
         //let anexosPrueba = [
         //    "Anexo 1 - Cantidad: 3",

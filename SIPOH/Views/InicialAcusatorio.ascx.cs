@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data;
+using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SIPOH.Views
 {
@@ -31,7 +33,8 @@ namespace SIPOH.Views
                 RegistroPartesIn.Style["display"] = "none";
                 OtroAnexo.Disabled = true;
                 InputOtraSolicitud.Disabled = true;
-
+                //ticket
+               
             }
         }
         private void CargarSalas()
@@ -512,6 +515,7 @@ namespace SIPOH.Views
 
                 try
                 {
+                    GlobalAnexosDetalles.Clear();
                     int circuito = Convert.ToInt32(HttpContext.Current.Session["IdCircuito"]);
                     var (idJuzgadoFolio, folio) = StorageFolio.EjecutarEjecucionAsignarFolioXJuzgado(transaction, circuito);
                     string nombreJuzgado = ObtenerNombreJuzgadoPorID(idJuzgadoFolio.ToString());
@@ -571,11 +575,10 @@ namespace SIPOH.Views
                     })
                     .Sum();
 
-
-
                     ActualizarFolios(conn, transaction, idJuzgadoFolio);
 
                     transaction.Commit();
+
                     ScriptManager.RegisterStartupScript(
                         this.UpdateAcusatorio,
                         this.UpdateAcusatorio.GetType(),
@@ -587,12 +590,13 @@ namespace SIPOH.Views
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", scriptToast, true);
 
                     // Recargar la página después de un tiempo determinado (por ejemplo, 5 segundos)
-                    string scriptRecarga = "setTimeout(function(){ window.location.href = window.location.href; }, 5000);";
-                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "recargaPaginaScript", scriptRecarga, true);
-                    //SEGUN YO AQUI VA EL TICKET DE EXITO YA NO RECUERDO QUE HICE JAJAJA
+                    //string scriptRecarga = "setTimeout(function(){ window.location.href = window.location.href; }, 5000);";
+                    //ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "recargaPaginaScript", scriptRecarga, true);
+                    LimpiarViewState();
                     string datosAnexos = String.Join(", ", GlobalAnexosDetalles.Select(a => $"\"{a}\""));
-                    string script = $"generarSELLO('{nombreJuzgado}', '{GlobalNoEjecucion}', '{GlobalFechaEjecucion}', '{GlobalesId.IdEjecucion}', [{datosAnexos}], {totalAnexos});";
-                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "llamarGenerarPDF", script, true);
+                    string ticket = CrearTicketSELLO();
+                    TicketDiv.InnerHtml = Server.HtmlEncode(ticket).Replace(Environment.NewLine, "<br style='margin-bottom: -5px !important;'>");
+                    ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
 
 
                 }
@@ -880,6 +884,13 @@ namespace SIPOH.Views
             GlobalAnexosDetalles.Add(detalle);
         }
 
+        private void LimpiarViewState()
+        {
+            ViewState.Remove("anexos");
+            ViewState.Remove("salas");
+            ViewState.Remove("sentencias");
+        }
+
         private void ActualizarVisibilidadTitulo()
         {
             bool haySalas = tablaSalas.Rows.Count > 0;
@@ -964,6 +975,72 @@ namespace SIPOH.Views
         {
             RecolectarDatosParaModal();
             ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "abrirModal", "abrirModalGuardarDatos();", true);
+        }
+
+        private List<string> DividirTextoEnLineas(string texto, int maxCaracteresPorLinea)
+        {
+            List<string> lineas = new List<string>();
+            string[] palabras = texto.Split(' ');
+            string lineaActual = "";
+
+            foreach (string palabra in palabras)
+            {
+                if ((lineaActual.Length > 0) && (lineaActual.Length + palabra.Length + 1 > maxCaracteresPorLinea))
+                {
+                    lineas.Add(lineaActual);
+                    lineaActual = "";
+                }
+
+                if (lineaActual.Length > 0)
+                    lineaActual += " ";
+
+                lineaActual += palabra;
+            }
+
+            if (lineaActual.Length > 0)
+                lineas.Add(lineaActual);
+
+            return lineas;
+        }
+
+        public string CrearTicketSELLO()
+        {
+            StringBuilder ticket = new StringBuilder();
+            string nombreJuzgado = ObtenerNombreJuzgadoPorID(GlobalIdJuzgado);
+            List<string> lineasNombreJuzgado = DividirTextoEnLineas(nombreJuzgado, 30);
+            List<Anexo> anexos = GlobalAnexosDetalles.Select(a => new Anexo
+            {
+                Descripcion = a.Split('-')[0].Trim(),
+                Cantidad = int.Parse(a.Split('-')[1].Trim())
+            }).ToList();
+            int totalAnexos = anexos.Sum(a => a.Cantidad);
+
+            ticket.AppendLine("TRIBUNAL SUPERIOR DE JUSTICIA");
+            ticket.AppendLine("DEL ESTADO DE HIDALGO");
+            ticket.AppendLine("ATENCION CIUDADANA");
+            ticket.AppendLine("SENTENCIA EJECUTORIADA");
+            ticket.AppendLine("INICIAL");
+            ticket.AppendLine("-----------------------------------");
+            foreach (string linea in lineasNombreJuzgado)
+            {
+                ticket.AppendLine(linea);
+            }
+            ticket.AppendLine("-----------------------------------");
+            ticket.AppendLine($"Número de Ejecución: {GlobalNoEjecucion}");
+            ticket.AppendLine($"Folio: {GlobalesId.IdEjecucion}");
+            ticket.AppendLine($"Fecha: {GlobalFechaEjecucion}");
+            foreach (var anexo in anexos)
+            {
+                ticket.AppendLine($"{anexo.Descripcion}: {anexo.Cantidad}");
+            }
+            ticket.AppendLine($"Total: {totalAnexos}");
+
+            return ticket.ToString();
+        }
+        
+        protected void btnImprimir_Click(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
         }
         //FIN de funcion que guarda los datos para luego mostrar en el modal
         //INICIO PDF
