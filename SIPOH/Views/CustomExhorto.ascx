@@ -1,6 +1,30 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CustomExhorto.ascx.cs" Inherits="SIPOH.Views.CustomExhorto" %>
 
+<style type="text/css">
+    .mayusculas {
+        text-transform: uppercase;
+    }
+</style>
 
+    <!-- Include Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <!-- Include jQuery (Toastr depends on it) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Include Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!-- Toastr initialization -->
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "timeOut": "5000", // Time in milliseconds
+            // You can customize other options as needed
+        };
+    </script>
 
 <div class="container col-12">
     <div style="text-align: center; padding: 3%">
@@ -12,6 +36,13 @@
 </div>
 
 
+<%--<div>
+        ID: <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+        Nombre: <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+        Apellido: <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
+        Email: <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
+        <asp:Button ID="Button9" runat="server" Text="Insertar" OnClick="Button1_Click" />
+    </div>--%>
 
 
 <asp:UpdatePanel ID="updPanel" runat="server" EnableViewState="true" >
@@ -20,11 +51,11 @@
         <div class="row ">
             <div class="col-md-3 col-sm-3 col-xs-3">
                 <h6 class="help-block text-muted small-font">Accion a elegir: </h6>
-                <asp:DropDownList ID="DropDownList1" CssClass="form-select" runat="server" AutoPostBack="True" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged">
-                    <asp:ListItem>Selecciona una opción</asp:ListItem>
-                    <asp:ListItem>Exhorto</asp:ListItem>
-                    <asp:ListItem>Despacho</asp:ListItem>
-                    <asp:ListItem>Requesitoria</asp:ListItem>
+                <asp:DropDownList ID="OpExhorto" CssClass="form-select" runat="server" AutoPostBack="True" OnSelectedIndexChanged="OpExhorto_SelectedIndexChanged">
+                    <asp:ListItem Value="SO">Selecciona una opción</asp:ListItem>
+                    <asp:ListItem Value="E">Exhorto</asp:ListItem>
+                    <asp:ListItem Value="D">Despacho</asp:ListItem>
+                    <asp:ListItem Value="R">Requesitoria</asp:ListItem>
                 </asp:DropDownList> 
             </div>
         </div>
@@ -71,7 +102,9 @@
                     <div class="row ">
                         <div class="col-md-12 col-sm-12 col-xs-12">
                             <h6 class="help-block text-muted small-font">Delitos: </h6>
-                            <asp:DropDownList ID="ddlDelitos1" CssClass="form-select" runat="server"></asp:DropDownList>
+                            <asp:DropDownList ID="ddlDelitos1" CssClass="form-select" runat="server">
+                            <asp:ListItem runat="server" Text="Seleccione un delito:"></asp:ListItem>
+                            </asp:DropDownList>
                         </div>
                     </div>
                 </div>
@@ -86,15 +119,10 @@
                         <asp:Button ID="modalParte" runat="server" CssClass="btn btn-success" Text="Agregar Parte" OnClick="btnAbrirModal" />
                     </div>
                     <div class="col-md-6 mx-auto" style="max-width: 600px;">
-                        <asp:GridView ID="gvPartes" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvPartes_RowCommand">
+                        <asp:GridView ID="gvPartes" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvPartes_RowCommand" OnRowDataBound="gvPartes_RowDataBound" ClientIDMode="Static">
                             <Columns>
-                                <asp:TemplateField HeaderText="" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-Width="80%">
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="chkSeleccionar" runat="server" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
                                 <asp:BoundField DataField="Nombre" HeaderText="Nombre">
-                                    <HeaderStyle CssClass="bg-success text-white" />
+                                    <HeaderStyle CssClass="bg-success text-white"/>
                                 </asp:BoundField>
                                 <asp:BoundField DataField="Genero" HeaderText="Genero">
                                     <HeaderStyle CssClass="bg-success text-white" />
@@ -113,21 +141,27 @@
                 </div>
 
 
-
                 <div class="col-md-6 col-sm-6 col-xs-6">
                     <div class="nav-item d-flex justify-content-end p-3">
                         <asp:Button ID="btnAgregarDelito" runat="server" CssClass="btn btn-success" Text="Agregar Delito" OnClick="btnAgregarDelito_Click" />
                     </div>
-                    <asp:GridView ID="gvDelitos" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvDelitos_RowCommand">
+                    <asp:GridView ID="gvDelitos" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvDelitos_RowCommand" ClientIDMode="Static">
                         <Columns>
-                            <asp:TemplateField HeaderStyle-CssClass="bg-success text-white">
+                            <asp:TemplateField HeaderText="Id Delito" SortExpression="NombreDelito">
                                 <ItemTemplate>
-                                    <asp:CheckBox ID="chkSeleccionar" runat="server" />
+                                    <asp:Label ID="lblIdDelito" runat="server" Text='<%# Bind("IdDelito") %>'></asp:Label>
                                 </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:BoundField DataField="NombreDelito" HeaderText="Nombre del Delito">
                                 <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:BoundField>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Nombre del Delito" SortExpression="NombreDelito">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblNombreDelito" runat="server" Text='<%# Bind("NombreDelito") %>'></asp:Label>
+                                </ItemTemplate>
+                                <HeaderStyle CssClass="bg-success text-white" />
+                            </asp:TemplateField>
+
+
                             <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
                                 <ItemTemplate>
                                     <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarDelito" CommandArgument='<%# Container.DisplayIndex %>' />
@@ -140,25 +174,89 @@
             </div>
 
 
+
+
+
             <br />
             <br />
 
 
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6">
-
                     <div class="form-group">
                         <h6 class="help-block text-muted small-font">Prioridad: </h6>
-                        <asp:RadioButtonList ID="radioOptions" runat="server">
-                            <asp:ListItem Text="Alta" Value="Alta" />
-                            <asp:ListItem Text="Normal" Value="Normal" />
+                        <asp:RadioButtonList ID="prioridad" runat="server">
+                            <asp:ListItem Text=" Alta" Value="A" />
+                            <asp:ListItem Text=" Normal" Value="N" />
                         </asp:RadioButtonList>
                     </div>
                 </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h6 class="help-block text-muted small-font">Diligencia Solicitada: </h6>
+                    <asp:TextBox runat="server" CssClass="form-control" placeholder="Ingrese Diligencia" ID="Diligencia1"></asp:TextBox>
+                </div>
+
             </div>
 
             <br />
             <br />
+
+            <div class="row ">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h6 class="help-block text-muted small-font">Anexos: </h6>
+                    <div class="form-outline">
+                        <asp:DropDownList ID="ddlAnexos" CssClass="form-select" runat="server">
+                            <asp:ListItem runat="server" Text="Seleccione el anexo a agregar:"></asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h6 class="help-block text-muted small-font">Cantidad de Anexos: </h6>
+                    <div class="form-outline">
+                        <asp:TextBox runat="server" ID="noAnexos" CssClass="form-control" Text="0" Type="Number"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="nav-item d-flex justify-content-end p-3">
+                        <div style="display: flex; justify-content: center;">
+                            <asp:Button ID="addAnexo" runat="server" CssClass="btn btn-success" Text="Agregar Anexos" OnClick="btnAgregarAnexo_Click" />
+                        </div>
+                    </div>
+                    <asp:GridView ID="gvAnexos" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvAnexos_RowCommand" ClientIDMode="Static">
+                        <Columns>
+                            <asp:TemplateField HeaderText="Anexo" SortExpression="NombreDelito">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblAnexo" runat="server" Text='<%# Bind("descripcion") %>' CssClass="mayusculas"></asp:Label>
+                                </ItemTemplate>
+                                <HeaderStyle CssClass="bg-success text-white" />
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Cantidad" SortExpression="NombreDelito">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblCantAnexos" runat="server" Text='<%# Bind("Cantidad") %>'></asp:Label>
+                                </ItemTemplate>
+                                <HeaderStyle CssClass="bg-success text-white" />
+                            </asp:TemplateField>
+
+
+                            <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
+                                <ItemTemplate>
+                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarAnexo" CommandArgument='<%# Container.DisplayIndex %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+
+                </div>
+            </div>
+    </div>
+</div>
+
+                        <br />
+                        <br />
 
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -170,8 +268,18 @@
             <br />
             <br />
 
+
+
+                 
+
+                </div>
+
+            <br />
+            <br />
+
             <center>
-            <asp:Button ID="ObDatos" runat="server" CssClass="btn btn-success" Text="Registrar" OnClick="ObtenerDatosYMostrarModal" OnClientClick="return ValidarCampos();" />
+            <asp:Button ID="ObDatos" runat="server" CssClass="btn btn-success" Text="Registrar" OnClick="ObtenerDatosYMostrarModal"  />
+                <asp:Button ID="LimpiarFormulario" runat="server" Text="Guardar cambios" CssClass="btn btn-success" OnClick="formLimpio"  />
             </center>
 
 
@@ -180,7 +288,7 @@
                         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                         <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
                     </svg>
-                    Registrar</button>--%>
+                    Registrar</button>
 
 <%--                <button type="button" class="btn btn-success" onclick="ObtenerDatosYMostrarModal()">
                     <svg style="fill: #ffffff" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
@@ -189,7 +297,6 @@
                     </svg>
                     Registrar
                 </button>--%>
-
 
 
             </center>
@@ -211,9 +318,9 @@
                              <h6 class="help-block text-muted small-font">Parte: </h6>
                              <asp:DropDownList ID="parte" runat="server" CssClass="form-select" onchange="habilitarTextBoxSelecParte()">
                                  <asp:ListItem Value="Seleccionar" Selected="True">Seleccione...</asp:ListItem>
-                                 <asp:ListItem Value="Victima">Victima</asp:ListItem>
-                                 <asp:ListItem Value="Imputado">Imputado</asp:ListItem>
-                                 <asp:ListItem Value="Otro">Otro</asp:ListItem>
+                                 <asp:ListItem Value="V">Victima</asp:ListItem>
+                                 <asp:ListItem Value="I">Imputado</asp:ListItem>
+                                 <asp:ListItem Value="O">Otro</asp:ListItem>
                              </asp:DropDownList>
                          </div>
                          <div class="col-md-6 col-sm-6 col-xs-6">
@@ -248,8 +355,8 @@
                              <h6 class="help-block text-muted small-font">Sexo: </h6>
                              <asp:DropDownList ID="sexo" runat="server" CssClass="form-select" onchange="habilitarTextBoxSelecSexo()">
                                  <asp:ListItem Value="Seleccionar" Selected="True">Seleccione...</asp:ListItem>
-                                 <asp:ListItem Value="Masculino">Masculino</asp:ListItem>
-                                 <asp:ListItem Value="Femenino">Femenino</asp:ListItem>
+                                 <asp:ListItem Value="M">Masculino</asp:ListItem>
+                                 <asp:ListItem Value="F">Femenino</asp:ListItem>
                                  <asp:ListItem Value="Otro">Otro</asp:ListItem>
                              </asp:DropDownList>
                          </div>
@@ -283,18 +390,26 @@
                  </button>
              </div>
              <div class="modal-body">
-                 Documento a enviar:
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                 <button type="button" class="btn btn-success">Guardar cambios</button>
+                 <asp:Button ID="btnGuardarCambios" runat="server" Text="Guardar cambios" CssClass="btn btn-success" OnClick="btnGuardarDatosJudiciales_Click"  />
+                 
              </div>
          </div>
      </div>
  </div>
 
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <!-- Etiqueta pre -->
+                    <pre id="TicketDiv" runat="server"></pre>
+                </div>
+            </div>
 
         </asp:Panel>
+
+
 
         <asp:Panel ID="Panel2" runat="server" Visible="False">
             <!-- Contenido del formulario para Despacho -->
@@ -319,7 +434,7 @@
                 <div class="col-md-3 col-sm-3 col-xs-3">
                     <h6 class="help-block text-muted small-font">Número de Envio: </h6>
                     <div class="form-outline">
-                        <asp:TextBox runat="server" CssClass="form-control" placeholder="Numero de Envio" ID="numdocenv"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="fojas2" CssClass="form-control" Text="0" Type="Number"></asp:TextBox>
                     </div>
                 </div>
             </div>
@@ -350,13 +465,8 @@
                         <asp:Button ID="Button1" runat="server" CssClass="btn btn-success" Text="Agregar Parte" OnClick="btnAbrirModal2" />
                     </div>
                     <div class="col-md-6 mx-auto" style="max-width: 600px;">
-                        <asp:GridView ID="gvPartes2" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvPartes_RowCommand2">
+                        <asp:GridView ID="gvPartes2" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvPartes_RowCommand2" OnRowDataBound="GridView1_RowDataBound2">
                             <Columns>
-                                <asp:TemplateField HeaderText="" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-Width="80%">
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="chkSeleccionar" runat="server" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
                                 <asp:BoundField DataField="Nombre" HeaderText="Nombre">
                                     <HeaderStyle CssClass="bg-success text-white" />
                                 </asp:BoundField>
@@ -384,17 +494,23 @@
                     </div>
                     <asp:GridView ID="gvDelitos2" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvDelitos_RowCommand2">
                         <Columns>
-                            <asp:TemplateField HeaderStyle-CssClass="bg-success text-white">
+                            <asp:TemplateField HeaderText="Id Delito" SortExpression="NombreDelito">
                                 <ItemTemplate>
-                                    <asp:CheckBox ID="chkSeleccionar" runat="server" />
+                                    <asp:Label ID="lblIdDelito2" runat="server" Text='<%# Bind("IdDelito2") %>'></asp:Label>
                                 </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:BoundField DataField="NombreDelito2" HeaderText="Nombre del Delito">
                                 <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:BoundField>
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Nombre del Delito" SortExpression="NombreDelito">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblNombreDelito2" runat="server" Text='<%# Bind("NombreDelito2") %>'></asp:Label>
+                                </ItemTemplate>
+                                <HeaderStyle CssClass="bg-success text-white" />
+                            </asp:TemplateField>
+
                             <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
                                 <ItemTemplate>
-                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarDelito" CommandArgument='<%# Container.DisplayIndex %>' />
+                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarDelito2" CommandArgument='<%# Container.DisplayIndex %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -410,19 +526,74 @@
 
             <div class="row">
                 <div class="col-md-6 col-sm-6 col-xs-6">
-
                     <div class="form-group">
                         <h6 class="help-block text-muted small-font">Prioridad: </h6>
-                        <asp:RadioButtonList ID="RadioButtonList1" runat="server">
-                            <asp:ListItem Text="Alta" Value="Alta" />
-                            <asp:ListItem Text="Normal" Value="Normal" />
+                        <asp:RadioButtonList ID="prioridad2" runat="server">
+                            <asp:ListItem Text="Alta" Value="A" />
+                            <asp:ListItem Text="Normal" Value="N" />
                         </asp:RadioButtonList>
                     </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h6 class="help-block text-muted small-font">Diligencia Solicitada: </h6>
+                    <asp:TextBox runat="server" CssClass="form-control" placeholder="Ingrese Diligencia" ID="Diligencia2"></asp:TextBox>
                 </div>
             </div>
 
             <br />
             <br />
+
+                        <div class="row ">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h6 class="help-block text-muted small-font">Anexos: </h6>
+                    <div class="form-outline">
+                        <asp:DropDownList ID="ddlAnexos2" CssClass="form-select" runat="server">
+                            <asp:ListItem runat="server" Text="Seleccione el anexo a agregar:"></asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h6 class="help-block text-muted small-font">Cantidad de Anexos: </h6>
+                    <div class="form-outline">
+                        <asp:TextBox runat="server" ID="noAnexos2" CssClass="form-control" Text="0" Type="Number"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="nav-item d-flex justify-content-end p-3">
+                        <div style="display: flex; justify-content: center;">
+                            <asp:Button ID="addAnexos2" runat="server" CssClass="btn btn-success" Text="Agregar Anexos" OnClick="btnAgregarAnexo_Click2" />
+                        </div>
+                    </div>
+                    <asp:GridView ID="gvAnexos2" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvAnexos_RowCommand2" ClientIDMode="Static">
+                        <Columns>
+                            <asp:TemplateField HeaderText="Anexo" SortExpression="NombreDelito">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblAnexo2" runat="server" Text='<%# Bind("descripcion2") %>' CssClass="mayusculas"></asp:Label>
+                                </ItemTemplate>
+                                <HeaderStyle CssClass="bg-success text-white" />
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Cantidad" SortExpression="NombreDelito">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblCantAnexos2" runat="server" Text='<%# Bind("Cantidad2") %>'></asp:Label>
+                                </ItemTemplate>
+                                <HeaderStyle CssClass="bg-success text-white" />
+                            </asp:TemplateField>
+
+
+                            <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
+                                <ItemTemplate>
+                                    <asp:Button ID="btnEliminar2" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarAnexo2" CommandArgument='<%# Container.DisplayIndex %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -475,9 +646,9 @@
                              <h6 class="help-block text-muted small-font">Parte: </h6>
                              <asp:DropDownList ID="parte2" runat="server" CssClass="form-select" onchange="habilitarTextBoxSelecParte2()">
                                  <asp:ListItem Value="Seleccionar" Selected="True">Seleccione...</asp:ListItem>
-                                 <asp:ListItem Value="Victima">Victima</asp:ListItem>
-                                 <asp:ListItem Value="Imputado">Imputado</asp:ListItem>
-                                 <asp:ListItem Value="Otro">Otro</asp:ListItem>
+                                 <asp:ListItem Value="V">Victima</asp:ListItem>
+                                 <asp:ListItem Value="I">Imputado</asp:ListItem>
+                                 <asp:ListItem Value="O">Otro</asp:ListItem>
                              </asp:DropDownList>
                          </div>
                          <div class="col-md-6 col-sm-6 col-xs-6">
@@ -512,9 +683,9 @@
                              <h6 class="help-block text-muted small-font">Sexo: </h6>
                              <asp:DropDownList ID="sexo2" runat="server" CssClass="form-select" onchange="habilitarTextBoxSelecSexo2()">
                                  <asp:ListItem Value="Seleccionar" Selected="True">Seleccione...</asp:ListItem>
-                                 <asp:ListItem Value="Masculino">Masculino</asp:ListItem>
-                                 <asp:ListItem Value="Femenino">Femenino</asp:ListItem>
-                                 <asp:ListItem Value="Otro">Otro</asp:ListItem>
+                                 <asp:ListItem Value="M">Masculino</asp:ListItem>
+                                 <asp:ListItem Value="F">Femenino</asp:ListItem>
+                                 <asp:ListItem Value="O">Otro</asp:ListItem>
                              </asp:DropDownList>
                          </div>
                          <div class="col-md-6 col-sm-6 col-xs-6">
@@ -547,18 +718,17 @@
                  </button>
              </div>
              <div class="modal-body">
-                 Documento a enviar:
              </div>
              <div class="modal-footer">
-                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                 <button type="button" class="btn btn-success">Guardar cambios</button>
+                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                 <asp:Button ID="Button9" runat="server" Text="Guardar cambios" CssClass="btn btn-success" OnClick="btnGuardarDatosJudiciales_Click2"  />
              </div>
          </div>
      </div>
  </div>
-
-
         </asp:Panel>
+        
+        
         <asp:Panel ID="Panel3" runat="server" Visible="False">
             <!-- Contenido del formulario para Requesitoria -->
                         <h3 style="text-align: center" id="lblRequisitoria">Registro de Requisitoria</h3>
@@ -580,9 +750,9 @@
                     <asp:TextBox ID="fecha3" runat="server" CssClass="form-control" placeholder="Fecha" TextMode="Date"></asp:TextBox>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Numero de envio: </h6>
+                    <h6 class="help-block text-muted small-font">Número de Fojas: </h6>
                     <div class="form-outline">
-                        <asp:TextBox runat="server" CssClass="form-control" placeholder="Numero de Envio" ID="numdocenv1"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="fojas3" CssClass="form-control" Text="0" Type="Number"></asp:TextBox>
                     </div>
                 </div>
             </div>
@@ -613,13 +783,8 @@
                         <asp:Button ID="Button5" runat="server" CssClass="btn btn-success" Text="Agregar Parte" OnClick="btnAbrirModal3" />
                     </div>
                     <div class="col-md-6 mx-auto" style="max-width: 600px;">
-                        <asp:GridView ID="gvPartes3" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvPartes_RowCommand3">
+                        <asp:GridView ID="gvPartes3" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvPartes_RowCommand3" OnRowDataBound="GridView1_RowDataBound3">
                             <Columns>
-                                <asp:TemplateField HeaderText="" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-Width="80%">
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="chkSeleccionar" runat="server" />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
                                 <asp:BoundField DataField="Nombre" HeaderText="Nombre">
                                     <HeaderStyle CssClass="bg-success text-white" />
                                 </asp:BoundField>
@@ -647,17 +812,21 @@
                     </div>
                     <asp:GridView ID="gvDelitos3" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvDelitos_RowCommand3">
                         <Columns>
-                            <asp:TemplateField HeaderStyle-CssClass="bg-success text-white">
+                            <asp:TemplateField HeaderText="Id Delito" SortExpression="NombreDelito">
                                 <ItemTemplate>
-                                    <asp:CheckBox ID="chkSeleccionar" runat="server" />
+                                    <asp:Label ID="lblIdDelito3" runat="server" Text='<%# Bind("IdDelito3") %>'></asp:Label>
                                 </ItemTemplate>
-                            </asp:TemplateField>
-                            <asp:BoundField DataField="NombreDelito3" HeaderText="Nombre del Delito">
                                 <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:BoundField>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Nombre del Delito" SortExpression="NombreDelito">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblNombreDelito3" runat="server" Text='<%# Bind("NombreDelito3") %>'></asp:Label>
+                                </ItemTemplate>
+                                <HeaderStyle CssClass="bg-success text-white" />
+                            </asp:TemplateField>
                             <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
                                 <ItemTemplate>
-                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarDelito" CommandArgument='<%# Container.DisplayIndex %>' />
+                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarDelito3" CommandArgument='<%# Container.DisplayIndex %>' />
                                 </ItemTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -676,16 +845,72 @@
 
                     <div class="form-group">
                         <h6 class="help-block text-muted small-font">Prioridad: </h6>
-                        <asp:RadioButtonList ID="RadioButtonList2" runat="server">
-                            <asp:ListItem Text="Alta" Value="Alta" />
-                            <asp:ListItem Text="Normal" Value="Normal" />
+                        <asp:RadioButtonList ID="prioridad3" runat="server">
+                            <asp:ListItem Text="Alta" Value="A" />
+                            <asp:ListItem Text="Normal" Value="N" />
                         </asp:RadioButtonList>
                     </div>
                 </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h6 class="help-block text-muted small-font">Diligencia Solicitada: </h6>
+                    <asp:TextBox runat="server" CssClass="form-control" placeholder="Ingrese Diligencia" ID="Diligencia3"></asp:TextBox>
+                </div>
+
             </div>
 
             <br />
             <br />
+
+            <div class="row ">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h6 class="help-block text-muted small-font">Anexos: </h6>
+                    <div class="form-outline">
+                        <asp:DropDownList ID="ddlAnexos3" CssClass="form-select" runat="server">
+                            <asp:ListItem runat="server" Text="Seleccione el anexo a agregar:"></asp:ListItem>
+                        </asp:DropDownList>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <h6 class="help-block text-muted small-font">Cantidad de Anexos: </h6>
+                    <div class="form-outline">
+                        <asp:TextBox runat="server" ID="noAnexos3" CssClass="form-control" Text="0" Type="Number"></asp:TextBox>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="nav-item d-flex justify-content-end p-3">
+                        <div style="display: flex; justify-content: center;">
+                            <asp:Button ID="addAnexos3" runat="server" CssClass="btn btn-success" Text="Agregar Anexos" OnClick="btnAgregarAnexo_Click3" />
+                        </div>
+                    </div>
+                    <asp:GridView ID="gvAnexos3" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvAnexos_RowCommand3" ClientIDMode="Static">
+                        <Columns>
+                            <asp:TemplateField HeaderText="Anexo" SortExpression="NombreDelito">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblAnexo3" runat="server" Text='<%# Bind("descripcion3") %>' CssClass="mayusculas"></asp:Label>
+                                </ItemTemplate>
+                                <HeaderStyle CssClass="bg-success text-white" />
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Cantidad" SortExpression="NombreDelito">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblCantAnexos2" runat="server" Text='<%# Bind("Cantidad3") %>'></asp:Label>
+                                </ItemTemplate>
+                                <HeaderStyle CssClass="bg-success text-white" />
+                            </asp:TemplateField>
+
+                            <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
+                                <ItemTemplate>
+                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarAnexo3" CommandArgument='<%# Container.DisplayIndex %>' />
+                                </ItemTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -738,9 +963,9 @@
                              <h6 class="help-block text-muted small-font">Parte: </h6>
                              <asp:DropDownList ID="parte3" runat="server" CssClass="form-select" onchange="habilitarTextBoxSelecParte3()">
                                  <asp:ListItem Value="Seleccionar" Selected="True">Seleccione...</asp:ListItem>
-                                 <asp:ListItem Value="Victima">Victima</asp:ListItem>
-                                 <asp:ListItem Value="Imputado">Imputado</asp:ListItem>
-                                 <asp:ListItem Value="Otro">Otro</asp:ListItem>
+                                 <asp:ListItem Value="V">Victima</asp:ListItem>
+                                 <asp:ListItem Value="I">Imputado</asp:ListItem>
+                                 <asp:ListItem Value="O">Otro</asp:ListItem>
                              </asp:DropDownList>
                          </div>
                          <div class="col-md-6 col-sm-6 col-xs-6">
@@ -775,9 +1000,9 @@
                              <h6 class="help-block text-muted small-font">Sexo: </h6>
                              <asp:DropDownList ID="sexo3" runat="server" CssClass="form-select" onchange="habilitarTextBoxSelecSexo3()">
                                  <asp:ListItem Value="Seleccionar" Selected="True">Seleccione...</asp:ListItem>
-                                 <asp:ListItem Value="Masculino">Masculino</asp:ListItem>
-                                 <asp:ListItem Value="Femenino">Femenino</asp:ListItem>
-                                 <asp:ListItem Value="Otro">Otro</asp:ListItem>
+                                 <asp:ListItem Value="M">Masculino</asp:ListItem>
+                                 <asp:ListItem Value="F">Femenino</asp:ListItem>
+                                 <asp:ListItem Value="O">Otro</asp:ListItem>
                              </asp:DropDownList>
                          </div>
                          <div class="col-md-6 col-sm-6 col-xs-6">
@@ -810,18 +1035,34 @@
                  </button>
              </div>
              <div class="modal-body">
-                 Documento a enviar:
              </div>
              <div class="modal-footer">
-                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                 <button type="button" class="btn btn-success">Guardar cambios</button>
+                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                 <asp:Button ID="Button10" runat="server" Text="Guardar cambios" CssClass="btn btn-success" OnClick="btnGuardarDatosJudiciales_Click3" />
              </div>
          </div>
      </div>
  </div>
-        </asp:Panel>
-    </ContentTemplate>
-</asp:UpdatePanel>
+
+            </asp:Panel>
+
+
+        </ContentTemplate>
+    </asp:UpdatePanel>
+
+            <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <!-- Botón -->
+            <asp:Button ID="btnImprimir" runat="server" Text="Imprimir Ticket" OnClick="btnImprimir_Click" CssClass="btn btn-success" />
+        </div>
+    </div>
+
+
+
+
+
+
+
 
 
 <script>  
@@ -831,31 +1072,44 @@
         // Abrir el modal
         $('#ModalConfirmacion1').modal('show');
 
-        var gvPartes = document.getElementById('<%= gvPartes.ClientID %>');
-        var checkboxesPartes = gvPartes.getElementsByTagName('input');
-        var parteSeleccionada = '';
+        // Obtener los nombres de las partes
+        var gvPartes = $('#<%= gvPartes.ClientID %> tr:gt(0)');
+        var listaPartes = $('#listaPartes');
+        listaPartes.empty(); // Limpiar la lista antes de agregar nuevos elementos
 
-        for (var i = 0; i < checkboxesPartes.length; i++) {
-            if (checkboxesPartes[i].type === 'checkbox' && checkboxesPartes[i].checked) {
-                // Obtiene el nombre de la celda "Nombre" en la fila seleccionada
-                // Incrementa el índice en 1 para comenzar en la fila 1
-                var index = checkboxesPartes[i].parentNode.parentNode.rowIndex;
-                parteSeleccionada += gvPartes.rows[index].cells[1].innerText + '; ';
-            }
-        }
+        var parteSeleccionada = ''; // Variable para almacenar partes seleccionadas
 
-        // Tomar los datos de la tabla de delitos
-        var gvDelitos = document.getElementById('<%= gvDelitos.ClientID %>');
-        var checkboxesDelitos = gvDelitos.getElementsByTagName('input');
-        var delitoSeleccionado = '';
+        gvPartes.each(function () {
+            var nombreParte = $(this).find('td:eq(0)').text().trim(); // Asumiendo que el nombre está en la primera celda
+            var li = $('<li>').text(nombreParte);
+            listaPartes.append(li);
 
-        for (var j = 0; j < checkboxesDelitos.length; j++) {
-            if (checkboxesDelitos[j].type === 'checkbox' && checkboxesDelitos[j].checked) {
-                // Obtiene el nombre de la celda "Nombre del Delito" en la fila seleccionada
-                // Incrementa el índice en 1 para comenzar en la fila 1
-                var indexDelito = checkboxesDelitos[j].parentNode.parentNode.rowIndex;
-                delitoSeleccionado += gvDelitos.rows[indexDelito].cells[1].innerText + '; ';
-            }
+            // Lógica para seleccionar partes (ajustar según sea necesario)
+            parteSeleccionada += nombreParte + ', ';
+        });
+
+        // Obtener los nombres de los delitos
+        var gvDelitos = $('#<%= gvDelitos.ClientID %> tr:gt(0)');
+        var listaDelitos = $('#listaDelitos');
+        listaDelitos.empty(); // Limpiar la lista antes de agregar nuevos elementos
+
+        var delitoSeleccionado = ''; // Variable para almacenar delitos seleccionados
+
+        gvDelitos.each(function () {
+            var nombreDelito = $(this).find('td:eq(1)').text().trim(); // Asumiendo que el nombre del delito está en la segunda celda
+            var li = $('<li>').text(nombreDelito);
+            listaDelitos.append(li);
+
+            // Lógica para seleccionar delitos (ajustar según sea necesario)
+            delitoSeleccionado += nombreDelito + ', ';
+        });
+
+        // Verificar si hay al menos una parte o delito seleccionado
+        if (parteSeleccionada === '' && delitoSeleccionado === '') {
+            alert('Seleccione al menos una parte o un delito.');
+            // Cerrar el modal si no hay partes o delitos seleccionados
+            $('#ModalConfirmacion1').modal('hide');
+            return;
         }
 
 
@@ -878,6 +1132,8 @@
             '<b>Observaciones: </b>' + observa + ' <br /> ' + ' <br /> ';
         // Agregar más líneas según sea necesario
     }
+
+
 
     function AbrirModal() {
         $('#ModalPartes').modal('show'); // Utiliza jQuery para mostrar el modal
@@ -913,7 +1169,7 @@
         espeSexo.value = '';
     }
 
-    
+
 
 
     function habilitarTextBoxSelecParte() {
@@ -921,7 +1177,7 @@
         var espeParteTextBox = document.getElementById('<%= espeParte.ClientID %>');
 
         // Verifica si la opción seleccionada es "Otro"
-        if (parteDropDown.value === "Otro") {
+        if (parteDropDown.value === "O") {
             // Habilita el TextBox
             espeParteTextBox.disabled = false;
         } else {
@@ -952,39 +1208,51 @@
         // Abrir el modal
         $('#ModalConfirmacion2').modal('show');
 
-        var gvPartes = document.getElementById('<%= gvPartes2.ClientID %>');
-        var checkboxesPartes = gvPartes.getElementsByTagName('input');
-        var parteSeleccionada = '';
+        // Obtener los nombres de las partes
+        var gvPartes = $('#<%= gvPartes2.ClientID %> tr:gt(0)');
+        var listaPartes = $('#listaPartes');
+        listaPartes.empty(); // Limpiar la lista antes de agregar nuevos elementos
 
-        for (var i = 0; i < checkboxesPartes.length; i++) {
-            if (checkboxesPartes[i].type === 'checkbox' && checkboxesPartes[i].checked) {
-                // Obtiene el nombre de la celda "Nombre" en la fila seleccionada
-                // Incrementa el índice en 1 para comenzar en la fila 1
-                var index = checkboxesPartes[i].parentNode.parentNode.rowIndex;
-                parteSeleccionada += gvPartes.rows[index].cells[1].innerText + '; ';
-            }
+        var parteSeleccionada = ''; // Variable para almacenar partes seleccionadas
+
+        gvPartes.each(function () {
+            var nombreParte = $(this).find('td:eq(0)').text().trim(); // Asumiendo que el nombre está en la primera celda
+            var li = $('<li>').text(nombreParte);
+            listaPartes.append(li);
+
+            // Lógica para seleccionar partes (ajustar según sea necesario)
+            parteSeleccionada += nombreParte + ', ';
+        });
+
+        // Obtener los nombres de los delitos
+        var gvDelitos = $('#<%= gvDelitos2.ClientID %> tr:gt(0)');
+        var listaDelitos = $('#listaDelitos');
+        listaDelitos.empty(); // Limpiar la lista antes de agregar nuevos elementos
+
+        var delitoSeleccionado = ''; // Variable para almacenar delitos seleccionados
+
+        gvDelitos.each(function () {
+            var nombreDelito = $(this).find('td:eq(1)').text().trim(); // Asumiendo que el nombre del delito está en la segunda celda
+            var li = $('<li>').text(nombreDelito);
+            listaDelitos.append(li);
+
+            // Lógica para seleccionar delitos (ajustar según sea necesario)
+            delitoSeleccionado += nombreDelito + ', ';
+        });
+
+        // Verificar si hay al menos una parte o delito seleccionado
+        if (parteSeleccionada === '' && delitoSeleccionado === '') {
+            alert('Seleccione al menos una parte o un delito.');
+            // Cerrar el modal si no hay partes o delitos seleccionados
+            $('#ModalConfirmacion1').modal('hide');
+            return;
         }
-
-        // Tomar los datos de la tabla de delitos
-        var gvDelitos = document.getElementById('<%= gvDelitos2.ClientID %>');
-        var checkboxesDelitos = gvDelitos.getElementsByTagName('input');
-        var delitoSeleccionado = '';
-
-        for (var j = 0; j < checkboxesDelitos.length; j++) {
-            if (checkboxesDelitos[j].type === 'checkbox' && checkboxesDelitos[j].checked) {
-                // Obtiene el nombre de la celda "Nombre del Delito" en la fila seleccionada
-                // Incrementa el índice en 1 para comenzar en la fila 1
-                var indexDelito = checkboxesDelitos[j].parentNode.parentNode.rowIndex;
-                delitoSeleccionado += gvDelitos.rows[indexDelito].cells[1].innerText + '; ';
-            }
-        }
-
 
         // Obtener los valores de los TextBox
         var numdesp = document.getElementById('<%= numdesp.ClientID %>').value;
         var quejo = document.getElementById('<%= quejoso.ClientID %>').value;
-      var fecha = document.getElementById('<%= fecha2.ClientID %>').value;
-      var numdoce = document.getElementById('<%= numdocenv.ClientID %>').value;
+        var fecha = document.getElementById('<%= fecha2.ClientID %>').value;
+        var fojas = document.getElementById('<%= fojas2.ClientID %>').value;
         var observa = document.getElementById('<%= observa2.ClientID %>').value;
         // Agregar más variables según sea necesario
 
@@ -993,7 +1261,7 @@
             '<b>Número de Despacho: </b>' + numdesp + '<br />' + '<br />' +
             '<b>Quejoso: </b>' + quejo + '<br />' + '<br />' +
             '<b>Fecha de Recepción: </b>' + fecha + '<br />' + '<br />' +
-            '<b>Numero de documento de envio: </b>' + numdoce + '<br />' + '<br />' +
+            '<b>Fojas: </b>' + fojas + '<br />' + '<br />' +
             '<b>Parte(s) a Notificar: </b>' + parteSeleccionada + '<br />' + '<br />' +
             '<b>Delito(s): </b>' + delitoSeleccionado + '<br />' + '<br />' +
             '<b>Observaciones: </b>' + observa + ' <br /> ' + ' <br /> ';
@@ -1036,7 +1304,7 @@
             var espeParteTextBox = document.getElementById('<%= espeParte2.ClientID %>');
 
         // Verifica si la opción seleccionada es "Otro"
-        if (parteDropDown.value === "Otro") {
+        if (parteDropDown.value === "O") {
             // Habilita el TextBox
             espeParteTextBox.disabled = false;
         } else {
@@ -1070,31 +1338,44 @@
         // Abrir el modal
         $('#ModalConfirmacion3').modal('show');
 
-        var gvPartes = document.getElementById('<%= gvPartes3.ClientID %>');
-        var checkboxesPartes = gvPartes.getElementsByTagName('input');
-        var parteSeleccionada = '';
+        // Obtener los nombres de las partes
+        var gvPartes = $('#<%= gvPartes3.ClientID %> tr:gt(0)');
+        var listaPartes = $('#listaPartes');
+        listaPartes.empty(); // Limpiar la lista antes de agregar nuevos elementos
 
-        for (var i = 0; i < checkboxesPartes.length; i++) {
-            if (checkboxesPartes[i].type === 'checkbox' && checkboxesPartes[i].checked) {
-                // Obtiene el nombre de la celda "Nombre" en la fila seleccionada
-                // Incrementa el índice en 1 para comenzar en la fila 1
-                var index = checkboxesPartes[i].parentNode.parentNode.rowIndex;
-                parteSeleccionada += gvPartes.rows[index].cells[1].innerText + '; ';
-            }
-        }
+        var parteSeleccionada = ''; // Variable para almacenar partes seleccionadas
 
-        // Tomar los datos de la tabla de delitos
-        var gvDelitos = document.getElementById('<%= gvDelitos3.ClientID %>');
-        var checkboxesDelitos = gvDelitos.getElementsByTagName('input');
-        var delitoSeleccionado = '';
+        gvPartes.each(function () {
+            var nombreParte = $(this).find('td:eq(0)').text().trim(); // Asumiendo que el nombre está en la primera celda
+            var li = $('<li>').text(nombreParte);
+            listaPartes.append(li);
 
-        for (var j = 0; j < checkboxesDelitos.length; j++) {
-            if (checkboxesDelitos[j].type === 'checkbox' && checkboxesDelitos[j].checked) {
-                // Obtiene el nombre de la celda "Nombre del Delito" en la fila seleccionada
-                // Incrementa el índice en 1 para comenzar en la fila 1
-                var indexDelito = checkboxesDelitos[j].parentNode.parentNode.rowIndex;
-                delitoSeleccionado += gvDelitos.rows[indexDelito].cells[1].innerText + '; ';
-            }
+            // Lógica para seleccionar partes (ajustar según sea necesario)
+            parteSeleccionada += nombreParte + ', ';
+        });
+
+        // Obtener los nombres de los delitos
+        var gvDelitos = $('#<%= gvDelitos3.ClientID %> tr:gt(0)');
+        var listaDelitos = $('#listaDelitos');
+        listaDelitos.empty(); // Limpiar la lista antes de agregar nuevos elementos
+
+        var delitoSeleccionado = ''; // Variable para almacenar delitos seleccionados
+
+        gvDelitos.each(function () {
+            var nombreDelito = $(this).find('td:eq(1)').text().trim(); // Asumiendo que el nombre del delito está en la segunda celda
+            var li = $('<li>').text(nombreDelito);
+            listaDelitos.append(li);
+
+            // Lógica para seleccionar delitos (ajustar según sea necesario)
+            delitoSeleccionado += nombreDelito + ', ';
+        });
+
+        // Verificar si hay al menos una parte o delito seleccionado
+        if (parteSeleccionada === '' && delitoSeleccionado === '') {
+            alert('Seleccione al menos una parte o un delito.');
+            // Cerrar el modal si no hay partes o delitos seleccionados
+            $('#ModalConfirmacion1').modal('hide');
+            return;
         }
 
 
@@ -1102,7 +1383,7 @@
         var numtoca = document.getElementById('<%= numtoca.ClientID %>').value;
         var sala = document.getElementById('<%= salaproc.ClientID %>').value;
         var fecha = document.getElementById('<%= fecha3.ClientID %>').value;
-        var numdoce = document.getElementById('<%= numdocenv1.ClientID %>').value;
+        var fojas = document.getElementById('<%= fojas3.ClientID %>').value;
         var observa = document.getElementById('<%= observa3.ClientID %>').value;
         // Agregar más variables según sea necesario
 
@@ -1111,7 +1392,7 @@
             '<b>Número de Toca: </b>' + numtoca + '<br />' + '<br />' +
             '<b>Sala de Procedencia: </b>' + sala + '<br />' + '<br />' +
             '<b>Fecha de Recepción: </b>' + fecha + '<br />' + '<br />' +
-            '<b>Numero de documento de envio: </b>' + numdoce + '<br />' + '<br />' +
+            '<b>Numero de documento de envio: </b>' + fojas + '<br />' + '<br />' +
             '<b>Parte(s) a Notificar: </b>' + parteSeleccionada + '<br />' + '<br />' +
             '<b>Delito(s): </b>' + delitoSeleccionado + '<br />' + '<br />' +
             '<b>Observaciones: </b>' + observa + ' <br /> ' + ' <br /> ';
@@ -1154,7 +1435,7 @@ function habilitarTextBoxSelecParte3() {
         var espeParteTextBox = document.getElementById('<%= espeParte3.ClientID %>');
 
     // Verifica si la opción seleccionada es "Otro"
-    if (parteDropDown.value === "Otro") {
+    if (parteDropDown.value === "O") {
         // Habilita el TextBox
         espeParteTextBox.disabled = false;
     } else {
@@ -1178,4 +1459,170 @@ function habilitarTextBoxSelecSexo3() {
 
 }
     //Fin Funciones Requisitoria
+
+
+    // Activar toast
+    function EjemploExito() {
+        var selectedValue = document.getElementById('<%= OpExhorto.ClientID %>').value;
+
+        switch (selectedValue) {
+            case 'E':
+                toastr.success('Exhorto agregado con éxito');
+                break;
+            case 'D':
+                toastr.success('Despacho agregado con éxito');
+                break;
+            case 'R':
+                toastr.success('Requisitoria agregada con éxito');
+                break;
+            default:
+                toastr.success('Transacción Exitosa');
+                break;
+        }
+    }
+
+
+    function EjemploError(errorMessage) {
+        toastr.error('Algo ha ocurrido con su transacción: <br>' + errorMessage + ' Error');
+    }
+
+    // Activar toast tbldelitos
+    function EjemploErrorTblDelitos(errorMessage) {
+        toastr.error('El delito ya existe en la tabla, seleccione uno diferente')
+    }
+
+    function EjemploErrorTblAnexo(errorMessage) {
+        toastr.error('El anexo ya existe en la tabla, seleccione uno diferente')
+    }
+
+    // Default Configuration
+    $(document).ready(function () {
+        toastr.options = {
+            'closeButton': true,
+            'debug': false,
+            'newestOnTop': false,
+            'progressBar': true,
+            'positionClass': 'toast-bottom-right',
+            'preventDuplicates': true,
+            'showDuration': '1000',
+            'hideDuration': '1000',
+            'timeOut': '5000',
+            'extendedTimeOut': '1000',
+            'showEasing': 'swing',
+            'hideEasing': 'linear',
+            'showMethod': 'fadeIn',
+            'hideMethod': 'fadeOut',
+        }
+    });
+
+<%--function validateInput() {
+        // Get the input values
+        var clienteNombre = document.getElementById('<%= txtClienteNombre.ClientID %>').value;
+         var producto = document.getElementById('<%= txtProducto.ClientID %>').value;
+            var cantidad = document.getElementById('<%= txtCantidad.ClientID %>').value;
+         var precio = document.getElementById('<%= txtPrecio.ClientID %>').value;
+
+         // Perform your validation logic
+         if (clienteNombre.trim() === '' || producto.trim() === '' || cantidad <= 0 || precio < 0) {
+             // Show Toastr notification for validation error
+             toastr.error('Por favor, complete todos los campos y asegúrese de que la cantidad y el precio sean valores válidos.');
+             return false; // Prevent form submission
+         } else {
+             // Input is valid, you can proceed with other actions
+             toastr.success('¡Transacción realizada con éxito!');
+             return true; // Allow form submission
+         }
+     }--%>
+
+    function CerrarConfirmacion() {
+        $('#guardarDatos').modal('hide');
+        $('body').removeClass('modal-open').css('overflow', ''); // Restablece el overflow
+        $('.modal-backdrop').remove();
+    }
+
+    function Recargar() {
+        // Después de realizar la inserción en P_Asunto
+        setTimeout(function () {
+            location.reload();
+        }, 1000); // Recargar la página después de 1000 milisegundos (1 segundo)
+    }
+
+    function imprimirTicket() {
+        var contenido = document.getElementById('<%= TicketDiv.ClientID %>').innerHTML;
+        var ventanaImpresion = window.open('', '_blank');
+
+        var estilos = `<style>
+                pre {
+                    font-family: monospace;
+                    white-space: pre;
+                    margin: 1em 0;
+                }
+            </style>`;
+
+        ventanaImpresion.document.write(estilos + '<pre>' + contenido + '</pre>');
+        ventanaImpresion.document.close();
+        ventanaImpresion.print();
+        ventanaImpresion.onfocus = function () { setTimeout(function () { ventanaImpresion.close(); }, 500); }
+    }
+
+
+    // Función para limpiar el formulario
+        function limpiarFormularioInsert() {
+        // Limpiar el dropdown "OpExhorto"
+            var opExhortoDropdown = document.getElementById('<%= OpExhorto.ClientID %>');
+            opExhortoDropdown.selectedValue = "SO";
+
+        // Limpiar los controles del panel1
+        var numdoc1TextBox = document.getElementById('<%= numdoc1.ClientID %>');
+        var procede1TextBox = document.getElementById('<%= procede1.ClientID %>');
+        var fecha1TextBox = document.getElementById('<%= fecha1.ClientID %>');
+        var fojas1TextBox = document.getElementById('<%= fojas1.ClientID %>');
+        var ddlDelitos1DropDown = document.getElementById('<%= ddlDelitos1.ClientID %>');
+        var gvPartesGridView = document.getElementById('<%= gvPartes.ClientID %>');
+        var gvDelitosGridView = document.getElementById('<%= gvDelitos.ClientID %>');
+        var prioridadRadioButtonList = document.getElementById('<%= prioridad.ClientID %>');
+        var diligencia1TextBox = document.getElementById('<%= Diligencia1.ClientID %>');
+        var observa1TextBox = document.getElementById('<%= observa1.ClientID %>');
+
+        numdoc1TextBox.value = '';
+        procede1TextBox.value = '';
+        fecha1TextBox.value = '';
+        fojas1TextBox.value = '0';
+        ddlDelitos1DropDown.selectedIndex = 0;
+        gvPartesGridView.innerHTML = '';
+        gvDelitosGridView.innerHTML = '';
+        prioridadRadioButtonList.selectedIndex = 0;
+        diligencia1TextBox.value = '';
+        observa1TextBox.value = '';
+    }
+
+        // Establecer el estado inicial del formulario
+        window.onload = function () {
+            limpiarFormularioInsert();
+    };
+
+    function limpiarFormularioAnexos() {
+        // Restablece el DropDownList a su primer elemento
+        document.getElementById('<%= ddlAnexos.ClientID %>').selectedIndex = 0;
+        
+        // Restablece el TextBox a su valor predeterminado
+         document.getElementById('<%= noAnexos.ClientID %>').value = '0';
+    }
+
+    function limpiarFormularioAnexos2() {
+        // Restablece el DropDownList a su primer elemento
+        document.getElementById('<%= ddlAnexos2.ClientID %>').selectedIndex = 0;
+        
+        // Restablece el TextBox a su valor predeterminado
+            document.getElementById('<%= noAnexos2.ClientID %>').value = '0';
+    }
+
+    function limpiarFormularioAnexos3() {
+        // Restablece el DropDownList a su primer elemento
+        document.getElementById('<%= ddlAnexos3.ClientID %>').selectedIndex = 0;
+        
+        // Restablece el TextBox a su valor predeterminado
+            document.getElementById('<%= noAnexos3.ClientID %>').value = '0';
+    }
+
 </script>
