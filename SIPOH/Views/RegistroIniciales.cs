@@ -17,6 +17,7 @@ namespace SIPOH
     public class RegistroIniciales
     {
         private static HttpSessionState Session => HttpContext.Current.Session;
+        
 
         private static string GetString(string key)
         {
@@ -101,7 +102,7 @@ namespace SIPOH
             get { return GetString("NumeroInicial"); }
             set { SetString("NumeroInicial", value); }
         }
-
+        
 
 
 
@@ -112,7 +113,7 @@ namespace SIPOH
             public List<string> Ids { get; set; }
             public List<string> IdDelitos { get; set; }
         }
-
+        
         public static (List<string> solicitudes, List<string> ids) GetTipoSolicitud(string Asunto)
         {
             List<string> solicitudes = new List<string>();
@@ -121,10 +122,10 @@ namespace SIPOH
             using (SqlConnection connection = new ConexionBD().Connection)
             {
                 connection.Open();
-                string query = "SELECT CA.IdAudiencia, IdAudi,  Descripcion FROM P_CatAudiencias CA JOIN P_CatAudiAsunto CAA ON CAA.IdAudiencia = CA.IdAudiencia WHERE TipoAsunto = @TipoAsunto";
 
-                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlCommand command = new SqlCommand("GetTipoSolicitud", connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@TipoAsunto", Asunto);
 
                     using (SqlDataReader reader = command.ExecuteReader())
@@ -136,7 +137,7 @@ namespace SIPOH
 
                             solicitudes.Add(TipoSolicitud);
                             ids.Add(IdAudiencia);
-                            //Debug.WriteLine("TipoSolicitud: " + TipoSolicitud + " IdAudiencia: " + IdAudiencia);
+                            //Debug.WriteLine("Los datos de tipo de asunto son: " + TipoSolicitud + IdAudiencia);
                         }
                     }
                 }
@@ -146,48 +147,56 @@ namespace SIPOH
         }
 
 
-        public static List<String> GetCatAnexos()
+
+        public static List<string> GetCatAnexos()
         {
-            List<string> CatAnexos = new List<String>();
+            List<string> CatAnexos = new List<string>();
+
             using (SqlConnection connection = new ConexionBD().Connection)
             {
                 connection.Open();
-                string query = "SELECT * FROM P_CatAnexos";
-                using (SqlCommand command = new SqlCommand(query, connection))
+
+                using (SqlCommand command = new SqlCommand("GetCatAnexos", connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
+
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            Anexos = reader["descripcion"].ToString();
-                            CatAnexos.Add(Anexos);
-                            //Debug.WriteLine("CatAnexos" + Anexos);
+                            string Anexo = reader["descripcion"].ToString();
+                            CatAnexos.Add(Anexo);
                         }
                     }
                 }
             }
+
             return CatAnexos;
         }
+
 
         public static (List<string> Delitos, List<string> IdDelitos) GetCatDelitos()
         {
             List<string> CatDelitos = new List<string>();
             List<string> CatIdDelitos = new List<string>();
+
             using (SqlConnection connection = new ConexionBD().Connection)
             {
                 connection.Open();
-                string query = "SELECT  IdDelito ,Nombre FROM P_CatDelitos";
-                using (SqlCommand command = new SqlCommand(query, connection))
+
+                using (SqlCommand command = new SqlCommand("GetCatDelitos", connection))
                 {
+                    command.CommandType = CommandType.StoredProcedure;
+
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            Delitos = reader["Nombre"].ToString();
-                            IdDelitos = reader["IdDelito"].ToString();
-                            CatDelitos.Add(Delitos);
-                            CatIdDelitos.Add(IdDelitos);
-                            //Debug.WriteLine(Delitos);
+                            string Delito = reader["Nombre"].ToString();
+                            string IdDelito = reader["IdDelito"].ToString();
+
+                            CatDelitos.Add(Delito);
+                            CatIdDelitos.Add(IdDelito);
                         }
                     }
                 }
@@ -212,6 +221,7 @@ namespace SIPOH
         //                string query = "SELECT Folio, IdFolio FROM P_Folios WHERE IdJuzgado = @IdJuzgado AND Tipo = @TipoInicial";
         //                using (SqlCommand selectCommand = new SqlCommand(query, connection))
         //                {
+
         //                    selectCommand.Parameters.AddWithValue("@IdJuzgado", IdJuzgado);
         //                    selectCommand.Parameters.AddWithValue("@TipoInicial", TipoInicial);
         //                    selectCommand.Transaction = transaction; // Mover la asignación de transacción aquí
@@ -290,10 +300,6 @@ namespace SIPOH
         //    }
         //        return true;
         //}
-
-
-
-
         public static bool SendRegistroIniciales(string FeIngresoAsunto, string TipoAsunto, string IdAudiencia, string Observaciones, string QuienIngresa, string MP, string Prioridad, string Fojas, string TipoRadicacion, string NUC, List<int> listaIdDelito, List<Victima> usuarios, List<Imputado> culpados, List<Anexos> Anexos)
         {
             using (SqlConnection connection = new ConexionBD().Connection)
@@ -400,23 +406,27 @@ namespace SIPOH
                             //command.Parameters.AddWithValue("@Tipo", anexo.Tipo);
                             command.ExecuteNonQuery();
                         }
-                        Debug.WriteLine("Paso 7 completado ✔️");
-                        //// Paso 5: Inserción en P_Posterior
-                        //command.CommandText = "INSERT INTO P_Posterior(IdAsunto, Promovente, FechaIngreso, Digitalizado, IdUsuario, TipoPromocion, FechaRecepcion) VALUES (@IdAsunto, 'Nombre Prueba', GETDATE(), 'N', 5, 'p', '2002/2/2')";
-                        //command.ExecuteNonQuery();
-                        //Debug.WriteLine("Tarea 5 completado.");
+                        Debug.WriteLine("Tarea 7 completado ✔️" );
+                        // Paso 5: Inserción en P_Posterior
 
-                        //// Paso 6: Obtener el IdPosterior
-                        //command.CommandText = "SELECT SCOPE_IDENTITY() AS IdPosterior";
-                        //object idPosterior = command.ExecuteScalar();
-                        //Debug.WriteLine("Paso 6 completado. IdPosterior: " + idPosterior);
+                        command.CommandText = "INSERT INTO P_Trayecto(IdAsunto, IdActividad, IdPerfil,IdUsuario, FeAsunto, Tipo, FeRecepcion, IdatividadProvienede, IdUsuarioProvienede,IdPerfilProvienede,Estado) VALUES (@IdAsunto,1, @IdPerfil,@IdUsuario,@FeAsunto, 'I', GETDATE(), NULL, NULL,NULL, 'A' )";
+                        
+                        
+                        command.Parameters.AddWithValue("@IdPerfil", Session["IdPerfil"]);
+                        command.Parameters.AddWithValue("@IdUsuario", Session["IdUsuario"]);
+                        command.Parameters.AddWithValue("@FeAsunto", FeIngresoAsunto);
+                        
+                        command.ExecuteNonQuery();
+                        Debug.WriteLine("Tarea 8 completado ✔️");
+
+                        
+                        // Confirmar la transacción si todo ha ido bien
                     }
+                        transaction.Commit();
+                        Debug.WriteLine("Transacción completada con éxito.");
+                        return true;
 
-                    // Confirmar la transacción si todo ha ido bien
-                    transaction.Commit();
-                    Debug.WriteLine("Transacción completada con éxito.");
-                    return true;
-                }
+                } 
                 catch (Exception ex)
                 {
                     // Si ocurre un error, revertir la transacción y manejar la excepción
@@ -431,7 +441,95 @@ namespace SIPOH
             }
         }
 
+        public static DataTable GetInicial(List<BusquedaInicial> BusquedaInicial)
+        {
+            using (SqlConnection connection = new ConexionBD().Connection)
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
 
+                try
+                {
+                    string IdJuzgado = HttpContext.Current.Session["IDJuzgado"] as string;
+
+                    using (SqlCommand command = new SqlCommand("P_GetInicial", connection, transaction))
+                    {
+                        command.Parameters.AddWithValue("@IDJuzgado", IdJuzgado);
+                        command.Parameters.AddWithValue("@DataImputado", BusquedaInicial.Select(b => b.DataImputado).FirstOrDefault());
+                        command.Parameters.AddWithValue("@DataVictima", BusquedaInicial.Select(b => b.DataVictima).FirstOrDefault());
+                        command.Parameters.AddWithValue("@DataNUC", BusquedaInicial.Select(b => b.DataNUC).FirstOrDefault());
+                        
+                        
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            DataTable dataTable = new DataTable();
+                            dataTable.Load(reader);
+
+                            return dataTable;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Debug.WriteLine("Error en Obtener Inicial: " + ex.Message);
+                    return null;
+                }
+                finally
+                {
+                    transaction.Dispose();
+                    connection.Close();
+                }
+            }
+        }
+
+
+
+
+
+        //public static bool GetInicial(List<BusquedaInicial> BusquedaInicial)
+        //{
+
+        //        using (SqlConnection connection = new ConexionBD().Connection)
+        //        {
+        //            connection.Open();
+
+        //        try
+        //        {
+        //            string IdJuzgado = HttpContext.Current.Session["IDJuzgado"] as string;
+        //            using (SqlCommand command = new SqlCommand("P_GetInicial", connection))
+        //            {
+        //                command.Parameters.AddWithValue("@IDJuzgado", IdJuzgado);
+        //                command.Parameters.AddWithValue("@DataImputado",DataImputado);
+
+        //                command.Parameters.AddWithValue("@DataVictima", DataVictima);
+        //                command.Parameters.AddWithValue("@DataNUC", DataNUC);
+        //                command.CommandType = CommandType.StoredProcedure;
+
+        //                using (SqlDataReader reader = command.ExecuteReader())
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        string tipoAsunto = reader["TipoAsunto"].ToString();
+        //                        string numero = reader["Numero"].ToString();
+        //                        string nuc = reader["Delitos"].ToString();
+        //                        string inculpados = reader["Inculpados"].ToString();
+        //                        string victimas = reader["Victimas"].ToString();
+        //                        Debug.WriteLine("Datos de tu consulta son los siguientes: "+ tipoAsunto + numero+ nuc +inculpados+victimas);
+        //                    }
+
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Debug.WriteLine("Error en Obtener Inicial: " + ex);
+        //        }
+        //    }
+        //    return true;
+        //}
 
 
 

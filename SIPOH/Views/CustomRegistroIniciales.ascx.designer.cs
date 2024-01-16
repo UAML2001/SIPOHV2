@@ -24,6 +24,60 @@ namespace SIPOH.Views
         protected global::System.Web.UI.UpdatePanel updPanel;
 
         /// <summary>
+        /// Control ddlTipoFiltrado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlTipoFiltrado;
+
+        /// <summary>
+        /// Control inputBuscarInicial.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox inputBuscarInicial;
+
+        /// <summary>
+        /// Control btnSearch.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearch;
+
+        /// <summary>
+        /// Control BusquedaIniciales.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel BusquedaIniciales;
+
+        /// <summary>
+        /// Control grdTblGetPromociones.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grdTblGetPromociones;
+
+        /// <summary>
+        /// Control errorConsulta.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label errorConsulta;
+
+        /// <summary>
         /// Control inputNUC.
         /// </summary>
         /// <remarks>
@@ -78,22 +132,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.DropDownList inputQuienIngresa;
 
         /// <summary>
-        /// Control MP.
+        /// Control lblTipoPersona.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListItem MP;
-
-        /// <summary>
-        /// Control particular.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListItem particular;
+        protected global::System.Web.UI.WebControls.Label lblTipoPersona;
 
         /// <summary>
         /// Control inputNombreParticular.
@@ -168,15 +213,6 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Label lblNombresDelitos;
 
         /// <summary>
-        /// Control lblIdDelitos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblIdDelitos;
-
-        /// <summary>
         /// Control litTablaDelitos.
         /// </summary>
         /// <remarks>
@@ -184,15 +220,6 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Literal litTablaDelitos;
-
-        /// <summary>
-        /// Control gvResultados.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvResultados;
 
         /// <summary>
         /// Control txtAnexosTipo.
@@ -436,6 +463,96 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlSexoVictima;
+
+        /// <summary>
+        /// Control copyTextBoxNUC.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox copyTextBoxNUC;
+
+        /// <summary>
+        /// Control copyDropDownTipoAsunto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox copyDropDownTipoAsunto;
+
+        /// <summary>
+        /// Control copyDropDownTipoSolicitud.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox copyDropDownTipoSolicitud;
+
+        /// <summary>
+        /// Control copyFechaRecepcion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox copyFechaRecepcion;
+
+        /// <summary>
+        /// Control copyNumeroFojas.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox copyNumeroFojas;
+
+        /// <summary>
+        /// Control copyQuienIngresa.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox copyQuienIngresa;
+
+        /// <summary>
+        /// Control copyinputNombreParticular.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox copyinputNombreParticular;
+
+        /// <summary>
+        /// Control copyTipoRadicacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox copyTipoRadicacion;
+
+        /// <summary>
+        /// Control copyPrioridad.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox copyPrioridad;
+
+        /// <summary>
+        /// Control copyObservaciones.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox copyObservaciones;
 
         /// <summary>
         /// Control UpdatePanel1.

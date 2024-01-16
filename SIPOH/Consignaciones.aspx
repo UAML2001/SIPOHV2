@@ -82,67 +82,7 @@
 
 
 
-             <div class="p-4">
-                        <div class="nav-item d-flex justify-content-end p-3">
-                            <a class="nav-link bg-success text-white rounded mr-3"  role="tab" data-bs-toggle="modal" data-bs-target="#modal5"><i class="fas fa-plus"></i> Registrar 
-                            </a>
-                            <a class="nav-link bg-success text-white rounded"  role="tab" data-bs-toggle="modal" data-bs-target="#modal4"><i class="fas fa-user-plus mr-1"></i>Asignar
-                            </a>
-                        </div>
-                 <div class="table-responsive">
-
-                        <table class="table table-striped table-hover mb-0 ">
-                            <thead class=" text-center ">
-                                <tr class="">
-
-                                    <th scope="col" class="bg-success text-white">Causa</th>
-                                    <th scope="col" class="bg-success text-white">Fecha</th>
-                                    <th scope="col" class="bg-success text-white">Prioridad</th>
-                                    <th scope="col" class="bg-success text-white">Estatus</th>
-                                    <th scope="col" class="bg-success text-white"></th>
-                                    <th scope="col" class="bg-success text-white">Accion</th>
-
-                                </tr>
-                            </thead>
-                            <tbody class="table table-striped text-center table-sm">
-                                <tr>
-                                    <th scope="row">0002/2023</th>
-                                    <td class="text-secondary">7 Agosto</td>
-                                    <td class="text-danger">Alta</td>
-                                    <td class="text-secondary">Activo</td>
-                                    <td>
-                                        <input type="checkbox" id="cbox1" value="first_checkbox" class="" checked /></td>
-                                    <td><i class="fas fa-pen text-warning"></i></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">0002/2023</th>
-                                    <td class="text-secondary">7 Agosto</td>
-                                    <td class="text-success">Normal</td>
-                                    <td class="text-secondary">Activo</td>
-                                    <td>
-                                        <input type="checkbox" id="cbox1" value="first_checkbox" class="" /></td>
-                                    <td><i class="fas fa-pen text-warning text-hover"></i></td>
-                                </tr>
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>
-                                        <input type="checkbox" id="cbox1" value="first_checkbox" class=""/></td>
-                                    <td><i class="fas fa-pen text-secondary"></i></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                 </div>
-                        <div class="nav-item d-flex justify-content-end mt-2">
-                            <a class="nav-link btn btn-outline-secondary btn-sm rounded-pill mr-1"  role="tab"><span class="fs-7">Anterior</span></a>
-                            <a class="nav-link btn-secondary btn-sm rounded-circle mr-1 fs-7"><span class="fs-7">1</span></a>
-                            <a class="nav-link btn btn-outline-secondary btn-sm rounded-pill" role="tab"><span class="fs-7">Siguiente</span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <%--modales--%>
             <!-- Modal Registrar -->
             <div class="modal fade" id="modal5" tabindex="-1" aria-labelledby="modal5Label" aria-hidden="true">
@@ -193,7 +133,35 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
             <script src="Scripts/consignaciones/Consignaciones.js"></script> 
-            
+            <script>
+                    toastr.options = {
+                        closeButton: true,
+                        debug: false,
+                        newestOnTop: false,
+                        progressBar: true,
+                        positionClass: "toast-bottom-right",
+                        preventDuplicates: false,
+                        onclick: null,
+                        showDuration: "300",
+                        hideDuration: "1000",
+                        timeOut: "5000",
+                        extendedTimeOut: "1000",
+                        showEasing: "swing",
+                        hideEasing: "linear",
+                        showMethod: "fadeIn",
+                        hideMethod: "fadeOut"
+                    };
+
+                    function mostrarToast() {
+                        toastr.toastsuccess(mensaje, "Exito");
+                    }
+                    function toastError(mensaje) {
+                        toastr.error(mensaje, "Error");
+                    }
+                    function toastInfo(mensaje) {
+                        toastr.info(mensaje, "Informacion");
+                    }
+            </script>
 
 
 </asp:Content>

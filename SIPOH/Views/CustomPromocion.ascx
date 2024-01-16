@@ -1,316 +1,241 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CustomPromocion.ascx.cs" Inherits="SIPOH.Views.CustomPromocion" %>
 
-        <div>
-            <h1 style="margin-left: 5%" class="h5">Control <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold"> Promociones</span> </h1>
-        </div>
+
 
 <link href="Content/css/Consignaciones.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script type="text/javascript">
+    //JS PROMOCIONES
 
-<div class="m-0">
-    <div class="row">
-        <div class="col-md-10 ml-auto col-xl-11 mr-auto">
-            <!-- Nav tabs -->
-            <div class="card">
+    function seleccionarVictima(victima) {
+        var inputPromovente = document.getElementById('<%= inputPromovente.ClientID %>');
+        inputPromovente.value = victima;
+    }
+    function mostrarOcultarDescripcion() {
+        var dropdown = $("#<%= txtAnexosTipo.ClientID %>")
+        var contenedor = $("#contenedorDescripcion");
+        if (dropdown.val() === "Otro") {
+            contenedor.fadeIn();
+        } else {
+            contenedor.fadeOut();
+        }
+    }
+    function validarNumero(input) {
+        var valor = input.value;
+        if (isNaN(valor)) {
+            var mensaje = "Este campo solo acepta numeros";
+            toastError(mensaje);
+            input.value = "";
+        }
+    }
+    function toggleAnexos() {
+        var btnAnexos = $("#btn-anexos");
+        var contenedor = $("#ContenidoAnexos");
 
-                <div class="card-body">
-                    <div class="container col-12">
-                        <div style="padding: 2%">
-                            <h5 class="text-secondary mb-5">Promocionar</h5>
+        if (btnAnexos.prop("checked")) {
+            //contenedor.show();
+            contenedor.fadeIn();
+        }else {
+            //contenedor.hide();
+            contenedor.fadeOut();
+        }
+
+    }
+
+    
+    
+</script>
+<asp:UpdatePanel runat="server" ID="promocionPanel" ChildrenAsTriggers="false" UpdateMode="Conditional">
+    <ContentTemplate>
+        <div class=" px-2 mx-1">
+            <h5 class="text-secondary mb-4">Registro de promociones</h5>
+
+            <div class="row d-flex justify-content-end align-content-end">
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <h6 class="help-block text-muted small-font">Tipo de Documento: </h6>
+                    <asp:DropDownList runat="server" ID="DrpLstTipoDocumento" class="form-select form-select-sm text-secondary" AutoPostBack="true" OnSelectedIndexChanged="DrpLstObtenerTipoDocumento" >
+                        <asp:ListItem Text="seleccionar" Value="" Selected="True" />                        
+                        <asp:ListItem Text="Causa" Value="C"/>
+                        <asp:ListItem Text="Juicio Oral" Value="JO" />
+                        <asp:ListItem Text="Exhorto" Value="E" />
+                        <asp:ListItem Text="Cupre" Value="CP" />
+                    </asp:DropDownList>
+                </div>
+           
+                    <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                        <h6 class="help-block text-muted small-font" >Numero de <asp:Label ID="itemNombre" runat="server" Text=""></asp:Label>: </h6>
+                        <div class="input-group">
+                            <asp:TextBox runat="server"  CssClass="form-control form-control-sm" ID="inputNumero"/>
+                            <div class="input-group-append">
+                                <asp:Button runat="server" CssClass="btn btn-outline-success btn-sm" Text="Buscar" OnClick="btnGetConsultaPromocion"  AutoPostBack="true"/>                                                                                                                                    
+                            </div>
+                        </div>
+                    </div>
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="">                                                               
+                            <div class="d-flex justify-content-end">
+                                <i class="bi bi-people-fill text-success mr-3"></i>
+                                <h5 class="text-success text-right">Relacion de partes</h5>
+                            </div>
+                            <br />
+                            <br />
+                            <%-- First part --%>
+                            <div class="row border border-top-0 border-1 my-3 ">
+                                <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                    <h5 ><b>Victima</b></h5>
+                                    <asp:Label runat="server" CssClass="text-secondary" ID="lblVictimasPromocion"></asp:Label>
+                                </div>   
+                                 <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                    <h5><b>Numero Documento</b></h5>
+                                    <asp:Label runat="server" CssClass="text-secondary" ID="lblNumeroPromocion"></asp:Label>
+                                </div>                            
+                            </div>
+                            <%-- Second part --%>
+                            <div class="row mb-1 border border-top-0 border-1 my-3">
+                                <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                   
+                                   <h5><b>Imputado</b></h5>
+                                    <asp:Label runat="server" CssClass="text-secondary" ID="lblInculpadosPromocion"></asp:Label>
+                                </div>                                
+                                <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                    <h5><b>Delitos:</b></h5>
+                                    <asp:Label runat="server" CssClass="text-secondary" ID="lblDelitosPromocion"></asp:Label>
+                                </div>
+                                
+                            </div> 
+                            <%-- third part --%>
+                             <div class="row mb-4 pt-3 " style="background-color: #3F5259;">
+                                 <div class="mb-2 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                                    <h6><b class="text-success">Numero de amparo:</b></h6>
+                                    <asp:Label runat="server" CssClass="text-light" ID="lblNumeroAmparoPromocion"></asp:Label>
+                                </div>
+                                <div class="mb-3 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                                   
+                                   <h6><b  class="text-success">Autoridad responsable</b></h6>
+                                    <asp:Label runat="server" CssClass="text-light" ID="lblAutoridadResponsablePromocion"></asp:Label>
+                                </div>                                
+                                <div class="mb-2 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                                    <h6><b class="text-success">Estatus:</b></h6>
+                                    <asp:Label runat="server" CssClass="text-light" ID="lblEstatusPromocion"></asp:Label>
+                                </div>
+                                 <div class="mb-2 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                                    <h6><b class="text-success">Etapa:</b></h6>
+                                    <asp:Label runat="server" CssClass="text-light" ID="lblEtapaPromocion"></asp:Label>
+                                </div>
+                            </div> 
+                                <asp:Label runat="server" CssClass="text-success " ID="ResultadoSolicitudPromociones"></asp:Label>
+                           
                         </div>
 
-                        <div class="row ">
-                            <div class="col-md-8 col-sm-8 col-xs-8">
-                                <h6 class="help-block text-muted small-font">Tipo de Documento: </h6>
-                                <select id="formSelector" class="form-select" aria-label="Default select example">
-                                    <option selected>Seleccione el tipo de Documento</option>
-                                    <option value="Amparo">Amparo</option>
-                                    <option value="Causa">Causa Penal</option>
-                                    <option value="Juicio">Juicio Oral</option>
-                                    <option value="Cuadernillo">Cuadernillo Preliminar</option>
-                                </select>
-                            </div>
-                            </div>
+                    </div>
+                </div>
+                <br />
 
+                <div class="row p-0 mx-0 my-4">
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                        <label for="inputPromovente" class="form-label text-secondary"><b>Promovente:</b></label>                
+                        <asp:TextBox runat="server" ID="inputPromovente" CssClass="form-control form-control-sm "></asp:TextBox>
+                    </div>
+                    
+                    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                        <label for="inputFechaRecepcion" class="form-label text-secondary"><b>Fecha de Recepcion:</b></label>                                        
+                        <asp:TextBox runat="server" ID="inputFechaRecepcion" CssClass="form-control form-control-sm" TextMode="Date"></asp:TextBox>
+                    </div>
+                </div>
 
-                            <br /> 
+                <br />                
+                   <div class="row mx-0 bg-light my-4 py-4 px-0">
+                       <div class="col d-flex justify-content-center ">
+                           <div class="row justify-content-center">
+                                <h6><b class="text-dark ">¿Desea añadir mas anexos?</b></h6>
+                                <input type="checkbox" class="btn-check" id="btn-anexos"  autocomplete="off" onclick="toggleAnexos();">
+                                <label class="bi bi-pencil-square btn btn-outline-success col-auto" for="btn-anexos"></label>                              
+                           </div>
+                       </div>
+                   </div>
+                <div id="ContenidoAnexos" style="display:none;">
+                    <div class="row p-0 m-0">
+                        <div class="col-md-4 col-sm-4 col-xs-4">
+                            <label for="inputAnexos" class="help-block text-muted small-font">Anexos: </label>
+                            <asp:DropDownList runat="server" CssClass="form-select form-select-sm text-secondary" ID="txtAnexosTipo" AutoPostBack="false" onchange="mostrarOcultarDescripcion()">
+                                <asp:ListItem Text="Seleccionar" Value="1" Selected="True" />
+                            </asp:DropDownList>
+                        </div>
 
-                            <div id="Amparo" class="formulario">
-                                <div class="row ">
-                                <!-- Contenido del primer formulario -->
-                                    <div class="col-md-8 col-sm-8 col-xs-8">
-                                    <h6 class="help-block text-muted small-font">Numero de Amparo: </h6>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="inputNuc" placeholder="0000/0000">
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-primary btn-sm" type="button">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                                </svg>
-                                            </button>
+                        <div id="contenedorDescripcion" style="display: none;" class="col-md-4 col-sm-4 col-xs-4">
+                            <label class="help-block text-muted small-font">Descripcion: </label>
+                            <asp:TextBox runat="server" CssClass="form-control form-control-sm" ID="txtDescripcionAnexos" />
+                        </div>
 
-                                            <button class="btn btn-outline-primary btn-sm" type="button">
-                                                <svg style="fill: #ff0000" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512">
-                                                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                    <path d="M290.7 57.4L57.4 290.7c-25 25-25 65.5 0 90.5l80 80c12 12 28.3 18.7 45.3 18.7H288h9.4H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H387.9L518.6 285.3c25-25 25-65.5 0-90.5L381.3 57.4c-25-25-65.5-25-90.5 0zM297.4 416H288l-105.4 0-80-80L227.3 211.3 364.7 348.7 297.4 416z" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
+                        <div class="mb-4 col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                            <label class="help-block text-muted small-font">Cantidad: </label>
+                            <div class="input-group">
+                                <asp:TextBox runat="server" CssClass="form-control form-control-sm" ID="txtCantidadAnexos" oninput="validarNumero(this)" />
+                                <div class="input-group-append">
+                                    <asp:Button runat="server" CssClass="btn btn-outline-success btn-sm" Text="➕" OnClick="btnAñadirAnexo"  />
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                                <br />
+                    <div class="row m-0 p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover mb-0  table-sm">
+                                <thead class=" text-center ">
+                                    <tr class="">
+                                        <th scope="col" class="bg-success text-white">Descripcion</th>
+                                        <th scope="col" class="bg-success text-white">Cantidad</th>
+                                        <th scope="col" class="bg-success text-white">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table table-striped text-center table-sm">
+                                    <asp:Repeater ID="RepeaterAnexos" runat="server">
+                                        <ItemTemplate>
+                                            <tr>
+                                                <th scope="row"><%# Eval("DescripcionAnexo") %></th>
+                                                <td class="text-secondary"><%# Eval("CantidadAnexo") %></td>
+                                                <td class="text-secondary"><i class="bi bi-trash-fill text-danger"></i></td>
+                                            </tr>
 
-                                <div class="card">
-                                    <div class="card-body">
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class=" d-flex justify-content-center mt-1">
+                    <a type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEnviarPromocion"><i class="bi bi-floppy-fill mr-1"></i>Enviar</a>
+                </div>
+                <asp:Label runat="server" ID="lblSuccess" Text="" CssClass="text-success text-center"></asp:Label>
+                <asp:Label runat="server" ID="lblError" Text="" CssClass="text-danger text-center"></asp:Label>
+            </div>
+        </div>
 
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <h5><b>Autoridad Federal</b></h5>
-                                                    <h6>Autoridad Federal</h6>
-                                                </div>
-                                                <div class="col">
-                                                    <h5><b>Numero de Amparo Interno</b></h5>
-                                                    <h6>Numero de Amparo Interno</h6>
-                                                </div>
-                                                <div class="col">
-                                                    <h5><b>Quejoso</b></h5>
-                                                    <h6>Quejoso</h6>
-                                                </div>
-                                            </div>
-
-                                            <br />
-
-                                            <div class="row">
-                                                <div class="col">
-                                                    <h5><b>Numero de Causa</b></h5>
-                                                    <h6>0000/0000</h6>
-                                                </div>
-                                                <div class="col">
-                                                    <h5><b>Tipo de Amparo</b></h5>
-                                                    <h6>Directo</h6>
-                                                </div>
-                                                <div class="col">
-                                                    <h5><b>Acto Reclamdo</b></h5>
-                                                    <h6>Acto Reclamdo</h6>
-                                                </div>
-                                            </div>
-
-                                            <br />
-                                            
-                                            <div class="row">
-                                                <div class="col">
-                                                    <h5><b>Numero de Amparo Externo</b></h5>
-                                                    <h6>Numero de Amparo Externo</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        </div>
-                                    </div>
-
-                                <br />
-
-                                <div class="row">
-                                    <label for="inputNuc" class="form-label text-secondary"><b>Informes de Amparo</b></label>
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-hover mb-0 ">
-                                            <thead class=" text-center ">
-                                                <tr class="">
-                                                    <th scope="col" class="bg-primary text-white">Informe</th>
-                                                    <th scope="col" class="bg-primary text-white">Numero Informe</th>
-                                                    <th scope="col" class="bg-primary text-white">Descripcion</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="table table-striped text-center table-sm">
-                                                <tr>
-                                                    <th scope="row">Previo</th>
-                                                    <td class="text-secondary">Numero Informe</td>
-                                                    <td class="text-secondary">Descripcion</td>
-                                                </tr>
-
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="nav-item d-flex justify-content-end mt-2">
-                                        <a class="nav-link btn btn-outline-secondary btn-sm rounded-pill mr-1" role="tab"><span class="fs-7">Anterior</span></a>
-                                        <a class="nav-link btn-secondary btn-sm rounded-circle mr-1 fs-7"><span class="fs-7">1</span></a>
-                                        <a class="nav-link btn btn-outline-secondary btn-sm rounded-pill" role="tab"><span class="fs-7">Siguiente</span></a>
-                                    </div>
-                                </div>
-
-                                <br />
-
-                                <div class="row ">
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <h6 class="help-block text-muted small-font">Fecha de Recepción: </h6>
-                                        <input type="date" class="form-control" placeholder="Fecha" />
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <h6 class="help-block text-muted small-font">Prioridad: </h6>
-                                        <fieldset data-role="controlgroup"
-                                            data-type="horizontal">
-
-                                            <input type="radio" id="normal"
-                                                value="on" checked="checked" />
-                                            <label for="normal">Normal</label>
-
-                                            <input type="radio"
-                                                id="alta" value="off" />
-                                            <label for="alta">Alta</label>
-                                        </fieldset>
-                                    </div>
-                                </div>
-
-                                <br />
-
-                                <div class="row ">
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <h6 class="help-block text-muted small-font">Promovente: </h6>
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Seleccione la procedencia</option>
-                                            <option value="1">MP</option>
-                                            <option value="2">Defensa Publica</option>
-                                            <option value="2">Defensa Privada</option>
-                                            <option value="2">Asesor Juridico</option>
-                                            <option value="2">Victima</option>
-                                            <option value="2">Otro</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <h6 class="help-block text-muted small-font">Especificar Nombre: </h6>
-                                        <input type="text" class="form-control" placeholder="Nombre" />
-                                    </div>
-
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <h6 class="help-block text-muted small-font">Numero Telefonico: </h6>
-                                        <input type="text" class="form-control" placeholder="55-00-00-00-00" />
-                                    </div>
-                                </div>
-
-                                <br />
-
-                                <div class="row ">
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <h6 class="help-block text-muted small-font">Nombre: </h6>
-                                        <input type="text" class="form-control" placeholder="Nombre" />
-                                    </div>
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <h6 class="help-block text-muted small-font">Identificacion: </h6>
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Seleccione la procedencia</option>
-                                            <option value="1">Catalogo Identicacion</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <h6 class="help-block text-muted small-font">Serie: </h6>
-                                        <input type="text" class="form-control" placeholder="Serie" />
-                                    </div>
-                                </div>
-
-                                <br />
-
-                                <div class="row ">
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <h6 class="help-block text-muted small-font">Tipo Solicitud: </h6>
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Seleccione la procedencia</option>
-                                            <option value="1">Copias</option>
-                                            <option value="1">Audiencia</option>
-                                            <option value="1">Otro</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-8 col-sm-8 col-xs-8">
-                                        <h6 class="help-block text-muted small-font">Especificar Solicitud: </h6>
-                                        <input type="text" class="form-control" placeholder="Solicitud" />
-                                    </div>
-                                </div>
-
-                                <br />
-
-                                <div class="row ">
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <h6 class="help-block text-muted small-font">Anexos: </h6>
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Seleccione el Anexo</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-md-4 col-sm-4 col-xs-4">
-                                        <h6 class="help-block text-muted small-font">Descripcion Otros: </h6>
-                                        <input type="text" class="form-control" placeholder="Solicitud" />
-                                    </div>
-
-
-                                    <div class="mb-4 col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                                        <h6 class="help-block text-muted small-font">Cantidad: </h6>
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="" placeholder="0000/0000">
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-primary btn-sm" type="button">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <label for="inputNuc" class="form-label text-secondary"><b></b></label>
-                                    <div class="table-responsive">
-                                        <table class="table table-striped table-hover mb-0 ">
-                                            <thead class=" text-center ">
-                                                <tr class="">
-                                                    <th scope="col" class="bg-primary text-white">Descripcion</th>
-                                                    <th scope="col" class="bg-primary text-white">Cantidad</th>
-                                                    <th scope="col" class="bg-primary text-white">Acciones</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="table table-striped text-center table-sm">
-                                                <tr>
-                                                    <th scope="row"></th>
-                                                    <td class="text-secondary"></td>
-                                                    <td class="text-secondary"></td>
-                                                </tr>
-
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="nav-item d-flex justify-content-end mt-2">
-                                        <a class="nav-link btn btn-outline-secondary btn-sm rounded-pill mr-1" role="tab"><span class="fs-7">Anterior</span></a>
-                                        <a class="nav-link btn-secondary btn-sm rounded-circle mr-1 fs-7"><span class="fs-7">1</span></a>
-                                        <a class="nav-link btn btn-outline-secondary btn-sm rounded-pill" role="tab"><span class="fs-7">Siguiente</span></a>
-                                    </div>
-                                </div>
-
-                                <br />
-                                <br />
-
-
-                               
-                                <center>
-                                    <button type="button" class="btn btn-primary">
-                                        <svg style="fill:#ffffff" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/></svg>
-                                        Guardar</button>
-                                    <button type="button" class="btn btn-primary">
-                                        <svg style="fill:#ffffff" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/></svg>
-                                        Cancelar</button>
-                                </center>
-
-                            </div>
+        <!-- Modales CustomPromociones -->
+        <div class="modal fade" id="modalEnviarPromocion" tabindex="-1" aria-labelledby="modalEnviarPromocion" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">¿Los datos son correctos?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <asp:Button runat="server" ID="btnPromocion" CssClass="btn btn-success btn-sm" Text="Enviar" OnClick="btnEnviarPromocion" AutoPostBack="true" data-bs-dismiss="modal"/>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        
 
+    </ContentTemplate>
+</asp:UpdatePanel>
 
 <script>
     const formSelector = document.getElementById('formSelector');
@@ -330,6 +255,6 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
-            <script src="Scripts/consignaciones/Consignaciones.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<script src="Scripts/consignaciones/Consignaciones.js"></script>

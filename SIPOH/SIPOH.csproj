@@ -2089,6 +2089,7 @@
     <Compile Include="App_Start\Autenticacion.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Consultas.cs" />
+    <Compile Include="App_Start\RegistroPromociones.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Seguridad.cs" />
     <Compile Include="Busqueda.aspx.cs">
