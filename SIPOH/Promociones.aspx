@@ -145,9 +145,9 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                         <asp:Label ID="TablasAnexos" runat="server" CssClass="textoTablasArriba">
+                                        <asp:Label ID="TablasAnexos" runat="server" CssClass="textoTablasArriba">
                                 <h2 class="textoTablasArriba"><i class="bi bi-table">Tabla de Anexos</i></h2>
-                                    </asp:Label>
+                                        </asp:Label>
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                                             <asp:GridView ID="tablaDatos" CssClass="table" runat="server" AutoGenerateColumns="False" OnRowDeleting="BorrarFila" OnRowDataBound="tablaDatos_RowDataBound">
                                                 <Columns>
@@ -165,15 +165,36 @@
                                         </div>
                                     </div>
                                     <div class="container" id="BotonGuardarDiv" runat="server">
-                                    <div class="row justify-content-md-center">
-                                        <div class="col-xl-2 col-sm-12 col-md-2">
-                                            <asp:Button ID="btnGuardarDatosModal" runat="server" Text="Guardar Datos" CssClass="btn btn-outline-secondary btn-sm col-12" OnClick="btnModalPromociones_Click" />
+                                        <div class="row justify-content-md-center">
+                                            <div class="col-xl-2 col-sm-12 col-md-2">
+                                                <asp:Button ID="btnGuardarDatosModal" runat="server" Text="Guardar Datos" CssClass="btn btn-outline-secondary btn-sm col-12" OnClick="btnModalPromociones_Click" />
+                                            </div>
                                         </div>
-                                    </div>
                                     </div>
 
                                 </div>
 
+
+                                <div class="container" id="tituloSello" runat="server">
+                                    <div class="row justify-content-center">
+                                        <div class="col-auto">
+                                            <h3 class="text-center">¡Se ha guardado tu informacion y ya puedes imprimir tu sello aqui!</h3>
+                                        </div>
+                                    </div>
+                                    <p></p>
+                                    <div class="row justify-content-center">
+                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 d-flex justify-content-center">
+                                            <button class="btn btn-success" onclick="imprimirTicket()">Imprimir SELLO</button>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 d-flex justify-content-center">
+                                            <button class="btn btn-primary" onclick="recargarPagina()">Registrar otra inicial</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p></p>
+
+
+                                <pre id="TicketDiv" runat="server"></pre>
                             </ContentTemplate>
 
                         </asp:UpdatePanel>
@@ -185,7 +206,7 @@
 
 
 
-         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
         <script src="Scripts/consignaciones/Consignaciones.js"></script>
@@ -224,7 +245,7 @@
 
         </script>
         <script>
-           function abrirModalGuardarDatos2() {
+            function abrirModalGuardarDatos2() {
                 $('#guardarDatos2').modal('show');
             }
             function CerrarModalGuardarDatos2() {
@@ -233,28 +254,28 @@
                 $('.modal-backdrop').remove();
             }
         </script>
-<script type="text/javascript">
-    function verificarCampos() {
-        var nombre = document.getElementById('<%= inPromoventeNombre.ClientID %>').value;
-        var apellidoPaterno = document.getElementById('<%= inPromoventePaterno.ClientID %>').value;
-        var apellidoMaterno = document.getElementById('<%= inPromoventeMaterno.ClientID %>').value;
+        <script type="text/javascript">
+            function verificarCampos() {
+                var nombre = document.getElementById('<%= inPromoventeNombre.ClientID %>').value;
+                var apellidoPaterno = document.getElementById('<%= inPromoventePaterno.ClientID %>').value;
+                var apellidoMaterno = document.getElementById('<%= inPromoventeMaterno.ClientID %>').value;
 
-        var botonGuardar = document.getElementById('<%= btnGuardarDatosModal.ClientID %>');
+                var botonGuardar = document.getElementById('<%= btnGuardarDatosModal.ClientID %>');
 
-        if (nombre.trim() !== '' && apellidoPaterno.trim() !== '' && apellidoMaterno.trim() !== '') {
-            botonGuardar.disabled = false;
-        } else {
-            botonGuardar.disabled = true;
-        }
-    }
-</script>
-<script type="text/javascript">
-    Sys.WebForms.PageRequestManager.getInstance().add_endRequest(endRequestHandler);
+                if (nombre.trim() !== '' && apellidoPaterno.trim() !== '' && apellidoMaterno.trim() !== '') {
+                    botonGuardar.disabled = false;
+                } else {
+                    botonGuardar.disabled = true;
+                }
+            }
+        </script>
+        <script type="text/javascript">
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(endRequestHandler);
 
-    function endRequestHandler(sender, args) {
-        verificarCampos(); // Llamar a verificarCampos después de cada postback parcial
-    }
-</script>
+            function endRequestHandler(sender, args) {
+                verificarCampos(); // Llamar a verificarCampos después de cada postback parcial
+            }
+        </script>
         <script>
             window.addEventListener('keydown', function (e) {
                 var node = (e.target) ? e.target : ((e.srcElement) ? e.srcElement : null);
@@ -263,6 +284,29 @@
                     return false;
                 }
             }, true);
+        </script>
+        <script>
+            function imprimirTicket() {
+                var contenido = document.getElementById('<%= TicketDiv.ClientID %>').innerHTML;
+                var ventanaImpresion = window.open('', '_blank');
+
+                var estilos = `<style>
+                pre {
+                    font-family: monospace;
+                    white-space: pre;
+                    margin: 1em 0;
+                }
+            </style>`;
+
+                ventanaImpresion.document.write(estilos + '<pre>' + contenido + '</pre>');
+                ventanaImpresion.document.close();
+                ventanaImpresion.print();
+                ventanaImpresion.onfocus = function () { setTimeout(function () { ventanaImpresion.close(); }, 500); }
+            }
+
+            function recargarPagina() {
+                window.location.href = window.location.href;
+            }
         </script>
     </div>
 </asp:Content>
