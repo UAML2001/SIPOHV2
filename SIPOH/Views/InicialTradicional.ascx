@@ -52,7 +52,42 @@
 
 <asp:UpdatePanel ID="UpdateTradicional1" runat="server">
     <ContentTemplate>
-        <div class="row">
+
+        <div class="modal fade" id="guardarDatos2" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modalGuardar">
+                        <h5 class="modal-title">
+                            <asp:Literal ID="ltTituloModal" runat="server"></asp:Literal>
+                        </h5>
+                        <button type="button" class="close" data-bs-dismiss="modal">×</button>
+                    </div>
+                    <div class="modal-body">
+
+                        <p class="DatosModal"><b>Fecha Ejecución:</b> <asp:Label ID="lblFechaEjecucion" runat="server"></asp:Label></p>
+                <p class="DatosModal"><b>Beneficiario: </b><asp:Label ID="lblnombreBeneficiario" runat="server"></asp:Label> <asp:Label ID="lblapellidoPaternoBeneficiario" runat="server"></asp:Label> <asp:Label ID="lblapellidoMaternoBeneficiario" runat="server"></asp:Label></p>
+                
+                <p class="DatosModal"><b>Solicitante: </b><asp:Label ID="lblnombreSolicitanteSeleccionado" runat="server"></asp:Label></p>
+                <p class="DatosModal"><b>Solicitud: </b><asp:Label ID="lblnombreSolicitudSeleccionado" runat="server"></asp:Label></p>
+                <p class="DatosModal"><b>Detalle de la solicitud: </b><asp:Label ID="lbldetalleSolicitante" runat="server"></asp:Label></p>
+                <p class="DatosModal"><b>Otra Solicitud: </b><asp:Label ID="lblotraSolicitud" runat="server"></asp:Label></p>
+                <p class="DatosModal"><b>Interno: </b><asp:Label ID="lblinterno" runat="server"></asp:Label></p>
+
+                <p class="DatosModal"><b>Sala disponible y toca: </b><asp:Label ID="lblSalasYTocas" runat="server"></asp:Label></p>
+                
+                <p class="DatosModal"><b>Sentencias: </b><asp:Label ID="lblSentencias" runat="server"></asp:Label></p>
+                <p class="DatosModal"><b>Anexos y Cantidad: </b><asp:Label ID="lblAnexos" runat="server"></asp:Label></p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+                        <asp:Button ID="btnGuardarAcusatorio" runat="server" CssClass="btn btn-outline-warning" OnClick="btnGuardarAcusatorio_Click" Text="Guardar" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="primerRowTradicional" runat="server">
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                 <label class="form-label text-secondary">Distrito de Procedencia</label>
                 <asp:DropDownList ID="InDistritoTra" runat="server" CssClass="form-select form-select-sm" AutoPostBack="true" OnSelectedIndexChanged="InDistritoTra_SelectedIndexChanged">
@@ -68,7 +103,7 @@
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                 <label class="form-label text-secondary">Numero de Causa</label>
                 <div class="input-group">
-                    <input type="text" class="form-control form-control-sm" id="InCausaTra" runat="server" placeholder="0000/0000">
+                    <input type="text" class="form-control form-control-sm" id="InCausaTra" runat="server" placeholder="0000/0000" minlength="9" maxlength="9">
                     <div class="input-group-append">
                         <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnBuscarTradicional_Click" Text="Buscar" />
                     </div>
@@ -77,11 +112,6 @@
         </div>
         <div class="p-4">
             <div id="tablaResultadosHtmlDivTradicional" class="table-responsive" runat="server"></div>
-            <div class="nav-item d-flex justify-content-end mt-2">
-                <a class="nav-link btn btn-outline-secondary btn-sm rounded-pill mr-1" role="tab"><span class="fs-7">Anterior</span></a>
-                <a class="nav-link btn-secondary btn-sm rounded-circle mr-1 fs-7"><span class="fs-7">1</span></a>
-                <a class="nav-link btn btn-outline-secondary btn-sm rounded-pill" role="tab"><span class="fs-7">Siguiente</span></a>
-            </div>
         </div>
         <!-- INICIO DIV OCULTO UNO-->
         <div class="container" id="OcultarTradicional" runat="server">
@@ -117,7 +147,7 @@
                     <asp:Label ID="tituloSalas" runat="server" CssClass="textoTablasArriba">
                 <h2 class="textoTablasArriba"><i class="bi bi-table">Tabla De Salas</i></h2>
                     </asp:Label>
-                    <asp:GridView ID="tablaSalasTradicional" runat="server" CssClass="table" AutoGenerateColumns="False" OnRowDeleting="BorrarSalaTradicional">
+                    <asp:GridView ID="tablaSalasTradicional" runat="server" CssClass="table" AutoGenerateColumns="False" OnRowDeleting="BorrarSalaTradicional" OnRowDataBound="tablaSalasTradicional_RowDataBound">
                         <Columns>
                             <asp:BoundField DataField="NombreSala" HeaderText="Sala">
                                 <HeaderStyle CssClass="bg-success text-white" />
@@ -136,7 +166,7 @@
             <h2 class="textoTablasArriba"><i class="bi bi-table">Tabla De Sentencias</i></h2>
                     </asp:Label>
 
-                    <asp:GridView ID="tablaSentenciasTradicional" runat="server" CssClass="table" AutoGenerateColumns="False" OnRowDeleting="BorrarSentenciaTradicional">
+                    <asp:GridView ID="tablaSentenciasTradicional" runat="server" CssClass="table" AutoGenerateColumns="False" OnRowDeleting="BorrarSentenciaTradicional" OnRowDataBound="tablaSentenciasTradicional_RowDataBound">
                         <Columns>
                             <asp:BoundField DataField="Sentencia" HeaderText="Sentencia">
                                 <HeaderStyle CssClass="bg-success text-white" />
@@ -151,7 +181,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-7 col-md-7 col-sm-12 text-center">
                     <div style="display: flex; align-items: center; justify-content: center;">
-                        <p style="margin-right: 10px; margin-top: 10px;">¿Consultar Sentenciado / Beneficiario? (</p>
+                        <p style="margin-right: 10px; margin-top: 10px;">¿Consultar Sentenciado / Beneficiario? </p>
                         <div class="form-check" style="margin-right: 10px;">
                             <asp:RadioButton ID="CheckSiTradicional" runat="server" GroupName="respuestaTradicional" AutoPostBack="True" OnCheckedChanged="RadioButton_CheckedChanged" />
                             <label class="form-check-label" for="CheckSiTradicional">
@@ -193,9 +223,9 @@
                     </div>
                 </div>
             </div>
-            <!-- GridView -->
+            <!-- GridView aqui -->
             <div class="row">
-                <asp:GridView ID="GridView1Tradicional" runat="server" CssClass="table" AutoGenerateColumns="False">
+                <asp:GridView ID="GridView1Tradicional" runat="server" CssClass="table" AutoGenerateColumns="False" OnRowDataBound="GridView1Tradicional_RowDataBound">
                     <Columns>
                         <asp:BoundField DataField="NoEjecucion" HeaderText="No°Ejecucion">
                             <HeaderStyle CssClass="bg-success text-white" />
@@ -297,7 +327,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    <h2 class="textoTablasArriba"><i class="bi bi-table"></i>Tabla de Anexos</i></h2>
+                     <asp:Label ID="TablasAnexos" runat="server" CssClass="textoTablasArriba">
+                       <h2 class="textoTablasArriba"><i class="bi bi-table">Tabla de Anexos</i></h2>
+                    </asp:Label>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                         <asp:GridView ID="tablaDatosTradicional" CssClass="table" runat="server" AutoGenerateColumns="False" OnRowDeleting="BorrarFilaTradicional">
                             <Columns>
@@ -316,12 +348,32 @@
                 </div>
                 <div class="row justify-content-md-center">
                     <div class="col-xl-2 col-sm-12 col-md-2">
-                        <asp:Button ID="btnGuardarDatosModal" runat="server" Text="Guardar Datos" CssClass="btn btn-outline-secondary btn-sm col-12" OnClientClick="ModalDatosTradicional(); return false;" />
+                        <asp:Button ID="btnGuardarDatosModal" runat="server" Text="Guardar Datos" CssClass="btn btn-outline-secondary btn-sm col-12" OnClick="btnGuardarDatosModal_Click"/>
                     </div>
                 </div>
             </div>
         </div>
         <!-- FIN DIV OCULTO DOS -->
+        <div class="container" id="tituloSello" runat="server">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <h3 class="text-center">¡Se ha guardado tu informacion y ya puedes imprimir tu sello aqui!</h3>
+                </div>
+            </div>
+            <p></p>
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 d-flex justify-content-center">
+                    <button class="btn btn-success" onclick="imprimirTicket()">Imprimir SELLO</button>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 d-flex justify-content-center">
+                    <button class="btn btn-primary" onclick="recargarPagina()">Registrar otra inicial</button>
+                </div>
+            </div>
+        </div>
+        <p></p>
+
+
+        <pre id="TicketDiv" runat="server"></pre>
     </ContentTemplate>
 </asp:UpdatePanel>
 
@@ -340,4 +392,40 @@
     function ModalDatosTradicional() {
         $('#DatosTradicional').modal('show');
     }
+
+
+    function abrirModalGuardarDatos() {
+        $('#guardarDatos2').modal('show');
+    }
+
+    function CerrarModalGuardarDatos() {
+        $('#guardarDatos2').modal('hide');
+        $('body').removeClass('modal-open').css('overflow', ''); // Restablece el overflow
+        $('.modal-backdrop').remove();
+    }
+
+    function imprimirTicket() {
+        var contenido = document.getElementById('<%= TicketDiv.ClientID %>').innerHTML;
+        var ventanaImpresion = window.open('', '_blank');
+
+        var estilos = `<style>
+                pre {
+                    font-family: monospace;
+                    white-space: pre;
+                    margin: 1em 0;
+                }
+            </style>`;
+
+        ventanaImpresion.document.write(estilos + '<pre>' + contenido + '</pre>');
+        ventanaImpresion.document.close();
+        ventanaImpresion.print();
+        ventanaImpresion.onfocus = function () { setTimeout(function () { ventanaImpresion.close(); }, 500); }
+    }
+
+
+    function recargarPagina() {
+        window.location.href = window.location.href;
+    }
+
+
 </script>

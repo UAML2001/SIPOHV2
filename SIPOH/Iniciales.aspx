@@ -83,6 +83,9 @@
                     function toastWarning(mensaje) {
                         toastr.warning(mensaje, "Atención");
                     }
+
+               
+
                 </script>
             </div>
 </asp:Content>

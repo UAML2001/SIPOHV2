@@ -159,6 +159,15 @@ namespace SIPOH.Views
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl errorModal;
 
         /// <summary>
+        /// Control PrimerRow.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PrimerRow;
+
+        /// <summary>
         /// Control inputRadicacion.
         /// </summary>
         /// <remarks>
@@ -483,6 +492,15 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Button AgregarBtn;
 
         /// <summary>
+        /// Control TablasAnexos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TablasAnexos;
+
+        /// <summary>
         /// Control tablaDatos.
         /// </summary>
         /// <remarks>
@@ -501,6 +519,15 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Button btnGuardarDatosModal;
 
         /// <summary>
+        /// Control tituloSello.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tituloSello;
+
+        /// <summary>
         /// Control TicketDiv.
         /// </summary>
         /// <remarks>
@@ -508,14 +535,5 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl TicketDiv;
-
-        /// <summary>
-        /// Control btnImprimir.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnImprimir;
     }
 }

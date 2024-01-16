@@ -9,6 +9,7 @@ using System.Web;
 using System.Data;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
+using System.Security.Cryptography;
 
 namespace SIPOH.Views
 {
@@ -34,7 +35,7 @@ namespace SIPOH.Views
                 OtroAnexo.Disabled = true;
                 InputOtraSolicitud.Disabled = true;
                 //ticket
-               
+                tituloSello.Style["display"] = "none";
             }
         }
         private void CargarSalas()
@@ -366,16 +367,16 @@ namespace SIPOH.Views
                         GridView1.DataSource = reader;
                         GridView1.DataBind();
                         string mensaje = "Se encontraron resultados semejantes verifica si es el que necesitas antes de guardar nueva informacion.";
-                        string scriptToast = $"toastInfo('{mensaje}');";
-                        ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
+                        string script = $"toastWarning('{mensaje}');";
+                        ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
                     }
                     else
                     {
                         GridView1.DataSource = null;
                         GridView1.DataBind();
                         string mensaje = "No se encontro registro, puedes guardar un nuevo dato pero verifica antes que sea correcto.";
-                        string script = $"toastWarning('{mensaje}');";
-                        ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+                        string scriptToast = $"toastInfo('{mensaje}');";
+                        ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
                     }
                 }
             }
@@ -441,6 +442,8 @@ namespace SIPOH.Views
         protected void AgregarATabla(object sender, EventArgs e)
         {
             string anexo = CatAnexosDD.SelectedItem.Text;
+            string valorAnexo = CatAnexosDD.SelectedItem.Value;
+
             if (anexo == "OTRO")
             {
                 anexo = OtroAnexo.Value;
@@ -448,19 +451,72 @@ namespace SIPOH.Views
             string cantidad = CantidadInput.Value;
 
             List<Sala> salas = ViewState["anexos"] as List<Sala> ?? new List<Sala>();
-            salas.Add(new Sala { NombreSala = anexo, NumeroToca = cantidad });
-            ViewState["anexos"] = salas;
-            tablaDatos.DataSource = salas;
-            tablaDatos.DataBind();
+
+            // Verificación de selección válida
+            if (valorAnexo.Equals("Seleccionar", StringComparison.OrdinalIgnoreCase))
+            {
+                MostrarMensajeToast("Debes seleccionar una opción válida");
+                TablasAnexos.Visible = false;
+                return;
+            }
+
+            // Verificación de campos no vacíos y cantidad mayor que cero
+            if (!string.IsNullOrWhiteSpace(anexo) && int.TryParse(cantidad, out int cantidadNumerica) && cantidadNumerica > 0)
+            {
+                var salaExistente = salas.FirstOrDefault(s => s.NombreSala.Equals(anexo, StringComparison.OrdinalIgnoreCase));
+                if (salaExistente != null)
+                {
+                    salaExistente.NumeroToca = cantidad;
+                }
+                else
+                {
+                    salas.Add(new Sala { NombreSala = anexo, NumeroToca = cantidad });
+                }
+
+                ViewState["anexos"] = salas;
+                tablaDatos.DataSource = salas;
+                tablaDatos.DataBind();
+                TablasAnexos.Visible = true;
+                CatAnexosDD.ClearSelection();
+                OtroAnexo.Value = "";
+                OtroAnexo.Disabled = true;
+                CantidadInput.Value = "";
+            }
+            else
+            {
+                MostrarMensajeToast("No puedes dejar campos vacíos y la cantidad debe ser mayor que cero");
+                TablasAnexos.Visible = false;
+            }
         }
+
+
+        private void MostrarMensajeToast(string mensaje)
+        {
+            string script = $"toastError('{mensaje}');";
+            ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+        }
+
         protected void BorrarFila(object sender, GridViewDeleteEventArgs e)
         {
             List<Sala> salas = (List<Sala>)ViewState["anexos"];
-            salas.RemoveAt(e.RowIndex);
-            ViewState["anexos"] = salas;
-            tablaDatos.DataSource = salas;
-            tablaDatos.DataBind();
+
+            if (salas != null && salas.Count > e.RowIndex)
+            {
+                salas.RemoveAt(e.RowIndex);
+                ViewState["anexos"] = salas;
+                tablaDatos.DataSource = salas;
+                tablaDatos.DataBind();
+                if (salas.Count == 0)
+                {
+                    TablasAnexos.Visible = false;
+                }
+            }
+            else
+            {
+                MostrarMensajeToast("No se puede eliminar la fila seleccionada");
+            }
         }
+
         protected void tablaDatos_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -588,7 +644,7 @@ namespace SIPOH.Views
                     );
                     string scriptToast = "mostrarToast();";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", scriptToast, true);
-
+                    Limpiar();
                     // Recargar la página después de un tiempo determinado (por ejemplo, 5 segundos)
                     //string scriptRecarga = "setTimeout(function(){ window.location.href = window.location.href; }, 5000);";
                     //ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "recargaPaginaScript", scriptRecarga, true);
@@ -927,6 +983,7 @@ namespace SIPOH.Views
         }
         //fin nuevas funcionalidades
         //FUNCION QUE GUARDA DATOS QUE INSERTARA PARA LUEGO MOSTRAR EN EL INSERT
+
         public void RecolectarDatosParaModal()
         {
             string fechaEjecucion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -971,10 +1028,49 @@ namespace SIPOH.Views
             lblinterno.Text = interno;
             ltTituloModal.Text = $"¿Quieres guardar los siguientes datos en la causa | nuc - {numeroCausaNuc} ?";
         }
-        protected void btnGuardarDatosModal_Click(object sender, EventArgs e)
+        protected void btnGuardarDatosModal1_Click(object sender, EventArgs e)
         {
             RecolectarDatosParaModal();
-            ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "abrirModal", "abrirModalGuardarDatos();", true);
+            ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "abrirModal", "abrirModalGuardarDatos1();", true);
+        }
+
+        private void Limpiar()
+        {
+            inputRadicacion.Value = "";
+            inputIncomJuzgado.Value = "";
+            inputNuc.Value = "";
+            tablaResultadosHtmlDiv.InnerHtml = "";
+            tablaSalas.DataSource = null;
+            tablaSalas.DataBind();
+            tablaSentencias.DataSource = null;
+            tablaSentencias.DataBind();
+            CheckSi.Checked = false;
+            CheckNo.Checked = false;
+            InputNombreBusqueda.Value = "";
+            InputApPaternoBusqueda.Value = "";
+            inputApMaterno.Value = "";
+            GridView1.DataSource = null;
+            GridView1.DataBind();
+            siInterno.Checked = false;
+            noInterno.Checked = false;
+            CatSolicitantesDD.ClearSelection();
+            detalleSolicitantes.Value = "";
+            CatSolicitudDD.ClearSelection();
+            InputOtraSolicitud.Value = "";
+            CatAnexosDD.ClearSelection();
+            OtroAnexo.Value = "";
+            CantidadInput.Value = "";
+            tablaDatos.DataSource = null;
+            tablaDatos.DataBind();
+            //tituloDetalles.Visible = false;
+            //INVISIBLE LOS DIVS
+            tituloSalas.Visible = false;
+            tituloSentencias.Visible = false;
+            DivExAm.Style["display"] = "none";
+            ContinuarRegistro.Style["display"] = "none";
+            RegistroPartesIn.Style["display"] = "none";
+            PrimerRow.Style["display"] = "none";
+            tituloSello.Style["display"] = "block";
         }
 
         private List<string> DividirTextoEnLineas(string texto, int maxCaracteresPorLinea)
@@ -1043,17 +1139,12 @@ namespace SIPOH.Views
             {
                 ticket.AppendLine($"{anexo.Descripcion}: {anexo.Cantidad}");
             }
-            ticket.AppendLine($"Total: {totalAnexos}");
+            ticket.AppendLine($"Total Anexos: {totalAnexos}");
             return ticket.ToString();
         }
         
-        protected void btnImprimir_Click(object sender, EventArgs e)
-        {
-            ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
-        }
+       
         //FIN de funcion que guarda los datos para luego mostrar en el modal
-        //INICIO PDF
-
-        //FINAL PDF
+        
     }
 }

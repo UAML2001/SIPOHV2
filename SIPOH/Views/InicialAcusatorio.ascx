@@ -95,7 +95,7 @@
 </div>
 
 
-<div class="row">
+<div class="row" id="PrimerRow" runat="server">
     <form class="container-lg col-xxl-12">
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
             <label for="inputRadicacion" class="form-label text-secondary">Juzgado de Procedencia</label>
@@ -113,7 +113,7 @@
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
             <label for="inputNuc" class="form-label text-secondary">Numero de Causa</label>
             <div class="input-group">
-                <input type="text" class="form-control form-control-sm" id="inputNuc" ClientIDMode="Static" runat="server">
+                <input type="text" class="form-control form-control-sm" id="inputNuc" ClientIDMode="Static" runat="server" minlength="9" maxlength="9">
                 <div class="input-group-append">
                     <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnBuscar_Click" />
                 </div>
@@ -124,11 +124,6 @@
 </div>
 <div class="p-4">
     <div id="tablaResultadosHtmlDiv" class="table-responsive" runat="server"></div>
-    <div class="nav-item d-flex justify-content-end mt-2">
-        <a class="nav-link btn btn-outline-secondary btn-sm rounded-pill mr-1 fs-6" role="tab"><span class="fs-6">Anterior</span></a>
-        <a class="nav-link btn-secondary btn-sm rounded-circle mr-1 fs-6"><span class="fs-6">1</span></a>
-        <a class="nav-link btn btn-outline-secondary btn-sm rounded-pill fs-6" role="tab"><span class="fs-6">Siguiente</span></a>
-    </div>
 </div>
 <div class="container" id="DivExAm" runat="server">
     <div class="row">
@@ -196,7 +191,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-7 col-md-7 col-sm-12 text-center">
             <div style="display: flex; align-items: center; justify-content: center;">
-                <p style="margin-right: 10px; margin-top: 10px;">¿Consultar Sentenciado / Beneficiario? (</p>
+                <p style="margin-right: 10px; margin-top: 10px;">¿Consultar Sentenciado / Beneficiario? </p>
                 <div class="form-check" style="margin-right: 10px;">
                     <asp:RadioButton ID="CheckSi" runat="server" GroupName="respuesta" AutoPostBack="True" OnCheckedChanged="RadioButton2_CheckedChanged" />
                     <label class="form-check-label" for="CheckSi">
@@ -330,13 +325,12 @@
             </div>
         </div>
 
-        
-
-
         <div class="row">
-            <h2 class="textoTablasArriba"><i class="bi bi-table"></i>Tabla de Anexos</i></h2>
+            <asp:Label ID="TablasAnexos" runat="server" CssClass="textoTablasArriba">
+               <h2 class="textoTablasArriba"><i class="bi bi-table">Tabla de Anexos</i></h2>
+            </asp:Label>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                <asp:GridView ID="tablaDatos" CssClass="table"  runat="server" AutoGenerateColumns="False" OnRowDeleting="BorrarFila" OnRowDataBound="tablaDatos_RowDataBound">
+                <asp:GridView ID="tablaDatos" CssClass="table" runat="server" AutoGenerateColumns="False" OnRowDeleting="BorrarFila" OnRowDataBound="tablaDatos_RowDataBound">
                     <Columns>
                         <asp:BoundField DataField="NombreSala" HeaderText="Anexo">
                             <HeaderStyle CssClass="bg-success text-white" />
@@ -354,18 +348,35 @@
 
         <div class="row justify-content-md-center">
             <div class="col-xl-2 col-sm-12 col-md-2">
-                <asp:Button ID="btnGuardarDatosModal" runat="server" Text="Guardar Datos" CssClass="btn btn-outline-secondary btn-sm col-12" OnClick="btnGuardarDatosModal_Click" />
+                <asp:Button ID="btnGuardarDatosModal" runat="server" Text="Guardar Datos" CssClass="btn btn-outline-secondary btn-sm col-12" OnClick="btnGuardarDatosModal1_Click" />
             </div>
         </div>
     </div>
         </div>
 
-    <pre id="TicketDiv" runat="server"></pre>
+        <div class="container" id="tituloSello" runat="server">
+            <div class="row justify-content-center" >
+                <div class="col-auto">
+                    <h3 class="text-center">¡Se ha guardado tu informacion y ya puedes imprimir tu sello aqui!</h3>
+                </div>
+            </div>
+            <p></p>
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 d-flex justify-content-center">
+                    <button class="btn btn-success" onclick="imprimirTicket()">Imprimir SELLO</button>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 d-flex justify-content-center">
+                    <button class="btn btn-primary" onclick="recargarPagina()">Registrar otra inicial</button>
+                </div>
+            </div>
+        </div>
+    <p></p>
 
+
+    <pre id="TicketDiv" runat="server"></pre>
     </ContentTemplate>
     </asp:UpdatePanel>
 
-    <asp:Button ID="btnImprimir" runat="server" Text="Imprimir Ticket" OnClick="btnImprimir_Click" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -383,7 +394,7 @@
             $('#modalError').modal('show'); // Muestra el modal de error
     }
     // Función para abrir el modal
-    function abrirModalGuardarDatos() {
+    function abrirModalGuardarDatos1() {
         $('#guardarDatos').modal('show');
         }
 
@@ -397,74 +408,6 @@
             $('#errorModal').modal('show');
             alert("Entro modal error insert");
         }
-
-    // Función para generar sello
-        //function dividirTexto(texto, maxCaracteres) {
-        //    const lineas = [];
-        //    while (texto.length > 0) {
-        //        if (texto.length <= maxCaracteres) {
-        //            lineas.push(texto);
-        //            break;
-        //        }
-        //        let corte = texto.substring(0, maxCaracteres);
-        //        let espacio = corte.lastIndexOf(' ');
-        //        let corteFinal = espacio > -1 ? espacio : maxCaracteres;
-        //        lineas.push(texto.substring(0, corteFinal).trim());
-        //        texto = texto.substring(corteFinal).trim();
-        //    }
-        //    return lineas;
-        //}
-        //function generarSELLO(nombreJuzgado, noEjecucion, fechaEjecucion, folio, anexos, totalAnexos) {
-        //    const { jsPDF } = window.jspdf;
-        //    const doc = new jsPDF();
-
-        //    doc.setFontSize(9);
-        //    doc.setFont("helvetica", "bold");
-        //    doc.text("TRIBUNAL SUPERIOR DE JUSTICIA ", 10, 5);
-        //    doc.text("INICIAL", 27, 25);
-        //    // Dividir el nombre del juzgado en líneas
-        //    let lineasNombreJuzgado = dividirTexto(nombreJuzgado, 30);
-        //    let y = 35;
-        //    lineasNombreJuzgado.forEach(linea => {
-        //        doc.text(linea, 10, y);
-        //        y += 5;
-        //    });
-        //    // Incremento adicional para separar secciones
-        //    y += 1;
-        //    // A partir de aquí, todos los elementos subsiguientes usan 'y' como referencia
-        //    doc.text("DEL ESTADO DE HIDALGO", 16, 10);
-        //    doc.setFont("helvetica", "normal");
-        //    doc.text("ATENCION CIUDADANA", 16, 15);
-        //    doc.text("SENTENCIA EJECUTORIADA", 13, 20);
-        //    doc.text("--------------------------------------", 15,30);
-        //    doc.text("--------------------------------------", 15, y);
-        //    y += 5;
-        //    doc.text(`Número de Ejecución: ${noEjecucion}`, 10, y);
-        //    y += 5;
-        //    doc.text(`Folio: ${folio}`, 10, y);
-        //    y += 5;
-        //    doc.text(`Fecha: ${fechaEjecucion}`, 10, y);
-        //    y += 5;
-        //    doc.setFont("helvetica", "bold");
-        //    doc.text("ANEXOS:", 10, y);
-        //    y += 5;
-        //    doc.setFont("helvetica", "normal");
-        //    anexos.forEach(anexo => {
-        //        doc.text(anexo, 10, y);
-        //        y += 5;
-        //    });
-        //    doc.text(`Total: ${totalAnexos}`, 10, y);
-        //    y += 5;
-
-        //    const blob = doc.output('blob');
-        //    const url = URL.createObjectURL(blob);
-        //    const pdfWindow = window.open(url);
-        //    setTimeout(() => {
-        //        pdfWindow.print();
-        //    }, 500);
-        //}
-        //TICKET// ... resto del código ...
-        //}
 
         function imprimirTicket() {
             var contenido = document.getElementById('<%= TicketDiv.ClientID %>').innerHTML;
@@ -484,13 +427,11 @@
             ventanaImpresion.onfocus = function () { setTimeout(function () { ventanaImpresion.close(); }, 500); }
         }
 
+ 
+        function recargarPagina() {
+            window.location.href = window.location.href;
+        }
 
-        //let anexosPrueba = [
-        //    "Anexo 1 - Cantidad: 3",
-        //    "Anexo 2 - Cantidad: 5",
-        //    "Anexo 3 - Cantidad: 2"
-        //];
-        //generarSELLO("Nombre Largo del Juzgado quini", "12345", "01-01-2024", "67890", anexosPrueba);
-
+ 
 
     </script>

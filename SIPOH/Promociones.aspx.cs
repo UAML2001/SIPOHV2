@@ -251,14 +251,13 @@ namespace SIPOH
             // Verificar si la opción "Seleccionar" fue elegida
             if (valorAnexo.Equals("Seleccionar", StringComparison.OrdinalIgnoreCase))
             {
-                // Manejar el caso de la opción "Seleccionar"
                 MostrarMensajeToast("Debes seleccionar una opción válida");
                 TablasAnexos.Visible = false;
                 return; // Finaliza la ejecución de la función
             }
 
-            // Verificar si los campos no están vacíos
-            if (!string.IsNullOrWhiteSpace(anexo) && !string.IsNullOrWhiteSpace(cantidad))
+            // Verificar si los campos no están vacíos y la cantidad es mayor que cero
+            if (!string.IsNullOrWhiteSpace(anexo) && int.TryParse(cantidad, out int cantidadNumerica) && cantidadNumerica > 0)
             {
                 var salaExistente = salas.FirstOrDefault(s => s.NombreSala.Equals(anexo, StringComparison.OrdinalIgnoreCase));
                 if (salaExistente != null)
@@ -277,14 +276,19 @@ namespace SIPOH
                 tablaDatos.DataBind();
                 TablasAnexos.Visible = true;
                 BotonGuardarDiv.Style.Add("display", "block");
+                CatAnexosDD.ClearSelection();
+                OtroAnexo.Value = "";
+                OtroAnexo.Disabled = true;
+                CantidadInput.Value = "";
             }
             else
             {
-                // Manejar el caso de campos vacíos
-                MostrarMensajeToast("No puedes dejar campos vacíos");
+                // Manejar el caso de campos vacíos o cantidad inválida (cero o no numérica)
+                MostrarMensajeToast("No puedes dejar campos vacíos y la cantidad debe ser mayor que cero");
                 TablasAnexos.Visible = false;
             }
         }
+
 
         private void MostrarMensajeToast(string mensaje)
         {
@@ -341,6 +345,7 @@ namespace SIPOH
             {
                 e.Row.Cells[0].Style.Add("display", "none");
             }
+      
         }
 
         protected void btnGuardarPromocion_Click(object sender, EventArgs e)
