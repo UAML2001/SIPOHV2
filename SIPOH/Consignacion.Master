@@ -38,7 +38,7 @@
                 <!-- Sidebar - Brand -->
                 <a class="sidebar-brand d-flex align-items-center justify-content-center" style="background-color: #3F5259;" href="index.html">
               
-                    <div class="sidebar-brand-text mx-3"><img src="http://drive.google.com/uc?export=view&id=1rjBJM5f5dGJOfoLvCwXpA3XVvF73pCy8" alt="" width="130" height="50" /></div>
+                    <div class="sidebar-brand-text mx-3"><img src="<%= ResolveUrl("content/img/PoderJudicialLargo.png") %>" alt="" width="130" height="50" /></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <li class="nav-item">

@@ -1074,11 +1074,10 @@ namespace SIPOH.Views
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
                     //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Limpiar", "limpiarFormularioInsert();", true);
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Exito", "EjemploExito();", true);
-                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
-
                     string ticket = CrearTicketSELLO();
                     TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
                     ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
+                    LimpiarYRestablecerPanel();
 
                 }
                 catch (SqlException sqlEx)
@@ -1093,6 +1092,7 @@ namespace SIPOH.Views
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
                     //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Limpiar", "limpiarFormularioInsert();", true);
                     //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
+                    LimpiarYRestablecerPanel();
                     string errorMessage = sqlEx.Message;
 
                     // Registra el script de JavaScript con el mensaje de error.
@@ -1357,8 +1357,8 @@ namespace SIPOH.Views
                 if (row.RowType == DataControlRowType.DataRow)
                 {
                     // Encuentra el control Label dentro de la celda
-                    Label descripcion = (Label)row.FindControl("descripcion");
-                    Label cantidad = (Label)row.FindControl("Cantidad");
+                    Label descripcion = (Label)row.FindControl("lblAnexo");
+                    Label cantidad = (Label)row.FindControl("lblCantAnexos");
 
                     // Realizar la inserción en P_PartesAsunto
                     string query = "INSERT INTO P_Anexos (IdAsunto, IdPosterior, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @IdPosterior, @Descripcion, @Cantidad, @Digitalizado);";
@@ -1367,9 +1367,11 @@ namespace SIPOH.Views
                     {
                         cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
                         cmd.Parameters.AddWithValue("@IdPosterior", idPost);
-                        cmd.Parameters.AddWithValue("@Descripcion", descripcion);
-                        cmd.Parameters.AddWithValue("@Cantidad", cantidad);
+                        cmd.Parameters.AddWithValue("@Descripcion", descripcion.Text); // Aquí está la corrección
+                        cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(cantidad.Text)); // Asegúrate de que este es el tipo correcto
                         cmd.Parameters.AddWithValue("@Digitalizado", digital);
+
+                        ProcesarDatosDeInsercion2(descripcion, cantidad);
 
                         // Resto de los parámetros...
 
@@ -1378,20 +1380,6 @@ namespace SIPOH.Views
                 }
             }
         }
-
-        //private void ActualizarFolios(SqlConnection conn, SqlTransaction transaction, int idJuzgado)
-        //{
-        //    string query = @"
-        //    UPDATE [SIPOH].[dbo].[P_Folios]
-        //    SET Folio = Folio + 1, frecuencia = frecuencia + 1
-        //    WHERE IdJuzgado = @IdJuzgado AND Tipo = 'C'";
-
-        //    using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
-        //    {
-        //        cmd.Parameters.AddWithValue("@IdJuzgado", idJuzgado);
-        //        cmd.ExecuteNonQuery();
-        //    }
-        //}
 
         private int ObtenerIdUsuarioDesdeSesion()
         {
@@ -1431,13 +1419,21 @@ namespace SIPOH.Views
         public static string GlobalNumero;
         public static string GlobalFechaRecepcion;
         public static string GlobalNomJuzgado;
+        public static string GlobalDescripcion;
+        public static string GlobalCantidad;
+        public static int GlobalExhorto = 1;
 
         private void ProcesarDatosDeInsercion(DateTime fIngresoFormateado, string Numero)
         {
             GlobalNumero = Numero;
             GlobalFechaRecepcion = fIngresoFormateado.ToString("yyyy-MM-dd HH:mm:ss");
             GlobalNomJuzgado = ObtenerNombreJuzgadoDesdeSesion();
-            // Nota: idEjecucion se almacena en GlobalesId.IdEjecucion AQUI ANDO
+        }
+
+        private void ProcesarDatosDeInsercion2(Label descripcion, Label cantidad)
+        {
+            GlobalDescripcion = descripcion.Text;
+            GlobalCantidad = cantidad.Text;
         }
 
         // Inicia desarrollo de sello
@@ -1473,30 +1469,60 @@ namespace SIPOH.Views
             StringBuilder ticket = new StringBuilder();
             string nombreJuzgado = GlobalNomJuzgado;
             List<string> lineasNombreJuzgado = DividirTextoEnLineas(nombreJuzgado, 30);
+            int total = GlobalExhorto; // Inicializa total con GlobalExhorto
+            int anchoLinea = 30; // Ancho de la línea
 
             // Encabezado del ticket
-            ticket.AppendLine("TRIBUNAL SUPERIOR DE JUSTICIA");
-            ticket.AppendLine("DEL ESTADO DE HIDALGO");
-            ticket.AppendLine("ATENCION CIUDADANA");
-            ticket.AppendLine("EXHORTO");
-            ticket.AppendLine(new string('-', 30)); // Línea divisoria
+            ticket.AppendLine(CentrarTexto("TRIBUNAL SUPERIOR DE JUSTICIA", anchoLinea));
+            ticket.AppendLine(CentrarTexto("DEL ESTADO DE HIDALGO", anchoLinea));
+            ticket.AppendLine(CentrarTexto("ATENCION CIUDADANA", anchoLinea));
+            ticket.AppendLine(CentrarTexto("EXHORTO", anchoLinea));
+            ticket.AppendLine(new string('-', anchoLinea)); // Línea divisoria
 
             // Información del juzgado
             foreach (string linea in lineasNombreJuzgado)
             {
                 ticket.AppendLine(linea);
             }
-            ticket.AppendLine(new string('-', 30)); // Línea divisoria
+            ticket.AppendLine(new string('-', anchoLinea)); // Línea divisoria
 
             // Detalles del exhorto
             ticket.AppendLine($"Exhorto: {GlobalNumero}");
             ticket.AppendLine($"Fecha: {GlobalFechaRecepcion}");
 
             // Sección del total
-            ticket.AppendLine("EXHORTO.................1");
-            ticket.AppendLine("TOTAL..................1");
+            ticket.AppendLine(AlinearTexto("EXHORTO", GlobalExhorto.ToString(), anchoLinea));
+
+            foreach (GridViewRow row in gvAnexos.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    // Encuentra el control Label dentro de la celda
+                    Label descripcion = (Label)row.FindControl("lblAnexo");
+                    Label cantidad = (Label)row.FindControl("lblCantAnexos");
+
+                    ticket.AppendLine(AlinearTexto(descripcion.Text, cantidad.Text, anchoLinea));
+                    total += Convert.ToInt32(cantidad.Text);
+                }
+            }
+
+            ticket.AppendLine(AlinearTexto("TOTAL", total.ToString(), anchoLinea));
 
             return ticket.ToString();
+        }
+
+        // Función para centrar texto
+        private string CentrarTexto(string texto, int anchoLinea)
+        {
+            int espacios = (anchoLinea - texto.Length) / 2;
+            return new string(' ', espacios) + texto;
+        }
+
+        // Función para alinear texto
+        private string AlinearTexto(string textoIzquierda, string textoDerecha, int anchoLinea)
+        {
+            int espacios = anchoLinea - textoIzquierda.Length - textoDerecha.Length;
+            return textoIzquierda + new string('.', espacios) + textoDerecha;
         }
 
 
@@ -1510,6 +1536,29 @@ namespace SIPOH.Views
         // Termina desarrollo de sello
 
 
+        private void LimpiarYRestablecerPanel()
+        {
+            // Limpia y restablece los controles dentro del Panel1}
+            OpExhorto.SelectedValue = "SO";
+            numdoc1.Text = string.Empty;
+            procede1.Text = string.Empty;
+            fecha1.Text = string.Empty;
+            fojas1.Text = "0";
+            ddlDelitos1.SelectedIndex = 0;
+            gvPartes.DataSource = null;
+            gvPartes.DataBind();
+            gvDelitos.DataSource = null;
+            gvDelitos.DataBind();
+            Diligencia1.Text = string.Empty;
+            prioridad.SelectedIndex = 0;
+            gvAnexos.DataSource = null;
+            gvAnexos.DataBind();
+            observa1.Text = string.Empty;
+            // ... limpia otros controles según sea necesario ...
+
+            // Oculta el Panel1
+            Panel1.Visible = false;
+        }
 
         //AQUI ACABA EL INSERT EXHORTO
 
@@ -1569,6 +1618,8 @@ namespace SIPOH.Views
 
                     InsertarEnPExhortos2(conn, transaction, idAsunto);
 
+                    InsertarEnPAnexos2(conn, transaction, idAsunto);
+
                     // Commit de la transacción
                     transaction.Commit();
 
@@ -1576,8 +1627,13 @@ namespace SIPOH.Views
                     // Mostrar un Toastr de confirmación
 
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
+                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Limpiar", "limpiarFormularioInsert();", true);
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Exito", "EjemploExito();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
+                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
+                    string ticket = CrearTicketSELLO2();
+                    TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
+                    ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
+                    LimpiarYRestablecerPanel2();
                 }
                 catch (SqlException sqlEx)
                 {
@@ -1676,6 +1732,8 @@ namespace SIPOH.Views
                 cmd.Parameters.AddWithValue("@MP", MP);
                 cmd.Parameters.AddWithValue("@Prioridad", nPrioridad);
                 cmd.Parameters.AddWithValue("@Fojas", nFojas);
+
+                ProcesarDatosDeInsercion3(fIngreso, Numero);
 
                 // Obtener el ID generado automáticamente
                 idAsunto = Convert.ToInt32(cmd.ExecuteScalar());
@@ -1816,31 +1874,64 @@ namespace SIPOH.Views
 
         private void InsertarEnPAsuntoDelito2(SqlConnection conn, SqlTransaction transaction, int idAsunto)
         {
-            // Obtener datos desde tu panel ASPX para P_PartesAsunto
-            int idDelito;
-
-            if (int.TryParse(ddlDelitos2.SelectedValue, out idDelito))
+            foreach (GridViewRow row in gvDelitos.Rows)
             {
-                // Resto de los campos...
-
-                // Realizar la inserción en P_PartesAsunto
-                string query = "INSERT INTO P_AsuntoDelito (IdAsunto, IdDelito) VALUES (@IdAsunto, @IdDelito);";
-
-                using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                if (row.RowType == DataControlRowType.DataRow)
                 {
-                    cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
-                    cmd.Parameters.AddWithValue("@IdDelito", idDelito);
+                    // Encuentra el control Label dentro de la celda
+                    Label lblIdDelito = (Label)row.FindControl("lblIdDelito");
 
-                    // Resto de los parámetros...
+                    // Obtén el valor de texto del control Label y conviértelo a int
+                    int idDelito = int.Parse(lblIdDelito.Text);
 
-                    cmd.ExecuteNonQuery();
+                    // Realizar la inserción en P_PartesAsunto
+                    string query = "INSERT INTO P_AsuntoDelito (IdAsunto, IdDelito) VALUES (@IdAsunto, @IdDelito);";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                        cmd.Parameters.AddWithValue("@IdDelito", idDelito);
+
+                        // Resto de los parámetros...
+
+                        cmd.ExecuteNonQuery();
+                    }
                 }
             }
-            else
+        }
+
+
+        private void InsertarEnPAnexos2(SqlConnection conn, SqlTransaction transaction, int idAsunto)
+        {
+            int idPost = 0;
+            string digital = "N";
+
+            foreach (GridViewRow row in gvAnexos2.Rows)
             {
-                // Manejar el caso donde ddlDelitos1.SelectedValue no es un número válido
-                // Puedes mostrar un mensaje de error o tomar alguna acción específica
-                Console.WriteLine($"El valor '{ddlDelitos2.SelectedValue}' no es un número válido para IdDelito.");
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    // Encuentra el control Label dentro de la celda
+                    Label descripcion = (Label)row.FindControl("lblAnexo2");
+                    Label cantidad = (Label)row.FindControl("lblCantAnexos2");
+
+                    // Realizar la inserción en P_PartesAsunto
+                    string query = "INSERT INTO P_Anexos (IdAsunto, IdPosterior, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @IdPosterior, @Descripcion, @Cantidad, @Digitalizado);";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                        cmd.Parameters.AddWithValue("@IdPosterior", idPost);
+                        cmd.Parameters.AddWithValue("@Descripcion", descripcion.Text); // Aquí está la corrección
+                        cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(cantidad.Text)); // Asegúrate de que este es el tipo correcto
+                        cmd.Parameters.AddWithValue("@Digitalizado", digital);
+
+                        ProcesarDatosDeInsercion4(descripcion, cantidad);
+
+                        // Resto de los parámetros...
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
             }
         }
 
@@ -1880,6 +1971,161 @@ namespace SIPOH.Views
             return -1; // O un valor por defecto según tu lógica de negocio
         }
 
+        private string ObtenerNombreJuzgadoDesdeSesion2()
+        {
+            // Asegúrate de que la clave de sesión para el nombre del juzgado sea la correcta
+            if (HttpContext.Current.Session["NombreJuzgado"] != null)
+            {
+                return HttpContext.Current.Session["NombreJuzgado"].ToString();
+            }
+
+            // En caso de que la clave de sesión no esté presente o sea nula
+            return "Nombre de juzgado no disponible"; // O un valor por defecto según tu lógica de negocio
+        }
+
+
+        // Variables Globales
+        public static string GlobalNumero2;
+        public static string GlobalFechaRecepcion2;
+        public static string GlobalNomJuzgado2;
+        public static string GlobalDescripcion2;
+        public static string GlobalCantidad2;
+        public static int GlobalExhorto2 = 1;
+
+        private void ProcesarDatosDeInsercion3(DateTime fIngresoFormateado, string Numero)
+        {
+            GlobalNumero2 = Numero;
+            GlobalFechaRecepcion2 = fIngresoFormateado.ToString("yyyy-MM-dd HH:mm:ss");
+            GlobalNomJuzgado2 = ObtenerNombreJuzgadoDesdeSesion2();
+        }
+
+        private void ProcesarDatosDeInsercion4(Label descripcion, Label cantidad)
+        {
+            GlobalDescripcion2 = descripcion.Text;
+            GlobalCantidad2 = cantidad.Text;
+        }
+
+        // Inicia desarrollo de sello
+        private List<string> DividirTextoEnLineas2(string texto, int maxCaracteresPorLinea)
+        {
+            List<string> lineas2 = new List<string>();
+            string[] palabras2 = texto.Split(' ');
+            string lineaActual2 = "";
+
+            foreach (string palabra in palabras2)
+            {
+                if ((lineaActual2.Length > 0) && (lineaActual2.Length + palabra.Length + 1 > maxCaracteresPorLinea))
+                {
+                    lineas2.Add(lineaActual2);
+                    lineaActual2 = "";
+                }
+
+                if (lineaActual2.Length > 0)
+                    lineaActual2 += " ";
+
+                lineaActual2 += palabra;
+            }
+
+            if (lineaActual2.Length > 0)
+                lineas2.Add(lineaActual2);
+
+            return lineas2;
+        }
+
+
+        public string CrearTicketSELLO2()
+        {
+            StringBuilder ticket = new StringBuilder();
+            string nombreJuzgado = GlobalNomJuzgado2;
+            List<string> lineasNombreJuzgado = DividirTextoEnLineas2(nombreJuzgado, 30);
+            int total = GlobalExhorto2; // Inicializa total con GlobalExhorto
+            int anchoLinea = 30; // Ancho de la línea
+
+            // Encabezado del ticket
+            ticket.AppendLine(CentrarTexto2("TRIBUNAL SUPERIOR DE JUSTICIA", anchoLinea));
+            ticket.AppendLine(CentrarTexto2("DEL ESTADO DE HIDALGO", anchoLinea));
+            ticket.AppendLine(CentrarTexto2("ATENCION CIUDADANA", anchoLinea));
+            ticket.AppendLine(CentrarTexto2("EXHORTO", anchoLinea));
+            ticket.AppendLine(new string('-', anchoLinea)); // Línea divisoria
+
+            // Información del juzgado
+            foreach (string linea in lineasNombreJuzgado)
+            {
+                ticket.AppendLine(linea);
+            }
+            ticket.AppendLine(new string('-', anchoLinea)); // Línea divisoria
+
+            // Detalles del exhorto
+            ticket.AppendLine($"Exhorto: {GlobalNumero2}");
+            ticket.AppendLine($"Fecha: {GlobalFechaRecepcion2}");
+
+            // Sección del total
+            ticket.AppendLine(AlinearTexto2("EXHORTO", GlobalExhorto2.ToString(), anchoLinea));
+
+            foreach (GridViewRow row in gvAnexos2.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    // Encuentra el control Label dentro de la celda
+                    Label descripcion = (Label)row.FindControl("lblAnexo2");
+                    Label cantidad = (Label)row.FindControl("lblCantAnexos2");
+
+                    ticket.AppendLine(AlinearTexto2(descripcion.Text, cantidad.Text, anchoLinea));
+                    total += Convert.ToInt32(cantidad.Text);
+                }
+            }
+
+            ticket.AppendLine(AlinearTexto2("TOTAL", total.ToString(), anchoLinea));
+
+            return ticket.ToString();
+        }
+
+        // Función para centrar texto
+        private string CentrarTexto2(string texto, int anchoLinea)
+        {
+            int espacios = (anchoLinea - texto.Length) / 2;
+            return new string(' ', espacios) + texto;
+        }
+
+        // Función para alinear texto
+        private string AlinearTexto2(string textoIzquierda, string textoDerecha, int anchoLinea)
+        {
+            int espacios = anchoLinea - textoIzquierda.Length - textoDerecha.Length;
+            return textoIzquierda + new string('.', espacios) + textoDerecha;
+        }
+
+
+        // Termina desarrollo de sello
+
+
+        protected void btnImprimir_Click2(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
+        }
+        // Termina desarrollo de sello
+        private void LimpiarYRestablecerPanel2()
+        {
+            // Limpia y restablece los controles dentro de Panel2
+            numdesp.Text = string.Empty;
+            quejoso.Text = string.Empty;
+            fecha2.Text = string.Empty;
+            fojas2.Text = "0";
+            ddlDelitos2.SelectedIndex = 0;
+            gvPartes2.DataSource = null;
+            gvPartes2.DataBind();
+            gvDelitos2.DataSource = null;
+            gvDelitos2.DataBind();
+            Diligencia2.Text = string.Empty;
+            prioridad2.SelectedIndex = 0;
+            gvAnexos2.DataSource = null;
+            gvAnexos2.DataBind();
+            observa2.Text = string.Empty;
+
+            // ... limpia otros controles según sea necesario ...
+
+            // Oculta Panel2
+            Panel2.Visible = false;
+        }
         //AQUI ACABA EL INSERT DESPACHO
 
 
@@ -1949,15 +2195,21 @@ namespace SIPOH.Views
 
                     InsertarEnPExhortos3(conn, transaction, idAsunto);
 
+                    InsertarEnPAnexos3(conn, transaction, idAsunto);
+
                     // Commit de la transacción
                     transaction.Commit();
 
                     // Mostrar mensajes y recargar la página si es necesario
                     // Mostrar un Toastr de confirmación
-
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
+                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Limpiar", "limpiarFormularioInsert();", true);
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Exito", "EjemploExito();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
+                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
+                    string ticket = CrearTicketSELLO3();
+                    TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
+                    ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
+                    LimpiarYRestablecerPanel3();
                 }
                 catch (SqlException sqlEx)
                 {
@@ -2056,6 +2308,8 @@ namespace SIPOH.Views
                 cmd.Parameters.AddWithValue("@MP", MP);
                 cmd.Parameters.AddWithValue("@Prioridad", nPrioridad);
                 cmd.Parameters.AddWithValue("@Fojas", nFojas);
+
+                ProcesarDatosDeInsercion5(fIngreso, Numero);
 
                 // Obtener el ID generado automáticamente
                 idAsunto = Convert.ToInt32(cmd.ExecuteScalar());
@@ -2196,31 +2450,64 @@ namespace SIPOH.Views
 
         private void InsertarEnPAsuntoDelito3(SqlConnection conn, SqlTransaction transaction, int idAsunto)
         {
-            // Obtener datos desde tu panel ASPX para P_PartesAsunto
-            int idDelito;
-
-            if (int.TryParse(ddlDelitos3.SelectedValue, out idDelito))
+            foreach (GridViewRow row in gvDelitos3.Rows)
             {
-                // Resto de los campos...
-
-                // Realizar la inserción en P_PartesAsunto
-                string query = "INSERT INTO P_AsuntoDelito (IdAsunto, IdDelito) VALUES (@IdAsunto, @IdDelito);";
-
-                using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                if (row.RowType == DataControlRowType.DataRow)
                 {
-                    cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
-                    cmd.Parameters.AddWithValue("@IdDelito", idDelito);
+                    // Encuentra el control Label dentro de la celda
+                    Label lblIdDelito = (Label)row.FindControl("lblIdDelito3");
 
-                    // Resto de los parámetros...
+                    // Obtén el valor de texto del control Label y conviértelo a int
+                    int idDelito = int.Parse(lblIdDelito.Text);
 
-                    cmd.ExecuteNonQuery();
+                    // Realizar la inserción en P_PartesAsunto
+                    string query = "INSERT INTO P_AsuntoDelito (IdAsunto, IdDelito) VALUES (@IdAsunto, @IdDelito);";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                        cmd.Parameters.AddWithValue("@IdDelito", idDelito);
+
+                        // Resto de los parámetros...
+
+                        cmd.ExecuteNonQuery();
+                    }
                 }
             }
-            else
+        }
+
+
+        private void InsertarEnPAnexos3(SqlConnection conn, SqlTransaction transaction, int idAsunto)
+        {
+            int idPost = 0;
+            string digital = "N";
+
+            foreach (GridViewRow row in gvAnexos3.Rows)
             {
-                // Manejar el caso donde ddlDelitos1.SelectedValue no es un número válido
-                // Puedes mostrar un mensaje de error o tomar alguna acción específica
-                Console.WriteLine($"El valor '{ddlDelitos1.SelectedValue}' no es un número válido para IdDelito.");
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    // Encuentra el control Label dentro de la celda
+                    Label descripcion = (Label)row.FindControl("lblAnexo3");
+                    Label cantidad = (Label)row.FindControl("lblCantAnexos3");
+
+                    // Realizar la inserción en P_PartesAsunto
+                    string query = "INSERT INTO P_Anexos (IdAsunto, IdPosterior, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @IdPosterior, @Descripcion, @Cantidad, @Digitalizado);";
+
+                    using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                    {
+                        cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                        cmd.Parameters.AddWithValue("@IdPosterior", idPost);
+                        cmd.Parameters.AddWithValue("@Descripcion", descripcion.Text); // Aquí está la corrección
+                        cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(cantidad.Text)); // Asegúrate de que este es el tipo correcto
+                        cmd.Parameters.AddWithValue("@Digitalizado", digital);
+
+                        ProcesarDatosDeInsercion6(descripcion, cantidad);
+
+                        // Resto de los parámetros...
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
             }
         }
 
@@ -2259,7 +2546,163 @@ namespace SIPOH.Views
             // En caso de que la clave de sesión no esté presente o sea nula
             return -1; // O un valor por defecto según tu lógica de negocio
         }
-    }
-    //AQUI ACABA EL INSERT REQUISITORIA
 
+        private string ObtenerNombreJuzgadoDesdeSesion3()
+        {
+            // Asegúrate de que la clave de sesión para el nombre del juzgado sea la correcta
+            if (HttpContext.Current.Session["NombreJuzgado"] != null)
+            {
+                return HttpContext.Current.Session["NombreJuzgado"].ToString();
+            }
+
+            // En caso de que la clave de sesión no esté presente o sea nula
+            return "Nombre de juzgado no disponible"; // O un valor por defecto según tu lógica de negocio
+        }
+
+
+        // Variables Globales
+        public static string GlobalNumero3;
+        public static string GlobalFechaRecepcion3;
+        public static string GlobalNomJuzgado3;
+        public static string GlobalDescripcion3;
+        public static string GlobalCantidad3;
+        public static int GlobalExhorto3 = 1;
+
+        private void ProcesarDatosDeInsercion5(DateTime fIngresoFormateado, string Numero)
+        {
+            GlobalNumero3 = Numero;
+            GlobalFechaRecepcion3 = fIngresoFormateado.ToString("yyyy-MM-dd HH:mm:ss");
+            GlobalNomJuzgado3 = ObtenerNombreJuzgadoDesdeSesion3();
+        }
+
+        private void ProcesarDatosDeInsercion6(Label descripcion, Label cantidad)
+        {
+            GlobalDescripcion3 = descripcion.Text;
+            GlobalCantidad3 = cantidad.Text;
+        }
+
+        // Inicia desarrollo de sello
+        private List<string> DividirTextoEnLineas3(string texto, int maxCaracteresPorLinea)
+        {
+            List<string> lineas3 = new List<string>();
+            string[] palabras3 = texto.Split(' ');
+            string lineaActual3 = "";
+
+            foreach (string palabra in palabras3)
+            {
+                if ((lineaActual3.Length > 0) && (lineaActual3.Length + palabra.Length + 1 > maxCaracteresPorLinea))
+                {
+                    lineas3.Add(lineaActual3);
+                    lineaActual3 = "";
+                }
+
+                if (lineaActual3.Length > 0)
+                    lineaActual3 += " ";
+
+                lineaActual3 += palabra;
+            }
+
+            if (lineaActual3.Length > 0)
+                lineas3.Add(lineaActual3);
+
+            return lineas3;
+        }
+
+
+        public string CrearTicketSELLO3()
+        {
+            StringBuilder ticket = new StringBuilder();
+            string nombreJuzgado = GlobalNomJuzgado3;
+            List<string> lineasNombreJuzgado = DividirTextoEnLineas3(nombreJuzgado, 30);
+            int total = GlobalExhorto3; // Inicializa total con GlobalExhorto
+            int anchoLinea = 30; // Ancho de la línea
+
+            // Encabezado del ticket
+            ticket.AppendLine(CentrarTexto3("TRIBUNAL SUPERIOR DE JUSTICIA", anchoLinea));
+            ticket.AppendLine(CentrarTexto3("DEL ESTADO DE HIDALGO", anchoLinea));
+            ticket.AppendLine(CentrarTexto3("ATENCION CIUDADANA", anchoLinea));
+            ticket.AppendLine(CentrarTexto3("EXHORTO", anchoLinea));
+            ticket.AppendLine(new string('-', anchoLinea)); // Línea divisoria
+
+            // Información del juzgado
+            foreach (string linea in lineasNombreJuzgado)
+            {
+                ticket.AppendLine(linea);
+            }
+            ticket.AppendLine(new string('-', anchoLinea)); // Línea divisoria
+
+            // Detalles del exhorto
+            ticket.AppendLine($"Exhorto: {GlobalNumero3}");
+            ticket.AppendLine($"Fecha: {GlobalFechaRecepcion3}");
+
+            // Sección del total
+            ticket.AppendLine(AlinearTexto3("EXHORTO", GlobalExhorto3.ToString(), anchoLinea));
+
+            foreach (GridViewRow row in gvAnexos3.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    // Encuentra el control Label dentro de la celda
+                    Label descripcion = (Label)row.FindControl("lblAnexo3");
+                    Label cantidad = (Label)row.FindControl("lblCantAnexos3");
+
+                    ticket.AppendLine(AlinearTexto3(descripcion.Text, cantidad.Text, anchoLinea));
+                    total += Convert.ToInt32(cantidad.Text);
+                }
+            }
+
+            ticket.AppendLine(AlinearTexto3("TOTAL", total.ToString(), anchoLinea));
+
+            return ticket.ToString();
+        }
+
+        // Función para centrar texto
+        private string CentrarTexto3(string texto, int anchoLinea)
+        {
+            int espacios = (anchoLinea - texto.Length) / 2;
+            return new string(' ', espacios) + texto;
+        }
+
+        // Función para alinear texto
+        private string AlinearTexto3(string textoIzquierda, string textoDerecha, int anchoLinea)
+        {
+            int espacios = anchoLinea - textoIzquierda.Length - textoDerecha.Length;
+            return textoIzquierda + new string('.', espacios) + textoDerecha;
+        }
+
+
+        // Termina desarrollo de sello
+
+
+        protected void btnImprimir_Click3(object sender, EventArgs e)
+        {
+            ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
+        }
+        // Termina desarrollo de sello
+
+        private void LimpiarYRestablecerPanel3()
+        {
+            // Limpia y restablece los controles dentro del Panel3
+            numtoca.Text = string.Empty;
+            salaproc.Text = string.Empty;
+            fecha3.Text = string.Empty;
+            fojas3.Text = "0";
+            ddlDelitos3.SelectedIndex = 0;
+            gvPartes3.DataSource = null;
+            gvPartes3.DataBind();
+            gvDelitos3.DataSource = null;
+            gvDelitos3.DataBind();
+            Diligencia3.Text = string.Empty;
+            prioridad3.SelectedIndex = 0;
+            gvAnexos3.DataSource = null;
+            gvAnexos3.DataBind();
+            observa3.Text = string.Empty;
+            // ... limpia otros controles según sea necesario ...
+
+            // Oculta el Panel3
+            Panel3.Visible = false;
+        }
+        //AQUI ACABA EL INSERT REQUISITORIA
+
+    }
 }

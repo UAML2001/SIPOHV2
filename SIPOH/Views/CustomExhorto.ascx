@@ -279,7 +279,6 @@
 
             <center>
             <asp:Button ID="ObDatos" runat="server" CssClass="btn btn-success" Text="Registrar" OnClick="ObtenerDatosYMostrarModal"  />
-                <asp:Button ID="LimpiarFormulario" runat="server" Text="Guardar cambios" CssClass="btn btn-success" OnClick="formLimpio"  />
             </center>
 
 
@@ -399,13 +398,6 @@
          </div>
      </div>
  </div>
-
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <!-- Etiqueta pre -->
-                    <pre id="TicketDiv" runat="server"></pre>
-                </div>
-            </div>
 
         </asp:Panel>
 
@@ -726,6 +718,9 @@
          </div>
      </div>
  </div>
+
+
+
         </asp:Panel>
         
         
@@ -896,7 +891,7 @@
 
                             <asp:TemplateField HeaderText="Cantidad" SortExpression="NombreDelito">
                                 <ItemTemplate>
-                                    <asp:Label ID="lblCantAnexos2" runat="server" Text='<%# Bind("Cantidad3") %>'></asp:Label>
+                                    <asp:Label ID="lblCantAnexos3" runat="server" Text='<%# Bind("Cantidad3") %>'></asp:Label>
                                 </ItemTemplate>
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:TemplateField>
@@ -1044,8 +1039,22 @@
      </div>
  </div>
 
+                                    <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <!-- Etiqueta pre -->
+                    <pre id="TicketDiv3" runat="server"></pre>
+                </div>
+            </div>
+
             </asp:Panel>
 
+
+                    <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <!-- Etiqueta pre -->
+                    <pre id="TicketDiv" runat="server"></pre>
+                </div>
+            </div>
 
         </ContentTemplate>
     </asp:UpdatePanel>
@@ -1476,7 +1485,7 @@ function habilitarTextBoxSelecSexo3() {
                 toastr.success('Requisitoria agregada con éxito');
                 break;
             default:
-                toastr.success('Transacción Exitosa');
+                toastr.success('Registro Exitoso');
                 break;
         }
     }
@@ -1515,36 +1524,10 @@ function habilitarTextBoxSelecSexo3() {
         }
     });
 
-<%--function validateInput() {
-        // Get the input values
-        var clienteNombre = document.getElementById('<%= txtClienteNombre.ClientID %>').value;
-         var producto = document.getElementById('<%= txtProducto.ClientID %>').value;
-            var cantidad = document.getElementById('<%= txtCantidad.ClientID %>').value;
-         var precio = document.getElementById('<%= txtPrecio.ClientID %>').value;
-
-         // Perform your validation logic
-         if (clienteNombre.trim() === '' || producto.trim() === '' || cantidad <= 0 || precio < 0) {
-             // Show Toastr notification for validation error
-             toastr.error('Por favor, complete todos los campos y asegúrese de que la cantidad y el precio sean valores válidos.');
-             return false; // Prevent form submission
-         } else {
-             // Input is valid, you can proceed with other actions
-             toastr.success('¡Transacción realizada con éxito!');
-             return true; // Allow form submission
-         }
-     }--%>
-
     function CerrarConfirmacion() {
         $('#guardarDatos').modal('hide');
         $('body').removeClass('modal-open').css('overflow', ''); // Restablece el overflow
         $('.modal-backdrop').remove();
-    }
-
-    function Recargar() {
-        // Después de realizar la inserción en P_Asunto
-        setTimeout(function () {
-            location.reload();
-        }, 1000); // Recargar la página después de 1000 milisegundos (1 segundo)
     }
 
     function imprimirTicket() {
@@ -1565,64 +1548,33 @@ function habilitarTextBoxSelecSexo3() {
         ventanaImpresion.onfocus = function () { setTimeout(function () { ventanaImpresion.close(); }, 500); }
     }
 
-
-    // Función para limpiar el formulario
-        function limpiarFormularioInsert() {
-        // Limpiar el dropdown "OpExhorto"
-            var opExhortoDropdown = document.getElementById('<%= OpExhorto.ClientID %>');
-            opExhortoDropdown.selectedValue = "SO";
-
-        // Limpiar los controles del panel1
-        var numdoc1TextBox = document.getElementById('<%= numdoc1.ClientID %>');
-        var procede1TextBox = document.getElementById('<%= procede1.ClientID %>');
-        var fecha1TextBox = document.getElementById('<%= fecha1.ClientID %>');
-        var fojas1TextBox = document.getElementById('<%= fojas1.ClientID %>');
-        var ddlDelitos1DropDown = document.getElementById('<%= ddlDelitos1.ClientID %>');
-        var gvPartesGridView = document.getElementById('<%= gvPartes.ClientID %>');
-        var gvDelitosGridView = document.getElementById('<%= gvDelitos.ClientID %>');
-        var prioridadRadioButtonList = document.getElementById('<%= prioridad.ClientID %>');
-        var diligencia1TextBox = document.getElementById('<%= Diligencia1.ClientID %>');
-        var observa1TextBox = document.getElementById('<%= observa1.ClientID %>');
-
-        numdoc1TextBox.value = '';
-        procede1TextBox.value = '';
-        fecha1TextBox.value = '';
-        fojas1TextBox.value = '0';
-        ddlDelitos1DropDown.selectedIndex = 0;
-        gvPartesGridView.innerHTML = '';
-        gvDelitosGridView.innerHTML = '';
-        prioridadRadioButtonList.selectedIndex = 0;
-        diligencia1TextBox.value = '';
-        observa1TextBox.value = '';
-    }
-
-        // Establecer el estado inicial del formulario
-        window.onload = function () {
-            limpiarFormularioInsert();
-    };
-
     function limpiarFormularioAnexos() {
-        // Restablece el DropDownList a su primer elemento
-        document.getElementById('<%= ddlAnexos.ClientID %>').selectedIndex = 0;
-        
-        // Restablece el TextBox a su valor predeterminado
-         document.getElementById('<%= noAnexos.ClientID %>').value = '0';
+        // Obtenemos los elementos del formulario
+        var ddlAnexos = document.getElementById('<%= ddlAnexos.ClientID %>');
+        var noAnexos = document.getElementById('<%= noAnexos.ClientID %>');
+
+        // Restablecemos los valores
+        ddlAnexos.selectedIndex = 0;
+        noAnexos.value = 0;
     }
 
     function limpiarFormularioAnexos2() {
-        // Restablece el DropDownList a su primer elemento
-        document.getElementById('<%= ddlAnexos2.ClientID %>').selectedIndex = 0;
-        
-        // Restablece el TextBox a su valor predeterminado
-            document.getElementById('<%= noAnexos2.ClientID %>').value = '0';
+        // Obtenemos los elementos del formulario
+        var ddlAnexos = document.getElementById('<%= ddlAnexos2.ClientID %>');
+            var noAnexos = document.getElementById('<%= noAnexos2.ClientID %>');
+
+            // Restablecemos los valores
+            ddlAnexos.selectedIndex = 0;
+            noAnexos.value = 0;
     }
 
     function limpiarFormularioAnexos3() {
-        // Restablece el DropDownList a su primer elemento
-        document.getElementById('<%= ddlAnexos3.ClientID %>').selectedIndex = 0;
-        
-        // Restablece el TextBox a su valor predeterminado
-            document.getElementById('<%= noAnexos3.ClientID %>').value = '0';
-    }
+        // Obtenemos los elementos del formulario
+        var ddlAnexos = document.getElementById('<%= ddlAnexos3.ClientID %>');
+            var noAnexos = document.getElementById('<%= noAnexos3.ClientID %>');
 
+        // Restablecemos los valores
+        ddlAnexos.selectedIndex = 0;
+        noAnexos.value = 0;
+    }
 </script>

@@ -23,7 +23,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     </head>
 
-    <body>
+    <body style="background-image: url('<%= ResolveUrl("content/img/Login.jpeg") %>');">
         <header>
             <nav class="navbar bg-transparent">
                 <div class="container">
