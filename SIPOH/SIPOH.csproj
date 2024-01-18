@@ -156,6 +156,15 @@
     <Content Include="Content\css\Permiso.css" />
     <Content Include="Content\css\sb-admin-2.css" />
     <Content Include="Content\css\sb-admin-2.min.css" />
+    <Content Include="Content\img\Login.jpeg" />
+    <Content Include="Content\img\PoderJudicialHgo.png" />
+    <Content Include="Content\img\PoderJudicialLargo.png" />
+    <Content Include="Content\img\undraw_posting_photo.svg" />
+    <Content Include="Content\img\undraw_profile.svg" />
+    <Content Include="Content\img\undraw_profile_1.svg" />
+    <Content Include="Content\img\undraw_profile_2.svg" />
+    <Content Include="Content\img\undraw_profile_3.svg" />
+    <Content Include="Content\img\undraw_rocket.svg" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\vendor\bootstrap\js\bootstrap.bundle.js" />
     <Content Include="Content\vendor\bootstrap\js\bootstrap.bundle.min.js" />
@@ -2429,7 +2438,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\img\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
