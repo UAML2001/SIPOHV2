@@ -23,7 +23,7 @@
                                     </a>
                                 </li>
                                  <li class="nav-item">
-                                    <a class="nav-link  onSplash" data-toggle="tab" href="#ICHCausa" role="tab">Consignación Histotica Causa
+                                    <a class="nav-link  onSplash" data-toggle="tab" href="#ICHCausa" role="tab">Consignación Histotica CAUSA
                                     </a>
                                 </li>
                             </ul>
