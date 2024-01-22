@@ -10,7 +10,7 @@ using System.Text;
 using System.Web.SessionState;
 using System.Web;
 using System.Web.UI;
-using static SIPOH.Views.CustomRegistroIniciales;
+using static SIPOH.Views.CustomRegistroIniciales;  
 using System.Net.NetworkInformation;
 using System.Diagnostics;
 using SIPOH.Views;
@@ -67,7 +67,7 @@ namespace SIPOH
                             {
                                 HttpContext.Current.Session["TipoAsuntoPromocion"] = reader["TipoAsunto"];
                                 HttpContext.Current.Session["NumeroPromocion"] = reader["Numero"];
-                                //HttpContext.Current.Session["NUCPromocion"] = reader["NUC"];
+                                HttpContext.Current.Session["NUCPromocion"] = reader["NUC"];
                                 HttpContext.Current.Session["DelitosPromocion"] = reader["Delitos"];
                                 HttpContext.Current.Session["InculpadosPromocion"] = reader["Inculpados"];
                                 HttpContext.Current.Session["VictimasPromocion"] = reader["Victimas"];
@@ -108,17 +108,17 @@ namespace SIPOH
 
                         //modificacion de variables (BACKEND) app
                         command.Parameters.AddWithValue("@IdAsunto", Session["IdAsuntoPromocion"]);
-                        command.Parameters.AddWithValue("@Promovente", InfoPromocion.Select(b => b.Promovente).FirstOrDefault());
-                        command.Parameters.AddWithValue("@Digitalizado", InfoPromocion.Select(b => b.Digitalizado).FirstOrDefault());
+                        command.Parameters.AddWithValue("@Promovente", InfoPromocion.Select(b => b.Promovente).FirstOrDefault().ToUpper());
+                        command.Parameters.AddWithValue("@Digitalizado", InfoPromocion.Select(b => b.Digitalizado).FirstOrDefault().ToUpper());
                         command.Parameters.AddWithValue("@IdUsuario", Session["IdUsuario"]);
 
-                        command.Parameters.AddWithValue("@TipoPromocion", InfoPromocion.Select(b => b.TipoPromocion).FirstOrDefault());
+                        command.Parameters.AddWithValue("@TipoPromocion", InfoPromocion.Select(b => b.TipoPromocion).FirstOrDefault().ToUpper());
                         command.Parameters.AddWithValue("@FechaRecepcion", InfoPromocion.Select(b => b.FechaRecepcion).FirstOrDefault());
-                        command.Parameters.AddWithValue("@Tipo",InfoPromocion.Select(b => b.Tipo).FirstOrDefault());
+                        command.Parameters.AddWithValue("@Tipo",InfoPromocion.Select(b => b.Tipo).FirstOrDefault().ToUpper());
                         command.Parameters.AddWithValue("@IdActividad", InfoPromocion.Select(b => b.IdActividad).FirstOrDefault());
                         command.Parameters.AddWithValue("@IdPerfil", Session["IdPerfil"]);
                         command.Parameters.AddWithValue("@FeAsunto", InfoPromocion.Select(b => b.FeAsunto).FirstOrDefault());                        
-                        command.Parameters.AddWithValue("@Estado", InfoPromocion.Select(b => b.EstadoPromocion).FirstOrDefault());
+                        command.Parameters.AddWithValue("@Estado", InfoPromocion.Select(b => b.EstadoPromocion).FirstOrDefault().ToUpper());
 
     
 	
@@ -135,9 +135,9 @@ namespace SIPOH
                            command.Parameters.Clear();
                            command.Parameters.AddWithValue("@IdAsunto", Session["IdAsuntoPromocion"]);
                            SqlParameter paramsAnexoPromocion = command.Parameters.AddWithValue("@IdPosterior", idPosterior);
-                           command.Parameters.AddWithValue("@Descripcion", anexo.DescripcionAnexo);
+                           command.Parameters.AddWithValue("@Descripcion", anexo.DescripcionAnexo.ToUpper());
                            command.Parameters.AddWithValue("@Cantidad", anexo.CantidadAnexo);
-                            command.Parameters.AddWithValue("@Digitalizado", anexo.DigitalizadoAnexo);
+                            command.Parameters.AddWithValue("@Digitalizado", anexo.DigitalizadoAnexo.ToUpper());
                            command.ExecuteNonQuery();
                         }
                         Debug.WriteLine("Tarea 2 completada ✔️");

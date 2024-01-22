@@ -1,4 +1,5 @@
 ﻿using DatabaseConnection;
+using Microsoft.Ajax.Utilities;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace SIPOH.Views
     {
         //List<int> listaDeIdDelitos = new List<int>();
         List<int> listaDeNombresDelitos = new List<int>();
-        
+
 
 
         public class Imputado
@@ -45,7 +46,7 @@ namespace SIPOH.Views
             public string ApellidoMaterno { get; set; }
             public string RazonSocial { get; set; }
             public string Genero { get; set; }
-           
+
         }
         public class BusquedaInicial
         {
@@ -62,14 +63,14 @@ namespace SIPOH.Views
         protected void Page_Load(object sender, EventArgs e)
         {
             //ScriptManager.RegisterStartupScript(this, GetType(), "MostrarModal", "$('#miModal').modal('show');", true);
-            
+
             if (!IsPostBack)
             {
 
-                
+
                 CargarCatDelitos();
                 CargarCatAnexosEnDropDownList();
-                Session["Victimas"] = new List<Victima>();                
+                Session["Victimas"] = new List<Victima>();
                 Session["Imputados"] = new List<Imputado>();
                 Session["IdDelitos"] = new List<int>();
                 Session["NombresDelitos"] = new List<string>();
@@ -82,8 +83,8 @@ namespace SIPOH.Views
                 CleanEtiquetaFormDelito();
                 CleanEtiquetaFormVictima();
                 CleanEtiquetasForm();
-                
-               
+
+
             }
 
 
@@ -96,9 +97,10 @@ namespace SIPOH.Views
 
 
         }
+
         public class InfoIniciales
         {
-            
+
             public string NUC { get; set; }
             public string Inculpados { get; set; }
             public string Delitos { get; set; }
@@ -114,13 +116,13 @@ namespace SIPOH.Views
             switch (VFiltradoPor)
             {
                 case "NUC":
-                    busquedaInicial = new BusquedaInicial { DataNUC = valorIncial, DataImputado = "", DataVictima = ""};
+                    busquedaInicial = new BusquedaInicial { DataNUC = valorIncial, DataImputado = "", DataVictima = "" };
                     break;
                 case "V":
-                    busquedaInicial = new BusquedaInicial { DataVictima = valorIncial, DataImputado = "" , DataNUC = "" };
+                    busquedaInicial = new BusquedaInicial { DataVictima = valorIncial, DataImputado = "", DataNUC = "" };
                     break;
                 case "I":
-                    busquedaInicial = new BusquedaInicial { DataImputado = valorIncial, DataNUC = "",DataVictima = "" };
+                    busquedaInicial = new BusquedaInicial { DataImputado = valorIncial, DataNUC = "", DataVictima = "" };
                     break;
                 default:
                     string mensaje = "Selecciona un filtrado";
@@ -144,13 +146,96 @@ namespace SIPOH.Views
                 errorConsulta.Text = "No se encontraron resultados";
             }
 
-            // Limpiar etiquetas innecesarias o hacer cualquier otra manipulación necesaria
-            
 
+        }
+        protected void btnEliminarAnexo(object sender, EventArgs e)
+        {
+            // Obtener el botón que activó el evento
+            Button btnEliminar = (Button)sender;
+
+            // Obtener la fila del Repeater que contiene el botón
+            RepeaterItem item = (RepeaterItem)btnEliminar.NamingContainer;
+            item.Visible = false;
+            // Obtener el índice de la fila en el Repeater
+            int indice = item.ItemIndex;
+
+            // Obtener la lista de la sesión
+            List<Anexos> listaAnexos = (List<Anexos>)Session["Anexos"];
+
+            // Verificar si la lista no es nula y tiene elementos
+            if (listaAnexos != null && listaAnexos.Count > indice)
+            {
+                // Eliminar el elemento en la posición indicada por el índice
+                item.Visible = false;
+                listaAnexos.RemoveAt(indice);
+                Repeater3.Controls.RemoveAt(indice);
+                Session["Anexos"] = listaAnexos;
+
+
+            }
+            // Verificar si la lista no es nula y tiene elementos
             updPanel.Update();
+
         }
 
+        protected void btnEliminarVictima(object sender, EventArgs e)
+        {
+            // Obtener el botón que activó el evento
+            Button btnEliminarVictima = (Button)sender;
 
+            // Obtener la fila del Repeater que contiene el botón
+            RepeaterItem item = (RepeaterItem)btnEliminarVictima.NamingContainer;
+            item.Visible = false;
+            // Obtener el índice de la fila en el Repeater
+            int indiceListVictima = item.ItemIndex;
+
+            // Obtener la lista de la sesión
+            List<Victima> listaVictima = (List<Victima>)Session["Victimas"];
+
+            // Verificar si la lista no es nula y tiene elementos
+            if (listaVictima != null && listaVictima.Count > indiceListVictima)
+            {
+                // Eliminar el elemento en la posición indicada por el índice
+                item.Visible = false;
+                listaVictima.RemoveAt(indiceListVictima);
+                Repeater1.Controls.RemoveAt(indiceListVictima);
+                Session["Victimas"] = listaVictima;
+
+                
+            }
+            // Verificar si la lista no es nula y tiene elementos
+                updPanel.Update();
+            
+        }
+        protected void btnEliminarCulpado(object sender, EventArgs e)
+        {
+            // Obtener el botón que activó el evento
+            Button btnEliminarCulpados = (Button)sender;
+
+            // Obtener la fila del Repeater que contiene el botón
+            RepeaterItem item = (RepeaterItem)btnEliminarCulpados.NamingContainer;
+            item.Visible = false;
+            // Obtener el índice de la fila en el Repeater
+            int indice = item.ItemIndex;
+
+            // Obtener la lista de la sesión
+            List<Imputado> listaImputados = (List<Imputado>)Session["Imputados"];
+
+            // Verificar si la lista no es nula y tiene elementos
+            if (listaImputados != null && listaImputados.Count > indice)
+            {
+                // Eliminar el elemento en la posición indicada por el índice
+                item.Visible = false;
+                listaImputados.RemoveAt(indice);
+                Repeater2.Controls.RemoveAt(indice);
+                Session["Imputados"] = listaImputados;
+
+
+            }
+            // Verificar si la lista no es nula y tiene elementos
+            updPanel.Update();
+
+        }
 
 
 
@@ -228,7 +313,7 @@ namespace SIPOH.Views
                 return;
             }
 
-            if (ddlPersonaVictima.SelectedValue == "fisica")
+            if (ddlPersonaVictima.SelectedValue == "F")
             {
                 if (string.IsNullOrWhiteSpace(nombreVictima) ||
                     string.IsNullOrWhiteSpace(apellidoMaternoVictima) ||
@@ -263,7 +348,7 @@ namespace SIPOH.Views
                 updPanel.Update();
                 CleanEtiquetaFormVictima();
             }
-            else if (ddlPersonaVictima.SelectedValue == "moral")
+            else if (ddlPersonaVictima.SelectedValue == "M")
             {
                 if (string.IsNullOrWhiteSpace(razonSocialVictima))
                 {
@@ -276,7 +361,7 @@ namespace SIPOH.Views
                 Victima nuevoUsuario = new Victima
                 {
                     Nombre = "",
-                    ApellidoMaterno = ".",
+                    ApellidoMaterno = "",
                     ApellidoPaterno = razonSocialVictima,
                     Genero = "O",
                 };
@@ -357,21 +442,40 @@ namespace SIPOH.Views
             CleanEtiquetaFormImputado();
             updPanel.Update();
         }
+        protected void GetLabelPrioridad(object sender, EventArgs e)
+        {
+            string valorSeleccionado = inputPrioridad.SelectedValue;
 
+            if (valorSeleccionado == "N")
+            {
+                valorSeleccionado = "Normal";
+                copyPrioridad.Text = valorSeleccionado;
+                
+            }else if (valorSeleccionado == "A")
+            {
+                valorSeleccionado = "Alta";
+                copyPrioridad.Text = valorSeleccionado;
+
+            }
+            
+                updPanel.Update();  
+            
+        }
+        
 
         protected void btnGuardarAnexos_Click(object sender, EventArgs e)
         {
             string inputTipoAnexo = txtAnexosTipo.SelectedValue;
-                string inputCantidadAnexo = txtCantidadAnexos.Text;
+            string inputCantidadAnexo = txtCantidadAnexos.Text;
             if (inputTipoAnexo == "Otro")
             {
                 string inputDescripcionAnexo = txtDescripcionAnexos.Text;
-                
+
 
                 Anexos anexo = new Anexos
                 {
                     //TipoAnexo = inputTipoAnexo,
-                    DescripcionAnexo = inputDescripcionAnexo,
+                    DescripcionAnexo = inputDescripcionAnexo.ToUpper(),
                     CantidadAnexo = inputCantidadAnexo
 
                 };
@@ -389,6 +493,8 @@ namespace SIPOH.Views
 
                 listaDeAnexos.Add(anexo);
                 Session["Anexos"] = listaDeAnexos;
+                Session["AnexosT"] = listaDeAnexos;
+                Debug.WriteLine("Anexos para ticket: "+ Session["AnexosT"]);
                 Repeater3.DataSource = listaDeAnexos;
                 Repeater3.DataBind();
                 CleanEtiquetaFormAnexo();
@@ -428,14 +534,20 @@ namespace SIPOH.Views
 
                 listaDeAnexos.Add(anexo);
                 Session["Anexos"] = listaDeAnexos;
+                //Session["AnexosT"] = Session["Anexos"];
+                
                 Repeater3.DataSource = listaDeAnexos;
                 Repeater3.DataBind();
                 CleanEtiquetaFormAnexo();
                 updPanel.Update();
             }
-                
+
             
         }
+
+        
+
+
 
 
         protected void btnEnviarInicial_Click(object sender, EventArgs e)
@@ -452,6 +564,12 @@ namespace SIPOH.Views
             string IdAudiencia = inputRadicacion.SelectedValue;
             string FeIngreso= inputFechaRecepcion.Text;
             string NUC = inputNUC.Text;
+            // CODIGOTICKET
+            string ticket = CrearTicketSELLO();
+            TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
+            ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
+            tituloSello.Style["display"] = "block";
+            ScriptManager.RegisterStartupScript(this, GetType(), "mostrarTituloSello", "mostrarTituloSello();", true);
             //RegistroIniciales.GetNumeroIniciales("cp");
             if (string.IsNullOrWhiteSpace(TipoAsunto) || string.IsNullOrWhiteSpace(TipoRadicacion) || 
                 string.IsNullOrWhiteSpace(QuienIngresa) ||
@@ -480,6 +598,7 @@ namespace SIPOH.Views
                 //List<int> idDelitos = (List<int>)Session["IdDelitos"];
                 List<int> idDelitos = Session["IdDelitos"] as List <int> ?? new List<int>();
                 List<Anexos> listaDeAnexos = Session["Anexos"] as List<Anexos> ?? new List<Anexos>();
+                
                 // Puedes usar la listaDeUsuarios según sea necesario en tu otra función
                 foreach (var usuario in listaDeUsuarios)
                 {
@@ -504,8 +623,9 @@ namespace SIPOH.Views
                 
                 string scriptToast = $"toastInfo('{mensaje}');";
                 ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
-                
-                //List<Victima> listaDeUsuarios = new List<Victima>();
+
+               
+
             }
             catch (Exception ex)
             {
@@ -536,10 +656,134 @@ namespace SIPOH.Views
             Session["Anexos"] = new List<Anexos>();
 
         }
+        private List<string> DividirTextoEnLineas(string texto, int maxCaracteresPorLinea)
+        {
+            List<string> lineas = new List<string>();
+            string[] palabras = texto.Split(' ');
+            string lineaActual = "";
 
+            foreach (string palabra in palabras)
+            {
+                if ((lineaActual.Length > 0) && (lineaActual.Length + palabra.Length + 1 > maxCaracteresPorLinea))
+                {
+                    lineas.Add(lineaActual);
+                    lineaActual = "";
+                }
 
+                if (lineaActual.Length > 0)
+                    lineaActual += " ";
 
+                lineaActual += palabra;
+            }
+
+            if (lineaActual.Length > 0)
+                lineas.Add(lineaActual);
+
+            return lineas;
+        }
         
+        public static List<string> listaDeAnexos = new List<string>();
+        private void ImprimirCentrado(StringBuilder ticket, string texto)
+        {
+            int maxLength = 37;
+            int totalPadding = maxLength - texto.Length;
+            int padLeft = totalPadding / 2 + texto.Length;
+            string centeredLine = texto.PadLeft(padLeft).PadRight(maxLength);
+            ticket.AppendLine(centeredLine);
+        }
+
+
+        public string CrearTicketSELLO()
+        {
+            string TipoAsunto = inputTipoAsunto.SelectedValue;
+            
+            StringBuilder ticket = new StringBuilder();
+            string nombreJuzgado = Session["NombreJuzgado"] as string;
+            List<Anexos> anexos = Session["Anexos"] as List<Anexos>;
+
+            List<string> lineasNombreJuzgado = DividirTextoEnLineas(nombreJuzgado, 32);
+
+            int cantidadAnexos = CantidadAnexos(anexos);
+
+            string NUC = inputNUC.Text;
+            string Causa = "0000/2024";
+
+          
+            ImprimirCentrado(ticket, "TRIBUNAL SUPERIOR");
+            ImprimirCentrado(ticket, "DE JUSTICIA");
+            ImprimirCentrado(ticket, "DEL ESTADO DE HIDALGO");
+            ImprimirCentrado(ticket, "ATENCION CIUDADANA");
+
+
+            ImprimirCentrado(ticket, ".........");
+            foreach (string linea in lineasNombreJuzgado)
+            {
+                ImprimirCentrado(ticket, linea);
+            }
+            
+            ImprimirCentrado(ticket, "INICIAL");
+
+            
+            ImprimirCentrado(ticket, ".........");
+            
+            
+            if (TipoAsunto == "C")
+            {
+                var AsuntoIncial = "CAUSA";
+                ticket.AppendLine($"{AsuntoIncial}: {Causa}");
+                
+            }
+            else if (TipoAsunto == "CP")
+            {
+                var AsuntoIncial = "CUPRE";
+                
+
+                ticket.AppendLine($"{AsuntoIncial}:{Causa}");
+            }
+            ticket.AppendLine($"FECHA RECEPCIÒN:{GetFechaYHora()}");
+            ticket.AppendLine($"NUC:{NUC.ToUpper()}");
+
+            int maxLength = 38; 
+            int maxLengthT = 32; 
+
+            foreach (var anexo in anexos)
+            {
+                int espacioEntreColumnas = 3; // Puedes ajustar este valor según tus necesidades
+                int longitudTotal = maxLength - espacioEntreColumnas;
+
+                string linea = $"{anexo.DescripcionAnexo.ToUpper()}".PadRight(longitudTotal, '.') + $"{anexo.CantidadAnexo.ToUpper()}";
+                ticket.AppendLine(linea);
+            }
+
+            
+            int espacioEntreColumnasT = 3; // Puedes ajustar este valor según tus necesidades
+            int longitudTotalT = maxLengthT - espacioEntreColumnasT;
+
+            string separador = new string('.', longitudTotalT);
+            ticket.AppendLine($"TOTAL:{separador}{cantidadAnexos}");
+
+
+
+
+            
+            return ticket.ToString();
+        }
+
+
+        private int CantidadAnexos(List<Anexos> anexos)
+        { 
+            return anexos?.Sum(a => Convert.ToInt32(a.CantidadAnexo)) ?? 0;
+        }
+        protected string GetFechaYHora()
+        {
+            string formatoPersonalizado = "yyyy-MM-dd HH:mm:ss";
+            string fechaYHoraFormateada = DateTime.Now.ToString(formatoPersonalizado);
+            return fechaYHoraFormateada;
+        }
+
+        //FIN SELLO
+
+
         protected void btnEnviarDelito_Click(object sender, EventArgs e)
         {
             // Intentar convertir el valor seleccionado a un entero
@@ -572,9 +816,9 @@ namespace SIPOH.Views
                     for (int i = 0; i < listaDeIdDelitos.Count; i++)
                     {
                         tablaHtml.AppendLine("<tr>");
-                        tablaHtml.AppendLine($"<th scope=\"row\">{listaDeIdDelitos[i]}</th>");
-                        tablaHtml.AppendLine($"<td class=\"text-secondary \">{listaDeNombresDelitos[i]}</td>");
-                        tablaHtml.AppendLine($"<td class=\"text-secondary\"><i class=\"bi bi-trash-fill text-danger\"></i></td>");
+                        tablaHtml.AppendLine($"<th scope=\"row\" style=\"display:none; \">{listaDeIdDelitos[i]}</th>");
+                        tablaHtml.AppendLine($"<td class=\"text-secondary text-capitalize \">{listaDeNombresDelitos[i]}</td>");
+                        tablaHtml.AppendLine($"<td class=\"text-secondary\"><button class=\"btnEliminar\" data-id=\"{listaDeIdDelitos[i]}\"><i class=\"bi bi-trash-fill text-danger\"></i></button></td>");
                         tablaHtml.AppendLine("</tr>");
                     }
 
@@ -671,6 +915,25 @@ namespace SIPOH.Views
             // Asignar la lista de ListItem al DropDownList
             inputDelitos.Items.AddRange(items.ToArray());
         }
+        
+        public static void EliminarDelito(int idDelito)
+        {
+            // Obtener las listas actuales de la sesión
+            List<int> listaDeIdDelitos = HttpContext.Current.Session["IdDelitos"] as List<int>;
+            List<string> listaDeNombresDelitos = HttpContext.Current.Session["NombresDelitos"] as List<string>;
+
+            // Encontrar el índice del delito con el ID proporcionado
+            int index = listaDeIdDelitos.IndexOf(idDelito);
+
+            // Eliminar el delito de ambas listas
+            listaDeIdDelitos.RemoveAt(index);
+            listaDeNombresDelitos.RemoveAt(index);
+
+            // Actualizar las listas en la sesión
+            HttpContext.Current.Session["IdDelitos"] = listaDeIdDelitos;
+            HttpContext.Current.Session["NombresDelitos"] = listaDeNombresDelitos;
+        }
+
 
 
 
@@ -715,7 +978,7 @@ namespace SIPOH.Views
             inputObservaciones.Text = "";
             inputQuienIngresa.SelectedIndex = 0;
             inputNombreParticular.Text = "";
-            inputPrioridad.SelectedIndex = 0;
+            //inputPrioridad.SelectedIndex = ;
             inputNumeroFojas.Text = "";
             //inputRadicacion.SelectedValue = "";
             inputFechaRecepcion.Text = "";

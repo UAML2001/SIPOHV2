@@ -2,75 +2,89 @@
 
 
 <script type="text/javascript">
-    function toggleElements() {
-        var ddlPersona = document.getElementById('<%= ddlPersonaVictima.ClientID %>');
-               var lblNombre = document.getElementById('<%= lblNombre.ClientID %>');
-               var txtNombre = document.getElementById('<%= txtNombreVictima.ClientID %>');
-               var lblAP = document.getElementById('<%= lblAP.ClientID %>');
-               var txtAP = document.getElementById('<%= txtAPVictima.ClientID %>');
-               var lblAM = document.getElementById('<%= lblAM.ClientID %>');
-               var txtAM = document.getElementById('<%= txtAMVictima.ClientID %>');
-               var lblRazonSocial = document.getElementById('<%= lblRazonSocial.ClientID %>');
-               var txtRazonSocial = document.getElementById('<%= txtRazonSocialVictima.ClientID %>');
-               var lblSexo = document.getElementById('<%= lblSexo.ClientID %>');
-               var ddlSexo = document.getElementById('<%= ddlSexoVictima.ClientID %>');
+    
+    
+    
 
-        if (ddlPersona.value === 'fisica') {
-            // Mostrar elementos para persona física
-            lblNombre.style.display = 'block';
-            txtNombre.style.display = 'block';
-            lblAP.style.display = 'block';
-            txtAP.style.display = 'block';
-            lblAM.style.display = 'block';
-            txtAM.style.display = 'block';
-            lblRazonSocial.style.display = 'none';
-            txtRazonSocial.style.display = 'none';
-            lblSexo.style.display = 'block';
-            ddlSexo.style.display = 'block';
-        } else if (ddlPersona.value === 'moral') {
-            // Mostrar elementos para persona moral
-            lblNombre.style.display = 'none';
-            txtNombre.style.display = 'none';
-            lblAP.style.display = 'none';
-            txtAP.style.display = 'none';
-            lblAM.style.display = 'none';
-            txtAM.style.display = 'none';
-            lblRazonSocial.style.display = 'block';
-            txtRazonSocial.style.display = 'block';
-            lblSexo.style.display = 'none';
-            ddlSexo.style.display = 'none';
-        } else {
-            // Mostrar elementos por defecto
-            lblNombre.style.display = 'none';
-            txtNombre.style.display = 'none';
-            lblAP.style.display = 'none';
-            txtAP.style.display = 'none';
-            lblAM.style.display = 'none';
-            txtAM.style.display = 'none';
-            lblRazonSocial.style.display = 'none';
-            txtRazonSocial.style.display = 'none';
-            lblSexo.style.display = 'none';
-            ddlSexo.style.display = 'none';
+    function mostrarTituloSello() {
+        var tituloSello = document.getElementById('tituloSello');
+        if (tituloSello) {
+            tituloSello.style.display = 'block';
         }
     }
+    function imprimirTicket() {
+        var contenido = document.getElementById('<%= TicketDiv.ClientID %>').innerHTML;
+        var ventanaImpresion = window.open('', '_blank');
 
-    window.onload = function () {
-        // Ocultar elementos al cargar la página
-        toggleElements();
-        var ddlPersona = document.getElementById('<%= ddlPersonaVictima.ClientID %>');
-        ddlPersona.value = '';
-        lblNombre.value = '';
-        txtAP.value = '';
+        var estilos = `<style>
+                pre {
+                    font-family: monospace;
+                    white-space: pre;
+                    margin: 1em 0;
+                }
+            </style>`;
 
-        txtAM.value = '';
-        lblRazonSocial.value = '';
-        txtRazonSocial.value = '';
-        lblSexo.value = '';
-
-
+        ventanaImpresion.document.write(estilos + '<pre>' + contenido + '</pre>');
+        ventanaImpresion.document.close();
+        ventanaImpresion.print();
+        ventanaImpresion.onfocus = function () { setTimeout(function () { ventanaImpresion.close(); }, 500); }
     }
+    function cambiarTipoPersona() {
+        var valueDropDownList = $("#<%= ddlPersonaVictima.ClientID %>");
+        var txtValue = $("#<%= lblAP.ClientID %>");
+        var lblRazonSocialVictima = $("#<%= txtRazonSocialVictima.ClientID %>");
+        var lblApellidoPaternoVictima = $("#<%= txtAPVictima.ClientID %>");
+        var lblNombreVictima = $("#<%= txtNombreVictima.ClientID %>");
+        var lblApellidoMaternoVictima = $("#<%= txtAMVictima.ClientID %>");
+        var lblApellidoMaternoVictima = $("#<%= txtAMVictima.ClientID %>");
+        var ddlGeneroVictima = $("#<%= ddlSexoVictima.ClientID %>");
+
+        var txtApellidoMaternoVictima = $("#<%= lblAM.ClientID %>");
+        var txtNombreVictima = $("#<%= lblNombre.ClientID %>");
+
+        var txtGeneroVictima = $("#<%= lblSexo.ClientID %>");
+        
 
 
+        
+        
+        
+        if (valueDropDownList.val() === "F") {
+            txtValue.html("Apellido paterno: ");
+            txtValue.fadeIn();
+            txtNombreVictima.fadeIn();
+            txtApellidoMaternoVictima.fadeIn();
+            lblApellidoPaternoVictima.fadeIn();
+            lblApellidoMaternoVictima.fadeIn();
+            txtGeneroVictima.fadeIn();
+            lblNombreVictima.fadeIn();
+            ddlGeneroVictima.fadeIn();
+            lblRazonSocialVictima.fadeOut();
+
+        } else if (valueDropDownList.val() === "M") {
+            txtValue.html("Persona moral:");
+            txtValue.fadeIn();
+            txtNombreVictima.fadeOut();
+            txtApellidoMaternoVictima.fadeOut();
+            lblApellidoPaternoVictima.fadeOut();
+            lblApellidoMaternoVictima.fadeOut();
+            txtGeneroVictima.fadeOut();
+            lblNombreVictima.fadeOut();
+            lblRazonSocialVictima.fadeIn();
+            ddlGeneroVictima.fadeOut();
+        } else if (valueDropDownList.val() === "") {
+            var mensaje = "Selecciona un tipo de persona";
+            txtValue.fadeOut();
+            toastError(mensaje);
+            txtGeneroVictima.fadeOut();
+            txtNombreVictima.fadeOut();
+            txtApellidoMaternoVictima.fadeOut();
+            lblApellidoPaternoVictima.fadeOut();
+            lblApellidoMaternoVictima.fadeOut();
+            lblRazonSocialVictima.fadeOut();
+            ddlGeneroVictima.fadeOut();
+        }
+    }
 
 
     function validarNumero(input) {
@@ -85,9 +99,10 @@
             toastError(mensaje);
 
 
-            /*input.value = "";*/
+            input.value = "";
         }
     }
+    
 
     function mostrarOcultarDescripcion() {
         var dropdown = $("#<%= txtAnexosTipo.ClientID %>");
@@ -108,7 +123,7 @@
         copiarQuienIngresa();
         copiarEspecificarNombre();
         copiarTipoRadicacion();
-        copiarPrioridad();
+        
         copiarObservacione();
 
     }
@@ -163,22 +178,8 @@
     }
 
 
-    function copiarPrioridad() {
-        var inputPrioridad = $("input[name='" + '<%= inputPrioridad.ClientID %>' + "']:checked");
-               var copyPrioridad = $("#<%= copyPrioridad.ClientID %>");
-
-        // Verificar si hay un elemento seleccionado
-        if (inputPrioridad.length > 0) {
-            // Obtener el valor del elemento seleccionado
-            var valorSeleccionado = inputPrioridad.val();
-
-            // Asignar el valor al TextBox de copia
-            copyPrioridad.val(valorSeleccionado);
-        } else {
-
-            copyPrioridad.val("");
-        }
-    }
+    
+    
 
 </script>
 
@@ -200,7 +201,7 @@
             <div class="row g-1 ">
                 <div class="  d-flex col">
                     <label class="form-label text-secondary d-flex p-0 m-0">Filtrar: </label>
-                    <asp:DropDownList runat="server" ID="ddlTipoFiltrado" CssClass="form-select form-select-sm text-secondary " ClientIDMode="Static">
+                    <asp:DropDownList runat="server" ID="ddlTipoFiltrado" CssClass="form-select form-select-sm text-secondary" ClientIDMode="Static">
                         <asp:ListItem Text="Seleccionar" Value="" />
                         <asp:ListItem Text="NUC" Value="NUC" />
                         <asp:ListItem Text="Victima" Value="V" />
@@ -221,12 +222,12 @@
                 <div class="card-body table-responsive p-0 mx-0 mt-3 ">                    
                     <asp:GridView ID="grdTblGetPromociones" runat="server" AutoGenerateColumns="false" CssClass="table table-hover table-sm table-borderless ">
                         <Columns >
-                            <asp:BoundField DataField="Victimas" HeaderText="Victimas Asociadas" ItemStyle-CssClass="text-secondary text-center" HeaderStyle-CssClass="bg-success text-white text-center"/>
-                            <asp:BoundField DataField="Inculpados" HeaderText="Inculpados Asociados" ItemStyle-CssClass="text-secondary text-center" HeaderStyle-CssClass="bg-success text-white text-center" />
-                            <asp:BoundField DataField="TipoAsunto" HeaderText="Tipo de asunto" ItemStyle-CssClass="text-secondary text-center" HeaderStyle-CssClass="bg-success text-white text-center" />
+                            <asp:BoundField DataField="Victimas" HeaderText="Victimas Asociadas" ItemStyle-CssClass="text-secondary text-center " HeaderStyle-CssClass="bg-success text-white text-center"/>
+                            <asp:BoundField DataField="Inculpados" HeaderText="Inculpados Asociados" ItemStyle-CssClass="text-secondary text-center " HeaderStyle-CssClass="bg-success text-white text-center" />
+                            <asp:BoundField DataField="TipoAsunto" HeaderText="Tipo de asunto" ItemStyle-CssClass="text-secondary text-center " HeaderStyle-CssClass="bg-success text-white text-center" />
                             <%--<asp:BoundField DataField="Numero" HeaderText="Numero" ItemStyle-CssClass="text-secondary text-center" HeaderStyle-CssClass="bg-success text-white text-center" />--%>
-                            <asp:BoundField DataField="NUC" HeaderText="NUC" ItemStyle-CssClass="text-success fw-bold text-center" HeaderStyle-CssClass="bg-success text-white text-center" />
-                            <asp:BoundField DataField="Delitos" HeaderText="Delitos" ItemStyle-CssClass="text-secondary text-center" HeaderStyle-CssClass="bg-success text-white text-center" />
+                            <asp:BoundField DataField="NUC" HeaderText="NUC" ItemStyle-CssClass="text-success fw-bold text-center " HeaderStyle-CssClass="bg-success text-white text-center" />
+                            <asp:BoundField DataField="Delitos" HeaderText="Delitos" ItemStyle-CssClass="text-secondary text-center " HeaderStyle-CssClass="bg-success text-white text-center" />
                         </Columns>
                      </asp:GridView>
                 </div>
@@ -239,14 +240,14 @@
             <form class="container-lg col-xxl-12">
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inputNUC" class="form-label text-secondary">NUC:</label>
-                    <asp:TextBox runat="server" ID="inputNUC" CssClass="form-control form-control-sm" />
+                    <asp:TextBox runat="server" ID="inputNUC" CssClass="form-control form-control-sm " />
 
                 </div>
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 ">
                     <label for="inputTipoAsunto" class="form-label text-secondary">Tipo de asunto: </label>
 
-                    <asp:DropDownList runat="server" ID="inputTipoAsunto" AutoPostBack="true" CssClass="form-select form-select-sm" OnSelectedIndexChanged="inputTipoAsunto_SelectedIndexChanged">
-                        <asp:ListItem Text="Seleccione..." Value="" />
+                    <asp:DropDownList runat="server" ID="inputTipoAsunto" AutoPostBack="true" CssClass="form-select form-select-sm text-secondary" OnSelectedIndexChanged="inputTipoAsunto_SelectedIndexChanged">
+                        <asp:ListItem Text="Seleccionar" Value="" />
                         <asp:ListItem Text="Causa" Value="C" />
                         <asp:ListItem Text="Cupre" Value="CP" />
                     </asp:DropDownList>
@@ -254,8 +255,8 @@
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inpuTipoSolicitud" class="form-label text-secondary">Tipo solicitud: </label>
 
-                    <asp:DropDownList runat="server" ID="inputRadicacion" CssClass="form-select form-select-sm text-dark">
-                        <asp:ListItem Text="Seleccione..." Value="" />
+                    <asp:DropDownList runat="server" ID="inputRadicacion" CssClass="form-select form-select-sm text-secondary">
+                        <asp:ListItem Text="Seleccionar" Value="" />
                     </asp:DropDownList>
 
                 </div>
@@ -272,7 +273,7 @@
                 <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label class="form-label text-secondary">Quien ingresa: </label>
 
-                    <asp:DropDownList runat="server" CssClass="form-select form-select-sm" ID="inputQuienIngresa" AutoPostBack="true" OnSelectedIndexChanged="inputQuienIngresa_SelectedIndexChanged">
+                    <asp:DropDownList runat="server" CssClass="form-select form-select-sm text-secondary" ID="inputQuienIngresa" AutoPostBack="true" OnSelectedIndexChanged="inputQuienIngresa_SelectedIndexChanged">
                         <asp:ListItem Text="Seleccionar" Value="" Selected="True" />
                         <asp:ListItem Text="MP" Value="M" />
                         <asp:ListItem Text="Particular" Value="P" />
@@ -283,13 +284,13 @@
                 <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inputNombreParticular" class="form-label text-secondary">Especificar nombre de 
                         <asp:Label ID="lblTipoPersona" runat="server" Text=""></asp:Label>: </label>
-                    <asp:TextBox runat="server" ID="inputNombreParticular" CssClass="form-control form-control-sm" />
+                    <asp:TextBox runat="server" ID="inputNombreParticular" CssClass="form-control form-control-sm " />
                 </div>
 
                 <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label class="form-label text-secondary">Tipo de radicacion: </label>
                     <div class="d-flex align-items-center">
-                        <asp:DropDownList runat="server" CssClass="form-select form-select-sm" ID="inpuTipoRadicacion" AutoPostBack="false">
+                        <asp:DropDownList runat="server" CssClass="form-select form-select-sm text-secondary" ID="inpuTipoRadicacion" AutoPostBack="false">
                             <asp:ListItem Text="Seleccionar" Value="" Selected="True" />
                             <asp:ListItem Text=" C/Detenido" Value="C" CssClass="form-check-input" />
                             <asp:ListItem Text=" S/Detenido" Value="S" CssClass="form-check-input" />
@@ -303,10 +304,11 @@
                 <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label class="form-label text-secondary">Prioridad: </label>
                     <div class=" d-flex align-items-center">
-                        <asp:RadioButtonList runat="server" ID="inputPrioridad" CssClass="form-check text-secondary d-flex flex-row" ClientIDMode="Static">
-                            <asp:ListItem Text="Alta" Value="A" />
-                            <asp:ListItem Text="Normal" Value="N" />
+                        <asp:RadioButtonList runat="server" ID="inputPrioridad" CssClass="form-check text-secondary d-flex flex-row" OnSelectedIndexChanged="GetLabelPrioridad" AutoPostBack="true">
+                            <asp:ListItem Text="Alta" Value="A" Selected="False" />
+                            <asp:ListItem Text="Normal" Value="N" Selected="False" />
                         </asp:RadioButtonList>
+
                     </div>
                 </div>
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
@@ -321,7 +323,7 @@
                     <div class="col-12 col-lg-6 text-left ">
 
                         <span class="text-success fw-bold m-2"><i class="bi bi-emoji-laughing"></i>Victima</span>
-                        <i class="bi bi-plus-square-fill text-success fs-6 text-right" data-bs-toggle="modal" data-bs-target="#modal2"></i>
+                        <i class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modal2">+</i>
 
                         <div class="table-responsive mt-2">
 
@@ -331,6 +333,7 @@
                                 <thead class="text-center">
                                     <tr>
                                         <th scope="col" class="bg-success text-white">Nombre</th>
+                                        <th scome="col" class="bg-success text-white">Apellidos</th>
                                         <th scope="col" class="bg-success text-white">Genero</th>
                                         <th scope="col" class="bg-success text-white">Acciones</th>
                                     </tr>
@@ -339,9 +342,10 @@
                                     <asp:Repeater ID="Repeater1" runat="server">
                                         <ItemTemplate>
                                             <tr>
-                                                <th scope="row"><%# !string.IsNullOrEmpty(Eval("Nombre").ToString()) ? Eval("Nombre") : Eval("ApellidoPaterno") %></th>
-                                                <td class="text-secondary"><%# Eval("Genero") %></td>
-                                                <td><i class="bi bi-trash-fill text-danger"></i></td>
+                                                <th scope="row" class=""><%# !string.IsNullOrEmpty(Eval("Nombre").ToString()) ? Eval("Nombre") : Eval("ApellidoPaterno") %></th>
+                                                <th  class="text-secondary"><%# Eval("ApellidoPaterno") %> <%# Eval("ApellidoMaterno") %></th>
+                                                <td class="text-secondary "><%# Eval("Genero") %></td>
+                                                <td><asp:Button runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" OnClick="btnEliminarVictima"  /></i></td>
                                             </tr>
                                         </ItemTemplate>
                                     </asp:Repeater>
@@ -356,7 +360,7 @@
                     <div class="col-12 col-lg-6 text-left">
 
                         <span class="text-success fw-bold m-2"><i class="bi bi-emoji-frown"></i>Imputado</span>
-                        <i class="bi bi-plus-square-fill text-success fs-6 text-right " data-bs-toggle="modal" data-bs-target="#modal1"></i>
+                        <i class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modal1">+</i>
                         <div class="table-responsive mt-2">
 
                             <table class="table table-striped table-hover mb-0 table-sm">
@@ -364,6 +368,7 @@
                                     <tr class="">
 
                                         <th scope="col" class="bg-success text-white">Nombre</th>
+                                        <th scope="col" class="bg-success text-white">Apellidos</th>
                                         <th scope="col" class="bg-success text-white">Genero</th>
                                         <th scope="col" class="bg-success text-white">Acciones</th>
 
@@ -373,9 +378,10 @@
                                     <asp:Repeater ID="Repeater2" runat="server">
                                         <ItemTemplate>
                                             <tr>
-                                                <th scope="row"><%# Eval("NombreCulpado") %></th>
-                                                <td class="text-secondary"><%# Eval("GeneroCulpado") %></td>
-                                                <td><i class="bi bi-trash-fill text-danger"></i></td>
+                                                <th scope="row"  class=""><%# Eval("NombreCulpado") %></th>
+                                                <th  class="text-secondary"><%# Eval("APCulpado") %> <%# Eval("AMCulpado") %></th>
+                                                <td class="text-secondary "><%# Eval("GeneroCulpado") %></td>
+                                                <td><asp:Button runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" OnClick="btnEliminarCulpado"  /></td>
                                             </tr>
                                         </ItemTemplate>
                                     </asp:Repeater>
@@ -398,13 +404,13 @@
                                 <label for="inputDelitos" class="form-label text-secondary align-self-center">Delitos: </label>
 
 
-                                <asp:DropDownList runat="server" CssClass="form-select form-select-sm text-capitalize" ID="inputDelitos" AutoPostBack="false">
-                                    <asp:ListItem Text="Seleccionar" Value="" Selected="True" CssClass=" text-capitalize" />
+                                <asp:DropDownList runat="server" CssClass="form-select form-select-sm text-capitalize text-secondary" ID="inputDelitos" AutoPostBack="false">
+                                    <asp:ListItem Text="Seleccionar" Value="" Selected="True" />
                                 </asp:DropDownList>
-                                <asp:Label runat="server" ID="lblNombresDelitos" Text=""></asp:Label>
+                                <%--<asp:Label runat="server" ID="lblNombresDelitos" Text=""></asp:Label>--%>
 
                             </div>
-                            <div class="col-1 ">
+                            <div class="col-1 d-flex align-items-end ">
                                  <asp:Button runat="server" CssClass="btn btn-success btn-sm" Text="+" OnClick="btnEnviarDelito_Click" UseSubmitBehavior="false" />
                                 
                             </div>
@@ -414,7 +420,7 @@
                             <table class="table table-striped table-hover mb-0 table-sm">
                                 <thead class=" text-center">
                                     <tr>
-                                        <th scope="col" class="bg-success text-white">IdDelito</th>
+                                        
                                         <th scope="col" class="bg-success text-white">Delito</th>
                                         <th scope="col" class="bg-success text-white">Acciones</th>
                                     </tr>
@@ -423,24 +429,7 @@
                                     <asp:Literal runat="server" ID="litTablaDelitos" />
                                 </tbody>
                             </table>
-
-                            <%--<asp:GridView ID="gvResultados" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-hover mb-0 table-sm">
-    <Columns>
-        <asp:TemplateField HeaderText="Nombre" ItemStyle-CssClass="text-center text-bold ">
-            <ItemTemplate >
-                <asp:Label ID="lblNombre" runat="server" Text='<%# Eval("Nombre") %>' ></asp:Label>
-            </ItemTemplate>
-        </asp:TemplateField>
-        
-        <asp:TemplateField HeaderText="Acciones" ItemStyle-CssClass="text-center ">
-            <ItemTemplate>
-                <i class="bi bi-trash-fill text-danger"></i>
-            </ItemTemplate>
-        </asp:TemplateField>
-    </Columns>
-    <HeaderStyle CssClass="text-center" />
-    <RowStyle CssClass="text-center" />
-</asp:GridView>--%>
+                         
                         </div>
                     </div>
                     <div class="col-12 col-lg-6 text-left">
@@ -448,7 +437,7 @@
                         <div class="mb-0 row">
                             <div class="col-md-4">
                                 <label for="txtAnexosTipo" class="form-label text-secondary align-self-center">Anexos: </label>
-                                <asp:DropDownList runat="server" CssClass="form-select form-select-sm" ID="txtAnexosTipo" AutoPostBack="false" onchange="mostrarOcultarDescripcion()">
+                                <asp:DropDownList runat="server" CssClass="form-select form-select-sm text-secondary" ID="txtAnexosTipo" AutoPostBack="false" onchange="mostrarOcultarDescripcion()">
                                     <asp:ListItem Text="Seleccionar" Value="" Selected="True" />
                                 </asp:DropDownList>
 
@@ -463,7 +452,7 @@
                                 <label for="inputCantidad" class="form-label text-secondary align-self-center">Cantidad: </label>
                                 <asp:TextBox runat="server" CssClass="form-control form-control-sm" ID="txtCantidadAnexos" oninput="validarNumero(this)" />
                             </div>
-                            <div class="col-1">
+                            <div class="col-1 d-flex align-items-end">
                                 
                                 <asp:Button runat="server" CssClass="btn btn-success btn-sm" Text="+" OnClick="btnGuardarAnexos_Click"  />
                             </div>
@@ -484,32 +473,43 @@
                                     <asp:Repeater ID="Repeater3" runat="server">
                                         <ItemTemplate>
                                             <tr>
-                                                <th scope="row"><%# Eval("DescripcionAnexo") %></th>
+                                                <th class="text-secondary"><%# Eval("DescripcionAnexo") %></th>
                                                 <td class="text-secondary"><%# Eval("CantidadAnexo") %></td>
-                                                <td><i class="bi bi-trash-fill text-danger"></i></td>
+                                                <td>
+                                                    <asp:Button runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" OnClick="btnEliminarAnexo"  />
+                                                    
+                                                </td>
                                             </tr>
                                         </ItemTemplate>
                                     </asp:Repeater>
+
+
+
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class=" d-flex justify-content-center mt-5">
-                    <a type="submit" class="btn btn-success" data-bs-toggle="modal" onclick="valoresFinales();" data-bs-target="#modal3"><i class="bi bi-floppy-fill mr-1"></i>Enviar</a>
+                    <a  class="btn btn-success btn-sm" data-bs-toggle="modal" onclick="valoresFinales();" data-bs-target="#modal3"><i class="bi bi-floppy-fill mr-1"></i>Enviar</a>
                 </div>
                 <asp:Label runat="server" ID="lblSuccess" Text="" CssClass="text-success text-center"></asp:Label>
                 <asp:Label runat="server" ID="lblError" Text="" CssClass="text-danger text-center"></asp:Label>
+                <!-- FIN DIV OCULTO DOS -->
+                <div class=" d-flex justify-content-center align-content-center w-100vw  mt-3">
+                    <pre id="TicketDiv" runat="server" ></pre>
 
-
-
-
+                </div>
+                <div class="container d-flex flex-row-reverse justify-content-center align-content-center w-100vw m-0 "  id="tituloSello" style="display:none !important;" runat="server">
+                    <div class="col-auto flex-column-reverse btn btn-info d-flex btn-sm" onclick="imprimirTicket()" style="cursor: pointer;">
+                        <h6 class="text-center align-self-center m-0 p-0 ">¡Imprimir <span class="text-black">ticket!</span></h6>
+                        <div class="col-auto ">
+                            <i class="bi bi-printer-fill  btn-sm"></i>
+                        </div>
+                    </div>
+                </div>
 
             </form>
-
-
-
-
 
         </div>
 
@@ -527,12 +527,7 @@
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body d-flex flex-wrap justify-content-end">
-                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                            <asp:Label ID="lblNombreImputado" runat="server" AssociatedControlID="txtNombreImputado" CssClass="form-label text-secondary">Nombre (s):</asp:Label>
-                            <asp:TextBox ID="txtNombreImputado" runat="server" CssClass="form-control form-control-sm" />
-                        </div>
-
+                    <div class="modal-body d-flex flex-wrap justify-content-start">
                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                             <asp:Label ID="lblAPaternoImputado" runat="server" AssociatedControlID="txtAPaternoImputado" CssClass="form-label text-secondary">Apellido Paterno:</asp:Label>
                             <asp:TextBox ID="txtAPaternoImputado" runat="server" CssClass="form-control form-control-sm" />
@@ -541,6 +536,11 @@
                             <asp:Label ID="lblAMaternoImputado" runat="server" AssociatedControlID="txtAMaternoImputado" CssClass="form-label text-secondary">Apellido Materno:</asp:Label>
                             <asp:TextBox ID="txtAMaternoImputado" runat="server" CssClass="form-control form-control-sm" />
                         </div>
+                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                            <asp:Label ID="lblNombreImputado" runat="server" AssociatedControlID="txtNombreImputado" CssClass="form-label text-secondary">Nombre (s):</asp:Label>
+                            <asp:TextBox ID="txtNombreImputado" runat="server" CssClass="form-control form-control-sm" />
+                        </div>
+
 
                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                             <asp:Label ID="lblGeneroImputado" runat="server" AssociatedControlID="txtGeneroImputado" CssClass="form-label text-secondary">Sexo:</asp:Label>
@@ -580,42 +580,38 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <div class="modal-body d-flex flex-wrap justify-content-end">
+                    <div class="modal-body d-flex flex-wrap justify-content-start">
 
 
                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                             <label for="inputvictimapersona" class="form-label text-secondary">Persona:</label>
 
-                            <asp:DropDownList ID="ddlPersonaVictima" runat="server" CssClass="form-select form-select-sm" AutoPostBack="false" onchange="toggleElements()">
+                            <asp:DropDownList ID="ddlPersonaVictima" runat="server" CssClass="form-select form-select-sm" AutoPostBack="true" onchange="cambiarTipoPersona()">
                                 <asp:ListItem Text="Seleccionar" Value="" />
-                                <asp:ListItem Text="Física" Value="fisica" />
-                                <asp:ListItem Text="Moral" Value="moral" />
+                                <asp:ListItem Text="Física" Value="F" />
+                                <asp:ListItem Text="Moral" Value="M" />
                             </asp:DropDownList>
                         </div>
 
+                        <%--//Apellido paterno es utizado para el registro de RAZON SOCIAL--%>
                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                            <asp:Label ID="lblNombre" runat="server" AssociatedControlID="txtNombreVictima" CssClass="form-label text-secondary">Nombre(s):</asp:Label>
-                            <asp:TextBox ID="txtNombreVictima" runat="server" CssClass="form-control form-control-sm" />
+                            <asp:Label ID="lblAP" runat="server"  class="form-label text-secondary" style="display: none;" ></asp:Label>
+                            <asp:TextBox ID="txtAPVictima" runat="server" CssClass="form-control form-control-sm" style="display: none;" />
+                            <asp:TextBox ID="txtRazonSocialVictima" runat="server" CssClass="form-control form-control-sm" style="display: none;" />
+                        </div>
+                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                            <asp:Label ID="lblAM" runat="server"  class="form-label text-secondary" style="display: none;">Apellido materno:</asp:Label>
+                            <asp:TextBox ID="txtAMVictima" runat="server" CssClass="form-control form-control-sm" style="display: none;" />
+                        </div>                       
+                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                            <asp:Label ID="lblNombre" runat="server"  CssClass="form-label text-secondary" style="display: none;">Nombre(s):</asp:Label>
+                            <asp:TextBox ID="txtNombreVictima" runat="server" CssClass="form-control form-control-sm" style="display: none;"/>
                         </div>
 
-                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                            <asp:Label ID="lblAP" runat="server" AssociatedControlID="txtAPVictima" class="form-label text-secondary">Apellido paterno:</asp:Label>
-                            <asp:TextBox ID="txtAPVictima" runat="server" CssClass="form-control form-control-sm" />
-                        </div>
 
                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                            <asp:Label ID="lblAM" runat="server" AssociatedControlID="txtAMVictima" class="form-label text-secondary">Apellido materno:</asp:Label>
-                            <asp:TextBox ID="txtAMVictima" runat="server" CssClass="form-control form-control-sm" />
-                        </div>
-
-                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                            <label id="lblRazonSocial" runat="server" associatedcontrolid="txtRazonSocialVictima" class="form-label text-secondary">Razón Social:</label>
-                            <asp:TextBox ID="txtRazonSocialVictima" runat="server" CssClass="form-control form-control-sm" />
-                        </div>
-
-                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                            <asp:Label ID="lblSexo" runat="server" AssociatedControlID="ddlSexoVictima" class="form-label text-secondary">Sexo:</asp:Label>
-                            <asp:DropDownList ID="ddlSexoVictima" runat="server" CssClass="form-select form-select-sm">
+                            <asp:Label ID="lblSexo" runat="server"  class="form-label text-secondary" style="display: none;">Sexo:</asp:Label>
+                            <asp:DropDownList ID="ddlSexoVictima" runat="server" CssClass="form-select form-select-sm" style="display: none;">
                                 <asp:ListItem Text="Seleccionar" Value="" />
                                 <asp:ListItem Text="Femenino" Value="F" />
                                 <asp:ListItem Text="Masculino" Value="M" />
@@ -709,12 +705,12 @@
                         </div>
                         <div class="col-12  pb-5">
                             <span class="text-secondary">Prioridad:</span>
-                            <asp:TextBox runat="server" ID="copyPrioridad" CssClass="form-control form-control-sm text-center text-success" ReadOnly="true" />
+                            <asp:TextBox runat="server" ID="copyPrioridad" CssClass="form-control form-control-sm text-center text-success" ReadOnly="true" ClientIDMode="Static"/>
 
                         </div>
                         <div class="col-12">
                             <span class="text-secondary">Observaciones:</span>
-                            <asp:TextBox runat="server" ID="copyObservaciones" TextMode="MultiLine" Height="100" CssClass="form-control form-control-sm text-center text-success" ReadOnly="true" />
+                            <asp:TextBox runat="server" ID="copyObservaciones"  CssClass="form-control form-control-sm text-center text-success" ReadOnly="true" TextMode="MultiLine" Rows="4"/>
 
                         </div>
                     </div>

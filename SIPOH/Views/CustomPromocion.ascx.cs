@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -97,18 +98,19 @@ namespace SIPOH.Views
             try
             {
             string promovente = inputPromovente.Text;
-            string fechaCaptura = inputFechaRecepcion.Text;                
+            string fechaCaptura = inputFechaRecepcion.Text;
+                
 
-                if (string.IsNullOrEmpty(promovente) || string.IsNullOrEmpty(fechaCaptura))
+                if (Session["IdAsuntoPromocion"] == null || string.IsNullOrEmpty(Session["IdAsuntoPromocion"].ToString()))
                 {
-                    string mensaje = "Los campos promovente y fecha son obligatorios.";
+                    string mensaje = "No tienes un numero de documento asignado, por favor busca uno!";
                     string script = $"toastError('{mensaje}');";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastError", script, true);
                     return;
                 }
-                if (Session["IdAsuntoPromocion"] == null || string.IsNullOrEmpty(Session["IdAsuntoPromocion"].ToString()))
+                if (string.IsNullOrEmpty(promovente) || string.IsNullOrEmpty(fechaCaptura))
                 {
-                    string mensaje = "No tienes un numero de documento asignado, por favor busca uno!";
+                    string mensaje = "Los campos promovente y fecha son obligatorios.";
                     string script = $"toastError('{mensaje}');";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastError", script, true);
                     return;
@@ -130,8 +132,18 @@ namespace SIPOH.Views
                 //verificar si el metodo funciona 
                     List<AnexosPromocion> listaAnexos = Session["Anexos"] as List<AnexosPromocion> ?? new List<AnexosPromocion>();
                     RegistroPromociones.SendRegistroPromocion(listaPromocion, listaAnexos);
+                string mensajeSuccess = "Tu peticion fue correcta!, tu registro se ha hecho correctamente. ";
 
-            }catch (Exception ex)
+                string scriptToast = $"toastInfo('{mensajeSuccess}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
+                // CODIGOTICKET
+                string ticket = CrearTicketSELLO();
+                TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
+                ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
+                tituloSello.Style["display"] = "block";
+                ScriptManager.RegisterStartupScript(this, GetType(), "mostrarTituloSello", "mostrarTituloSello();", true);
+            }
+            catch (Exception ex)
             {
                 Debug.WriteLine("Error dentro codigo: " + ex);
                 string mensaje = "Error: " + ex;
@@ -141,9 +153,11 @@ namespace SIPOH.Views
                 return;
             }
 
-
+            CleanBusquedaPromocion();
             CleanEtiquetaInicial();
+            CleanTables();
             Session.Remove("Anexos");
+
             Session["Anexos"] = new List<AnexosPromocion>();
             CleanEtiquetaFormAnexo();
             Session.Remove("TipoAsuntoPromocion");            
@@ -159,11 +173,145 @@ namespace SIPOH.Views
             promocionPanel.Update();
 
         }
+        public int CantidadAnexos()
+        {
+            int cantidaAnexos = 10;
+            return cantidaAnexos;
+        }
+        private List<string> DividirTextoEnLineas(string texto, int maxCaracteresPorLinea)
+        {
+            List<string> lineas = new List<string>();
+            string[] palabras = texto.Split(' ');
+            string lineaActual = "";
+
+            foreach (string palabra in palabras)
+            {
+                if ((lineaActual.Length > 0) && (lineaActual.Length + palabra.Length + 1 > maxCaracteresPorLinea))
+                {
+                    lineas.Add(lineaActual);
+                    lineaActual = "";
+                }
+
+                if (lineaActual.Length > 0)
+                    lineaActual += " ";
+
+                lineaActual += palabra;
+            }
+
+            if (lineaActual.Length > 0)
+                lineas.Add(lineaActual);
+
+            return lineas;
+        }
+        private int CantidadAnexos(List<AnexosPromocion> anexos)
+        {
+            return anexos?.Sum(a => Convert.ToInt32(a.CantidadAnexo)) ?? 0;
+        }
+        public static List<string> listaDeAnexos = new List<string>();
+        private void ImprimirCentrado(StringBuilder ticket, string texto)
+        {
+            int maxLength = 37;
+            int totalPadding = maxLength - texto.Length;
+            int padLeft = totalPadding / 2 + texto.Length;
+            string centeredLine = texto.PadLeft(padLeft).PadRight(maxLength);
+            ticket.AppendLine(centeredLine);
+        }
+        public string CrearTicketSELLO()
+        {
+            string TipoAsunto = Session["TipoAsuntoPromocion"] as string;
+
+            StringBuilder ticket = new StringBuilder();
+            string nombreJuzgado = Session["NombreJuzgado"] as string;
+            List<AnexosPromocion> anexos = Session["Anexos"] as List<AnexosPromocion>;
+
+            List<string> lineasNombreJuzgado = DividirTextoEnLineas(nombreJuzgado, 32);
+
+            int cantidadAnexos = CantidadAnexos(anexos);
+
+            string NUC = Session["NUCPromocion"] as string;
+            string Causa = Session["NumeroPromocion"] as string;
+
+
+            ImprimirCentrado(ticket, "TRIBUNAL SUPERIOR");
+            ImprimirCentrado(ticket, "DE JUSTICIA");
+            ImprimirCentrado(ticket, "DEL ESTADO DE HIDALGO");
+            ImprimirCentrado(ticket, "ATENCION CIUDADANA");
+
+
+            ImprimirCentrado(ticket, ".........");
+            foreach (string linea in lineasNombreJuzgado)
+            {
+                ImprimirCentrado(ticket, linea);
+            }
+
+            ImprimirCentrado(ticket, "PROMOCION");
+
+
+            ImprimirCentrado(ticket, ".........");
+
+
+            if (TipoAsunto == "C")
+            {
+                var AsuntoIncial = "CAUSA";
+                ticket.AppendLine($"{AsuntoIncial}: {Causa}");
+
+            }
+            else if (TipoAsunto == "CP")
+            {
+                var AsuntoIncial = "CUPRE";
+                ticket.AppendLine($"{AsuntoIncial}:{Causa}");
+            }else if(TipoAsunto == "JO")
+            {
+                var AsuntoIncial = "JUICIO ORAL";
+                ticket.AppendLine($"{AsuntoIncial}:{Causa}");
+            }
+            else if(TipoAsunto == "E")
+            {
+                var AsuntoIncial = "EXHORTO";
+                ticket.AppendLine($"{AsuntoIncial}:{Causa}");
+            }
+            ticket.AppendLine($"FECHA RECEPCIÒN:{GetFechaYHora()}");
+            ticket.AppendLine($"NUC:{NUC.ToUpper()}");
+
+            int maxLength = 38;
+            int maxLengthT = 32;
+
+            foreach (var anexo in anexos)
+            {
+                int espacioEntreColumnas = 3; // Puedes ajustar este valor según tus necesidades
+                int longitudTotal = maxLength - espacioEntreColumnas;
+
+                string linea = $"{anexo.DescripcionAnexo.ToUpper()}".PadRight(longitudTotal, '.') + $"{anexo.CantidadAnexo.ToUpper()}";
+                ticket.AppendLine(linea);
+            }
+
+
+            int espacioEntreColumnasT = 3; // Puedes ajustar este valor según tus necesidades
+            int longitudTotalT = maxLengthT - espacioEntreColumnasT;
+
+            string separador = new string('.', longitudTotalT);
+            ticket.AppendLine($"TOTAL:{separador}{cantidadAnexos}");
+
+
+
+
+
+            return ticket.ToString();
+        }
+
+        //FIN SELLO
+        protected string GetFechaYHora()
+        {
+            string formatoPersonalizado = "yyyy-MM-dd HH:mm:ss";
+            string fechaYHoraFormateada = DateTime.Now.ToString(formatoPersonalizado);
+            return fechaYHoraFormateada;
+        }
         protected void btnGetConsultaPromocion(object sender, EventArgs e)
         {
            
                 string numeroPromocion = inputNumero.Text;
             string tipoDocumento = DrpLstTipoDocumento.SelectedValue;
+            copyNumeroDocumento.Text = numeroPromocion;
 
 
             switch (tipoDocumento)
@@ -200,13 +348,20 @@ namespace SIPOH.Views
             lblVictimasPromocion.Text = victimasHtml;
 
             lblNumeroPromocion.Text = Session["NumeroPromocion"] as string;
-                lblDelitosPromocion.Text = Session["DelitosPromocion"] as string;
-                lblInculpadosPromocion.Text = Session["InculpadosPromocion"] as string;
+            lblDelitosPromocion.Text = Session["DelitosPromocion"] as string;
+            lblInculpadosPromocion.Text = Session["InculpadosPromocion"] as string ;
+
+            string imputados = lblInculpadosPromocion.Text;
+            string[] imputadosArray = imputados.Split(',');
+            string imputadosHtml = string.Join(", ", imputadosArray.Select(v => $"<a class='link-success' onclick='seleccionarImputado(\"{v.Trim()}\")'>{v.Trim()}</a>"));
+            lblInculpadosPromocion.Text = imputadosHtml;
+
                 lblNumeroAmparoPromocion.Text = Session["NumeroAmparoPromocion"] as string;
 
                 if (lblNumeroAmparoPromocion.Text == "")
                 {
                     string Mensaje = "Este documento no tiene un Amparo";
+
                     ResultadoSolicitudPromociones.Text = Mensaje;
                 }
                 else
@@ -259,6 +414,8 @@ namespace SIPOH.Views
                 listaAnexos.Add(anexo);
                 Session["Anexos"] = listaAnexos;
                 RepeaterAnexos.DataSource = listaAnexos;
+                RepeaterAnexosPrev.DataSource = listaAnexos;
+                RepeaterAnexosPrev.DataBind();
                 RepeaterAnexos.DataBind();
                 CleanEtiquetaFormAnexo();
                 promocionPanel.Update();
@@ -299,6 +456,8 @@ namespace SIPOH.Views
                 listaAnexos.Add(anexo);
                 Session["Anexos"] = listaAnexos;
                 RepeaterAnexos.DataSource = listaAnexos;
+                RepeaterAnexosPrev.DataSource = listaAnexos;
+                RepeaterAnexosPrev.DataBind();
                 RepeaterAnexos.DataBind();
                 CleanEtiquetaFormAnexo();
                 promocionPanel.Update();
@@ -306,8 +465,36 @@ namespace SIPOH.Views
 
 
         }
+        protected void btnEliminarAnexo(object sender, EventArgs e)
+        {
+            // Obtener el botón que activó el evento
+            Button btnEliminar = (Button)sender;
 
-    private void CleanEtiquetaFormAnexo()
+            // Obtener la fila del Repeater que contiene el botón
+            RepeaterItem item = (RepeaterItem)btnEliminar.NamingContainer;
+            item.Visible = false;
+            // Obtener el índice de la fila en el Repeater
+            int indice = item.ItemIndex;
+
+            // Obtener la lista de la sesión
+            List<AnexosPromocion> listaAnexos = (List<AnexosPromocion>)Session["Anexos"];
+
+            // Verificar si la lista no es nula y tiene elementos
+            if (listaAnexos != null && listaAnexos.Count > indice)
+            {
+                // Eliminar el elemento en la posición indicada por el índice
+                item.Visible = false;
+                listaAnexos.RemoveAt(indice);
+                RepeaterAnexos.Controls.RemoveAt(indice);
+                Session["Anexos"] = listaAnexos;
+
+
+            }
+            // Verificar si la lista no es nula y tiene elementos
+            promocionPanel.Update();
+
+        }
+        private void CleanEtiquetaFormAnexo()
     {
         txtDescripcionAnexos.Text = "";
         txtCantidadAnexos.Text = "";
@@ -320,5 +507,32 @@ namespace SIPOH.Views
             inputPromovente.Text = "";
             inputFechaRecepcion.Text = "";
         }
+        private void CleanBusquedaPromocion()
+        {
+            inputNumero.Text = "";
+            DrpLstTipoDocumento.SelectedIndex = 0;
+            copyNumeroDocumento.Text = "";
+            copyFechaRecepcion.Text = "";
+            copyPromovente.Text = "";
+            lblVictimasPromocion.Text = "";
+            lblNumeroPromocion.Text = "";
+            lblInculpadosPromocion.Text = "";
+            lblDelitosPromocion.Text = "";
+            lblNumeroAmparoPromocion.Text = "";
+            lblAutoridadResponsablePromocion.Text = "";
+            lblEstatusPromocion.Text = "";
+            lblEtapaPromocion.Text = "";
+            ResultadoSolicitudPromociones.Text = "";
+
+        }
+        private void CleanTables()
+        {
+            RepeaterAnexos.DataSource = null;
+            RepeaterAnexos.DataBind();
+            RepeaterAnexosPrev.DataSource = null;
+            RepeaterAnexosPrev.DataBind();
+        }
+
+
     }
 }

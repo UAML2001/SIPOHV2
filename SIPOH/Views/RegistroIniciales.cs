@@ -317,19 +317,19 @@ namespace SIPOH
 
 
                         // Paso 1: Inserción en P_Asunto
-                        command.CommandText = "INSERT INTO P_Asunto(Numero, IdJuzgado, FeIngreso, TipoAsunto, Digitalizado, FeCaptura, IdUsuario, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas) OUTPUT INSERTED.IdAsunto VALUES ('0000/2023', @IdJuzgado, @FeIngreso, @TipoAsunto, '0', GETDATE(), @IdUsuario, @IdAudiencia, @Observaciones, @QuienIngresa, @MP, @Prioridad, @Fojas)";
+                        command.CommandText = "INSERT INTO P_Asunto(Numero, IdJuzgado, FeIngreso, TipoAsunto, Digitalizado, FeCaptura, IdUsuario, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas) OUTPUT INSERTED.IdAsunto VALUES ('0000/2024', @IdJuzgado, @FeIngreso, @TipoAsunto, '0', GETDATE(), @IdUsuario, @IdAudiencia, @Observaciones, @QuienIngresa, @MP, @Prioridad, @Fojas)";
                         //command.Parameters.AddWithValue("@NumeroInicial", NumeroInicial);
                         command.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
                         command.Parameters.AddWithValue("@FeIngreso", FeIngresoAsunto);
-                        command.Parameters.AddWithValue("@TipoAsunto", TipoAsunto);
+                        command.Parameters.AddWithValue("@TipoAsunto", TipoAsunto.ToUpper());
                         //command.Parameters.AddWithValue("@Digitalizado", Digitalizado);
                         //command.Parameters.AddWithValue("@FeCaptura", FeCaptura);
                         command.Parameters.AddWithValue("@IdUsuario", Session["IdUsuario"]);
                         command.Parameters.AddWithValue("@IdAudiencia", IdAudiencia);
-                        command.Parameters.AddWithValue("@Observaciones", Observaciones);
-                        command.Parameters.AddWithValue("@QuienIngresa", QuienIngresa);
-                        command.Parameters.AddWithValue("@MP", MP);
-                        command.Parameters.AddWithValue("@Prioridad", Prioridad);
+                        command.Parameters.AddWithValue("@Observaciones", Observaciones.ToUpper());
+                        command.Parameters.AddWithValue("@QuienIngresa", QuienIngresa.ToUpper());
+                        command.Parameters.AddWithValue("@MP", MP.ToUpper());
+                        command.Parameters.AddWithValue("@Prioridad", Prioridad.ToUpper());
                         command.Parameters.AddWithValue("@Fojas", Fojas);
                         object insertedId = command.ExecuteScalar();
                         Session["UserId"] = insertedId;
@@ -339,8 +339,8 @@ namespace SIPOH
                         //// Paso 2: Inserción en P_Causa
                         command.CommandText = "INSERT INTO P_Causa(IdAsunto, TipoRadicacion, Remision, IdRazonIncom, FeImcompeten, IncomEntidad, IncomJuzgado, Acumulada, NUC) VALUES (@IdAsunto, @TipoRadicacion, 'N', NULL, NULL, NULL, NULL, 'N', @NUC)";
                         command.Parameters.AddWithValue("@IdAsunto", insertedId);
-                        command.Parameters.AddWithValue("@TipoRadicacion", TipoRadicacion);
-                        command.Parameters.AddWithValue("@NUC", NUC);
+                        command.Parameters.AddWithValue("@TipoRadicacion", TipoRadicacion.ToUpper());
+                        command.Parameters.AddWithValue("@NUC", NUC.ToUpper());
                         command.ExecuteNonQuery();
                         Debug.WriteLine("Tarea 2 completada ✔️");
 
@@ -367,10 +367,10 @@ namespace SIPOH
                                                         // Configurar los parámetros con los valores del usuario actual
 
                             command.Parameters.AddWithValue("@IdAsunto", Session["UserId"]);
-                            command.Parameters.AddWithValue("@NombreVictimas", usuario.Nombre);
-                            command.Parameters.AddWithValue("@ApellidoPaternoVictima", usuario.ApellidoPaterno);
-                            command.Parameters.AddWithValue("@ApellidoMaternoVictima", usuario.ApellidoMaterno);
-                            command.Parameters.AddWithValue("@GeneroVictima", usuario.Genero);
+                            command.Parameters.AddWithValue("@NombreVictimas", usuario.Nombre.ToUpper());
+                            command.Parameters.AddWithValue("@ApellidoPaternoVictima", usuario.ApellidoPaterno.ToUpper());
+                            command.Parameters.AddWithValue("@ApellidoMaternoVictima", usuario.ApellidoMaterno.ToUpper());
+                            command.Parameters.AddWithValue("@GeneroVictima", usuario.Genero.ToUpper());
 
                             // Ejecutar la consulta
                             command.ExecuteNonQuery();
@@ -384,11 +384,11 @@ namespace SIPOH
                         {
                             command.Parameters.Clear();
                             command.Parameters.AddWithValue("@IdAsunto", Session["UserId"]);
-                            command.Parameters.AddWithValue("@NombreImputado", culpado.NombreCulpado);
-                            command.Parameters.AddWithValue("@ApellidoPaternoImputado", culpado.APCulpado);
-                            command.Parameters.AddWithValue("@ApellidoMaternoImputado", culpado.AMCulpado);
-                            command.Parameters.AddWithValue("@GeneroImputado", culpado.GeneroCulpado);
-                            command.Parameters.AddWithValue("@AliasImputado", culpado.AliasCulpado);
+                            command.Parameters.AddWithValue("@NombreImputado", culpado.NombreCulpado.ToUpper());
+                            command.Parameters.AddWithValue("@ApellidoPaternoImputado", culpado.APCulpado.ToUpper());
+                            command.Parameters.AddWithValue("@ApellidoMaternoImputado", culpado.AMCulpado.ToUpper());
+                            command.Parameters.AddWithValue("@GeneroImputado", culpado.GeneroCulpado.ToUpper());
+                            command.Parameters.AddWithValue("@AliasImputado", culpado.AliasCulpado.ToUpper());
                             //Ejecutar consulta
                             command.ExecuteNonQuery();
                         }
@@ -401,7 +401,7 @@ namespace SIPOH
                         {
                             command.Parameters.Clear();
                             command.Parameters.AddWithValue("@IdAsunto", Session["UserId"]);
-                            command.Parameters.AddWithValue("@Descripcion", anexo.DescripcionAnexo);
+                            command.Parameters.AddWithValue("@Descripcion", anexo.DescripcionAnexo.ToUpper());
                             command.Parameters.AddWithValue("@Cantidad", anexo.CantidadAnexo);
                             //command.Parameters.AddWithValue("@Tipo", anexo.Tipo);
                             command.ExecuteNonQuery();

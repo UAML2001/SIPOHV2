@@ -204,15 +204,6 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.DropDownList inputDelitos;
 
         /// <summary>
-        /// Control lblNombresDelitos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombresDelitos;
-
-        /// <summary>
         /// Control litTablaDelitos.
         /// </summary>
         /// <remarks>
@@ -276,22 +267,22 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Label lblError;
 
         /// <summary>
-        /// Control lblNombreImputado.
+        /// Control TicketDiv.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombreImputado;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TicketDiv;
 
         /// <summary>
-        /// Control txtNombreImputado.
+        /// Control tituloSello.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombreImputado;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tituloSello;
 
         /// <summary>
         /// Control lblAPaternoImputado.
@@ -328,6 +319,24 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAMaternoImputado;
+
+        /// <summary>
+        /// Control lblNombreImputado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNombreImputado;
+
+        /// <summary>
+        /// Control txtNombreImputado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNombreImputado;
 
         /// <summary>
         /// Control lblGeneroImputado.
@@ -375,24 +384,6 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.DropDownList ddlPersonaVictima;
 
         /// <summary>
-        /// Control lblNombre.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNombre;
-
-        /// <summary>
-        /// Control txtNombreVictima.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombreVictima;
-
-        /// <summary>
         /// Control lblAP.
         /// </summary>
         /// <remarks>
@@ -409,6 +400,15 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAPVictima;
+
+        /// <summary>
+        /// Control txtRazonSocialVictima.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRazonSocialVictima;
 
         /// <summary>
         /// Control lblAM.
@@ -429,22 +429,22 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.TextBox txtAMVictima;
 
         /// <summary>
-        /// Control lblRazonSocial.
+        /// Control lblNombre.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblRazonSocial;
+        protected global::System.Web.UI.WebControls.Label lblNombre;
 
         /// <summary>
-        /// Control txtRazonSocialVictima.
+        /// Control txtNombreVictima.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRazonSocialVictima;
+        protected global::System.Web.UI.WebControls.TextBox txtNombreVictima;
 
         /// <summary>
         /// Control lblSexo.
