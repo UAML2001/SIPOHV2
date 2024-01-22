@@ -569,7 +569,6 @@ namespace SIPOH.Views
             InputOtraSolicitud.Disabled = CatSolicitudDDTradicional.SelectedValue != "OTRO";
         }
         //FIN NUEVAS FUNCIONES
-        //NO USADA
         private string ObtenerNombreJuzgadoPorID(string idJuzgado)
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;

@@ -46,6 +46,7 @@ namespace SIPOH
                 TablasAnexos.Visible = false;
                 insertarPromoventeAnexos.Style.Add("display", "none");
                 BotonGuardarDiv.Style.Add("display", "none");
+                tituloSello.Style.Add("display", "none");
                 CargarJuzgados();
                 CargarAnexos();
                 OtroAnexo.Disabled = true;
@@ -351,11 +352,12 @@ namespace SIPOH
         protected void btnGuardarPromocion_Click(object sender, EventArgs e)
         {
             int idEjecucion = 0; // Valor predeterminado, por ejemplo, 0
+            string nombreJuzgado = ObtenerNombreJuzgadoPorID(selectBusJuzgados.Value);
+
 
             if (ViewState["IdEjecucionSeleccionado"] != null)
             {
                 idEjecucion = (int)ViewState["IdEjecucionSeleccionado"];
-                // Continuar con el resto del código
             }
             else
             {
@@ -410,9 +412,17 @@ namespace SIPOH
                     );
                     string mensajeExito = "¡Se guardaron los datos de la promocion exitoamente!.";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastExito", $"mostrarToast('{mensajeExito}');", true);
-                    //string scriptRecarga = "setTimeout(function(){ window.location.href = window.location.href; }, 5000);";
-                    //ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "recargaPaginaScript", scriptRecarga, true);
-                    string ticket = CrearTicketSELLO();
+
+                    DatosSello datosSello = new DatosSello
+                    {
+                        Juzgado = nombreJuzgado,
+                        NumeroEjecucion = ObtenerNumeroEjecucionDesdeGridView(),
+                        Folio = idEjecucionPosterior.ToString(),
+                        Fecha = fechaIngreso,
+                        AnexosDetalles = ObtenerAnexosDesdeViewState()
+                    };
+
+                    string ticket = CrearTicketSELLO(datosSello);
                     TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
                     ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
                 }
@@ -436,7 +446,24 @@ namespace SIPOH
                 }
             }
         }
-
+        private string ObtenerNombreJuzgadoPorID(string idJuzgado)
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                string query = $"SELECT Nombre FROM P_CatJuzgados WHERE IdJuzgado = {idJuzgado}";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    object result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        return result.ToString();
+                    }
+                }
+            }
+            return null;
+        }
         private int CalcularTotalAnexos()
         {
             // Código para sumar las cantidades de los anexos de la tablaDatos
@@ -497,27 +524,39 @@ namespace SIPOH
 
 
         //INICIO SELLO
-        public static string GlobalJuzgado = "Juzgado Ejemplo";
-        public static string GlobalNoEjecucion = "123456";
-        public static string GlobalFolio = "78910";
-        public static string GlobalFecha = "19/01/2024"; // Formato de fecha a tu elección
-        public static List<string> GlobalAnexosDetalles = new List<string> { "Anexo 1", "Anexo 2" }; // Ejemplo de anexos
-        public static int GlobalTotalAnexos = 2; // Suma de anexos, cambiar según sea necesario
-
-        private void ProcesarDatosDeInsercion(int idJuzgado, string noEjecucion, int idEjecucion, string fechaEjecucion)
+        private string ObtenerNumeroEjecucionDesdeGridView()
         {
-            GlobalIdJuzgado = idJuzgado.ToString();
-            GlobalNoEjecucion = noEjecucion;
-            GlobalFechaEjecucion = fechaEjecucion;
-            // Nota: idEjecucion se almacena en GlobalesId.IdEjecucion AQUI ANDO
+            if (GridViewPromociones.SelectedRow != null)
+            {
+                return GridViewPromociones.SelectedRow.Cells[1].Text;
+            }
+            else
+            {
+                return "";
+            }
         }
 
-
-        private void ProcesarDetalleAnexo(string nombreAnexo, int cantidad)
+        private List<Anexo> ObtenerAnexosDesdeViewState()
         {
-            string detalle = $"{nombreAnexo} - {cantidad}";
-            GlobalAnexosDetalles.Add(detalle);
+            // Transforma los datos de anexos en ViewState a una lista de Anexo
+            List<Sala> salas = ViewState["anexos"] as List<Sala>;
+            return salas?.Select(s => new Anexo { Descripcion = s.NombreSala, Cantidad = Convert.ToInt32(s.NumeroToca) }).ToList();
         }
+        //nueva obtencion de datos sello
+        public class DatosSello
+        {
+            public string Juzgado { get; set; }
+            public string NumeroEjecucion { get; set; }
+            public string Folio { get; set; }
+            public DateTime Fecha { get; set; }
+            public List<Anexo> AnexosDetalles { get; set; }
+
+            public DatosSello()
+            {
+                AnexosDetalles = new List<Anexo>();
+            }
+        }
+        // fin de nueva obtencion de datos sello
         private List<string> DividirTextoEnLineas(string texto, int maxCaracteresPorLinea)
         {
             List<string> lineas = new List<string>();
@@ -544,7 +583,7 @@ namespace SIPOH
             return lineas;
         }
 
-        public string CrearTicketSELLO()
+        public string CrearTicketSELLO(DatosSello datos)
         {
             StringBuilder ticket = new StringBuilder();
 
@@ -554,7 +593,7 @@ namespace SIPOH
                 "DEL ESTADO DE HIDALGO",
                 "ATENCION CIUDADANA",
                 "SENTENCIA EJECUTORIADA",
-                "INICIAL"
+                "POSTERIOR"
             };
             int maxLength = lines.Max(line => line.Length);
             foreach (string line in lines)
@@ -566,18 +605,22 @@ namespace SIPOH
             }
 
             ticket.AppendLine("-----------------------------------");
-            ticket.AppendLine(GlobalJuzgado);
-            ticket.AppendLine("-----------------------------------");
-            ticket.AppendLine($"Numero de Ejecucion: {GlobalNoEjecucion}");
-            ticket.AppendLine($"Folio: {GlobalFolio}");
-            ticket.AppendLine($"Fecha: {GlobalFecha}");
-
-            foreach (string anexoDetalle in GlobalAnexosDetalles)
+            List<string> juzgadoLineas = DividirTextoEnLineas(datos.Juzgado, maxLength);
+            foreach (string linea in juzgadoLineas)
             {
-                ticket.AppendLine(anexoDetalle);
+                ticket.AppendLine(linea.PadRight(maxLength)); // Asegúrate de que cada línea tenga el mismo ancho
+            }
+            ticket.AppendLine("-----------------------------------");
+            ticket.AppendLine($"Numero de Ejecucion: {datos.NumeroEjecucion}");
+            ticket.AppendLine($"Folio: {datos.Folio}");
+            ticket.AppendLine($"Fecha: {datos.Fecha.ToString("dd/MM/yyyy")}");
+
+            foreach (Anexo anexo in datos.AnexosDetalles)
+            {
+                ticket.AppendLine($"{anexo.Descripcion}: {anexo.Cantidad}");
             }
 
-            ticket.AppendLine($"Total Anexos: {GlobalAnexosDetalles.Count}"); // Contar los elementos en la lista de anexos
+            ticket.AppendLine($"Total Anexos: {datos.AnexosDetalles.Count}");
 
             return ticket.ToString();
         }
