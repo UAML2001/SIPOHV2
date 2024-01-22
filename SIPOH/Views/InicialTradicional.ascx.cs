@@ -622,6 +622,17 @@ namespace SIPOH.Views
 
         protected void btnGuardarAcusatorio_Click(object sender, EventArgs e)
         {
+            if (!ValidarCampos())
+            {
+                ScriptManager.RegisterStartupScript(
+                    this.UpdateTradicional1,
+                    this.UpdateTradicional1.GetType(),
+                    "cerrarModal",
+                    "CerrarModalGuardarDatos();",
+                    true
+                );
+                return;
+            }
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -738,6 +749,46 @@ namespace SIPOH.Views
                 }
             }
         }
+        private bool ValidarCampos()
+        {
+            List<string> mensajesError = new List<string>();
+
+            if (string.IsNullOrEmpty(InputNombreBusquedaTradicional.Value))
+            {
+                mensajesError.Add("El campo NOMBRE PARTE Parte está vacío.");
+            }
+            if (string.IsNullOrEmpty(InputApPaternoBusquedaTradicional.Value))
+            {
+                mensajesError.Add("El campo APELLIDO PATERNO está vacío.");
+            }
+            if (string.IsNullOrEmpty(inputApMaternoTradicional.Value))
+            {
+                mensajesError.Add("El campo APELLIDO MATERNO está vacío.");
+            }
+            if (!siInterno.Checked && !noInterno.Checked)
+            {
+                mensajesError.Add("Debe seleccionar una opción para saber el estado del SENTENCIADO INTERNO.");
+            }
+            if (string.IsNullOrEmpty(detalleSolicitantes.Value))
+            {
+                mensajesError.Add("El campo DETALLE SOLICITANTE está vacío.");
+            }
+            if (CatSolicitudDDTradicional.SelectedValue == "Seleccionar")
+            {
+                mensajesError.Add("Debe seleccionar una opción en el campo SOLICITUD.");
+            }
+            if (CatSolicitantesDDTradicional.SelectedValue == "Seleccionar")
+            {
+                mensajesError.Add("Debe seleccionar una opción en el campo SOLICITANTES.");
+            }
+            if (mensajesError.Any())
+            {
+                string script = $"toastError('{string.Join("<br>", mensajesError)}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), Guid.NewGuid().ToString(), script, true);
+                return false;
+            }
+            return true;
+        }
         private string ObtenerClavePorNombre(string nombre, string tablaCatalogo, string columnaNombre, string columnaClave)
         {
             string clave = "";
@@ -834,10 +885,7 @@ namespace SIPOH.Views
             string cveSolicitud = ObtenerClavePorNombre(nombreSolicitudSeleccionado, "P_EjecucionCatSolicitud", "Solicitud", "CveSolicitud");
             if (string.IsNullOrWhiteSpace(detalleSolicitantes.Value))
             {
-                string mensaje = "Favor de dar click al boton buscar";
-                string script = $"toastError('{mensaje}');";
-                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
-                return; // Detiene la ejecución si el campo está vacío
+                return;
             }
 
             //string idusuario= (string)Session["IdUsuario"];

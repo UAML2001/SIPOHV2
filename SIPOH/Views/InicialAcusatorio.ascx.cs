@@ -37,6 +37,7 @@ namespace SIPOH.Views
                 //ticket
                 tituloSello.Style["display"] = "none";
             }
+          
         }
         private void CargarSalas()
         {
@@ -80,13 +81,15 @@ namespace SIPOH.Views
             public string NombreSala { get; set; }
             public string NumeroToca { get; set; }
         }
+        //aqui ando
         protected void AgregarSalaATabla(object sender, EventArgs e)
         {
             string sala = selectSalas.SelectedItem.Text;
             string valorSala = selectSalas.SelectedItem.Value; // Obtiene el valor del item seleccionado
             string numeroToca = inputNumeroToca.Text;
             List<Sala> salas = ViewState["salas"] as List<Sala> ?? new List<Sala>();
-
+            selectSalas.ClearSelection();
+            inputNumeroToca.Text = "";
             // Verificar si se seleccionó la opción "Seleccionar"
             if (valorSala.Equals("Seleccionar", StringComparison.OrdinalIgnoreCase))
             {
@@ -131,7 +134,7 @@ namespace SIPOH.Views
         {
             string sentencia = inputSentencia.Text;
             List<string> sentencias = (List<string>)ViewState["sentencias"] ?? new List<string>();
-
+            inputSentencia.Text = "";
             // Verificar si el campo no está vacío
             if (!string.IsNullOrWhiteSpace(sentencia))
             {
@@ -271,6 +274,7 @@ namespace SIPOH.Views
                                 while (dr.Read())
                                 {
                                     int idAsunto = Convert.ToInt32(dr["IdAsunto"]);
+
                                     Session["IdAsunto"] = idAsunto; 
                                     htmlTable.Append("<tr>");
                                     if (tipoBusqueda == "2")
@@ -285,7 +289,8 @@ namespace SIPOH.Views
                                     htmlTable.Append($"<td class='text-secondary'>{dr["NombreOfendido"]}</td>");
                                     htmlTable.Append($"<td class='text-secondary'>{dr["NombreInculpado"]}</td>");
                                     htmlTable.Append($"<td class='text-secondary'>{dr["NombreDelito"]}</td>");
-                                    htmlTable.Append("<td class='text-secondary'><button class='btn btn-sm eliminar-button btn-danger' onclick='eliminarFila(this)'><i class=\"bi bi-trash\"></i></button></td>");
+                                    htmlTable.Append("<td class='text-secondary'><button onclick='limpiarControles()' class='btn btn-sm btn-danger'>Quitar</button></td>");
+
                                     htmlTable.Append("</tr>");
                                 }
                                 htmlTable.Append("</tbody>");
@@ -366,7 +371,7 @@ namespace SIPOH.Views
                     {
                         GridView1.DataSource = reader;
                         GridView1.DataBind();
-                        string mensaje = "Se encontraron resultados semejantes verifica si es el que necesitas antes de guardar nueva informacion.";
+                        string mensaje = "Se encontraron resultados semejantes verifica si es el que necesitas antes de guardar nueva información.";
                         string script = $"toastWarning('{mensaje}');";
                         ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
                     }
@@ -560,9 +565,22 @@ namespace SIPOH.Views
         }
 
 
-
         protected void btnGuardarAcusatorio_Click(object sender, EventArgs e)
         {
+            // INICIO FUNCION DE VALIDAR CAMPOS
+            if (!ValidarCampos())
+            {
+                ScriptManager.RegisterStartupScript(
+                    this.UpdateAcusatorio,
+                    this.UpdateAcusatorio.GetType(),
+                    "cerrarModal",
+                    "CerrarModalGuardarDatos();",
+                    true
+                );
+                return;
+            }
+            // FINAL FUNCION DE VALIDAR CAMPOS QUE NO FUNCIONO
+
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -645,17 +663,12 @@ namespace SIPOH.Views
                     string scriptToast = "mostrarToast();";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", scriptToast, true);
                     Limpiar();
-                    // Recargar la página después de un tiempo determinado (por ejemplo, 5 segundos)
-                    //string scriptRecarga = "setTimeout(function(){ window.location.href = window.location.href; }, 5000);";
-                    //ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "recargaPaginaScript", scriptRecarga, true);
-                    LimpiarViewState();
                     string datosAnexos = String.Join(", ", GlobalAnexosDetalles.Select(a => $"\"{a}\""));
                     string ticket = CrearTicketSELLO();
                     TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
                     ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
-
-
                 }
+
                 catch (Exception ex)
                 {
                     if (transaction != null && transaction.Connection != null)
@@ -680,6 +693,49 @@ namespace SIPOH.Views
                 }
             }
         }
+        //no funciono qiitar
+        private bool ValidarCampos()
+        {
+            List<string> mensajesError = new List<string>();
+
+            if (string.IsNullOrEmpty(InputNombreBusqueda.Value))
+            {
+                mensajesError.Add("El campo NOMBRE PARTE Parte está vacío.");
+            }
+            if (string.IsNullOrEmpty(InputApPaternoBusqueda.Value))
+            {
+                mensajesError.Add("El campo APELLIDO PATERNO está vacío.");
+            }
+            if (string.IsNullOrEmpty(inputApMaterno.Value))
+            {
+                mensajesError.Add("El campo APELLIDO MATERNO está vacío.");
+            }
+            if (!siInterno.Checked && !noInterno.Checked)
+            {
+                mensajesError.Add("Debe seleccionar una opción para saber el estado del SENTENCIADO INTERNO.");
+            }
+            if (string.IsNullOrEmpty(detalleSolicitantes.Value))
+            {
+                mensajesError.Add("El campo DETALLE SOLICITANTE está vacío.");
+            }
+            if (CatSolicitudDD.SelectedValue == "Seleccionar")
+            {
+                mensajesError.Add("Debe seleccionar una opción en el campo SOLICITUD.");
+            }
+            if (CatSolicitantesDD.SelectedValue == "Seleccionar")
+            {
+                mensajesError.Add("Debe seleccionar una opción en el campo SOLICITANTES.");
+            }
+            if (mensajesError.Any())
+            {
+                string script = $"toastError('{string.Join("<br>", mensajesError)}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), Guid.NewGuid().ToString(), script, true);
+                return false;
+            }
+            return true;
+        }
+
+
         private string ObtenerClavePorNombre(string nombre, string tablaCatalogo, string columnaNombre, string columnaClave)
             {
                 string clave = "";
@@ -778,9 +834,6 @@ namespace SIPOH.Views
             string cveSolicitud = ObtenerClavePorNombre(nombreSolicitudSeleccionado, "P_EjecucionCatSolicitud", "Solicitud", "CveSolicitud");
             if (string.IsNullOrWhiteSpace(detalleSolicitantes.Value))
             {
-                string mensaje = "Falto ingresar el nombre del solicitante";
-                string script = $"toastError('{mensaje}');";
-                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
                 return; // Detiene la ejecución si el campo está vacío
             }
 
@@ -940,12 +993,7 @@ namespace SIPOH.Views
             GlobalAnexosDetalles.Add(detalle);
         }
 
-        private void LimpiarViewState()
-        {
-            ViewState.Remove("anexos");
-            ViewState.Remove("salas");
-            ViewState.Remove("sentencias");
-        }
+   
 
         private void ActualizarVisibilidadTitulo()
         {
@@ -994,7 +1042,7 @@ namespace SIPOH.Views
             string nombreSolicitudSeleccionado = CatSolicitudDD.SelectedItem.Text;
             string detalleSolicitante = detalleSolicitantes.Value;
             string otraSolicitud = InputOtraSolicitud.Value;
-            string interno = siInterno.Checked ? "S" : "N";
+            string interno = siInterno.Checked ? "SI" : "NO";
             string numeroCausaNuc = Session["NumeroCausaNuc"] as string;
 
             List<Sala> salas = ViewState["salas"] as List<Sala>;
@@ -1033,7 +1081,6 @@ namespace SIPOH.Views
             RecolectarDatosParaModal();
             ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "abrirModal", "abrirModalGuardarDatos1();", true);
         }
-
         private void Limpiar()
         {
             inputRadicacion.Value = "";
@@ -1062,6 +1109,7 @@ namespace SIPOH.Views
             CantidadInput.Value = "";
             tablaDatos.DataSource = null;
             tablaDatos.DataBind();
+            inputNumeroToca.Text = "";
             //tituloDetalles.Visible = false;
             //INVISIBLE LOS DIVS
             tituloSalas.Visible = false;

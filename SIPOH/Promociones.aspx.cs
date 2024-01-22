@@ -410,8 +410,11 @@ namespace SIPOH
                     );
                     string mensajeExito = "¡Se guardaron los datos de la promocion exitoamente!.";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastExito", $"mostrarToast('{mensajeExito}');", true);
-                    string scriptRecarga = "setTimeout(function(){ window.location.href = window.location.href; }, 5000);";
-                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "recargaPaginaScript", scriptRecarga, true);
+                    //string scriptRecarga = "setTimeout(function(){ window.location.href = window.location.href; }, 5000);";
+                    //ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "recargaPaginaScript", scriptRecarga, true);
+                    string ticket = CrearTicketSELLO();
+                    TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
+                    ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
                 }
                 catch (Exception)
                 {
@@ -494,10 +497,12 @@ namespace SIPOH
 
 
         //INICIO SELLO
-        public static string GlobalNoEjecucion;
-        public static string GlobalFechaEjecucion;
-        public static string GlobalIdJuzgado;
-        public static List<string> GlobalAnexosDetalles = new List<string>();
+        public static string GlobalJuzgado = "Juzgado Ejemplo";
+        public static string GlobalNoEjecucion = "123456";
+        public static string GlobalFolio = "78910";
+        public static string GlobalFecha = "19/01/2024"; // Formato de fecha a tu elección
+        public static List<string> GlobalAnexosDetalles = new List<string> { "Anexo 1", "Anexo 2" }; // Ejemplo de anexos
+        public static int GlobalTotalAnexos = 2; // Suma de anexos, cambiar según sea necesario
 
         private void ProcesarDatosDeInsercion(int idJuzgado, string noEjecucion, int idEjecucion, string fechaEjecucion)
         {
@@ -542,15 +547,8 @@ namespace SIPOH
         public string CrearTicketSELLO()
         {
             StringBuilder ticket = new StringBuilder();
-            //string nombreJuzgado = ObtenerNombreJuzgadoPorID(GlobalIdJuzgado);
-            //List<string> lineasNombreJuzgado = DividirTextoEnLineas(nombreJuzgado, 30);
-            List<Anexo> anexos = GlobalAnexosDetalles.Select(a => new Anexo
-            {
-                Descripcion = a.Split('-')[0].Trim(),
-                Cantidad = int.Parse(a.Split('-')[1].Trim())
-            }).ToList();
-            int totalAnexos = anexos.Sum(a => a.Cantidad);
 
+            // Añadir las líneas del encabezado
             string[] lines = {
                 "TRIBUNAL SUPERIOR DE JUSTICIA",
                 "DEL ESTADO DE HIDALGO",
@@ -566,22 +564,24 @@ namespace SIPOH
                 string centeredLine = line.PadLeft(padLeft).PadRight(maxLength);
                 ticket.AppendLine(centeredLine);
             }
+
             ticket.AppendLine("-----------------------------------");
-            //foreach (string linea in lineasNombreJuzgado)
-            {
-               // ticket.AppendLine(linea);
-            }
+            ticket.AppendLine(GlobalJuzgado);
             ticket.AppendLine("-----------------------------------");
             ticket.AppendLine($"Numero de Ejecucion: {GlobalNoEjecucion}");
-            ticket.AppendLine($"Folio: {GlobalesId.IdEjecucion}");
-            ticket.AppendLine($"Fecha: {GlobalFechaEjecucion}");
-            foreach (var anexo in anexos)
+            ticket.AppendLine($"Folio: {GlobalFolio}");
+            ticket.AppendLine($"Fecha: {GlobalFecha}");
+
+            foreach (string anexoDetalle in GlobalAnexosDetalles)
             {
-                ticket.AppendLine($"{anexo.Descripcion}: {anexo.Cantidad}");
+                ticket.AppendLine(anexoDetalle);
             }
-            ticket.AppendLine($"Total Anexos: {totalAnexos}");
+
+            ticket.AppendLine($"Total Anexos: {GlobalAnexosDetalles.Count}"); // Contar los elementos en la lista de anexos
+
             return ticket.ToString();
         }
+
 
 
         //

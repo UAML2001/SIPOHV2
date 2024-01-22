@@ -54,15 +54,12 @@
                 
                 <p class="DatosModal"><b>Fecha Ejecución:</b> <asp:Label ID="lblFechaEjecucion" runat="server"></asp:Label></p>
                 <p class="DatosModal"><b>Beneficiario: </b><asp:Label ID="lblnombreBeneficiario" runat="server"></asp:Label> <asp:Label ID="lblapellidoPaternoBeneficiario" runat="server"></asp:Label> <asp:Label ID="lblapellidoMaternoBeneficiario" runat="server"></asp:Label></p>
-                
                 <p class="DatosModal"><b>Solicitante: </b><asp:Label ID="lblnombreSolicitanteSeleccionado" runat="server"></asp:Label></p>
                 <p class="DatosModal"><b>Solicitud: </b><asp:Label ID="lblnombreSolicitudSeleccionado" runat="server"></asp:Label></p>
                 <p class="DatosModal"><b>Detalle de la solicitud: </b><asp:Label ID="lbldetalleSolicitante" runat="server"></asp:Label></p>
                 <p class="DatosModal"><b>Otra Solicitud: </b><asp:Label ID="lblotraSolicitud" runat="server"></asp:Label></p>
                 <p class="DatosModal"><b>Interno: </b><asp:Label ID="lblinterno" runat="server"></asp:Label></p>
-
                 <p class="DatosModal"><b>Sala disponible y toca: </b><asp:Label ID="lblSalasYTocas" runat="server"></asp:Label></p>
-                
                 <p class="DatosModal"><b>Sentencias: </b><asp:Label ID="lblSentencias" runat="server"></asp:Label></p>
                 <p class="DatosModal"><b>Anexos y Cantidad: </b><asp:Label ID="lblAnexos" runat="server"></asp:Label></p>
                 
@@ -70,7 +67,7 @@
                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-danger" onclick="CerrarModalGuardarDatos()" data-bs-dismiss="modal">Cancelar</button>
                 <asp:Button ID="btnGuardarAcusatorio" runat="server" CssClass="btn btn-outline-warning" OnClick="btnGuardarAcusatorio_Click" Text="Guardar" />
             </div>
         </div>
@@ -104,14 +101,14 @@
             </select>
         </div>
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
-            <label for="inputIncomJuzgado" class="form-label text-secondary">Causa | Nuc</label>
+            <label for="inputIncomJuzgado" class="form-label text-secondary">Causa | NUC</label>
             <select class="form-select form-select-sm" id="inputIncomJuzgado" ClientIDMode="Static" runat="server" onchange="mostrarValorSeleccionado(this)">
                 <option selected >Causa</option>
-                <option value="2">Nuc</option>
+                <option value="2">NUC</option>
             </select>
         </div>
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
-            <label for="inputNuc" class="form-label text-secondary">Numero de Causa</label>
+            <label for="inputNuc" class="form-label text-secondary">Número de Causa</label>
             <div class="input-group">
                 <input type="text" class="form-control form-control-sm" id="inputNuc" ClientIDMode="Static" runat="server" minlength="9" maxlength="9">
                 <div class="input-group-append">
@@ -134,7 +131,7 @@
             </asp:DropDownList>
         </div>
         <div class="mb-5 col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-            <label class="form-label text-secondary">Numero de Toca</label>
+            <label class="form-label text-secondary">Número de Toca</label>
             <div class="input-group">
                 <asp:TextBox ID="inputNumeroToca" runat="server" CssClass="form-control form-control-sm " placeholder="0000/0000"></asp:TextBox>
                 <div class="input-group-append">
@@ -231,7 +228,7 @@
     <div class="row">
         <asp:GridView ID="GridView1" runat="server" CssClass="table" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound">
             <Columns>
-                <asp:BoundField DataField="NoEjecucion" HeaderText="No°Ejecucion">
+                <asp:BoundField DataField="NoEjecucion" HeaderText="No°Ejecución">
                     <HeaderStyle CssClass="bg-success text-white" />
                 </asp:BoundField>
                 <asp:BoundField DataField="Juzgado" HeaderText="Juzgado">
@@ -246,7 +243,7 @@
                 <asp:BoundField DataField="ApMaterno" HeaderText="Apellido Materno">
                     <HeaderStyle CssClass="bg-success text-white" />
                 </asp:BoundField>
-                <asp:BoundField DataField="FechaEjecucion" HeaderText="Fecha Ejecucion">
+                <asp:BoundField DataField="FechaEjecucion" HeaderText="Fecha Ejecución">
                     <HeaderStyle CssClass="bg-success text-white" />
                 </asp:BoundField>
             </Columns>
@@ -432,6 +429,54 @@
             window.location.href = window.location.href;
         }
 
- 
-
     </script>
+    <script type="text/javascript">
+        function limpiarControles() {
+            // Limpiar controles de entrada
+            document.getElementById('<%= inputRadicacion.ClientID %>').value = '';
+            document.getElementById('<%= inputIncomJuzgado.ClientID %>').value = '';
+            document.getElementById('<%= inputNuc.ClientID %>').value = '';
+            document.getElementById('<%= InputNombreBusqueda.ClientID %>').value = '';
+            document.getElementById('<%= InputApPaternoBusqueda.ClientID %>').value = '';
+            document.getElementById('<%= inputApMaterno.ClientID %>').value = '';
+            document.getElementById('<%= InputOtraSolicitud.ClientID %>').value = '';
+            document.getElementById('<%= OtroAnexo.ClientID %>').value = '';
+            document.getElementById('<%= CantidadInput.ClientID %>').value = '';
+            document.getElementById('<%= inputNumeroToca.ClientID %>').value = '';
+            document.getElementById('<%= detalleSolicitantes.ClientID %>').value = '';
+
+            // Limpiar y ocultar elementos específicos
+            document.getElementById('<%= tablaResultadosHtmlDiv.ClientID %>').innerHTML = '';
+            document.getElementById('<%= tituloSalas.ClientID %>').style.display = 'none';
+            document.getElementById('<%= tituloSentencias.ClientID %>').style.display = 'none';
+            document.getElementById('<%= DivExAm.ClientID %>').style.display = 'none';
+            document.getElementById('<%= ContinuarRegistro.ClientID %>').style.display = 'none';
+            document.getElementById('<%= RegistroPartesIn.ClientID %>').style.display = 'none';
+            document.getElementById('<%= tituloSello.ClientID %>').style.display = 'none';
+
+            // Desmarcar radio buttons y checkboxes
+            document.getElementById('<%= CheckSi.ClientID %>').checked = false;
+            document.getElementById('<%= CheckNo.ClientID %>').checked = false;
+            document.getElementById('<%= siInterno.ClientID %>').checked = false;
+            document.getElementById('<%= noInterno.ClientID %>').checked = false;
+            // Restablecer los DropDownLists (seleccionar la primera opción)
+            // Nota: Esto puede variar dependiendo de cómo estén configurados tus DropDownList
+            var dropdowns = ['<%= CatSolicitantesDD.ClientID %>', '<%= CatSolicitudDD.ClientID %>', '<%= CatAnexosDD.ClientID %>'];
+            dropdowns.forEach(function (ddId) {
+                var dropdown = document.getElementById(ddId);
+                if (dropdown && dropdown.options.length > 0) {
+                    dropdown.selectedIndex = 0;
+                }
+            });
+            location.reload();
+        }
+    </script>
+       <script>
+           window.addEventListener('keydown', function (e) {
+               var node = (e.target) ? e.target : ((e.srcElement) ? e.srcElement : null);
+               if ((e.keyCode == 13) && (node.type == "text")) {
+                   e.preventDefault();
+                   return false;
+               }
+           }, true);
+       </script>

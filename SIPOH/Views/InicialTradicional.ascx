@@ -101,7 +101,7 @@
                 </asp:DropDownList>
             </div>
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
-                <label class="form-label text-secondary">Numero de Causa</label>
+                <label class="form-label text-secondary">Número de Causa</label>
                 <div class="input-group">
                     <input type="text" class="form-control form-control-sm" id="InCausaTra" runat="server" placeholder="0000/0000" minlength="9" maxlength="9">
                     <div class="input-group-append">
@@ -124,7 +124,7 @@
                     </asp:DropDownList>
                 </div>
                 <div class="mb-5 col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                    <label class="form-label text-secondary">Numero de Toca</label>
+                    <label class="form-label text-secondary">Número de Toca</label>
                     <div class="input-group">
                         <asp:TextBox ID="inputNumeroTocaTradicional" runat="server" CssClass="form-control form-control-sm " placeholder="0000/0000"></asp:TextBox>
                         <div class="input-group-append">
@@ -227,7 +227,7 @@
             <div class="row">
                 <asp:GridView ID="GridView1Tradicional" runat="server" CssClass="table" AutoGenerateColumns="False" OnRowDataBound="GridView1Tradicional_RowDataBound">
                     <Columns>
-                        <asp:BoundField DataField="NoEjecucion" HeaderText="No°Ejecucion">
+                        <asp:BoundField DataField="NoEjecucion" HeaderText="No°Ejecución">
                             <HeaderStyle CssClass="bg-success text-white" />
                         </asp:BoundField>
                         <asp:BoundField DataField="Juzgado" HeaderText="Juzgado">
@@ -242,7 +242,7 @@
                         <asp:BoundField DataField="ApMaterno" HeaderText="Apellido Materno">
                             <HeaderStyle CssClass="bg-success text-white" />
                         </asp:BoundField>
-                        <asp:BoundField DataField="FechaEjecucion" HeaderText="Fecha Ejecucion">
+                        <asp:BoundField DataField="FechaEjecucion" HeaderText="Fecha Ejecución">
                             <HeaderStyle CssClass="bg-success text-white" />
                         </asp:BoundField>
                     </Columns>
@@ -429,3 +429,12 @@
 
 
 </script>
+       <script>
+           window.addEventListener('keydown', function (e) {
+               var node = (e.target) ? e.target : ((e.srcElement) ? e.srcElement : null);
+               if ((e.keyCode == 13) && (node.type == "text")) {
+                   e.preventDefault();
+                   return false;
+               }
+           }, true);
+       </script>
