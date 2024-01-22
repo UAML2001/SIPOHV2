@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <div class="row" id="primerRowPromocion" runat="server">
                                     <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                         <label for="inputRadicacion" class="form-label text-secondary">Nombre de Juzgado</label>
                                         <select class="form-select form-select-sm" id="selectBusJuzgados" runat="server">
@@ -61,7 +61,7 @@
                                     </div>
                                 </div>
                                 <p></p>
-                                <div class="row">
+                                <div class="row" >
                                     <asp:Label ID="tituloTablaPromociones" runat="server" CssClass="textoTablasArriba">
                                 <h2 class="textoTablasArriba"><i class="bi bi-table">Consulta de promociones</i></h2>
                                     </asp:Label>

@@ -117,6 +117,7 @@ namespace SIPOH
             // Mostrar los títulos si hay datos
             if (dt.Rows.Count > 0)
             {
+                ViewState["NumeroEjecucionSeleccionado"] = dt.Rows[0]["NoEjecucion"].ToString();
                 tituloTablaPromociones.Visible = true;
                 GridViewPromociones.DataSource = dt;
                 GridViewPromociones.DataBind();
@@ -353,7 +354,8 @@ namespace SIPOH
         {
             int idEjecucion = 0; // Valor predeterminado, por ejemplo, 0
             string nombreJuzgado = ObtenerNombreJuzgadoPorID(selectBusJuzgados.Value);
-
+            int totalAnexos = CalcularTotalAnexos();
+            string numeroEjecucion = ViewState["NumeroEjecucionSeleccionado"] != null ? ViewState["NumeroEjecucionSeleccionado"].ToString() : "No disponible";
 
             if (ViewState["IdEjecucionSeleccionado"] != null)
             {
@@ -378,7 +380,7 @@ namespace SIPOH
             }
             string promovente = $"{inPromoventeNombre.Value} {inPromoventePaterno.Value} {inPromoventeMaterno.Value}";
             DateTime fechaIngreso = DateTime.Now;
-            int totalAnexos = CalcularTotalAnexos();
+            
             string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -416,12 +418,14 @@ namespace SIPOH
                     DatosSello datosSello = new DatosSello
                     {
                         Juzgado = nombreJuzgado,
-                        NumeroEjecucion = ObtenerNumeroEjecucionDesdeGridView(),
+                        NumeroEjecucion = numeroEjecucion,
                         Folio = idEjecucionPosterior.ToString(),
                         Fecha = fechaIngreso,
-                        AnexosDetalles = ObtenerAnexosDesdeViewState()
+                        AnexosDetalles = ObtenerAnexosDesdeViewState(),
+                        TotalAnexos = totalAnexos
                     };
-
+                    Limpiar();
+                    tituloSello.Style.Add("display", "block");
                     string ticket = CrearTicketSELLO(datosSello);
                     TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
                     ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
@@ -438,6 +442,7 @@ namespace SIPOH
                     );
                     string mensajeError = "Ocurrió un error al procesar su solicitud.";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastError", $"toastError('{mensajeError}');", true);
+                    tituloSello.Style.Add("display", "none");
                 }
                 finally
                 {
@@ -521,7 +526,30 @@ namespace SIPOH
                                            !string.IsNullOrWhiteSpace(apellidoPaterno) &&
                                            !string.IsNullOrWhiteSpace(apellidoMaterno);
         }
-
+        private void Limpiar()
+        {
+            selectBusJuzgados.Items.Clear();
+            inpuBusEjecucion.Value = "";
+            GridViewPromociones.DataSource = null;
+            GridViewPromociones.DataBind();
+            detallesCausa.InnerHtml = "";
+            inPromoventeNombre.Value = "";
+            inPromoventePaterno.Value = "";
+            inPromoventeMaterno.Value = "";
+            CatAnexosDD.ClearSelection();
+            OtroAnexo.Value = "";
+            CantidadInput.Value = "";
+            tablaDatos.DataSource = null;
+            tablaDatos.DataBind();
+            //INVISIBLE LOS DIVS
+            tituloDetallesCausa.Visible = false;
+            TablasAnexos.Visible = false;
+            tituloTablaPromociones.Visible = false;
+            tituloSello.Style["display"] = "block";
+            BotonGuardarDiv.Style["display"] = "none";
+            insertarPromoventeAnexos.Style["display"] = "none";
+            primerRowPromocion.Style["display"] = "none";
+        }
 
         //INICIO SELLO
         private string ObtenerNumeroEjecucionDesdeGridView()
@@ -554,7 +582,9 @@ namespace SIPOH
             public DatosSello()
             {
                 AnexosDetalles = new List<Anexo>();
+
             }
+            public int TotalAnexos { get; set; }
         }
         // fin de nueva obtencion de datos sello
         private List<string> DividirTextoEnLineas(string texto, int maxCaracteresPorLinea)
@@ -619,8 +649,7 @@ namespace SIPOH
             {
                 ticket.AppendLine($"{anexo.Descripcion}: {anexo.Cantidad}");
             }
-
-            ticket.AppendLine($"Total Anexos: {datos.AnexosDetalles.Count}");
+            ticket.AppendLine($"Total Anexos: {datos.TotalAnexos}");
 
             return ticket.ToString();
         }
