@@ -28,8 +28,14 @@ namespace SIPOH
             List<string> enlaces = HttpContext.Current.Session["enlace"] as List<string>;
 
             
-            bool tienePermiso = enlaces.Any(enlace => enlace.Contains("/consignaciones"));
+            //bool tienePermiso = enlaces.Any(enlace => enlace.Contains("/consignaciones"));
+            bool tienePermiso = enlaces != null ? enlaces.Any(enlace => enlace.Contains("/consignaciones")) : false;
 
+            // Si enlaces es nulo, redirige a Default.aspx
+            if (enlaces == null)
+            {
+                Response.Redirect("~/Default.aspx");
+            }
             if ((circuito == "c" || circuito == "d" ) && tienePermiso)
             {
                 Visible = true;
