@@ -419,7 +419,6 @@
         ventanaImpresion.document.write(estilos + '<pre>' + contenido + '</pre>');
         ventanaImpresion.document.close();
         ventanaImpresion.print();
-        ventanaImpresion.onfocus = function () { setTimeout(function () { ventanaImpresion.close(); }, 500); }
     }
 
 
