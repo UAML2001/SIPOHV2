@@ -44,6 +44,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
@@ -1841,6 +1844,7 @@
     <Content Include="PromocionesCtrl.aspx" />
     <Content Include="Reportes.aspx" />
     <Content Include="ReportesCtrl.aspx" />
+    <Content Include="ReportesEjec.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -2019,6 +2023,7 @@
     <Content Include="Content\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Content\vendor\jquery\jquery.min.map" />
     <Content Include="Content\vendor\jquery\jquery.slim.min.map" />
+    <Content Include="ReportesEjecucion\InicialEjecucion.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\consignaciones\Consignaciones.js" />
     <Content Include="Scripts\consignaciones\RegistroIniciales.js" />
@@ -2076,10 +2081,9 @@
     <Content Include="Views\InicialCHCausa.ascx" />
     <Content Include="Views\InicialCHSAcusatorio.ascx" />
     <Content Include="Views\InicialCHSTradicional.ascx" />
-    <Content Include="Views\InicialReportePorDia.ascx" />
-    <Content Include="Views\InicialReportePorFecha.ascx" />
     <Content Include="Views\InicialTradicional.ascx" />
     <Content Include="Views\ReportesControl.ascx" />
+    <Content Include="Views\ReportesEjecucion.ascx" />
     <Content Include="Views\SolicitudCD.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -2217,6 +2221,22 @@
     </Compile>
     <Compile Include="ReportesCtrl.aspx.designer.cs">
       <DependentUpon>ReportesCtrl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportesEjec.aspx.cs">
+      <DependentUpon>ReportesEjec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportesEjec.aspx.designer.cs">
+      <DependentUpon>ReportesEjec.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ReportesEjecucion\InicialEjecucion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ReportesEjecucion\InicialEjecucion1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InicialEjecucion.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -2399,20 +2419,6 @@
     <Compile Include="Views\InicialCHSTradicional.ascx.designer.cs">
       <DependentUpon>InicialCHSTradicional.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Views\InicialReportePorDia.ascx.cs">
-      <DependentUpon>InicialReportePorDia.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\InicialReportePorDia.ascx.designer.cs">
-      <DependentUpon>InicialReportePorDia.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\InicialReportePorFecha.ascx.cs">
-      <DependentUpon>InicialReportePorFecha.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\InicialReportePorFecha.ascx.designer.cs">
-      <DependentUpon>InicialReportePorFecha.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Views\InicialTradicional.ascx.cs">
       <DependentUpon>InicialTradicional.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2427,6 +2433,13 @@
     </Compile>
     <Compile Include="Views\ReportesControl.ascx.designer.cs">
       <DependentUpon>ReportesControl.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReportesEjecucion.ascx.cs">
+      <DependentUpon>ReportesEjecucion.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\ReportesEjecucion.ascx.designer.cs">
+      <DependentUpon>ReportesEjecucion.ascx</DependentUpon>
     </Compile>
     <Compile Include="Views\SolicitudCD.ascx.cs">
       <DependentUpon>SolicitudCD.ascx</DependentUpon>
@@ -2451,6 +2464,15 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ReportesEjecucion\InicialEjecucion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InicialEjecucion1.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -124,7 +124,7 @@
                             <a class="collapse-item" href="Promociones.aspx">Promociones</a>
                             <a class="collapse-item" href="Busqueda.aspx">Búsquedas</a>
                             <a class="collapse-item" href="ConsignacionesHistorica.aspx">Consignaciones Históricas</a>
-                            <a class="collapse-item" href="Reportes.aspx">Reportes</a>
+                            <a class="collapse-item" href="ReportesEjec.aspx">Reportes</a>
                         </div>
                     </div>
                 </li>
@@ -146,7 +146,7 @@
                             <a class="collapse-item" href="Promociones.aspx">Promociones</a>
                             <a class="collapse-item" href="Busqueda.aspx">Búsquedas</a>
                             <a class="collapse-item" href="ConsignacionesHistorica.aspx">Consignaciones Históricas</a>
-                            <a class="collapse-item" href="Reportes.aspx">Reportes</a>
+                            <a class="collapse-item" href="ReportesEjec.aspx">Reportes</a>
                         </div>
                     </div>
                 </asp:Panel>

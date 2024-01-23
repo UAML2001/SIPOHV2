@@ -1041,12 +1041,11 @@ namespace SIPOH.Views
                 {
                     // Ejecutar el procedimiento almacenado para obtener el folio
                     int folio = StorageFolio.EjecutarControlAsignarFolio(transaction);
-
+                    int idJuzgado = ObtenerIdJuzgadoDesdeSesion();
+                    string tipo = "EH";
 
                     // Insertar datos en la tabla P_Asunto
                     int idAsunto = InsertarEnPAsunto(conn, transaction, folio);
-
-                    // ActualizarFolios(conn, transaction, folio);
 
                     // Verificar si idAsunto es válido (no nulo o cero)
                     if (idAsunto == 0)
@@ -1064,6 +1063,8 @@ namespace SIPOH.Views
                     InsertarEnPExhortos(conn, transaction, idAsunto);
 
                     InsertarEnPAnexos(conn, transaction, idAsunto);
+
+                    ActualizarFolios(conn, transaction, folio, idJuzgado, tipo);
 
                     // Commit de la transacción
                     transaction.Commit();
@@ -1380,6 +1381,22 @@ namespace SIPOH.Views
                 }
             }
         }
+
+        private int ActualizarFolios(SqlConnection conn, SqlTransaction transaction, int folio, int IdJuzgado, string tipo)
+        {
+            // Crear el comando SQL
+            SqlCommand cmd = new SqlCommand("UPDATE dbo.P_Folios SET Folio = @folio WHERE Tipo = @tipo AND Folio = @folio - 1 AND IdJuzgado = @Idjuzgado;", conn, transaction);
+
+            // Agregar los parámetros al comando SQL
+            cmd.Parameters.AddWithValue("@folio", folio);
+            cmd.Parameters.AddWithValue("@idjuzgado", IdJuzgado);
+            cmd.Parameters.AddWithValue("@tipo", tipo);
+
+            // Ejecutar el comando SQL y devolver el número de filas afectadas
+            return cmd.ExecuteNonQuery();
+        }
+
+
 
         private int ObtenerIdUsuarioDesdeSesion()
         {
