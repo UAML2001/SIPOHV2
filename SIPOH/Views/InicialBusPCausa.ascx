@@ -27,15 +27,15 @@
     <div class="row">
         <div class="col-sm-6 col-md-4">
             <label for="inputNombre" class="form-label text-secondary">Nombre(s) Parte</label>
-            <input type="text" class="form-control form-control-sm" id="inputNombre" runat="server" />
+            <input type="text" class="form-control form-control-sm" id="inputNombre" minlength="2" maxlength="250" runat="server" />
         </div>
         <div class="col-sm-6 col-md-3">
             <label for="inputApellidoPaterno" class="form-label text-secondary">Apellido Paterno</label>
-            <input type="text" class="form-control form-control-sm" id="inputApellidoPaterno" runat="server" />
+            <input type="text" class="form-control form-control-sm" maxlength="100" minlength="2" id="inputApellidoPaterno" runat="server" />
         </div>
         <div class="col-sm-6 col-md-3">
             <label for="inputApellidoMaterno" class="form-label text-secondary">Apellido Materno</label>
-            <input type="text" class="form-control form-control-sm" id="inputApellidoMaterno" runat="server" />
+            <input type="text" class="form-control form-control-sm" maxlength="100" id="inputApellidoMaterno" runat="server" />
         </div>
         <div class="col-sm-6 col-md-2 d-flex align-items-end justify-content-center">
             <asp:Button ID="btnBuscarPCausa" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnBuscarPCausa_Click" />

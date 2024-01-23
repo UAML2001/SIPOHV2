@@ -17,7 +17,7 @@
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
             <label for="inputNuc" class="form-label text-secondary">Numero Unico de Caso</label>
             <div class="input-group">
-                <input type="text" class="form-control form-control-sm" id="inputNucBusqueda" runat="server" placeholder="00-0000-0000">
+                <input type="text" class="form-control form-control-sm" id="inputNucBusqueda" runat="server" onblur="formatNuc(this)" maxlength="12" placeholder="">
                 <div class="input-group-append">
                    <asp:Button ID="btnBuscarPCausa4" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm ml-2" OnClick="btnBuscarPCausa4_Click" />
                     <button id="btnLimpiar4" runat="server" type="button" class="btn btn-outline-danger btn-sm ml-2" OnServerClick="btnLimpiar4_Click">Limpiar</button>

@@ -110,7 +110,7 @@
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
             <label for="inputNuc" class="form-label text-secondary">Número de Causa</label>
             <div class="input-group">
-                <input type="text" class="form-control form-control-sm" id="inputNuc" ClientIDMode="Static" runat="server" minlength="9" maxlength="9">
+                <input type="text" class="form-control form-control-sm" id="inputNuc" ClientIDMode="Static" runat="server" minlength="9" maxlength="12" onblur="aplicarFormatoSegunSeleccion(this)">
                 <div class="input-group-append">
                     <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnBuscar_Click" />
                 </div>
