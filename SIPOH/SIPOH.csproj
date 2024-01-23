@@ -2229,9 +2229,6 @@
     <Compile Include="ReportesEjec.aspx.designer.cs">
       <DependentUpon>ReportesEjec.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ReportesEjecucion\InicialEjecucion.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ReportesEjecucion\InicialEjecucion1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

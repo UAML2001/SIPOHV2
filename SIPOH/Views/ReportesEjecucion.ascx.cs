@@ -12,7 +12,6 @@ using CrystalDecisions.Shared;
 using SIPOH.ReportesEjecucion;
 using System.Configuration.Provider;
 using CrystalDecisions.ReportAppServer;
-using CrystalDecisions.Windows.Forms;
 
 namespace SIPOH.Views
 {
@@ -68,10 +67,6 @@ namespace SIPOH.Views
     // Crea el informe
     ReportDocument reporte = new ReportDocument();
     reporte.Load(rutaInforme);
-
-    // Configura los parámetros del informe
-    reporte.SetParameterValue("@NombreJuzgado", "Pachuca");
-
 
     // Configura el formato de salida como PDF
     reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
