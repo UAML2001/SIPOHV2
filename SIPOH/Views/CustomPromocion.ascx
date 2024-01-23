@@ -95,7 +95,7 @@
                     <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                         <h6 class="help-block text-muted small-font" >Numero de <asp:Label ID="itemNombre" runat="server" Text=""></asp:Label>: </h6>
                         <div class="input-group">
-                            <asp:TextBox runat="server"  CssClass="form-control form-control-sm " ID="inputNumero"/>
+                            <asp:TextBox runat="server"  CssClass="form-control form-control-sm " ID="inputNumero"  MaxLength="10"/>
                             <div class="input-group-append">
                                 <asp:Button runat="server" CssClass="btn btn-outline-success btn-sm" Text="Buscar" OnClick="btnGetConsultaPromocion"  AutoPostBack="true"/>                                                                                                                                    
                             </div>
@@ -166,7 +166,7 @@
                 <div class="row p-0 mx-0 my-4">
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                         <label for="inputPromovente" class="form-label text-secondary"><b>Promovente:</b></label>                
-                        <asp:TextBox runat="server" ID="inputPromovente" CssClass="form-control form-control-sm "></asp:TextBox>
+                        <asp:TextBox runat="server" ID="inputPromovente" CssClass="form-control form-control-sm "  MaxLength="500"></asp:TextBox>
                     </div>
                     
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
@@ -188,13 +188,13 @@
 
                         <div id="contenedorDescripcion" style="display: none;" class="col-md-4 col-sm-4 col-xs-4">
                             <label class="help-block text-muted small-font">Descripcion: </label>
-                            <asp:TextBox runat="server" CssClass="form-control form-control-sm " ID="txtDescripcionAnexos" />
+                            <asp:TextBox runat="server" CssClass="form-control form-control-sm " ID="txtDescripcionAnexos" MaxLength="600" />
                         </div>
 
                         <div class="mb-4 col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                             <label class="help-block text-muted small-font">Cantidad: </label>
                             <div class="input-group">
-                                <asp:TextBox runat="server" CssClass="form-control form-control-sm" ID="txtCantidadAnexos" oninput="validarNumero(this)" />
+                                <asp:TextBox runat="server" CssClass="form-control form-control-sm" ID="txtCantidadAnexos" oninput="validarNumero(this)"  MaxLength="10"/>
                                 <div class="input-group-append">
                                     <asp:Button runat="server" CssClass="btn btn-success btn-sm" Text="+"   OnClick="btnAñadirAnexo"  />
                                 </div>

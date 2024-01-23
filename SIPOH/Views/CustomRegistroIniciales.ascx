@@ -240,7 +240,7 @@
             <form class="container-lg col-xxl-12">
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inputNUC" class="form-label text-secondary">NUC:</label>
-                    <asp:TextBox runat="server" ID="inputNUC" CssClass="form-control form-control-sm " />
+                    <asp:TextBox runat="server" ID="inputNUC" CssClass="form-control form-control-sm " MaxLength="20" />
 
                 </div>
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 ">
@@ -267,7 +267,7 @@
 
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inputNumeroFojas" class="form-label text-secondary">Numero de fojas:</label>
-                    <asp:TextBox runat="server" ID="inputNumeroFojas" CssClass="form-control form-control-sm" oninput="validarNumero(this)" />
+                    <asp:TextBox runat="server" ID="inputNumeroFojas" CssClass="form-control form-control-sm" oninput="validarNumero(this)" MaxLength="6" />
 
                 </div>
                 <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
@@ -284,7 +284,7 @@
                 <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inputNombreParticular" class="form-label text-secondary">Especificar nombre de 
                         <asp:Label ID="lblTipoPersona" runat="server" Text=""></asp:Label>: </label>
-                    <asp:TextBox runat="server" ID="inputNombreParticular" CssClass="form-control form-control-sm " />
+                    <asp:TextBox runat="server" ID="inputNombreParticular" CssClass="form-control form-control-sm " MaxLength="150"/>
                 </div>
 
                 <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
@@ -313,7 +313,7 @@
                 </div>
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inputObservaciones" class="form-label text-secondary">Observaciones: </label>
-                    <asp:TextBox runat="server" ID="inputObservaciones" CssClass="form-control form-control-sm"></asp:TextBox>
+                    <asp:TextBox runat="server" ID="inputObservaciones" CssClass="form-control form-control-sm" MaxLength="8000"></asp:TextBox>
                 </div>
 
                 <%--first part--%>
@@ -445,12 +445,12 @@
 
                             <div id="contenedorDescripcion" style="display: none;" class="col-md-4">
                                 <asp:Label runat="server" AssociatedControlID="txtAnexosTipo" class="form-label text-secondary align-self-center">Descripcion: </asp:Label>
-                                <asp:TextBox runat="server" CssClass="form-control form-control-sm" ID="txtDescripcionAnexos" />
+                                <asp:TextBox runat="server" CssClass="form-control form-control-sm" ID="txtDescripcionAnexos" MaxLength="8000" />
                             </div>
                             <div class="col-md-3">
 
                                 <label for="inputCantidad" class="form-label text-secondary align-self-center">Cantidad: </label>
-                                <asp:TextBox runat="server" CssClass="form-control form-control-sm" ID="txtCantidadAnexos" oninput="validarNumero(this)" />
+                                <asp:TextBox runat="server" CssClass="form-control form-control-sm" ID="txtCantidadAnexos" oninput="validarNumero(this)" MaxLength="10"/>
                             </div>
                             <div class="col-1 d-flex align-items-end">
                                 
@@ -530,15 +530,15 @@
                     <div class="modal-body d-flex flex-wrap justify-content-start">
                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                             <asp:Label ID="lblAPaternoImputado" runat="server" AssociatedControlID="txtAPaternoImputado" CssClass="form-label text-secondary">Apellido Paterno:</asp:Label>
-                            <asp:TextBox ID="txtAPaternoImputado" runat="server" CssClass="form-control form-control-sm" />
+                            <asp:TextBox ID="txtAPaternoImputado" runat="server" CssClass="form-control form-control-sm" MaxLength="50" />
                         </div>
                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                             <asp:Label ID="lblAMaternoImputado" runat="server" AssociatedControlID="txtAMaternoImputado" CssClass="form-label text-secondary">Apellido Materno:</asp:Label>
-                            <asp:TextBox ID="txtAMaternoImputado" runat="server" CssClass="form-control form-control-sm" />
+                            <asp:TextBox ID="txtAMaternoImputado" runat="server" CssClass="form-control form-control-sm" MaxLength="50"/>
                         </div>
                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                             <asp:Label ID="lblNombreImputado" runat="server" AssociatedControlID="txtNombreImputado" CssClass="form-label text-secondary">Nombre (s):</asp:Label>
-                            <asp:TextBox ID="txtNombreImputado" runat="server" CssClass="form-control form-control-sm" />
+                            <asp:TextBox ID="txtNombreImputado" runat="server" CssClass="form-control form-control-sm" MaxLength="40" />
                         </div>
 
 
@@ -553,7 +553,7 @@
                         </div>
                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                             <asp:Label ID="lblAliasImputado" runat="server" AssociatedControlID="txtAliasImputado" CssClass="form-label text-secondary">Alias:</asp:Label>
-                            <asp:TextBox ID="txtAliasImputado" runat="server" CssClass="form-control form-control-sm" />
+                            <asp:TextBox ID="txtAliasImputado" runat="server" CssClass="form-control form-control-sm" MaxLength="40"/>
                         </div>
 
 
@@ -596,16 +596,16 @@
                         <%--//Apellido paterno es utizado para el registro de RAZON SOCIAL--%>
                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                             <asp:Label ID="lblAP" runat="server"  class="form-label text-secondary" style="display: none;" ></asp:Label>
-                            <asp:TextBox ID="txtAPVictima" runat="server" CssClass="form-control form-control-sm" style="display: none;" />
-                            <asp:TextBox ID="txtRazonSocialVictima" runat="server" CssClass="form-control form-control-sm" style="display: none;" />
+                            <asp:TextBox ID="txtAPVictima" runat="server" CssClass="form-control form-control-sm" style="display: none;" MaxLength="40" />
+                            <asp:TextBox ID="txtRazonSocialVictima" runat="server" CssClass="form-control form-control-sm" style="display: none;" MaxLength="40" />
                         </div>
                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                             <asp:Label ID="lblAM" runat="server"  class="form-label text-secondary" style="display: none;">Apellido materno:</asp:Label>
-                            <asp:TextBox ID="txtAMVictima" runat="server" CssClass="form-control form-control-sm" style="display: none;" />
+                            <asp:TextBox ID="txtAMVictima" runat="server" CssClass="form-control form-control-sm" style="display: none;" MaxLength="40" />
                         </div>                       
                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                             <asp:Label ID="lblNombre" runat="server"  CssClass="form-label text-secondary" style="display: none;">Nombre(s):</asp:Label>
-                            <asp:TextBox ID="txtNombreVictima" runat="server" CssClass="form-control form-control-sm" style="display: none;"/>
+                            <asp:TextBox ID="txtNombreVictima" runat="server" CssClass="form-control form-control-sm" style="display: none;" MaxLength="40"/>
                         </div>
 
 
