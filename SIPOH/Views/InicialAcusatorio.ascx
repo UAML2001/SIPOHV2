@@ -360,7 +360,7 @@
             <p></p>
             <div class="row justify-content-center">
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 d-flex justify-content-center">
-                    <button class="btn btn-success" onclick="imprimirTicket()">Imprimir SELLO</button>
+                    <button class="btn btn-success" onclick="imprimirTicketAcusatorio()">Imprimir SELLO</button>
                 </div>
                 <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 d-flex justify-content-center">
                     <button class="btn btn-primary" onclick="recargarPagina()">Registrar otra inicial</button>
@@ -370,7 +370,7 @@
     <p></p>
 
 
-    <pre id="TicketDiv" runat="server"></pre>
+    <pre id="TicketDivAcusatorio" runat="server"></pre>
     </ContentTemplate>
     </asp:UpdatePanel>
 
@@ -406,23 +406,23 @@
             alert("Entro modal error insert");
         }
 
-        function imprimirTicket() {
-            var contenido = document.getElementById('<%= TicketDiv.ClientID %>').innerHTML;
+        function imprimirTicketAcusatorio() {
+            var contenido = document.getElementById('<%= TicketDivAcusatorio.ClientID %>').innerHTML;
             var ventanaImpresion = window.open('', '_blank');
 
             var estilos = `<style>
-                pre {
-                    font-family: monospace;
-                    white-space: pre;
-                    margin: 1em 0;
-                }
-            </style>`;
+                            pre {
+                                font-family: monospace;
+                                white-space: pre;
+                                margin: 1em 0;
+                            }
+                        </style>`;
 
             ventanaImpresion.document.write(estilos + '<pre>' + contenido + '</pre>');
             ventanaImpresion.document.close();
             ventanaImpresion.print();
-            ventanaImpresion.onfocus = function () { setTimeout(function () { ventanaImpresion.close(); }, 500); }
         }
+
 
  
         function recargarPagina() {
@@ -433,41 +433,6 @@
     <script type="text/javascript">
         function limpiarControles() {
             // Limpiar controles de entrada
-            document.getElementById('<%= inputRadicacion.ClientID %>').value = '';
-            document.getElementById('<%= inputIncomJuzgado.ClientID %>').value = '';
-            document.getElementById('<%= inputNuc.ClientID %>').value = '';
-            document.getElementById('<%= InputNombreBusqueda.ClientID %>').value = '';
-            document.getElementById('<%= InputApPaternoBusqueda.ClientID %>').value = '';
-            document.getElementById('<%= inputApMaterno.ClientID %>').value = '';
-            document.getElementById('<%= InputOtraSolicitud.ClientID %>').value = '';
-            document.getElementById('<%= OtroAnexo.ClientID %>').value = '';
-            document.getElementById('<%= CantidadInput.ClientID %>').value = '';
-            document.getElementById('<%= inputNumeroToca.ClientID %>').value = '';
-            document.getElementById('<%= detalleSolicitantes.ClientID %>').value = '';
-
-            // Limpiar y ocultar elementos específicos
-            document.getElementById('<%= tablaResultadosHtmlDiv.ClientID %>').innerHTML = '';
-            document.getElementById('<%= tituloSalas.ClientID %>').style.display = 'none';
-            document.getElementById('<%= tituloSentencias.ClientID %>').style.display = 'none';
-            document.getElementById('<%= DivExAm.ClientID %>').style.display = 'none';
-            document.getElementById('<%= ContinuarRegistro.ClientID %>').style.display = 'none';
-            document.getElementById('<%= RegistroPartesIn.ClientID %>').style.display = 'none';
-            document.getElementById('<%= tituloSello.ClientID %>').style.display = 'none';
-
-            // Desmarcar radio buttons y checkboxes
-            document.getElementById('<%= CheckSi.ClientID %>').checked = false;
-            document.getElementById('<%= CheckNo.ClientID %>').checked = false;
-            document.getElementById('<%= siInterno.ClientID %>').checked = false;
-            document.getElementById('<%= noInterno.ClientID %>').checked = false;
-            // Restablecer los DropDownLists (seleccionar la primera opción)
-            // Nota: Esto puede variar dependiendo de cómo estén configurados tus DropDownList
-            var dropdowns = ['<%= CatSolicitantesDD.ClientID %>', '<%= CatSolicitudDD.ClientID %>', '<%= CatAnexosDD.ClientID %>'];
-            dropdowns.forEach(function (ddId) {
-                var dropdown = document.getElementById(ddId);
-                if (dropdown && dropdown.options.length > 0) {
-                    dropdown.selectedIndex = 0;
-                }
-            });
             location.reload();
         }
     </script>

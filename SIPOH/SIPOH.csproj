@@ -2027,6 +2027,7 @@
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\consignaciones\Consignaciones.js" />
     <Content Include="Scripts\consignaciones\RegistroIniciales.js" />
+    <Content Include="Scripts\Ejecucion\formatoInput.js" />
     <Content Include="Scripts\Ejecucion\Inicial.js" />
     <Content Include="Scripts\Ejecucion\Tabs.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

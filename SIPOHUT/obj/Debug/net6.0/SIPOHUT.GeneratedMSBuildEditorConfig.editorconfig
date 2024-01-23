@@ -8,6 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SIPOHUT
-build_property.ProjectDir = C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOHUT\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.ProjectDir = c:\Users\20111\Documents\GitHub\SIPOHV2\SIPOHUT\

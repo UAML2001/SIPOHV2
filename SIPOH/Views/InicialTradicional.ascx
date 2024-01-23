@@ -103,7 +103,7 @@
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                 <label class="form-label text-secondary">Número de Causa</label>
                 <div class="input-group">
-                    <input type="text" class="form-control form-control-sm" id="InCausaTra" runat="server" placeholder="0000/0000" minlength="9" maxlength="9">
+                    <input type="text" class="form-control form-control-sm" id="InCausaTra" runat="server" maxlength="9" onblur="padLeadingZeros(this)" placeholder="">
                     <div class="input-group-append">
                         <asp:Button ID="btnBuscar" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnBuscarTradicional_Click" Text="Buscar" />
                     </div>

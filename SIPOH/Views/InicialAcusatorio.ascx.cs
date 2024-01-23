@@ -665,8 +665,8 @@ namespace SIPOH.Views
                     Limpiar();
                     string datosAnexos = String.Join(", ", GlobalAnexosDetalles.Select(a => $"\"{a}\""));
                     string ticket = CrearTicketSELLO();
-                    TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
-                    ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
+                    TicketDivAcusatorio.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
+                    ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScriptAcusatorio", "imprimirTicketAcusatorio();", true);
                 }
 
                 catch (Exception ex)
