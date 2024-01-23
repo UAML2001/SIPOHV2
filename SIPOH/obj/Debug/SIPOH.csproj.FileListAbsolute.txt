@@ -785,3 +785,16 @@ C:\Users\20111\Documents\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServ
 C:\Users\20111\Documents\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
 C:\Users\20111\Documents\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
 C:\Users\20111\Documents\GitHub\SIPOHV2\SIPOH\bin\stdole.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.DataDefModel.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.ClientDoc.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.ReportDefModel.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.Controllers.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.CommLayer.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.DataSetConversion.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.Prompting.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.XmlSerialize.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.CubeDefModel.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\stdole.dll
