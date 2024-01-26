@@ -204,13 +204,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.DropDownList inputDelitos;
 
         /// <summary>
-        /// Control litTablaDelitos.
+        /// Control RepeaterDelitos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litTablaDelitos;
+        protected global::System.Web.UI.WebControls.Repeater RepeaterDelitos;
 
         /// <summary>
         /// Control txtAnexosTipo.
@@ -276,13 +276,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl TicketDiv;
 
         /// <summary>
-        /// Control tituloSello.
+        /// Control tituloSelloIniciales.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tituloSello;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tituloSelloIniciales;
 
         /// <summary>
         /// Control lblAPaternoImputado.

@@ -60,20 +60,27 @@ namespace SIPOH.Views
             public string DescripcionAnexo { get; set; }
             public string CantidadAnexo { get; set; }
         }
+        public class CatDelito
+        {
+            public string IdDelito { get; set; }
+            public string DescripcionDelito { get; set; }
+            
+            
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             //ScriptManager.RegisterStartupScript(this, GetType(), "MostrarModal", "$('#miModal').modal('show');", true);
 
             if (!IsPostBack)
             {
-
-
+                inputBuscarInicial.Text = "";
+                ddlTipoFiltrado.SelectedIndex = 0;
                 CargarCatDelitos();
                 CargarCatAnexosEnDropDownList();
                 Session["Victimas"] = new List<Victima>();
                 Session["Imputados"] = new List<Imputado>();
-                Session["IdDelitos"] = new List<int>();
-                Session["NombresDelitos"] = new List<string>();
+                Session["Delitos"] = new List<int>();
+                //Session["NombresDelitos"] = new List<string>();
                 Session["Anexos"] = new List<Anexos>();
 
 
@@ -87,13 +94,6 @@ namespace SIPOH.Views
 
             }
 
-
-            //List<Victima> listaDeUsuarios = Session["Victimas"] as List<Victima> ?? new List<Victima>();
-            //listaDeUsuarios.Clear();
-            //List<BusquedaInicial> GetInicial = Session["Inicial"] as List<BusquedaInicial> ?? new List<BusquedaInicial>();
-
-
-            // Llamando a la función GetInicial con la lista
 
 
         }
@@ -145,7 +145,10 @@ namespace SIPOH.Views
                 BusquedaIniciales.Visible = false;
                 errorConsulta.Text = "No se encontraron resultados";
             }
+            ddlTipoFiltrado.SelectedIndex = 0;
+            inputBuscarInicial.Text = "";
 
+            updPanel.Update();
 
         }
         protected void btnEliminarAnexo(object sender, EventArgs e)
@@ -545,103 +548,170 @@ namespace SIPOH.Views
             
         }
 
-        
-
-
-
 
         protected void btnEnviarInicial_Click(object sender, EventArgs e)
         {
-            
+            try
+            {
+                string[] camposFaltantes;
+                if (CamposIncompletos(out camposFaltantes))
+                {
+                    string camposMensaje = string.Join(", ", camposFaltantes.Where(campo => !string.IsNullOrWhiteSpace(campo)));
+                    string mensaje = $"Los siguientes campos son obligatorios: {camposMensaje}";
+                    MostrarMensajeError(mensaje);
+                    return;
+                }
+
+                ProcesarDatos();
+               
+            }
+            catch (Exception ex)
+            {
+                
+                MostrarMensajeError("Sucedió un error en su consulta, verifica si es correcta.");
+                Debug.WriteLine("Problemas en la consulta: " + ex);
+            }
+        }
+
+
+        private bool CamposIncompletos(out string[] camposFaltantes)
+        {
             string TipoAsunto = inputTipoAsunto.SelectedValue;
             string TipoRadicacion = inpuTipoRadicacion.SelectedValue;
             string Observaciones = inputObservaciones.Text;
             string QuienIngresa = inputQuienIngresa.SelectedValue;
             string MP = inputNombreParticular.Text;
             string Prioridad = inputPrioridad.SelectedValue;
+            string Fojas = inputNumeroFojas.Text;
+            string IdAudiencia = inputRadicacion.SelectedValue;
+            string FeIngreso = inputFechaRecepcion.Text;
+            string NUC = inputNUC.Text;
+
+            camposFaltantes = new string[]
+            {
+        string.IsNullOrWhiteSpace(TipoAsunto) ? "Tipo de Asunto" : "",
+        string.IsNullOrWhiteSpace(TipoRadicacion) ? "Tipo de Radicación" : "",
+        string.IsNullOrWhiteSpace(QuienIngresa) ? "Quién Ingresa" : "",
+        string.IsNullOrWhiteSpace(MP) ? "Nombre Particular" : "",
+        string.IsNullOrWhiteSpace(Prioridad) ? "Prioridad" : "",
+        string.IsNullOrWhiteSpace(Fojas) ? "Número de Fojas" : "",
+        string.IsNullOrWhiteSpace(IdAudiencia) ? "Tipo de solicitud" : "",
+        string.IsNullOrWhiteSpace(FeIngreso) ? "Fecha de Ingreso" : "",
+        string.IsNullOrWhiteSpace(NUC) ? "NUC" : "",
+            };
+
+            return camposFaltantes.Any(campo => !string.IsNullOrWhiteSpace(campo));
+        }
+
+
+        private void MostrarMensajeError(string mensaje)
+        {
+            
+            string script = $"toastError('{mensaje}');";
+            ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+            
+        }
+
+        private void ProcesarDatos()
+        {
+            string TipoAsunto = inputTipoAsunto.SelectedValue;
+            string TipoRadicacion = inpuTipoRadicacion.SelectedValue;
+            string Observaciones = inputObservaciones.Text;
+            string QuienIngresa = inputQuienIngresa.SelectedValue;
+            string MP = inputNombreParticular.Text;
+            string Prioridad = inputPrioridad.SelectedValue;
+
+
             //Prioridad 
             string Fojas = inputNumeroFojas.Text;
             string IdAudiencia = inputRadicacion.SelectedValue;
-            string FeIngreso= inputFechaRecepcion.Text;
+            string FeIngreso = inputFechaRecepcion.Text;
             string NUC = inputNUC.Text;
-            // CODIGOTICKET
-            string ticket = CrearTicketSELLO();
-            TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
-            ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
-            tituloSello.Style["display"] = "block";
-            ScriptManager.RegisterStartupScript(this, GetType(), "mostrarTituloSello", "mostrarTituloSello();", true);
-            //RegistroIniciales.GetNumeroIniciales("cp");
-            if (string.IsNullOrWhiteSpace(TipoAsunto) || string.IsNullOrWhiteSpace(TipoRadicacion) || 
-                string.IsNullOrWhiteSpace(QuienIngresa) ||
-       string.IsNullOrWhiteSpace(MP) || string.IsNullOrWhiteSpace(Prioridad) ||
-       string.IsNullOrWhiteSpace(Fojas) || string.IsNullOrWhiteSpace(IdAudiencia) ||
-       string.IsNullOrWhiteSpace(FeIngreso) || string.IsNullOrWhiteSpace(NUC))
+            // Lógica de procesamiento de datos
+            List<Victima> listaDeUsuarios = ObtenerListaDeUsuarios();
+            List<Imputado> listaDeImputados = ObtenerListaDeImputados();
+            List<CatDelito> listaDeDelitos = ObtenerIdDelitos();
+            List<Anexos> listaDeAnexos = ObtenerListaDeAnexos();
+
+            if (listaDeUsuarios.Count == 0 || listaDeImputados.Count == 0 || listaDeDelitos.Count == 0)
             {
-                // Mostrar un mensaje al usuario indicando que debe llenar todos los campos
-                // Puedes usar un control como Label para mostrar el mensaje en tu interfaz
-                string mensaje = "Datos no estan correctamente insertados";
-                string script = $"toastError('{mensaje}');";
+                var mensajeListas = "La tabla de víctima, imputado y delitos no pueden estar vacías.";
+                string script = $"toastError('{mensajeListas}');";
                 ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
-                
-                Debug.WriteLine("Datos no estan correctamnte insertados");
-
-
-
-            return;  // Salir del método si no se llenaron todos los campos
+                throw new InvalidOperationException("Las listas no pueden estar vacías.");
             }
+            string mensaje = "El llenado de tus datos fue correcto";
+            string scriptToast = $"toastInfo('{mensaje}');";
+            ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
             try
-            { 
-
-
-                List<Victima> listaDeUsuarios = Session["Victimas"] as List<Victima> ?? new List<Victima>();
-                List<Imputado> listaDeImputados = Session["Imputados"] as List<Imputado> ?? new List<Imputado>();
-                //List<int> idDelitos = (List<int>)Session["IdDelitos"];
-                List<int> idDelitos = Session["IdDelitos"] as List <int> ?? new List<int>();
-                List<Anexos> listaDeAnexos = Session["Anexos"] as List<Anexos> ?? new List<Anexos>();
+            {
+                bool transaccionExitosa =  RegistroIniciales.SendRegistroIniciales(FeIngreso, TipoAsunto, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas, TipoRadicacion, NUC, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
                 
-                // Puedes usar la listaDeUsuarios según sea necesario en tu otra función
-                foreach (var usuario in listaDeUsuarios)
+
+                if (transaccionExitosa)
                 {
-                    
-                    //Debug.WriteLine($"Nombre: {usuario.Nombre}, Apellido Paterno: {usuario.ApellidoPaterno}, Apellido Materno: {usuario.ApellidoMaterno}, Razon Social: {usuario.RazonSocial}, Genero: {usuario.Genero}");
+                    // Lógica si la transacción fue exitosa
+                    string mensajeTransaccion = "Envío exitoso. Tu registro se ha hecho correctamente.";
+                    string scriptToastTransaccion = $"toastInfo('{mensajeTransaccion}');";
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToastTransaccion, true);
+                    // CODIGOTICKET
+                    string ticket = CrearTicketSELLO();
+                    TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
+                    ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicketIniciales();", true);
+                    tituloSelloIniciales.Style["display"] = "block";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "mostrarTituloSello", "mostrarTituloSello();", true);
                 }
-                if (listaDeUsuarios.Count == 0 || listaDeImputados.Count == 0 || idDelitos.Count == 0)
+                else
                 {
-                    throw new InvalidOperationException("Las listas no pueden estar vacías.");
-                    
+                    // Lógica si la transacción falló
+                    string mensajeError = "¡Ocurrio un error en la transacción!, Folio ha sido asignado consulte a soporte gracias! ";
+                    MostrarMensajeError(mensajeError);
                 }
-                    RegistroIniciales.SendRegistroIniciales(FeIngreso, TipoAsunto, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas,TipoRadicacion, NUC, idDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
-               
-                //listaDeIdDelitos.Clear();
-                listaDeUsuarios.Clear();
-                
-                listaDeImputados.Clear();
-                listaDeAnexos.Clear();
-                // método para realizar las inserciones
-                
-                string mensaje = "Tu peticion fue correcta!, tu Registro se ha hecho correctamente. ";
-                
-                string scriptToast = $"toastInfo('{mensaje}');";
-                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
-
-               
-
             }
             catch (Exception ex)
             {
-                //  error genérico al usuario
-                Debug.WriteLine("Problemas en la consulta: " + ex);
-                //lblError.Text = "Sucedio un error con su consulta, tu registro es incompleto o ya se ha generado anteriormente";
-                
-                string mensaje = "Sucedio un error en su consulta, verifica si es correcta! ";
-                string script = $"toastError('{mensaje}');";
-                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+                // Manejo de la excepción en tu archivo ASPX
+                Debug.WriteLine("Error en la página ASPX: " + ex.Message);
+                // Puedes mostrar un mensaje al usuario o realizar otras acciones necesarias
             }
 
-            //Debug.WriteLine("Tipo Asunto "+ TipoAsunto+"Valor seleccionado: " + IdAudienciaSelect + "fechas" + FeIngresoSelect+ "observaciones: " + Observaciones+ "Radicacion: "+ TipoRadicacion + "Quien ingresa: " + QuienIngresa + "MPName :" + MP + "NUM FOJAS: " + Fojas + "Prioridad: "+ Prioridad );
 
-           
+
+
+            listaDeDelitos.Clear();
+            listaDeUsuarios.Clear();
+            listaDeImputados.Clear();
+            listaDeAnexos.Clear();
+            // método para realizar las inserciones
+
             
+
+            LimpiarDatosDespuesDeProcesar();
+        }
+
+        // Definir funciones para obtener datos
+        private List<Victima> ObtenerListaDeUsuarios()
+        {
+            return Session["Victimas"] as List<Victima> ?? new List<Victima>();
+        }
+
+        private List<Imputado> ObtenerListaDeImputados()
+        {
+            return Session["Imputados"] as List<Imputado> ?? new List<Imputado>();
+        }
+
+        private List<CatDelito> ObtenerIdDelitos()
+        {
+            return Session["Delitos"] as List<CatDelito> ?? new List<CatDelito>();
+        }
+
+        private List<Anexos> ObtenerListaDeAnexos()
+        {
+            return Session["Anexos"] as List<Anexos> ?? new List<Anexos>();
+        }
+
+        private void LimpiarDatosDespuesDeProcesar()
+        {
             updPanel.Update();
             CleanTablas();
             CleanEtiquetaFormImputado();
@@ -651,11 +721,14 @@ namespace SIPOH.Views
             CleanEtiquetasForm();
             Session["Victimas"] = new List<Victima>();
             Session["Imputados"] = new List<Imputado>();
-            Session["IdDelitos"] = new List<int>();
-            Session["NombresDelitos"] = new List<string>();
+            Session["Delitos"] = new List<int>();
+            
             Session["Anexos"] = new List<Anexos>();
-
         }
+
+
+
+
         private List<string> DividirTextoEnLineas(string texto, int maxCaracteresPorLinea)
         {
             List<string> lineas = new List<string>();
@@ -706,27 +779,21 @@ namespace SIPOH.Views
             int cantidadAnexos = CantidadAnexos(anexos);
 
             string NUC = inputNUC.Text;
-            string Causa = "0000/2024";
+            //string Causa = inputNumeroDocumento.Text;
+            string Causa = Session["FolioNuevoInicial"] as string;
 
           
             ImprimirCentrado(ticket, "TRIBUNAL SUPERIOR");
             ImprimirCentrado(ticket, "DE JUSTICIA");
             ImprimirCentrado(ticket, "DEL ESTADO DE HIDALGO");
             ImprimirCentrado(ticket, "ATENCION CIUDADANA");
-
-
             ImprimirCentrado(ticket, ".........");
             foreach (string linea in lineasNombreJuzgado)
             {
                 ImprimirCentrado(ticket, linea);
-            }
-            
-            ImprimirCentrado(ticket, "INICIAL");
-
-            
-            ImprimirCentrado(ticket, ".........");
-            
-            
+            }            
+            ImprimirCentrado(ticket, "INICIAL");           
+            ImprimirCentrado(ticket, ".........");                        
             if (TipoAsunto == "C")
             {
                 var AsuntoIncial = "CAUSA";
@@ -743,8 +810,8 @@ namespace SIPOH.Views
             ticket.AppendLine($"FECHA RECEPCIÒN:{GetFechaYHora()}");
             ticket.AppendLine($"NUC:{NUC.ToUpper()}");
 
-            int maxLength = 38; 
-            int maxLengthT = 32; 
+            int maxLength = 36; 
+            int maxLengthT = 30; 
 
             foreach (var anexo in anexos)
             {
@@ -782,103 +849,83 @@ namespace SIPOH.Views
         }
 
         //FIN SELLO
+        protected void btnEliminarDelito(object sender, EventArgs e)
+        {
+            // Obtener el botón que activó el evento
+            Button btnEliminarDelitos = (Button)sender;
 
+            // Obtener la fila del Repeater que contiene el botón
+            RepeaterItem item = (RepeaterItem)btnEliminarDelitos.NamingContainer;
+            item.Visible = false;
+            // Obtener el índice de la fila en el Repeater
+            int indiceD = item.ItemIndex;
+
+            // Obtener la lista de la sesión
+            List<CatDelito> listaDelitos = (List<CatDelito>)Session["Delitos"];
+
+            // Verificar si la lista no es nula y tiene elementos
+            if (listaDelitos != null && listaDelitos.Count > indiceD)
+            {
+                // Eliminar el elemento en la posición indicada por el índice
+                item.Visible = false;
+                listaDelitos.RemoveAt(indiceD);
+                RepeaterDelitos.Controls.RemoveAt(indiceD);
+                Session["Delitos"] = listaDelitos;
+
+
+            }
+            // Verificar si la lista no es nula y tiene elementos
+            updPanel.Update();
+
+        }
 
         protected void btnEnviarDelito_Click(object sender, EventArgs e)
         {
-            // Intentar convertir el valor seleccionado a un entero
-            if (int.TryParse(inputDelitos.SelectedValue, out int idDelitoSeleccionado))
+            // Obtener el ID del delito seleccionado
+            string inputIDDelito = inputDelitos.SelectedValue;
+            string descripcionDelito = inputDelitos.SelectedItem.Text;
+            // Crear un objeto CatDelito con los datos seleccionados
+            CatDelito delito = new CatDelito
             {
-                // Obtener la lista actual de la sesión o crear una nueva si aún no existe
-                List<int> listaDeIdDelitos = Session["IdDelitos"] as List<int> ?? new List<int>();
-                List<string> listaDeNombresDelitos = Session["NombresDelitos"] as List<string> ?? new List<string>();
-               
-                if (!listaDeIdDelitos.Contains(idDelitoSeleccionado))
-                {
-                    // Agregar a las listas solo si la conversión fue exitosa
-                    listaDeIdDelitos.Add(idDelitoSeleccionado);
+                IdDelito = inputIDDelito,
+                DescripcionDelito = descripcionDelito
+            };
 
-                    // Obtener el nombre del delito seleccionado
-                    string nombreDelitoSeleccionado = ObtenerNombreDelito(idDelitoSeleccionado);
-                    listaDeNombresDelitos.Add(nombreDelitoSeleccionado);
+            // Obtener la lista actual de delitos de la sesión
+            List<CatDelito> listaDelitos = Session["Delitos"] as List<CatDelito> ?? new List<CatDelito>();
 
-                    // Actualizar las listas en la sesión
-                    Session["IdDelitos"] = listaDeIdDelitos;
-                    Session["NombresDelitos"] = listaDeNombresDelitos;
-
-                    // Otro código que necesites hacer después de guardar
-
-
-                    StringBuilder tablaHtml = new StringBuilder();
-
-
-                    // Iterar sobre las listas y agregar filas a la tabla
-                    for (int i = 0; i < listaDeIdDelitos.Count; i++)
-                    {
-                        tablaHtml.AppendLine("<tr>");
-                        tablaHtml.AppendLine($"<th scope=\"row\" style=\"display:none; \">{listaDeIdDelitos[i]}</th>");
-                        tablaHtml.AppendLine($"<td class=\"text-secondary text-capitalize \">{listaDeNombresDelitos[i]}</td>");
-                        tablaHtml.AppendLine($"<td class=\"text-secondary\"><button class=\"btnEliminar\" data-id=\"{listaDeIdDelitos[i]}\"><i class=\"bi bi-trash-fill text-danger\"></i></button></td>");
-                        tablaHtml.AppendLine("</tr>");
-                    }
-
-
-
-                    // Asignar la cadena HTML a un control en tu página (puede ser un LiteralControl o un literal en tu página)
-                    litTablaDelitos.Text = tablaHtml.ToString();
-                    //lblIdDelitos.Text = "";
-                    
-                }
-                else
-                {
-                    // Mostrar un mensaje si el idDelito ya está en la lista
-                    
-                    string mensaje = "El delito ya ha sido seleccionado! ";
-                    string script = $"toastError('{mensaje}');";
-                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
-                }
-
-            }
-            else
+            // Verificar si el delito ya existe en la lista
+            if (listaDelitos.Any(v => v.IdDelito == inputIDDelito))
             {
-                // Manejar el caso en el que la conversión falla
-                // Puedes mostrar un mensaje de error o realizar alguna acción específica.
-                // Por ejemplo:
-                
-                string mensaje = "No tiene delitos seleccionados! ";
+                // Mostrar mensaje de error
+                string mensaje = "Este delito ya existe en la lista.";
                 string script = $"toastError('{mensaje}');";
                 ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
-
+                return;
             }
 
-            // Actualizar el contenido del UpdatePanel
-            CleanEtiquetaFormDelito();
-            
+            // Agregar el delito a la lista y guardarla en la sesión
+            listaDelitos.Add(delito);
+            Session["Delitos"] = listaDelitos;
+
+            // Mostrar los delitos en el Repeater
+            RepeaterDelitos.DataSource = listaDelitos;
+            RepeaterDelitos.DataBind();
+
+            // Limpiar y actualizar el panel
+            CleanEtiquetaFormAnexo();
             updPanel.Update();
-        }
-        protected void LimpiarTabla()
-        {
-            // Limpiar el contenido de la tabla
-            StringBuilder tablaHtml = new StringBuilder();
-            litTablaDelitos.Text = tablaHtml.ToString();
 
-            // También puedes limpiar las listas en la sesión si es necesario
-            Session["IdDelitos"] = new List<int>();
-            Session["NombresDelitos"] = new List<string>();
         }
 
 
 
 
-        // Método para obtener el nombre del delito por su ID
-        private string ObtenerNombreDelito(int idDelito)
-        {
-            (List<string> catDelitos, List<string> catIdsDelitos) = RegistroIniciales.GetCatDelitos();
 
-            int index = catIdsDelitos.IndexOf(idDelito.ToString());
 
-            return index != -1 ? catDelitos[index] : "Nombre no encontrado";
-        }
+
+
+       
 
 
 
@@ -899,40 +946,20 @@ namespace SIPOH.Views
         }
         private void CargarCatDelitos()
         {
-            (List<string> catDelitos, List<string> catIdsDelitos) = RegistroIniciales.GetCatDelitos();
+            RegistroIniciales.CatDelitosResult catDelitos = RegistroIniciales.GetCatDelitos();
 
-            // Crear una lista de ListItem
-            List<ListItem> items = new List<ListItem>();
-
-            for (int i = 0; i < catDelitos.Count; i++)
+            // Recorres la lista de delitos y añades ListItem al DropDownList
+            for (int i = 0; i < catDelitos.Delitos.Count; i++)
             {
-                // Crear ListItem con el texto y el valor correspondientes
-                ListItem item = new ListItem(catDelitos[i], catIdsDelitos[i]);
-                items.Add(item);
-                
-            }
+                string delito = catDelitos.Delitos[i];
+                string idDelito = catDelitos.IdDelitos[i];
 
-            // Asignar la lista de ListItem al DropDownList
-            inputDelitos.Items.AddRange(items.ToArray());
+                ListItem listItem = new ListItem(delito, idDelito);
+                inputDelitos.Items.Add(listItem);
+            }
         }
         
-        public static void EliminarDelito(int idDelito)
-        {
-            // Obtener las listas actuales de la sesión
-            List<int> listaDeIdDelitos = HttpContext.Current.Session["IdDelitos"] as List<int>;
-            List<string> listaDeNombresDelitos = HttpContext.Current.Session["NombresDelitos"] as List<string>;
-
-            // Encontrar el índice del delito con el ID proporcionado
-            int index = listaDeIdDelitos.IndexOf(idDelito);
-
-            // Eliminar el delito de ambas listas
-            listaDeIdDelitos.RemoveAt(index);
-            listaDeNombresDelitos.RemoveAt(index);
-
-            // Actualizar las listas en la sesión
-            HttpContext.Current.Session["IdDelitos"] = listaDeIdDelitos;
-            HttpContext.Current.Session["NombresDelitos"] = listaDeNombresDelitos;
-        }
+        
 
 
 
@@ -979,6 +1006,7 @@ namespace SIPOH.Views
             inputQuienIngresa.SelectedIndex = 0;
             inputNombreParticular.Text = "";
             //inputPrioridad.SelectedIndex = ;
+            
             inputNumeroFojas.Text = "";
             //inputRadicacion.SelectedValue = "";
             inputFechaRecepcion.Text = "";
@@ -992,7 +1020,9 @@ namespace SIPOH.Views
             Repeater2.DataBind();
             Repeater3.DataSource = null;
             Repeater3.DataBind();
-            LimpiarTabla();
+            RepeaterDelitos.DataSource = null;
+            RepeaterDelitos.DataBind();
+            
         }
 
 
