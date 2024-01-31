@@ -42,40 +42,40 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.DropDownList ddlFormatoReporte;
 
         /// <summary>
-        /// Control RIniciales.
+        /// Control divOpcionInicial.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RIniciales;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOpcionInicial;
 
         /// <summary>
-        /// Control ddlTipoInicial.
+        /// Control OpcionInicial.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTipoInicial;
+        protected global::System.Web.UI.WebControls.DropDownList OpcionInicial;
 
         /// <summary>
-        /// Control RPromociones.
+        /// Control divOpcionPoste.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RPromociones;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOpcionPoste;
 
         /// <summary>
-        /// Control ddlTipoPromocion.
+        /// Control OpcionPoste.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTipoPromocion;
+        protected global::System.Web.UI.WebControls.DropDownList OpcionPoste;
 
         /// <summary>
         /// Control fechas.
@@ -112,6 +112,24 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnMostrarInforme;
+
+        /// <summary>
+        /// Control TituloReporte.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TituloReporte;
+
+        /// <summary>
+        /// Control GenerarOtro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GenerarOtro;
 
         /// <summary>
         /// Control iframePDF.

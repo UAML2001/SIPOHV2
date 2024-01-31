@@ -762,22 +762,22 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Button Button10;
 
         /// <summary>
-        /// Control TicketDiv3.
+        /// Control InsertExhorto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TicketDiv3;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InsertExhorto;
 
         /// <summary>
-        /// Control TicketDiv.
+        /// Control TituloExhorto.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TicketDiv;
+        protected global::System.Web.UI.WebControls.Label TituloExhorto;
 
         /// <summary>
         /// Control btnImprimir.
@@ -787,5 +787,23 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnImprimir;
+
+        /// <summary>
+        /// Control btnGenerarOtro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGenerarOtro;
+
+        /// <summary>
+        /// Control TicketDiv.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TicketDiv;
     }
 }

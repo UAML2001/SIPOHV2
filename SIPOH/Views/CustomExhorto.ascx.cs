@@ -1,4 +1,5 @@
-﻿using Microsoft.Ajax.Utilities;
+﻿using DatabaseConnection;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -45,9 +46,9 @@ namespace SIPOH.Views
                 // Cargar los delitos en el DropDownList
                 CargarDelitos();
                 CargarAnexos();
+
+                InsertExhorto.Style.Add("display", "none");
             }
-
-
         }
 
         //Back para cargar anexos exhortos
@@ -90,6 +91,23 @@ namespace SIPOH.Views
         protected void btnAgregarAnexo_Click(object sender, EventArgs e)
         {
             string anexoSeleccionado = ddlAnexos.SelectedItem.Text;
+            string cantidadAnexo = noAnexos.Text;
+
+            // Verificar si el valor de "noAnexos" es 0
+            if (cantidadAnexo == "0")
+            {
+                // Mostrar un mensaje de error específico para la cantidad de anexos
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "EjemploErrorCantAnexo();", true);
+                return;
+            }
+
+            // Verificar si el anexo seleccionado es "Seleccione el anexo a agregar:"
+            if (anexoSeleccionado == "Seleccione el anexo a agregar:")
+            {
+                // Mostrar un mensaje de error específico para la selección de anexos
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "SelAnexos", "EjemploErrorSelAnexo();", true);
+                return;
+            }
 
             // Verificar si el delito ya está en la tabla
             if (!AnexosYaEnTabla(anexoSeleccionado))
@@ -97,12 +115,9 @@ namespace SIPOH.Views
                 // Agregar el delito a la tabla
                 // Puedes agregar el código necesario para agregar el delito a tu fuente de datos
 
-                string nombreAnexo = ddlAnexos.SelectedItem.Text;
-                string cantidadAnexo = noAnexos.Text;
-
                 DataTable dt = GetDataTableAnex();
                 DataRow newRow = dt.NewRow();
-                newRow["descripcion"] = nombreAnexo;
+                newRow["descripcion"] = anexoSeleccionado;
                 newRow["Cantidad"] = cantidadAnexo;
                 dt.Rows.Add(newRow);
 
@@ -116,6 +131,8 @@ namespace SIPOH.Views
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ErrorTblExhortos", "EjemploErrorTblAnexo();", true);
             }
         }
+
+
 
         private DataTable GetDataTableAnex()
         {
@@ -195,6 +212,23 @@ namespace SIPOH.Views
         protected void btnAgregarAnexo_Click2(object sender, EventArgs e)
         {
             string anexoSeleccionado = ddlAnexos2.SelectedItem.Text;
+            string cantidadAnexo = noAnexos2.Text;
+
+            // Verificar si el valor de "noAnexos" es 0
+            if (cantidadAnexo == "0")
+            {
+                // Mostrar un mensaje de error específico para la cantidad de anexos
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "EjemploErrorCantAnexo();", true);
+                return;
+            }
+
+            // Verificar si el anexo seleccionado es "Seleccione el anexo a agregar:"
+            if (anexoSeleccionado == "Seleccione el anexo a agregar:")
+            {
+                // Mostrar un mensaje de error específico para la selección de anexos
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "SelAnexos", "EjemploErrorSelAnexo();", true);
+                return;
+            }
 
             // Verificar si el delito ya está en la tabla
             if (!AnexosYaEnTabla2(anexoSeleccionado))
@@ -202,12 +236,9 @@ namespace SIPOH.Views
                 // Agregar el delito a la tabla
                 // Puedes agregar el código necesario para agregar el delito a tu fuente de datos
 
-                string nombreAnexo = ddlAnexos2.SelectedItem.Text;
-                string cantidadAnexo = noAnexos2.Text;
-
                 DataTable dt = GetDataTableAnex2();
                 DataRow newRow = dt.NewRow();
-                newRow["descripcion2"] = nombreAnexo;
+                newRow["descripcion2"] = anexoSeleccionado;
                 newRow["Cantidad2"] = cantidadAnexo;
                 dt.Rows.Add(newRow);
 
@@ -298,6 +329,23 @@ namespace SIPOH.Views
         protected void btnAgregarAnexo_Click3(object sender, EventArgs e)
         {
             string anexoSeleccionado = ddlAnexos3.SelectedItem.Text;
+            string cantidadAnexo = noAnexos3.Text;
+
+            // Verificar si el valor de "noAnexos" es 0
+            if (cantidadAnexo == "0")
+            {
+                // Mostrar un mensaje de error específico para la cantidad de anexos
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "EjemploErrorCantAnexo3();", true);
+                return;
+            }
+
+            // Verificar si el anexo seleccionado es "Seleccione el anexo a agregar:"
+            if (anexoSeleccionado == "Seleccione el anexo a agregar:")
+            {
+                // Mostrar un mensaje de error específico para la selección de anexos
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "SelAnexos", "EjemploErrorSelAnexo();", true);
+                return;
+            }
 
             // Verificar si el delito ya está en la tabla
             if (!AnexosYaEnTabla3(anexoSeleccionado))
@@ -305,12 +353,9 @@ namespace SIPOH.Views
                 // Agregar el delito a la tabla
                 // Puedes agregar el código necesario para agregar el delito a tu fuente de datos
 
-                string nombreAnexo = ddlAnexos3.SelectedItem.Text;
-                string cantidadAnexo = noAnexos3.Text;
-
                 DataTable dt = GetDataTableAnex3();
                 DataRow newRow = dt.NewRow();
-                newRow["descripcion3"] = nombreAnexo;
+                newRow["descripcion3"] = anexoSeleccionado;
                 newRow["Cantidad3"] = cantidadAnexo;
                 dt.Rows.Add(newRow);
 
@@ -435,8 +480,13 @@ namespace SIPOH.Views
         {
             string delitoSeleccionado = ddlDelitos1.SelectedItem.Text;
 
+            // Verificar si el valor es "Seleccione un delito:"
+            if (delitoSeleccionado == "Seleccione un delito:")
+            {
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ErrorSeleccion", "EjemploErrorSelecTblDelitos();", true);
+            }
             // Verificar si el delito ya está en la tabla
-            if (!DelitoYaEnTabla(delitoSeleccionado))
+            else if (!DelitoYaEnTabla(delitoSeleccionado))
             {
                 // Agregar el delito a la tabla
                 // Puedes agregar el código necesario para agregar el delito a tu fuente de datos
@@ -458,6 +508,36 @@ namespace SIPOH.Views
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ErrorTblDelitos", "EjemploErrorTblDelitos();", true);
             }
         }
+
+
+
+        //protected void btnAgregarDelito_Click(object sender, EventArgs e)
+        //{
+        //    string delitoSeleccionado = ddlDelitos1.SelectedItem.Text;
+
+        //    // Verificar si el delito ya está en la tabla
+        //    if (!DelitoYaEnTabla(delitoSeleccionado))
+        //    {
+        //        // Agregar el delito a la tabla
+        //        // Puedes agregar el código necesario para agregar el delito a tu fuente de datos
+
+        //        string idDelito = ddlDelitos1.SelectedValue;
+        //        string nombreDelito = ddlDelitos1.SelectedItem.Text;
+
+        //        DataTable dt = GetDataTable();
+        //        DataRow newRow = dt.NewRow();
+        //        newRow["IdDelito"] = idDelito;
+        //        newRow["NombreDelito"] = nombreDelito;
+        //        dt.Rows.Add(newRow);
+
+        //        gvDelitos.DataSource = dt;
+        //        gvDelitos.DataBind();
+        //    }
+        //    else
+        //    {
+        //        ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ErrorTblDelitos", "EjemploErrorTblDelitos();", true);
+        //    }
+        //}
 
 
 
@@ -514,8 +594,13 @@ namespace SIPOH.Views
         {
             string delitoSeleccionado = ddlDelitos2.SelectedItem.Text;
 
+            // Verificar si el valor es "Seleccione un delito:"
+            if (delitoSeleccionado == "Seleccione un delito:")
+            {
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ErrorSeleccion", "EjemploErrorSelecTblDelitos();", true);
+            }
             // Verificar si el delito ya está en la tabla
-            if (!DelitoYaEnTabla2(delitoSeleccionado))
+            else if (!DelitoYaEnTabla2(delitoSeleccionado))
             {
                 // Agregar el delito a la tabla
                 // Puedes agregar el código necesario para agregar el delito a tu fuente de datos
@@ -525,7 +610,7 @@ namespace SIPOH.Views
 
                 DataTable dt = GetDataTableRe();
                 DataRow newRow = dt.NewRow();
-                newRow["IdDelito2"] = idDelito;
+                //newRow["IdDelito2"] = idDelito;
                 newRow["NombreDelito2"] = nombreDelito;
                 dt.Rows.Add(newRow);
 
@@ -537,7 +622,6 @@ namespace SIPOH.Views
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ErrorTblDelitos", "EjemploErrorTblDelitos();", true);
             }
         }
-
         private DataTable GetDataTableRe()
         {
             DataTable dt;
@@ -592,8 +676,13 @@ namespace SIPOH.Views
         {
             string delitoSeleccionado = ddlDelitos3.SelectedItem.Text;
 
+            // Verificar si el valor es "Seleccione un delito:"
+            if (delitoSeleccionado == "Seleccione un delito:")
+            {
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ErrorSeleccion", "EjemploErrorSelecTblDelitos();", true);
+            }
             // Verificar si el delito ya está en la tabla
-            if (!DelitoYaEnTabla3(delitoSeleccionado))
+            else if (!DelitoYaEnTabla3(delitoSeleccionado))
             {
                 // Agregar el delito a la tabla
                 // Puedes agregar el código necesario para agregar el delito a tu fuente de datos
@@ -652,6 +741,7 @@ namespace SIPOH.Views
 
 
 
+
         //Back para agragar partes exhorto
 
         private DataTable GetDataTable2()
@@ -672,6 +762,7 @@ namespace SIPOH.Views
 
             return dt;
         }
+
         protected void btnAgregarParte_Click(object sender, EventArgs e)
         {
             string nom = nom2.Text;
@@ -682,12 +773,41 @@ namespace SIPOH.Views
             string espePartes = espeParte.Text;
             string espeSexox = espeSexo.Text;
 
+            // Verificar si los campos están vacíos
+            if (nom == "" || ap == "" || am == "" || partes == "" || sexox == "")
+            {
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('Todos los campos deben estar llenos');", true);
+                return;
+            }
+
             // Verifica si la opción seleccionada en los DropDownList es "Otro"
             if (partes == "Otro" && sexox == "Otro")
             {
                 // Asigna los valores de los TextBox de "espeParte" y "espeSexo"
                 partes = espePartes;
                 sexox = espeSexox;
+            }
+
+            // Convierte "I" y "V" a "Imputado" y "Víctima" respectivamente
+            if (partes == "I")
+            {
+                partes = "Imputado";
+            }
+            if (partes == "V")
+            {
+                partes = "Víctima";
+            }
+
+            // Convierte "F" y "M" a "Femenino" y "Masculino" respectivamente
+            if (sexox == "F")
+            {
+                sexox = "Femenino";
+            }
+            else if (sexox == "M")
+            {
+                sexox = "Masculino";
             }
 
             DataTable dt = GetDataTable2();
@@ -704,9 +824,9 @@ namespace SIPOH.Views
 
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos();", true);
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.success('Partes Agregadas con exito');", true);
 
-
-            // Obtener los valores de la fila seleccionada en gvPartes
+            //Obtener los valores de la fila seleccionada en gvPartes
             GridViewRow row = gvPartes.SelectedRow;
 
             if (row != null)
@@ -727,6 +847,7 @@ namespace SIPOH.Views
                 string amParte = partesNombre.Length > 2 ? partesNombre[2] : "";
             }
         }
+
 
         protected void gvPartes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -776,6 +897,7 @@ namespace SIPOH.Views
 
             return dt;
         }
+
         protected void btnAgregarParte_Click2(object sender, EventArgs e)
         {
             string nom = nom3.Text;
@@ -786,12 +908,41 @@ namespace SIPOH.Views
             string espePartes = espeParte2.Text;
             string espeSexox = espeSexo2.Text;
 
+            // Verificar si los campos están vacíos
+            if (nom == "" || ap == "" || am == "" || partes == "" || sexox == "")
+            {
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('Todos los campos deben estar llenos');", true);
+                return;
+            }
+
             // Verifica si la opción seleccionada en los DropDownList es "Otro"
-            if (partes == "O" && sexox == "O")
+            if (partes == "Otro" && sexox == "Otro")
             {
                 // Asigna los valores de los TextBox de "espeParte" y "espeSexo"
                 partes = espePartes;
                 sexox = espeSexox;
+            }
+
+            // Convierte "I" y "V" a "Imputado" y "Víctima" respectivamente
+            if (partes == "I")
+            {
+                partes = "Imputado";
+            }
+            if (partes == "V")
+            {
+                partes = "Víctima";
+            }
+
+            // Convierte "F" y "M" a "Femenino" y "Masculino" respectivamente
+            if (sexox == "F")
+            {
+                sexox = "Femenino";
+            }
+            else if (sexox == "M")
+            {
+                sexox = "Masculino";
             }
 
             DataTable dt = GetDataTable3();
@@ -806,9 +957,30 @@ namespace SIPOH.Views
             gvPartes2.DataSource = dt;
             gvPartes2.DataBind();
 
-            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos2();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos();", true);
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario2();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.success('Partes Agregadas con exito');", true);
 
+            //Obtener los valores de la fila seleccionada en gvPartes
+            GridViewRow row = gvPartes2.SelectedRow;
+
+            if (row != null)
+            {
+                // Obtener los valores de las celdas en la fila seleccionada
+                string nombre = row.Cells[0].Text; // La posición 0 corresponde a la columna de Nombre
+                string genero = row.Cells[1].Text; // La posición 1 corresponde a la columna de Genero
+                string tipoParte = row.Cells[2].Text; // La posición 2 corresponde a la columna de Parte
+
+                // Obtener otros valores del formulario de "Agregar Partes"
+                string especifiqueParte = espeParte2.Text;
+                string especifiqueSexo = espeSexo2.Text;
+
+                // Puedes desconcatenar el nombre si está en el formato "Nombre ApellidoPaterno ApellidoMaterno"
+                string[] partesNombre = nombre.Split(' ');
+                string nomParte = partesNombre[0];
+                string apParte = partesNombre.Length > 1 ? partesNombre[1] : "";
+                string amParte = partesNombre.Length > 2 ? partesNombre[2] : "";
+            }
         }
 
         protected void gvPartes_RowCommand2(object sender, GridViewCommandEventArgs e)
@@ -868,12 +1040,41 @@ namespace SIPOH.Views
             string espePartes = espeParte3.Text;
             string espeSexox = espeSexo3.Text;
 
+            // Verificar si los campos están vacíos
+            if (nom == "" || ap == "" || am == "" || partes == "" || sexox == "")
+            {
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario3();", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('Todos los campos deben estar llenos');", true);
+                return;
+            }
+
             // Verifica si la opción seleccionada en los DropDownList es "Otro"
-            if (partes == "O" && sexox == "O")
+            if (partes == "Otro" && sexox == "Otro")
             {
                 // Asigna los valores de los TextBox de "espeParte" y "espeSexo"
                 partes = espePartes;
                 sexox = espeSexox;
+            }
+
+            // Convierte "I" y "V" a "Imputado" y "Víctima" respectivamente
+            if (partes == "I")
+            {
+                partes = "Imputado";
+            }
+            if (partes == "V")
+            {
+                partes = "Víctima";
+            }
+
+            // Convierte "F" y "M" a "Femenino" y "Masculino" respectivamente
+            if (sexox == "F")
+            {
+                sexox = "Femenino";
+            }
+            else if (sexox == "M")
+            {
+                sexox = "Masculino";
             }
 
             DataTable dt = GetDataTable4();
@@ -888,10 +1089,32 @@ namespace SIPOH.Views
             gvPartes3.DataSource = dt;
             gvPartes3.DataBind();
 
-            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos3();", true);
-            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario3();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.success('Partes Agregadas con exito');", true);
 
+            //Obtener los valores de la fila seleccionada en gvPartes
+            GridViewRow row = gvPartes3.SelectedRow;
+
+            if (row != null)
+            {
+                // Obtener los valores de las celdas en la fila seleccionada
+                string nombre = row.Cells[0].Text; // La posición 0 corresponde a la columna de Nombre
+                string genero = row.Cells[1].Text; // La posición 1 corresponde a la columna de Genero
+                string tipoParte = row.Cells[2].Text; // La posición 2 corresponde a la columna de Parte
+
+                // Obtener otros valores del formulario de "Agregar Partes"
+                string especifiqueParte = espeParte3.Text;
+                string especifiqueSexo = espeSexo3.Text;
+
+                // Puedes desconcatenar el nombre si está en el formato "Nombre ApellidoPaterno ApellidoMaterno"
+                string[] partesNombre = nombre.Split(' ');
+                string nomParte = partesNombre[0];
+                string apParte = partesNombre.Length > 1 ? partesNombre[1] : "";
+                string amParte = partesNombre.Length > 2 ? partesNombre[2] : "";
+            }
         }
+
 
         protected void gvPartes_RowCommand3(object sender, GridViewCommandEventArgs e)
         {
@@ -1010,23 +1233,66 @@ namespace SIPOH.Views
 
         //AQUI EMPIEZA EL INSERT EXHORTO
 
-        public static class StorageFolio
-        {
-            public static int EjecutarControlAsignarFolio(SqlTransaction transaction)
-            {
-                using (SqlCommand cmd = new SqlCommand("Control_AsignarFolio", transaction.Connection, transaction))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@folio", SqlDbType.Int).Direction = ParameterDirection.Output; // Parámetro de salida para folio
+        //public static class StorageFolio
+        //{
+        //    public static (int? folioNuevo, int? idFolio, int? idAsunto) EjecutarControlAsignarFolio(SqlTransaction transaction, int idJuzgado, string tipoDocumento, string nuevoNumero, string tipoAsunto)
+        //    {
+        //        // Primero, ejecutamos el procedimiento almacenado AC_AsignarFolio
+        //        using (SqlCommand cmd = new SqlCommand("AC_AsignarFolio", transaction.Connection, transaction))
+        //        {
+        //            cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.ExecuteNonQuery();
+        //            // Parámetros de entrada
+        //            cmd.Parameters.AddWithValue("@IdJuzgado", idJuzgado);
+        //            cmd.Parameters.AddWithValue("@TipoDocumento", tipoDocumento);
 
-                    int folio = (int)cmd.Parameters["@folio"].Value;  // Captura el valor del folio
-                    Debug.WriteLine($"Folio obtenido: {folio}");
-                    return folio;  // Devuelve el valor del folio
-                }
-            }
-        }
+        //            // Ejecutar el procedimiento almacenado
+        //            SqlDataReader reader = cmd.ExecuteReader();
+
+        //            // Si hay resultados
+        //            if (reader.HasRows)
+        //            {
+        //                while (reader.Read())
+        //                {
+        //                    int folioNuevo = reader.GetInt32(0);  // Captura el valor del folio nuevo
+        //                    int idFolio = reader.GetInt32(1);  // Captura el valor del idFolio
+        //                    Debug.WriteLine($"Folio nuevo obtenido: {folioNuevo}, IdFolio obtenido: {idFolio}");
+
+        //                    // Luego, ejecutamos el procedimiento almacenado AC_verificar_disponibilidad_folio_en_PAsunto
+        //                    using (SqlCommand cmd2 = new SqlCommand("AC_verificar_disponibilidad_folio_en_PAsunto", transaction.Connection, transaction))
+        //                    {
+        //                        cmd2.CommandType = CommandType.StoredProcedure;
+
+        //                        // Parámetros de entrada
+        //                        cmd2.Parameters.AddWithValue("@NuevoNumero", nuevoNumero);
+        //                        cmd2.Parameters.AddWithValue("@IdJuzgado", idJuzgado);
+        //                        cmd2.Parameters.AddWithValue("@TipoAsunto", tipoAsunto);
+
+        //                        // Ejecutar el procedimiento almacenado
+        //                        var result = cmd2.ExecuteScalar();
+
+        //                        // Si el resultado es nulo, significa que no hay un número de documento replicado
+        //                        if (result == null)
+        //                        {
+        //                            return (folioNuevo, idFolio, null);
+        //                        }
+
+        //                        // Si el resultado no es nulo, devuelve el IdAsunto
+        //                        return (folioNuevo, idFolio, (int)result);
+        //                    }
+        //                }
+        //            }
+
+        //            // Si no hay resultados, devuelve null
+        //            return (null, null, null);
+        //        }
+        //    }
+        //}
+
+
+
+
+
 
         protected void btnGuardarDatosJudiciales_Click(object sender, EventArgs e)
         {
@@ -1039,19 +1305,62 @@ namespace SIPOH.Views
 
                 try
                 {
-                    // Ejecutar el procedimiento almacenado para obtener el folio
-                    int folio = StorageFolio.EjecutarControlAsignarFolio(transaction);
-                    int idJuzgado = ObtenerIdJuzgadoDesdeSesion();
-                    string tipo = "EH";
+                    // Paso 0: Insertar AsignarFolio
+                    using (SqlCommand command2 = new SqlCommand("AC_AsignarFolio", conn, transaction))
+                    {
+                        command2.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
+                        command2.Parameters.AddWithValue("@TipoDocumento", "EH");
+                        command2.CommandType = CommandType.StoredProcedure;
+
+                        using (var reader = command2.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Folio nuevo 
+                                var FolioNuevo = reader["FolioNuevo"];
+                                HttpContext.Current.Session["IdFolioInicial"] = reader["IdFolio"];
+                                HttpContext.Current.Session["FolioNuevoPInicial"] = FolioNuevo;
+
+                                int folio = Convert.ToInt32(FolioNuevo);
+                                int añoActual = DateTime.Now.Year;
+                                string NumeroAsignado = folio.ToString("D4") + "/" + añoActual;
+                                HttpContext.Current.Session["FolioNuevoInicial"] = NumeroAsignado;
+
+                                Debug.WriteLine("Numero Asignado" + Session["FolioNuevoInicial"] + "IDFOLIO: " + Session["IdFolioInicial"] + "FOLIO NUEVO:" + Session["FolioNuevoPInicial"]);
+                            }
+                        }
+                    }
+
+                    // Confirmar la transacción si todo ha ido bien
+                    using (SqlCommand command3 = new SqlCommand("AC_verificar_disponibilidad_folio_en_PAsunto", conn, transaction))
+                    {
+                        command3.Parameters.AddWithValue("@NuevoNumero", Session["FolioNuevoInicial"]);
+                        command3.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
+                        command3.Parameters.AddWithValue("@TipoAsunto", "EH");
+                        command3.CommandType = CommandType.StoredProcedure;
+
+                        using (var reader = command3.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                var IdAsuntoDuplicado = reader["IdAsunto"];
+
+                                if (IdAsuntoDuplicado != DBNull.Value && Convert.ToInt32(IdAsuntoDuplicado) != 0)
+                                {
+                                    int idAsuntoDuplicado = Convert.ToInt32(IdAsuntoDuplicado);
+                                    Debug.WriteLine("Error: Número de Asunto duplicado. IdAsunto: " + idAsuntoDuplicado);
+
+                                    // Realizar Rollback para cancelar la transacción
+                                    transaction.Rollback();
+                                    throw new Exception("Número de Asunto duplicado. IdAsunto: " + idAsuntoDuplicado);
+                                }
+                            }
+                        }
+                    }
+
 
                     // Insertar datos en la tabla P_Asunto
-                    int idAsunto = InsertarEnPAsunto(conn, transaction, folio);
-
-                    // Verificar si idAsunto es válido (no nulo o cero)
-                    if (idAsunto == 0)
-                    {
-                        throw new Exception("No se pudo generar el idAsunto.");
-                    }
+                    int idAsunto = InsertarEnPAsunto(conn, transaction);
 
                     //// Insertar datos en la tabla P_PartesAsunto
                     InsertarEnPPartesAsunto(conn, transaction, idAsunto);
@@ -1064,27 +1373,41 @@ namespace SIPOH.Views
 
                     InsertarEnPAnexos(conn, transaction, idAsunto);
 
-                    ActualizarFolios(conn, transaction, folio, idJuzgado, tipo);
+                    // Actualizar el folio
+                    using (SqlCommand command4 = new SqlCommand("AC_UpdateFolio", conn, transaction))
+                    {
+                        command4.Parameters.AddWithValue("@FolioNuevoI", Session["FolioNuevoPInicial"]);
+                        command4.Parameters.AddWithValue("@IdFolio", Session["IdFolioInicial"]);
+                        command4.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
+                        command4.CommandType = CommandType.StoredProcedure;
 
-                    // Commit de la transacción
+                        command4.ExecuteNonQuery();
+                    }
+                    // Si todo ha ido bien, confirmar la transacción
                     transaction.Commit();
+                    InsertExhorto.Style.Add("display", "block");
 
-                    // Mostrar mensajes y recargar la página si es necesario
-                    // Mostrar un Toastr de confirmación
-
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
-                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Limpiar", "limpiarFormularioInsert();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Exito", "EjemploExito();", true);
+                    // Generar el ticket
                     string ticket = CrearTicketSELLO();
+
+                    // Insertar el ticket en el div
                     TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
-                    ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
+
+                    // Ejecutar los scripts
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Exito", "EjemploExito();", true);
                     LimpiarYRestablecerPanel();
+                    //ScriptManager.RegisterStartupScript(this, this.GetType(), "ImprimirScript", "imprimirTicket();", true);
+
 
                 }
-                catch (SqlException sqlEx)
+                catch (Exception ex)
                 {
-                    // Revisar si la transacción está activa antes de hacer rollback
-                    if (transaction != null && conn.State == System.Data.ConnectionState.Open)
+                    // Manejar la excepción aquí
+                    Debug.WriteLine("Error: " + ex.Message);
+
+                    // Si la transacción todavía está activa, realizar Rollback
+                    if (transaction != null && transaction.Connection != null)
                     {
                         transaction.Rollback();
                     }
@@ -1094,31 +1417,6 @@ namespace SIPOH.Views
                     //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Limpiar", "limpiarFormularioInsert();", true);
                     //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
                     LimpiarYRestablecerPanel();
-                    string errorMessage = sqlEx.Message;
-
-                    // Registra el script de JavaScript con el mensaje de error.
-                    string script = $"EjemploError('{errorMessage}');";
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Error", script, true);
-
-                    // Registra los detalles de la excepción en la consola o en un archivo de registro
-                    Console.WriteLine("Error SQL: " + sqlEx.Message);
-
-                    foreach (SqlError error in sqlEx.Errors)
-                    {
-                        Console.WriteLine($"Número de error: {error.Number}");
-                        Console.WriteLine($"Estado: {error.State}");
-                        Console.WriteLine($"Procedimiento almacenado: {error.Procedure}");
-                        Console.WriteLine($"Línea: {error.LineNumber}");
-                        Console.WriteLine($"Mensaje: {error.Message}");
-                        Console.WriteLine("==============================");
-                    }
-
-                    // Muestra un mensaje de error específico en el frontend
-                    string mensaje = "Error SQL: " + sqlEx.Message;
-                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastErrorScript", script, true);
-
-                    // Puedes decidir si lanzar una excepción aquí para manejar el rollback en el bloque try-catch
-                    throw;
                 }
                 finally
                 {
@@ -1129,10 +1427,10 @@ namespace SIPOH.Views
             }
         }
 
-        private int InsertarEnPAsunto(SqlConnection conn, SqlTransaction transaction, int folio)
+
+        private int InsertarEnPAsunto(SqlConnection conn, SqlTransaction transaction)
         {
-            int añoActual = DateTime.Now.Year;
-            string Numero = $"{folio:0000}/{añoActual}";
+            string Numero = Session["FolioNuevoInicial"] as string;
             int IdJuzgado = ObtenerIdJuzgadoDesdeSesion();
 
             string fIngresoTexto = fecha1.Text;
@@ -1200,8 +1498,8 @@ namespace SIPOH.Views
                 {
                     // Obtén los datos de las celdas de la fila
                     string nombreCompleto = row.Cells[0].Text;
-                    string genero = row.Cells[1].Text;
-                    string tipoParte = row.Cells[2].Text;
+                    string genero = row.Cells[1].Text.Substring(0, 1).ToUpper();
+                    string tipoParte = row.Cells[2].Text.Substring(0, 1).ToUpper();
 
                     // Desconcatena el nombre
                     string[] nombres = nombreCompleto.Split(' ');
@@ -1234,7 +1532,6 @@ namespace SIPOH.Views
                         amParte = nombres[3];
                     }
 
-
                     // Realizar la inserción en P_PartesAsunto
                     string query = "INSERT INTO P_PartesAsunto (IdAsunto, Nombre, APaterno, AMaterno, Genero, TipoParte, Alias) VALUES (@IdAsunto, @Nombre, @APaterno, @AMaterno, @Genero, @TipoParte, NULL);";
 
@@ -1253,6 +1550,7 @@ namespace SIPOH.Views
                 }
             }
         }
+
 
         private void InsertarEnPExhortos(SqlConnection conn, SqlTransaction transaction, int idAsunto)
         {
@@ -1382,21 +1680,6 @@ namespace SIPOH.Views
             }
         }
 
-        private int ActualizarFolios(SqlConnection conn, SqlTransaction transaction, int folio, int IdJuzgado, string tipo)
-        {
-            // Crear el comando SQL
-            SqlCommand cmd = new SqlCommand("UPDATE dbo.P_Folios SET Folio = @folio WHERE Tipo = @tipo AND Folio = @folio - 1 AND IdJuzgado = @Idjuzgado;", conn, transaction);
-
-            // Agregar los parámetros al comando SQL
-            cmd.Parameters.AddWithValue("@folio", folio);
-            cmd.Parameters.AddWithValue("@idjuzgado", IdJuzgado);
-            cmd.Parameters.AddWithValue("@tipo", tipo);
-
-            // Ejecutar el comando SQL y devolver el número de filas afectadas
-            return cmd.ExecuteNonQuery();
-        }
-
-
 
         private int ObtenerIdUsuarioDesdeSesion()
         {
@@ -1522,9 +1805,7 @@ namespace SIPOH.Views
                     total += Convert.ToInt32(cantidad.Text);
                 }
             }
-
             ticket.AppendLine(AlinearTexto("TOTAL", total.ToString(), anchoLinea));
-
             return ticket.ToString();
         }
 
@@ -1548,7 +1829,7 @@ namespace SIPOH.Views
 
         protected void btnImprimir_Click(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ImprimirScript", "imprimirTicket();", true);
         }
         // Termina desarrollo de sello
 
@@ -1589,23 +1870,6 @@ namespace SIPOH.Views
 
         //AQUI EMPIEZA EL INSERT DESPACHO
 
-        public static class StorageFolio2
-        {
-            public static int EjecutarControlAsignarFolio(SqlTransaction transaction)
-            {
-                using (SqlCommand cmd = new SqlCommand("Control_AsignarFolio", transaction.Connection, transaction))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@folio", SqlDbType.Int).Direction = ParameterDirection.Output; // Parámetro de salida para folio
-
-                    cmd.ExecuteNonQuery();
-
-                    int folio = (int)cmd.Parameters["@folio"].Value;  // Captura el valor del folio
-                    Debug.WriteLine($"Folio obtenido: {folio}");
-                    return folio;  // Devuelve el valor del folio
-                }
-            }
-        }
 
         protected void btnGuardarDatosJudiciales_Click2(object sender, EventArgs e)
         {
@@ -1618,13 +1882,62 @@ namespace SIPOH.Views
 
                 try
                 {
-                    // Ejecutar el procedimiento almacenado para obtener el folio
-                    int folio = StorageFolio2.EjecutarControlAsignarFolio(transaction);
+                    // Paso 0: Insertar AsignarFolio
+                    using (SqlCommand command2 = new SqlCommand("AC_AsignarFolio", conn, transaction))
+                    {
+                        command2.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
+                        command2.Parameters.AddWithValue("@TipoDocumento", "EH");
+                        command2.CommandType = CommandType.StoredProcedure;
 
-                    //ActualizarFolios2(conn, transaction, idJuzgadoFolio);
+                        using (var reader = command2.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Folio nuevo 
+                                var FolioNuevo = reader["FolioNuevo"];
+                                HttpContext.Current.Session["IdFolioInicial"] = reader["IdFolio"];
+                                HttpContext.Current.Session["FolioNuevoPInicial"] = FolioNuevo;
+
+                                int folio = Convert.ToInt32(FolioNuevo);
+                                int añoActual = DateTime.Now.Year;
+                                string NumeroAsignado = folio.ToString("D4") + "/" + añoActual;
+                                HttpContext.Current.Session["FolioNuevoInicial"] = NumeroAsignado;
+
+                                Debug.WriteLine("Numero Asignado" + Session["FolioNuevoInicial"] + "IDFOLIO: " + Session["IdFolioInicial"] + "FOLIO NUEVO:" + Session["FolioNuevoPInicial"]);
+                            }
+                        }
+                    }
+
+                    // Confirmar la transacción si todo ha ido bien
+                    using (SqlCommand command3 = new SqlCommand("AC_verificar_disponibilidad_folio_en_PAsunto", conn, transaction))
+                    {
+                        command3.Parameters.AddWithValue("@NuevoNumero", Session["FolioNuevoInicial"]);
+                        command3.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
+                        command3.Parameters.AddWithValue("@TipoAsunto", "EH");
+                        command3.CommandType = CommandType.StoredProcedure;
+
+                        using (var reader = command3.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                var IdAsuntoDuplicado = reader["IdAsunto"];
+
+                                if (IdAsuntoDuplicado != DBNull.Value && Convert.ToInt32(IdAsuntoDuplicado) != 0)
+                                {
+                                    int idAsuntoDuplicado = Convert.ToInt32(IdAsuntoDuplicado);
+                                    Debug.WriteLine("Error: Número de Asunto duplicado. IdAsunto: " + idAsuntoDuplicado);
+
+                                    // Realizar Rollback para cancelar la transacción
+                                    transaction.Rollback();
+                                    throw new Exception("Número de Asunto duplicado. IdAsunto: " + idAsuntoDuplicado);
+                                }
+                            }
+                        }
+                    }
+
 
                     // Insertar datos en la tabla P_Asunto
-                    int idAsunto = InsertarEnPAsunto2(conn, transaction, folio);
+                    int idAsunto = InsertarEnPAsunto2(conn, transaction);
 
                     //// Insertar datos en la tabla P_PartesAsunto
                     InsertarEnPPartesAsunto2(conn, transaction, idAsunto);
@@ -1637,54 +1950,50 @@ namespace SIPOH.Views
 
                     InsertarEnPAnexos2(conn, transaction, idAsunto);
 
-                    // Commit de la transacción
+                    // Actualizar el folio
+                    using (SqlCommand command4 = new SqlCommand("AC_UpdateFolio", conn, transaction))
+                    {
+                        command4.Parameters.AddWithValue("@FolioNuevoI", Session["FolioNuevoPInicial"]);
+                        command4.Parameters.AddWithValue("@IdFolio", Session["IdFolioInicial"]);
+                        command4.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
+                        command4.CommandType = CommandType.StoredProcedure;
+
+                        command4.ExecuteNonQuery();
+                    }
+                    // Si todo ha ido bien, confirmar la transacción
                     transaction.Commit();
+                    InsertExhorto.Style.Add("display", "block");
 
-                    // Mostrar mensajes y recargar la página si es necesario
-                    // Mostrar un Toastr de confirmación
+                    // Generar el ticket
+                    string ticket = CrearTicketSELLO();
 
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
-                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Limpiar", "limpiarFormularioInsert();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Exito", "EjemploExito();", true);
-                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
-                    string ticket = CrearTicketSELLO2();
+                    // Insertar el ticket en el div
                     TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
-                    ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
-                    LimpiarYRestablecerPanel2();
-                }
-                catch (SqlException sqlEx)
-                {
 
-                    transaction.Rollback();
+                    // Ejecutar los scripts
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Exito", "EjemploExito();", true);
+                    LimpiarYRestablecerPanel();
+                    //ScriptManager.RegisterStartupScript(this, this.GetType(), "ImprimirScript", "imprimirTicket();", true);
+
+
+                }
+                catch (Exception ex)
+                {
+                    // Manejar la excepción aquí
+                    Debug.WriteLine("Error: " + ex.Message);
+
+                    // Si la transacción todavía está activa, realizar Rollback
+                    if (transaction != null && transaction.Connection != null)
+                    {
+                        transaction.Rollback();
+                    }
 
                     // Manejar excepciones y realizar rollback si es necesario
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
-                    string errorMessage = sqlEx.Message;
-
-                    // Registra el script de JavaScript con el mensaje de error.
-                    string script = $"EjemploError('{errorMessage}');";
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Error", script, true);
-
-                    // Registra los detalles de la excepción en la consola o en un archivo de registro
-                    Console.WriteLine("Error SQL: " + sqlEx.Message);
-
-                    foreach (SqlError error in sqlEx.Errors)
-                    {
-                        Console.WriteLine($"Número de error: {error.Number}");
-                        Console.WriteLine($"Estado: {error.State}");
-                        Console.WriteLine($"Procedimiento almacenado: {error.Procedure}");
-                        Console.WriteLine($"Línea: {error.LineNumber}");
-                        Console.WriteLine($"Mensaje: {error.Message}");
-                        Console.WriteLine("==============================");
-                    }
-
-                    // Muestra un mensaje de error específico en el frontend
-                    string mensaje = "Error SQL: " + sqlEx.Message;
-                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastErrorScript", script, true);
-
-                    // Puedes decidir si lanzar una excepción aquí para manejar el rollback en el bloque try-catch
-                    throw;
+                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Limpiar", "limpiarFormularioInsert();", true);
+                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
+                    LimpiarYRestablecerPanel();
                 }
                 finally
                 {
@@ -1695,11 +2004,10 @@ namespace SIPOH.Views
             }
         }
 
-        private int InsertarEnPAsunto2(SqlConnection conn, SqlTransaction transaction, int folio)
+        private int InsertarEnPAsunto2(SqlConnection conn, SqlTransaction transaction)
         {
-            int añoActual = DateTime.Now.Year;
-            string Numero = $"{folio:0000}/{añoActual}";
-            int IdJuzgado = ObtenerIdJuzgadoDesdeSesion2();
+            string Numero = Session["FolioNuevoInicial"] as string;
+            int IdJuzgado = ObtenerIdJuzgadoDesdeSesion();
 
             string fIngresoTexto = fecha2.Text;
             DateTime fIngreso;
@@ -2150,38 +2458,7 @@ namespace SIPOH.Views
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //AQUI EMPIEZA EL INSERT REQUISITORIA
-        public static class StorageFolio3
-        {
-            public static int EjecutarControlAsignarFolio(SqlTransaction transaction)
-            {
-                using (SqlCommand cmd = new SqlCommand("Control_AsignarFolio", transaction.Connection, transaction))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add("@folio", SqlDbType.Int).Direction = ParameterDirection.Output; // Parámetro de salida para folio
-
-                    cmd.ExecuteNonQuery();
-
-                    int folio = (int)cmd.Parameters["@folio"].Value;  // Captura el valor del folio
-                    Debug.WriteLine($"Folio obtenido: {folio}");
-                    return folio;  // Devuelve el valor del folio
-                }
-            }
-        }
 
         protected void btnGuardarDatosJudiciales_Click3(object sender, EventArgs e)
         {
@@ -2194,14 +2471,62 @@ namespace SIPOH.Views
 
                 try
                 {
+                    // Paso 0: Insertar AsignarFolio
+                    using (SqlCommand command2 = new SqlCommand("AC_AsignarFolio", conn, transaction))
+                    {
+                        command2.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
+                        command2.Parameters.AddWithValue("@TipoDocumento", "EH");
+                        command2.CommandType = CommandType.StoredProcedure;
 
-                    // Ejecutar el procedimiento almacenado para obtener el folio
-                    int folio = StorageFolio3.EjecutarControlAsignarFolio(transaction);
+                        using (var reader = command2.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                // Folio nuevo 
+                                var FolioNuevo = reader["FolioNuevo"];
+                                HttpContext.Current.Session["IdFolioInicial"] = reader["IdFolio"];
+                                HttpContext.Current.Session["FolioNuevoPInicial"] = FolioNuevo;
 
-                    //ActualizarFolios3(conn, transaction, idJuzgadoFolio);
+                                int folio = Convert.ToInt32(FolioNuevo);
+                                int añoActual = DateTime.Now.Year;
+                                string NumeroAsignado = folio.ToString("D4") + "/" + añoActual;
+                                HttpContext.Current.Session["FolioNuevoInicial"] = NumeroAsignado;
+
+                                Debug.WriteLine("Numero Asignado" + Session["FolioNuevoInicial"] + "IDFOLIO: " + Session["IdFolioInicial"] + "FOLIO NUEVO:" + Session["FolioNuevoPInicial"]);
+                            }
+                        }
+                    }
+
+                    // Confirmar la transacción si todo ha ido bien
+                    using (SqlCommand command3 = new SqlCommand("AC_verificar_disponibilidad_folio_en_PAsunto", conn, transaction))
+                    {
+                        command3.Parameters.AddWithValue("@NuevoNumero", Session["FolioNuevoInicial"]);
+                        command3.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
+                        command3.Parameters.AddWithValue("@TipoAsunto", "EH");
+                        command3.CommandType = CommandType.StoredProcedure;
+
+                        using (var reader = command3.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                var IdAsuntoDuplicado = reader["IdAsunto"];
+
+                                if (IdAsuntoDuplicado != DBNull.Value && Convert.ToInt32(IdAsuntoDuplicado) != 0)
+                                {
+                                    int idAsuntoDuplicado = Convert.ToInt32(IdAsuntoDuplicado);
+                                    Debug.WriteLine("Error: Número de Asunto duplicado. IdAsunto: " + idAsuntoDuplicado);
+
+                                    // Realizar Rollback para cancelar la transacción
+                                    transaction.Rollback();
+                                    throw new Exception("Número de Asunto duplicado. IdAsunto: " + idAsuntoDuplicado);
+                                }
+                            }
+                        }
+                    }
+
 
                     // Insertar datos en la tabla P_Asunto
-                    int idAsunto = InsertarEnPAsunto3(conn, transaction, folio);
+                    int idAsunto = InsertarEnPAsunto3(conn, transaction);
 
                     //// Insertar datos en la tabla P_PartesAsunto
                     InsertarEnPPartesAsunto3(conn, transaction, idAsunto);
@@ -2214,53 +2539,50 @@ namespace SIPOH.Views
 
                     InsertarEnPAnexos3(conn, transaction, idAsunto);
 
-                    // Commit de la transacción
+                    // Actualizar el folio
+                    using (SqlCommand command4 = new SqlCommand("AC_UpdateFolio", conn, transaction))
+                    {
+                        command4.Parameters.AddWithValue("@FolioNuevoI", Session["FolioNuevoPInicial"]);
+                        command4.Parameters.AddWithValue("@IdFolio", Session["IdFolioInicial"]);
+                        command4.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
+                        command4.CommandType = CommandType.StoredProcedure;
+
+                        command4.ExecuteNonQuery();
+                    }
+                    // Si todo ha ido bien, confirmar la transacción
                     transaction.Commit();
+                    InsertExhorto.Style.Add("display", "block");
 
-                    // Mostrar mensajes y recargar la página si es necesario
-                    // Mostrar un Toastr de confirmación
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
-                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Limpiar", "limpiarFormularioInsert();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Exito", "EjemploExito();", true);
-                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
-                    string ticket = CrearTicketSELLO3();
+                    // Generar el ticket
+                    string ticket = CrearTicketSELLO();
+
+                    // Insertar el ticket en el div
                     TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
-                    ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
-                    LimpiarYRestablecerPanel3();
-                }
-                catch (SqlException sqlEx)
-                {
 
-                    transaction.Rollback();
+                    // Ejecutar los scripts
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Exito", "EjemploExito();", true);
+                    LimpiarYRestablecerPanel();
+                    //ScriptManager.RegisterStartupScript(this, this.GetType(), "ImprimirScript", "imprimirTicket();", true);
+
+
+                }
+                catch (Exception ex)
+                {
+                    // Manejar la excepción aquí
+                    Debug.WriteLine("Error: " + ex.Message);
+
+                    // Si la transacción todavía está activa, realizar Rollback
+                    if (transaction != null && transaction.Connection != null)
+                    {
+                        transaction.Rollback();
+                    }
 
                     // Manejar excepciones y realizar rollback si es necesario
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
-                    string errorMessage = sqlEx.Message;
-
-                    // Registra el script de JavaScript con el mensaje de error.
-                    string script = $"EjemploError('{errorMessage}');";
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Error", script, true);
-
-                    // Registra los detalles de la excepción en la consola o en un archivo de registro
-                    Console.WriteLine("Error SQL: " + sqlEx.Message);
-
-                    foreach (SqlError error in sqlEx.Errors)
-                    {
-                        Console.WriteLine($"Número de error: {error.Number}");
-                        Console.WriteLine($"Estado: {error.State}");
-                        Console.WriteLine($"Procedimiento almacenado: {error.Procedure}");
-                        Console.WriteLine($"Línea: {error.LineNumber}");
-                        Console.WriteLine($"Mensaje: {error.Message}");
-                        Console.WriteLine("==============================");
-                    }
-
-                    // Muestra un mensaje de error específico en el frontend
-                    string mensaje = "Error SQL: " + sqlEx.Message;
-                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastErrorScript", script, true);
-
-                    // Puedes decidir si lanzar una excepción aquí para manejar el rollback en el bloque try-catch
-                    throw;
+                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Limpiar", "limpiarFormularioInsert();", true);
+                    //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
+                    LimpiarYRestablecerPanel();
                 }
                 finally
                 {
@@ -2271,11 +2593,10 @@ namespace SIPOH.Views
             }
         }
 
-        private int InsertarEnPAsunto3(SqlConnection conn, SqlTransaction transaction, int folio)
+        private int InsertarEnPAsunto3(SqlConnection conn, SqlTransaction transaction)
         {
-            int añoActual = DateTime.Now.Year;
-            string Numero = $"{folio:0000}/{añoActual}";
-            int IdJuzgado = ObtenerIdJuzgadoDesdeSesion3();
+            string Numero = Session["FolioNuevoInicial"] as string;
+            int IdJuzgado = ObtenerIdJuzgadoDesdeSesion();
 
             string fIngresoTexto = fecha3.Text;
             DateTime fIngreso;
@@ -2528,20 +2849,6 @@ namespace SIPOH.Views
             }
         }
 
-        //private void ActualizarFolios3(SqlConnection conn, SqlTransaction transaction, int idJuzgado)
-        //{
-        //    string query = @"
-        //    UPDATE [SIPOH].[dbo].[P_Folios]
-        //    SET Folio = Folio + 1, frecuencia = frecuencia + 1
-        //    WHERE IdJuzgado = @IdJuzgado AND Tipo = 'C'";
-
-        //    using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
-        //    {
-        //        cmd.Parameters.AddWithValue("@IdJuzgado", idJuzgado);
-        //        cmd.ExecuteNonQuery();
-        //    }
-        //}
-
         private int ObtenerIdUsuarioDesdeSesion3()
         {
             int idUsuario = 0;
@@ -2720,6 +3027,12 @@ namespace SIPOH.Views
             Panel3.Visible = false;
         }
         //AQUI ACABA EL INSERT REQUISITORIA
+
+
+        protected void GenerarOtro_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(Request.RawUrl);
+        }
 
     }
 }

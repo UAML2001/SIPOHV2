@@ -42,6 +42,15 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.DropDownList ddlFormatoReporte;
 
         /// <summary>
+        /// Control JuzgadoEjec.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList JuzgadoEjec;
+
+        /// <summary>
         /// Control fechas.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,24 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnMostrarInforme;
+
+        /// <summary>
+        /// Control TituloReporte.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TituloReporte;
+
+        /// <summary>
+        /// Control GenerarOtro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GenerarOtro;
 
         /// <summary>
         /// Control iframePDF.

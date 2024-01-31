@@ -1,9 +1,34 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ReportesControl.ascx.cs" Inherits="SIPOH.Views.ReportesControl" %>
 
+<style type="text/css">
+    .mayusculas {
+        text-transform: uppercase;
+    }
+</style>
+
+    <!-- Include Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <!-- Include jQuery (Toastr depends on it) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Include Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!-- Toastr initialization -->
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "timeOut": "5000", // Time in milliseconds
+            // You can customize other options as needed
+        };
+    </script>
 
 
-        <div>
-            <h1 style="margin-left: 5%" class="h5">Control <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold"> Reportes</span> </h1>
+<div>
+            <h1 style="margin-left: 5%" class="h5">Ejecucion <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold"> Reportes</span> </h1>
         </div>
 
     <!-- Include Toastr CSS -->
@@ -18,7 +43,6 @@
 
      <link href="Content/css/Consignaciones.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
 <asp:ScriptManager runat="server"></asp:ScriptManager>
 <asp:UpdatePanel ID="updPanel" runat="server" EnableViewState="true" >
     <ContentTemplate>
@@ -34,11 +58,11 @@
                             <h5 class="text-secondary mb-5">Reportes</h5>
                         </div>
 
-                        <div class="row ">
+                            <div class="row ">
                             <div class="col-md-4 col-sm-4 col-xs-4">
-                                <h6 class="help-block text-muted small-font">Tipo de Reporte: </h6>
-                                <asp:DropDownList runat="server" CssClass="form-select" ID="ddlTipoReporte" AutoPostBack="true" OnSelectedIndexChanged="ddlTipoReporte_SelectedIndexChanged">
-                                    <asp:ListItem Value=S Text="Seleccione el tipo de reporte" Selected="True"></asp:ListItem>
+                                <h6 class="help-block text-muted small-font">Fecha del reporte: </h6>
+                                <asp:DropDownList runat="server" CssClass="form-select mayusculas" ID="ddlTipoReporte" AutoPostBack="true" OnSelectedIndexChanged="ddlTipoReporte_SelectedIndexChanged">
+                                    <asp:ListItem Value="S" Text="Seleccione el tipo de reporte" Selected="True"></asp:ListItem>
                                     <asp:ListItem Value="D">Dia (Hoy)</asp:ListItem>
                                     <asp:ListItem Value="F">Fecha (Intervalo de Fecha)</asp:ListItem>
                                 </asp:DropDownList>
@@ -47,42 +71,39 @@
 
                             <div class="col-md-4 col-sm-4 col-xs-4">
                                 <h6 class="help-block text-muted small-font">Formato de Reporte: </h6>
-                                <asp:DropDownList runat="server" CssClass="form-select" ID="ddlFormatoReporte" AutoPostBack="true" OnSelectedIndexChanged="ddlFormatoReporte_SelectedIndexChanged">
-                                    <asp:ListItem Text="Seleccione el formato del reporte" Selected="True"></asp:ListItem>
+                                <asp:DropDownList runat="server" CssClass="form-select mayusculas" ID="ddlFormatoReporte" AutoPostBack="true" OnSelectedIndexChanged="ddlFormatoReporte_SelectedIndexChanged">
+                                    <asp:ListItem Value="S" Text="Seleccione el formato del reporte" Selected="True"></asp:ListItem>
                                     <asp:ListItem Value="I">Inicial</asp:ListItem>
-                                    <asp:ListItem Value="P">Promociones</asp:ListItem>
+                                    <asp:ListItem Value="P">Posterior</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
 
-                            <div class="col-md-4 col-sm-4 col-xs-4" runat="server" id="RIniciales">
-                                <h6 class="help-block text-muted small-font">Iniciales: </h6>
-                                <asp:DropDownList runat="server" CssClass="form-select" ID="ddlTipoInicial">
-                                    <asp:ListItem Text="Seleccione el tipo de inicial:" Selected="True"></asp:ListItem>
-                                    <asp:ListItem Value="CP">Causa Penal</asp:ListItem>
-                                    <asp:ListItem Value="CuPr">Cuadernillo Preliminar</asp:ListItem>
-                                    <asp:ListItem Value="A">Amparo</asp:ListItem>
-                                    <asp:ListItem Value="JO">Juicio Oral</asp:ListItem>
-                                    <asp:ListItem Value="EH">Exhorto</asp:ListItem>
+                            
+
+                            <div class="col-md-4 col-sm-4 col-xs-4" runat="server" id="divOpcionInicial">
+                                <h6 class="help-block text-muted small-font">Tipo de reporte (Inicial): </h6>
+                                <asp:DropDownList runat="server" CssClass="form-select mayusculas" ID="OpcionInicial" AutoPostBack="true">
+                                    <asp:ListItem Value="S" Text="Seleccione el tipo del reporte..." Selected="True"></asp:ListItem>
+                                    <asp:ListItem Value="G" Text="Reporte General"></asp:ListItem>
+                                    <asp:ListItem Value="C" Text="Causa Penal"></asp:ListItem>
+                                    <asp:ListItem Value="CP" Text="Cuadernillo Preliminal"></asp:ListItem>
+                                    <asp:ListItem Value="JO" Text="Juicio Oral"></asp:ListItem>
+                                    <asp:ListItem Value="E" Text="Exhorto"></asp:ListItem>
+                                    <asp:ListItem Value="A" Text="Amparo"></asp:ListItem>
                                 </asp:DropDownList>
                                 </div>
-
-                            <div class="col-md-4 col-sm-4 col-xs-4" runat="server" id="RPromociones">
-                                <h6 class="help-block text-muted small-font">Promociones: </h6>
-                                <asp:DropDownList runat="server" CssClass="form-select" ID="ddlTipoPromocion">
-                                    <asp:ListItem Text="Seleccione el tipo de promocion" Selected="True"></asp:ListItem>
-                                    <asp:ListItem Value="CP">Causa Penal</asp:ListItem>
-                                    <asp:ListItem Value="CuPr">Cuadernillo Preliminar</asp:ListItem>
-                                    <asp:ListItem Value="A">Amparo</asp:ListItem>
-                                    <asp:ListItem Value="JO">Juicio Oral</asp:ListItem>
+                                
+                                <div class="col-md-4 col-sm-4 col-xs-4" runat="server" id="divOpcionPoste">
+                                <h6 class="help-block text-muted small-font">Tipo de reporte (Posterior): </h6>
+                                <asp:DropDownList runat="server" CssClass="form-select mayusculas" ID="OpcionPoste" AutoPostBack="true">
+                                    <asp:ListItem Value="S" Text="Seleccione el tipo del reporte..." Selected="True"></asp:ListItem>
+                                    <asp:ListItem Value="G" Text="Reporte General"></asp:ListItem>
+                                    <asp:ListItem Value="A" Text="Amparo"></asp:ListItem>
                                 </asp:DropDownList>
                             </div>
-
-
                         </div>
 
                         <br />
-                        <br />
-
 
                         <div class="row" runat="server" id="fechas">
                             <div class="col-md-6 col-sm-6 col-xs-6">
@@ -105,14 +126,39 @@
 
 
                         <br />
-                        <br />
 
-                        
-                            <%--<asp:Button ID="btnConsultarReporte" runat="server" CssClass="btn btn-success align-content-center" Text="Consultar Reporte" OnClick="btnConsultarReporte_Click" />--%>
+<%--                        <!-- Botón -->
+                        <asp:Button ID="btnMostrar" runat="server" Text="Mostrar" OnClick="btnMostrar_Click" CssClass="btn btn-primary" />
 
+                        <!-- Tabla -->
+                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table">
+                            <Columns>
+                                <asp:BoundField DataField="NoEjecucion" HeaderText="No. Ejecución" />
+                                <asp:BoundField DataField="DetalleSolicitante" HeaderText="Detalle Solicitante" />
+                                <asp:BoundField DataField="FechaEjecucion" HeaderText="Fecha Ejecución" />
+                                <asp:BoundField DataField="Solicitud" HeaderText="Solicitud" />
+                                <asp:BoundField DataField="Beneficiario" HeaderText="Beneficiario" />
+                                <asp:BoundField DataField="Causa" HeaderText="Causa" />
+                                <asp:BoundField DataField="NUC" HeaderText="NUC" />
+                                <asp:BoundField DataField="Juzgado" HeaderText="Juzgado" />
+                            </Columns>
+                        </asp:GridView>--%>
+
+
+
+
+                        <%--<asp:Button ID="btnConsultarReporte" runat="server" CssClass="btn btn-success align-content-center" Text="Consultar Reporte" OnClick="btnConsultarReporte_Click" />--%>
                         <center>
-                        <asp:Button ID="btnMostrarInforme" CssClass="btn btn-success align-content-center" runat="server" Text="Generar Reporte" OnClick="btnMostrarInforme_Click" />
-                            </center>
+                        <asp:Button ID="btnMostrarInforme" CssClass="btn btn-success align-content-center" runat="server" Text="📄 Generar Reporte" OnClick="btnMostrarInforme_Click" />
+                        <%--<asp:Button ID="Button1" CssClass="btn btn-success align-content-center" runat="server" Text="📄 Generar promocion" OnClick="botonmostrarpromocion" />--%>
+                        <br />
+                        <br />
+                        <br />
+                        <asp:Label ID="TituloReporte" runat="server" CssClass="h4 text-center" Text="¡Su reporte esta listo! 🎉" Visible="false" />
+                            <br />
+                            <br />
+                        <asp:Button ID="GenerarOtro" CssClass="btn btn-success align-content-center" runat="server" Text="🔙 Generar otro reporte" Visible="false" OnClick="GenerarOtro_Click" />
+                        </center>
                         <br />
                         <iframe id="iframePDF" runat="server" width="100%" height="500px" visible="false" frameborder="0"></iframe>
 
@@ -138,7 +184,26 @@
             <script src="Scripts/consignaciones/Consignaciones.js"></script>
 
 <script>
-    function EjemploErrorFechaReporte() {
-        toastr.error(toastr.error('Por favor, selecciona una opción.')
-    }
+
+    // Default Configuration
+    $(document).ready(function () {
+        toastr.options = {
+            'closeButton': true,
+            'debug': false,
+            'newestOnTop': false,
+            'progressBar': true,
+            'positionClass': 'toast-bottom-right',
+            'preventDuplicates': true,
+            'showDuration': '1000',
+            'hideDuration': '1000',
+            'timeOut': '5000',
+            'extendedTimeOut': '1000',
+            'showEasing': 'swing',
+            'hideEasing': 'linear',
+            'showMethod': 'fadeIn',
+            'hideMethod': 'fadeOut',
+        }
+    });
+
+
 </script>
