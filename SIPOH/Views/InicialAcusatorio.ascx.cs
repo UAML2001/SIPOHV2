@@ -39,6 +39,7 @@ namespace SIPOH.Views
             }
           
         }
+        //CODIGO PARA SELECT DE SALAS DE TOCAS 
         private void CargarSalas()
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
@@ -57,24 +58,32 @@ namespace SIPOH.Views
                 }
             }
         }
+        //CODIGO PARA EL SELECT DE JUZGADOS DEL PRIMER ROW
         private void CargarJuzgados()
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                string query = "SELECT IdJuzgado, Nombre FROM P_CatJuzgados WHERE IdCircuito = 1 AND Tipo = 'P' AND SubTipo = 'A'";
-                SqlCommand cmd = new SqlCommand(query, con);
-                using (SqlDataReader dr = cmd.ExecuteReader())
+                int circuito = Convert.ToInt32(HttpContext.Current.Session["IdCircuito"]);
+
+                using (SqlCommand cmd = new SqlCommand("Ejecucion_Cat_JuzgadosConTipoYSubtipo", con))
                 {
-                    while (dr.Read())
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdCircuito", circuito);
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-                        ListItem item = new ListItem(dr["Nombre"].ToString(), dr["IdJuzgado"].ToString());
-                        inputRadicacion.Items.Add(item);
+                        while (dr.Read())
+                        {
+                            ListItem item = new ListItem(dr["Nombre"].ToString(), dr["IdJuzgado"].ToString());
+                            inputRadicacion.Items.Add(item);
+                        }
                     }
                 }
             }
         }
+
         [Serializable]
         public class Sala
         {

@@ -211,7 +211,7 @@ namespace SIPOH.Views
                 GridViewPCausa5.DataSource = dt;
                 GridViewPCausa5.DataBind();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Manejar aquí cualquier excepción o error que ocurra
                 // Por ejemplo, podrías mostrar un mensaje de error al usuario
