@@ -2141,6 +2141,10 @@
     <Compile Include="Consulta.aspx.designer.cs">
       <DependentUpon>Consulta.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AC_CatalogosCompartidos\CatAnexosController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\CatTipoSolicitudController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\P_CatSolicitanteController.cs" />
+    <Compile Include="Controllers\AC_RegistroInicialJuicioOral\InicialJuicioOralController.cs" />
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2449,7 +2453,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

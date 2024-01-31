@@ -11,7 +11,7 @@
         <h1 style="margin-left: 5%" class="h5" >Consignaciones <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-success fw-bold">Amparo</span> </h1>
 	</div>
     
-            <div class="col-md-10 ml-auto col-xl-11 mr-auto">
+            <div class="col-md-10 ml-0 col-xl-12 m-0">
                 <!-- Nav tabs -->
                 <div class="card">
                     <div class="card-header">
@@ -41,8 +41,8 @@
                         </ul>
                     </div>
 
-
-                    <div class="card-body mt-0 pt-0">
+                    <%--importante--%>
+                    <div class="card-body mx-3 my-2 p-0">
                         <!-- Tab panes -->
                         <asp:ScriptManager ID="ScriptManagerConsignaciones" runat="server"></asp:ScriptManager>
                         <div class="tab-content ">

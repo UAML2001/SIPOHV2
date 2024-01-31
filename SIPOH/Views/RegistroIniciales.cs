@@ -354,16 +354,19 @@ namespace SIPOH
 
                         // Paso 3: Inserción en P_AsuntoDelito
 
-
+                        ////SE AÑADIO 2 LINEAS DE CODIGO  PARA LIMPIAR LOS PARAMETROS y IDASUNTO !IMPORTANTE PARA PODER REGISTRAR UNA INICIAL
                         command.CommandText = "INSERT INTO P_AsuntoDelito(IdAsunto, IdDelito) VALUES (@IdAsunto, @IdDelito)";
                         foreach (var Delito in listaIdDelito) // recorre lista de los IdDelito que deseas insertar
                         {
+                            command.Parameters.Clear();
                             // IdAsunto que obtuvo anteriormente
+                            command.Parameters.AddWithValue("@IdAsunto", Session["UserId"]);
                             command.Parameters.AddWithValue("@IdDelito", Delito.IdDelito); // @IdDelito será establecido más adelante
                             
                             // Ejecutar la consulta
                             command.ExecuteNonQuery();
                         }
+                        ////SE AÑADIO 2 LINEAS DE CODIGO  PARA LIMPIAR LOS PARAMETROS y IDASUNTO !IMPORTANTE PARA PODER REGISTRAR UNA INICIAL
                         Debug.WriteLine("Tarea 3 completada ✔️");
 
                         // Paso 4: Inserción en P_PartesAsunto
