@@ -65,17 +65,17 @@ namespace SIPOH
                         {
                             while (reader.Read())
                             {
-                                HttpContext.Current.Session["TipoAsuntoPromocion"] = reader["TipoAsunto"];
-                                HttpContext.Current.Session["NumeroPromocion"] = reader["Numero"];
-                                HttpContext.Current.Session["NUCPromocion"] = reader["NUC"];
-                                HttpContext.Current.Session["DelitosPromocion"] = reader["Delitos"];
-                                HttpContext.Current.Session["InculpadosPromocion"] = reader["Inculpados"];
-                                HttpContext.Current.Session["VictimasPromocion"] = reader["Victimas"];
-                                HttpContext.Current.Session["IdAsuntoPromocion"] = reader["IdAsunto"];
-                                HttpContext.Current.Session["NumeroAmparoPromocion"] = reader["NumeroAmparo"];
-                                HttpContext.Current.Session["AutoridadResponsablePromocion"] = reader["AutoridadResponsable"];
-                                HttpContext.Current.Session["EstatusPromocion"] = reader["Estatus"];
-                                HttpContext.Current.Session["EtapaPromocion"] = reader["Etapa"];                                   
+                                HttpContext.Current.Session["TipoAsuntoPromocion"] = reader["TipoAsunto"].ToString();
+                                HttpContext.Current.Session["NumeroPromocion"] = reader["Numero"].ToString();
+                                HttpContext.Current.Session["NUCPromocion"] = reader["NUC"].ToString();
+                                HttpContext.Current.Session["DelitosPromocion"] = reader["Delitos"].ToString();
+                                HttpContext.Current.Session["InculpadosPromocion"] = reader["Inculpados"].ToString();
+                                HttpContext.Current.Session["VictimasPromocion"] = reader["Victimas"].ToString();
+                                HttpContext.Current.Session["IdAsuntoPromocion"] = reader["IdAsunto"].ToString();
+                                HttpContext.Current.Session["NumeroAmparoPromocion"] = reader["NumeroAmparo"].ToString();
+                                HttpContext.Current.Session["AutoridadResponsablePromocion"] = reader["AutoridadResponsable"].ToString();
+                                HttpContext.Current.Session["EstatusPromocion"] = reader["Estatus"].ToString();
+                                HttpContext.Current.Session["EtapaPromocion"] = reader["Etapa"].ToString();                                   
                                 
 
                             }

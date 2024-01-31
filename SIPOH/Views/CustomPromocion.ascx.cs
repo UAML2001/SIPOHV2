@@ -97,9 +97,9 @@ namespace SIPOH.Views
         {
             try
             {
-            string promovente = inputPromovente.Text;
-            string fechaCaptura = inputFechaRecepcion.Text;
-                
+                string promovente = inputPromovente.Text;
+                string fechaCaptura = inputFechaRecepcion.Text;
+
 
                 if (Session["IdAsuntoPromocion"] == null || string.IsNullOrEmpty(Session["IdAsuntoPromocion"].ToString()))
                 {
@@ -110,11 +110,24 @@ namespace SIPOH.Views
                 }
                 if (string.IsNullOrEmpty(promovente) || string.IsNullOrEmpty(fechaCaptura))
                 {
-                    string mensaje = "Los campos promovente y fecha son obligatorios.";
+                    List<string> camposFaltantes = new List<string>();
+
+                    if (string.IsNullOrEmpty(promovente))
+                    {
+                        camposFaltantes.Add("promovente");
+                    }
+
+                    if (string.IsNullOrEmpty(fechaCaptura))
+                    {
+                        camposFaltantes.Add("fecha");
+                    }
+
+                    string mensaje = $"Campos {string.Join(" y ", camposFaltantes)} son obligatorios.";
                     string script = $"toastError('{mensaje}');";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastError", script, true);
                     return;
                 }
+
                 DataPromocion registro = new DataPromocion
                 {
                     Promovente = promovente,
@@ -123,15 +136,15 @@ namespace SIPOH.Views
                     FechaRecepcion = fechaCaptura,
                     Tipo = "P",
                     IdActividad = 1,
-                    FeAsunto = fechaCaptura,                
+                    FeAsunto = fechaCaptura,
                     EstadoPromocion = "A"
                 };
-                    List<DataPromocion> listaPromocion = Session["promocion"] as List<DataPromocion> ?? new List<DataPromocion>();
-                    listaPromocion.Add(registro);
-                    Session["RegistroPromocion"] = listaPromocion;
+                List<DataPromocion> listaPromocion = Session["promocion"] as List<DataPromocion> ?? new List<DataPromocion>();
+                listaPromocion.Add(registro);
+                Session["RegistroPromocion"] = listaPromocion;
                 //verificar si el metodo funciona 
-                    List<AnexosPromocion> listaAnexos = Session["Anexos"] as List<AnexosPromocion> ?? new List<AnexosPromocion>();
-                    RegistroPromociones.SendRegistroPromocion(listaPromocion, listaAnexos);
+                List<AnexosPromocion> listaAnexos = Session["Anexos"] as List<AnexosPromocion> ?? new List<AnexosPromocion>();
+                RegistroPromociones.SendRegistroPromocion(listaPromocion, listaAnexos);
                 string mensajeSuccess = "Tu peticion fue correcta!, tu registro se ha hecho correctamente. ";
 
                 string scriptToast = $"toastInfo('{mensajeSuccess}');";
@@ -160,8 +173,8 @@ namespace SIPOH.Views
 
             Session["Anexos"] = new List<AnexosPromocion>();
             CleanEtiquetaFormAnexo();
-            Session.Remove("TipoAsuntoPromocion");            
-            Session.Remove("NumeroPromocion");            
+            Session.Remove("TipoAsuntoPromocion");
+            Session.Remove("NumeroPromocion");
             Session.Remove("DelitosPromocion");
             Session.Remove("InculpadosPromocion");
             Session.Remove("VictimasPromocion");
@@ -173,11 +186,8 @@ namespace SIPOH.Views
             promocionPanel.Update();
 
         }
-        public int CantidadAnexos()
-        {
-            int cantidaAnexos = 10;
-            return cantidaAnexos;
-        }
+
+
         private List<string> DividirTextoEnLineas(string texto, int maxCaracteresPorLinea)
         {
             List<string> lineas = new List<string>();
@@ -273,8 +283,8 @@ namespace SIPOH.Views
             ticket.AppendLine($"FECHA RECEPCIÒN:{GetFechaYHora()}");
             ticket.AppendLine($"NUC:{NUC.ToUpper()}");
 
-            int maxLength = 38;
-            int maxLengthT = 32;
+            int maxLength = 36;
+            int maxLengthT = 30;
 
             foreach (var anexo in anexos)
             {
@@ -371,7 +381,8 @@ namespace SIPOH.Views
                 lblAutoridadResponsablePromocion.Text = Session["AutoridadResponsablePromocion"] as string;
                 lblEstatusPromocion.Text = Session["EstatusPromocion"] as string;
                 lblEtapaPromocion.Text = Session["EtapaPromocion"] as string;
-                promocionPanel.Update();
+                
+            promocionPanel.Update();
 
         }
 

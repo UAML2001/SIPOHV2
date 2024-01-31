@@ -14,8 +14,9 @@ using System.Web.UI;
 
 namespace SIPOH
 {
-    public class RegistroIniciales
+    public class RegistroIniciales 
     {
+        
         private static HttpSessionState Session => HttpContext.Current.Session;
         
 
@@ -28,6 +29,10 @@ namespace SIPOH
         {
             Session[key] = value;
         }
+        
+
+
+
 
 
         public static string TipoSolicitud
@@ -97,12 +102,23 @@ namespace SIPOH
             get { return GetString("Fojas"); }
             set { SetString("Fojas", value); }
         }
-        public static string NumeroInicial
+        public static string NumeroAsignado
         {
-            get { return GetString("NumeroInicial"); }
-            set { SetString("NumeroInicial", value); }
+            get { return GetString("NumeroAsignado"); }
+            set { SetString("NumeroAsignado", value); }
+        }public static string Exepciones
+        {
+            get { return GetString("Exepciones"); }
+            set { SetString("Exepciones", value); }
         }
-        
+
+
+
+        public class CatDelitosResult
+        {
+            public List<string> Delitos { get; set; }
+            public List<string> IdDelitos { get; set; }
+        }
 
 
 
@@ -173,9 +189,7 @@ namespace SIPOH
 
             return CatAnexos;
         }
-
-
-        public static (List<string> Delitos, List<string> IdDelitos) GetCatDelitos()
+        public static CatDelitosResult GetCatDelitos()
         {
             List<string> CatDelitos = new List<string>();
             List<string> CatIdDelitos = new List<string>();
@@ -201,106 +215,19 @@ namespace SIPOH
                     }
                 }
             }
-            return (CatDelitos, CatIdDelitos);
+
+            return new CatDelitosResult
+            {
+                Delitos = CatDelitos,
+                IdDelitos = CatIdDelitos
+            };
         }
 
-        //public static bool GetNumeroIniciales(string TipoInicial)
-        //{
-        //    using (SqlConnection connection = new ConexionBD().Connection)
-        //    {
-        //        connection.Open();
-        //        SqlTransaction transaction = connection.BeginTransaction();
-        //        try
-        //        {
-        //            using (SqlCommand command = new SqlCommand())
-        //            {
-        //                command.Connection = connection;
-        //                command.Transaction = transaction;
-        //                // Paso 1
-        //                string IdJuzgado = HttpContext.Current.Session["IDJuzgado"] as string;
-        //                string query = "SELECT Folio, IdFolio FROM P_Folios WHERE IdJuzgado = @IdJuzgado AND Tipo = @TipoInicial";
-        //                using (SqlCommand selectCommand = new SqlCommand(query, connection))
-        //                {
+        
 
-        //                    selectCommand.Parameters.AddWithValue("@IdJuzgado", IdJuzgado);
-        //                    selectCommand.Parameters.AddWithValue("@TipoInicial", TipoInicial);
-        //                    selectCommand.Transaction = transaction; // Mover la asignación de transacción aquí
-        //                    using (SqlDataReader reader = selectCommand.ExecuteReader())
-        //                    {
-        //                        if (reader.Read())
-        //                        {
-        //                            HttpContext.Current.Session["IdFolio"] = reader["IdFolio"].ToString();
-        //                            Debug.WriteLine("Folio: " + HttpContext.Current.Session["IdFolio"]);
+        
 
-        //                        }
-        //                    }
-        //                    // Folio
-        //                    object numeroActual = selectCommand.ExecuteScalar();
-        //                    Debug.WriteLine("Numero Obtenido Query: " + numeroActual);
-        //                    // Nuevo número
-        //                    int nuevoNumero = Convert.ToInt32(numeroActual) + 1;
-        //                    int añoActual = DateTime.Now.Year;
-
-        //                    // Formatea el número con ceros a la izquierda y agrega el año actual
-        //                    string numeroFormateado = nuevoNumero.ToString("D4") + "/" + añoActual;
-
-        //                    Debug.WriteLine("Tarea 1 Completada! Numero Siguiente: " + numeroFormateado);
-        //                    HttpContext.Current.Session["NuevoFolio"] = numeroFormateado;
-
-        //                    // Paso 2
-        //                    string queryUpdate = "UPDATE P_Folios SET Folio = @NuevoNumero WHERE IdFolio = @IdFolio";
-        //                    command.Parameters.AddWithValue("@IdFolio", Session["IdFolio"]);
-        //                    command.Parameters.AddWithValue("@NuevoNumero", nuevoNumero);
-        //                    command.CommandText = queryUpdate;
-        //                    // No es necesario asignar la transacción aquí
-
-        //                    // Ejecuta la consulta de actualización
-        //                    command.ExecuteNonQuery();
-        //                    Debug.WriteLine("Tarea 2 completada.");
-
-        //                    transaction.Commit();
-        //                    Debug.WriteLine("Transacción fue ejecutada!");
-        //                    return true;
-        //                }
-        //            }
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            // Si ocurre un error, revertir la transacción y manejar la excepción
-        //            transaction.Rollback();
-        //            Debug.WriteLine("Error: " + ex.Message);
-        //            return false;
-        //        }
-        //        finally
-        //        {
-        //            connection.Close();
-        //        }
-        //    }
-        //}
-
-        //public static bool SendDelitosIniciales(List<int> listaIdDelito)
-        //{
-        //    using(SqlConnection connection = new ConexionBD().Connection)
-        //    {
-        //        connection.Open();
-
-        //        foreach (int idDelito in listaIdDelito)
-        //        {
-        //            using (SqlCommand command = new SqlCommand())
-        //            {
-        //                command.Connection = connection;
-        //                command.CommandText = "INSERT INTO P_AsuntoDelito(IdAsunto, IdDelito) VALUES (@IdAsunto, @IdDelito)";
-        //                command.Parameters.AddWithValue("@IdAsunto", Session["UserId"]);
-        //                command.Parameters.AddWithValue("@IdDelito", idDelito);
-
-        //                command.ExecuteNonQuery();
-        //            }
-        //        }
-
-        //    }
-        //        return true;
-        //}
-        public static bool SendRegistroIniciales(string FeIngresoAsunto, string TipoAsunto, string IdAudiencia, string Observaciones, string QuienIngresa, string MP, string Prioridad, string Fojas, string TipoRadicacion, string NUC, List<int> listaIdDelito, List<Victima> usuarios, List<Imputado> culpados, List<Anexos> Anexos)
+        public static bool SendRegistroIniciales(string FeIngresoAsunto, string TipoAsunto, string IdAudiencia, string Observaciones, string QuienIngresa, string MP, string Prioridad, string Fojas, string TipoRadicacion, string NUC, List<CatDelito> listaIdDelito, List<Victima> usuarios, List<Imputado> culpados, List<Anexos> Anexos)
         {
             using (SqlConnection connection = new ConexionBD().Connection)
             {
@@ -308,17 +235,98 @@ namespace SIPOH
                 SqlTransaction transaction = connection.BeginTransaction();
 
                 try
-                {
+                {   
+                    //obtener folio para ser asignado a una Inicial
+                    //Paso 0 insert AsignarFolio
+                    using (SqlCommand command2 = new SqlCommand("AC_AsignarFolio", connection, transaction))
+                    {
+                       command2.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
+                       command2.Parameters.AddWithValue("@TipoDocumento", TipoAsunto);
+                       
+                       command2.CommandType = CommandType.StoredProcedure;
+                        using (var reader = command2.ExecuteReader())
+                        {
+                           if (reader.Read())
+                           {
+                               //Folio nuevo 
+                                var FolioNuevo = reader["FolioNuevo"];
+                                HttpContext.Current.Session["IdFolioInicial"] = reader["IdFolio"];
+                                HttpContext.Current.Session["FolioNuevoPInicial"] = FolioNuevo;
+
+                                int folio = Convert.ToInt32(FolioNuevo);
+                                
+                                ///Convierte el valor a int
+                                int añoActual = DateTime.Now.Year;
+                                string NumeroAsignado = folio.ToString("D4") + "/" + añoActual;
+                                HttpContext.Current.Session["FolioNuevoInicial"] = NumeroAsignado;
+                                
+                                Debug.WriteLine("Numero Asignado" + Session["FolioNuevoInicial"] + "IDFOLIO: "+ Session["IdFolioInicial"] + "FOLIO NUEVO:" + Session["FolioNuevoPInicial"]);
+                                
+
+
+
+
+                           }
+                        }
+                        
+                    }
+                    Debug.WriteLine("Inicio Procedimiento: ✔️ Obtener Folio");
+                    // Confirmar la transacción si todo ha ido bien
+                    using (SqlCommand command3 = new SqlCommand("AC_verificar_disponibilidad_folio_en_PAsunto", connection, transaction))
+                    {
+                        command3.Parameters.AddWithValue("@NuevoNumero", Session["FolioNuevoInicial"]);
+                        command3.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
+                        command3.Parameters.AddWithValue("@TipoAsunto", TipoAsunto);
+                        command3.CommandType = CommandType.StoredProcedure;
+
+                        try
+                        {
+                            using (var reader = command3.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    var IdAsuntoDuplicado = reader["IdAsunto"];
+
+                                    if (IdAsuntoDuplicado != DBNull.Value && Convert.ToInt32(IdAsuntoDuplicado) != 0)
+                                    {
+                                        int idAsuntoDuplicado = Convert.ToInt32(IdAsuntoDuplicado);
+                                        Debug.WriteLine("Error: Número de Asunto duplicado. IdAsunto: " + idAsuntoDuplicado);
+                                        // Aquí puedes manejar el caso de duplicado, por ejemplo, lanzar una excepción o tomar alguna acción específica.
+                                        // Realizar Rollback para cancelar la transacción
+                                        transaction.Rollback();
+                                    }
+                                    else
+                                    {
+                                        // No hay duplicado, puedes realizar otras acciones aquí.
+                                    }
+                                }
+                            }
+                        }
+                        catch (SqlException ex)
+                        {
+                            // Manejar la excepción aquí
+                            // ex.Message contendrá el mensaje de error lanzado desde el procedimiento almacenado
+                            // Puedes agregar lógica específica para tratar el caso de duplicados
+                            Debug.WriteLine("Error al ejecutar el procedimiento almacenado: " + ex.Message);
+                            Exepciones = "Error en consulta";
+                            
+
+
+                            // Realizar Rollback para cancelar la transacción
+                            transaction.Rollback();
+                        }
+                    }
+
+
+                    Debug.WriteLine("✔️ Consulta Folio  ");
                     using (SqlCommand command = new SqlCommand())
                     {
+
                         command.Connection = connection;
                         command.Transaction = transaction;
-
-
-
                         // Paso 1: Inserción en P_Asunto
-                        command.CommandText = "INSERT INTO P_Asunto(Numero, IdJuzgado, FeIngreso, TipoAsunto, Digitalizado, FeCaptura, IdUsuario, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas) OUTPUT INSERTED.IdAsunto VALUES ('0000/2024', @IdJuzgado, @FeIngreso, @TipoAsunto, '0', GETDATE(), @IdUsuario, @IdAudiencia, @Observaciones, @QuienIngresa, @MP, @Prioridad, @Fojas)";
-                        //command.Parameters.AddWithValue("@NumeroInicial", NumeroInicial);
+                        command.CommandText = "INSERT INTO P_Asunto(Numero, IdJuzgado, FeIngreso, TipoAsunto, Digitalizado, FeCaptura, IdUsuario, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas) OUTPUT INSERTED.IdAsunto VALUES (@NumeroDocumento, @IdJuzgado, @FeIngreso, @TipoAsunto, '0', GETDATE(), @IdUsuario, @IdAudiencia, @Observaciones, @QuienIngresa, @MP, @Prioridad, @Fojas)";
+                        command.Parameters.AddWithValue("@NumeroDocumento", Session["FolioNuevoInicial"]);
                         command.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
                         command.Parameters.AddWithValue("@FeIngreso", FeIngresoAsunto);
                         command.Parameters.AddWithValue("@TipoAsunto", TipoAsunto.ToUpper());
@@ -348,11 +356,11 @@ namespace SIPOH
 
 
                         command.CommandText = "INSERT INTO P_AsuntoDelito(IdAsunto, IdDelito) VALUES (@IdAsunto, @IdDelito)";
-                        SqlParameter paramIdDelito = command.Parameters.AddWithValue("@IdDelito", 0); // @IdDelito será establecido más adelante
-                        foreach (int idDelito in listaIdDelito) // recorre lista de los IdDelito que deseas insertar
+                        foreach (var Delito in listaIdDelito) // recorre lista de los IdDelito que deseas insertar
                         {
                             // IdAsunto que obtuvo anteriormente
-                            paramIdDelito.Value = idDelito;
+                            command.Parameters.AddWithValue("@IdDelito", Delito.IdDelito); // @IdDelito será establecido más adelante
+                            
                             // Ejecutar la consulta
                             command.ExecuteNonQuery();
                         }
@@ -403,26 +411,49 @@ namespace SIPOH
                             command.Parameters.AddWithValue("@IdAsunto", Session["UserId"]);
                             command.Parameters.AddWithValue("@Descripcion", anexo.DescripcionAnexo.ToUpper());
                             command.Parameters.AddWithValue("@Cantidad", anexo.CantidadAnexo);
+                            command.Parameters.AddWithValue("@FolioNuevo", 0);
                             //command.Parameters.AddWithValue("@Tipo", anexo.Tipo);
                             command.ExecuteNonQuery();
                         }
-                        Debug.WriteLine("Tarea 7 completado ✔️" );
+                        Debug.WriteLine("Tarea 7 completado ✔️");
                         // Paso 5: Inserción en P_Posterior
 
                         command.CommandText = "INSERT INTO P_Trayecto(IdAsunto, IdActividad, IdPerfil,IdUsuario, FeAsunto, Tipo, FeRecepcion, IdatividadProvienede, IdUsuarioProvienede,IdPerfilProvienede,Estado) VALUES (@IdAsunto,1, @IdPerfil,@IdUsuario,@FeAsunto, 'I', GETDATE(), NULL, NULL,NULL, 'A' )";
-                        
-                        
+
+
                         command.Parameters.AddWithValue("@IdPerfil", Session["IdPerfil"]);
                         command.Parameters.AddWithValue("@IdUsuario", Session["IdUsuario"]);
                         command.Parameters.AddWithValue("@FeAsunto", FeIngresoAsunto);
-                        
-                        command.ExecuteNonQuery();
-                        Debug.WriteLine("Tarea 8 completado ✔️");
 
-                        
-                        // Confirmar la transacción si todo ha ido bien
+                        command.ExecuteNonQuery();
+                        Debug.WriteLine("Tarea 8 completado ✔️" + Session["FolioNuevoPInicial"] + " "+ Session["IdFolioInicial"]);
+
+
+                        using (SqlCommand command4 = new SqlCommand("AC_UpdateFolio", connection, transaction))
+                        {
+                            // valores de Session al tipo de datos correcto
+                            int folioNuevo = Convert.ToInt32(Session["FolioNuevoPInicial"]);
+                            int idFolio = Convert.ToInt32(Session["IdFolioInicial"]);
+                            int idJuzgado = Convert.ToInt32(Session["IDJuzgado"]);
+
+                            command4.Parameters.AddWithValue("@FolioNuevoI", Session["FolioNuevoPInicial"]);
+                            command4.Parameters.AddWithValue("@IdFolio", idFolio);
+                            command4.Parameters.AddWithValue("@IdJuzgado", idJuzgado);
+                            command4.CommandType = CommandType.StoredProcedure;
+
+
+                            command4.ExecuteNonQuery();
+
+                            // Recuperar el valor de salida si es necesario
+                            
+
+                            Debug.WriteLine("Tarea 9 completado ✔️");
+                            //Debug.WriteLine("Folio actualizado: " + folioNuevoActualizado);
+                        }
                     }
-                        transaction.Commit();
+
+
+                    transaction.Commit();
                         Debug.WriteLine("Transacción completada con éxito.");
                         return true;
 
@@ -430,8 +461,10 @@ namespace SIPOH
                 catch (Exception ex)
                 {
                     // Si ocurre un error, revertir la transacción y manejar la excepción
+                    Exepciones = "Error en consulta";
                     transaction.Rollback();
-                    Debug.WriteLine("Error: " + ex.Message);
+                    Debug.WriteLine("Error Transaction: " + ex.Message);
+
                     return false;
                 }
                 finally
@@ -440,6 +473,8 @@ namespace SIPOH
                 }
             }
         }
+        
+
 
         public static DataTable GetInicial(List<BusquedaInicial> BusquedaInicial)
         {

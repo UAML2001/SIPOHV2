@@ -60,27 +60,27 @@ namespace SIPOH.Views
         //}
 
         protected void btnMostrarInforme_Click(object sender, EventArgs e)
-{
-    // Configura la ruta del informe Crystal Reports (.rpt)
-    string rutaInforme = Server.MapPath("~/ReportesEjecucion/InicialEjecucion.rpt");
+        {
+            // Configura la ruta del informe Crystal Reports (.rpt)
+            string rutaInforme = Server.MapPath("~/ReportesEjecucion/InicialEjecucion.rpt");
 
-    // Crea el informe
-    ReportDocument reporte = new ReportDocument();
-    reporte.Load(rutaInforme);
+            // Crea el informe
+            ReportDocument reporte = new ReportDocument();
+            reporte.Load(rutaInforme);
 
-    // Configura el formato de salida como PDF
-    reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
-    reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
-    string rutaArchivoPDF = Server.MapPath("~/ReportesEjecucion/InicialEjecucion.pdf");
-    reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
+            // Configura el formato de salida como PDF
+            reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
+            reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
+            string rutaArchivoPDF = Server.MapPath("~/ReportesEjecucion/InicialEjecucion.pdf");
+            reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
 
-    // Exporta el informe a PDF
-    reporte.Export();
+            // Exporta el informe a PDF
+            reporte.Export();
 
-    // Muestra el archivo PDF en el iframe
-    iframePDF.Src = "~/ReportesEjecucion/InicialEjecucion.pdf";
-    iframePDF.Visible = true;
-}
+            // Muestra el archivo PDF en el iframe
+            iframePDF.Src = "~/ReportesEjecucion/InicialEjecucion.pdf";
+            iframePDF.Visible = true;
+        }
 
     }
 }
