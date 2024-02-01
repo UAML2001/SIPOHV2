@@ -252,7 +252,6 @@ namespace SIPOH.Views
             {
                 // Manejar excepciones y mostrar mensaje Toastr
                 Toastr("Error al generar el informe: " + ex.Message, "error");
-                //Toastr("No se pudo generar el reporte, por favor seleccione el juzgado del reporte", "error");
             }
         }
 

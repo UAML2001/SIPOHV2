@@ -241,7 +241,6 @@
             </div>
 
             <br />
-            <br />
 
                 </div>
 
@@ -249,22 +248,7 @@
             <asp:Button ID="ObDatos" runat="server" CssClass="btn btn-success mayusculas" Text="📄 Registrar Exhorto" OnClick="ObtenerDatosYMostrarModal"  />
             </center>
 
-
-                <%--                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#conf" onclick="AbrirModalConf()">
-                    <svg style="fill: #ffffff" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
-                    </svg>
-                    Registrar</button>
-
-<%--                <button type="button" class="btn btn-success" onclick="ObtenerDatosYMostrarModal()">
-                    <svg style="fill: #ffffff" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
-                    </svg>
-                    Registrar
-                </button>--%>
-
+            <br />
 
             </center>
 
@@ -366,7 +350,6 @@
          </div>
      </div>
  </div>
-
         </asp:Panel>
 
 
@@ -558,27 +541,9 @@
             <br />
 
             <center>
-            <asp:Button ID="Button3" runat="server" CssClass="btn btn-success mayusculas" Text="Registrar" OnClick="ObtenerDatosYMostrarModal2" OnClientClick="return ValidarCampos();" />
+            <asp:Button ID="Button3" runat="server" CssClass="btn btn-success mayusculas" Text="📄 Registrar Exhorto" OnClick="ObtenerDatosYMostrarModal2" OnClientClick="return ValidarCampos();" />
             </center>
-
-
-                <%--                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#conf" onclick="AbrirModalConf()">
-                    <svg style="fill: #ffffff" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
-                    </svg>
-                    Registrar</button>--%>
-
-<%--                <button type="button" class="btn btn-success" onclick="ObtenerDatosYMostrarModal()">
-                    <svg style="fill: #ffffff" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
-                    </svg>
-                    Registrar
-                </button>--%>
-
-
-
+            <br />
             </center>
 
             </div>
@@ -870,24 +835,9 @@
             <br />
 
             <center>
-            <asp:Button ID="Button7" runat="server" CssClass="btn btn-success mayusculas" Text="Registrar" OnClick="ObtenerDatosYMostrarModal3" OnClientClick="return ValidarCampos();" />
+            <asp:Button ID="Button7" runat="server" CssClass="btn btn-success mayusculas" Text="📄 Registrar Exhorto" OnClick="ObtenerDatosYMostrarModal3" OnClientClick="return ValidarCampos();" />
             </center>
-
-
-                <%--                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#conf" onclick="AbrirModalConf()">
-                    <svg style="fill: #ffffff" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
-                    </svg>
-                    Registrar</button>--%>
-
-<%--                <button type="button" class="btn btn-success" onclick="ObtenerDatosYMostrarModal()">
-                    <svg style="fill: #ffffff" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512">
-                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                        <path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L352 50.7C340 38.7 323.7 32 306.7 32H64zm0 96c0-17.7 14.3-32 32-32H288c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
-                    </svg>
-                    Registrar
-                </button>--%>
+            <br />
 
 
 
@@ -997,9 +947,9 @@
             <div class="d-flex justify-content-center align-items-center flex-column" runat="server">
                 <asp:Label ID="TituloExhorto" runat="server" CssClass="h4 text-center" Text="¡Registro de exhorto listo! 🎉" />
                 <br />
-                    <asp:Button ID="btnImprimir" runat="server" Text="🖨️ Imprimir Ticket" OnClick="btnImprimir_Click" CssClass="btn btn-success" />
-                    <br />
-                    <asp:Button ID="btnGenerarOtro" runat="server" Text="🔙 Insertar Otro Exhorto" OnClick="GenerarOtro_Click" CssClass="btn btn-success" />
+                <asp:Button ID="btnImprimir" runat="server" Text="🖨️ Imprimir Ticket" OnClick="btnImprimir_Click" CssClass="btn btn-success" />
+                <br />
+                <asp:Button ID="btnGenerarOtro" runat="server" Text="🔙 Insertar Otro Exhorto" OnClick="GenerarOtro_Click" CssClass="btn btn-success" />
             </div>
             <br />
             <br />
@@ -1008,29 +958,11 @@
             </div>
         </div>
 
-
-
     </ContentTemplate>
 </asp:UpdatePanel>
 
 
-
-
-
-
-
-
-
-
 <script>
-    // Asumiendo que tienes los IDs de los elementos en JavaScript
-    function mostrarElementosExhorto() {
-        // Asumiendo que tienes los IDs de los elementos en JavaScript
-        document.getElementById('<%= TituloExhorto.ClientID %>').style.display = 'block';
-        document.getElementById('<%= btnImprimir.ClientID %>').style.display = 'block';
-        document.getElementById('<%= btnGenerarOtro.ClientID %>').style.display = 'block';
-    }
-
 
     //Funciones Exhorto
     function ObtenerDatosYMostrarModal() {
@@ -1341,7 +1273,7 @@
         var ap2 = document.getElementById('<%= ap3.ClientID %>');
         var am2 = document.getElementById('<%= am3.ClientID %>');
         var parte = document.getElementById('<%= parte2.ClientID %>');
-    var sexo = document.getElementById('<%= sexo2.ClientID %>');
+        var sexo = document.getElementById('<%= sexo2.ClientID %>');
     var espeParte = document.getElementById('<%= espeParte2.ClientID %>');
         var espeSexo = document.getElementById('<%= espeSexo2.ClientID %>');
 
@@ -1485,7 +1417,7 @@
     $('#ModalConfirmacion3').modal('show');
 
     // Mostrar los valores en el modal
-    document.getElementById('ModalConfirmacion2').querySelector('.modal-body').innerHTML =
+    document.getElementById('ModalConfirmacion3').querySelector('.modal-body').innerHTML =
         '<b>Número de Documento: </b>' + numtoca + '<br />' + '<br />' +
         '<b>Procedente de: </b>' + sala + '<br />' + '<br />' +
         '<b>Fecha de Recepción: </b>' + fecha + '<br />' + '<br />' +
@@ -1509,7 +1441,7 @@
 
     function LimpiarFormulario3() {
         // Obtén referencias a los elementos del formulario
-        var nom2 = document.getElementById('<%= nom4.ClientID %>');
+    var nom2 = document.getElementById('<%= nom4.ClientID %>');
     var ap2 = document.getElementById('<%= ap4.ClientID %>');
     var am2 = document.getElementById('<%= am4.ClientID %>');
     var parte = document.getElementById('<%= parte3.ClientID %>');

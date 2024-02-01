@@ -97,6 +97,7 @@ namespace SIPOH.Views
             if (cantidadAnexo == "0")
             {
                 // Mostrar un mensaje de error específico para la cantidad de anexos
+
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "EjemploErrorCantAnexo();", true);
                 return;
             }
@@ -769,12 +770,12 @@ namespace SIPOH.Views
             string ap = ap2.Text;
             string am = am2.Text;
             string partes = parte.SelectedValue;
-            string sexox = sexo.SelectedValue;
+            string sexos = sexo.SelectedValue;
             string espePartes = espeParte.Text;
-            string espeSexox = espeSexo.Text;
+            string espeSexos = espeSexo.Text;
 
             // Verificar si los campos están vacíos
-            if (nom == "" || ap == "" || am == "" || partes == "" || sexox == "")
+            if (nom == "" || ap == "" || am == "" || partes == "" || sexos == "")
             {
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
@@ -782,12 +783,31 @@ namespace SIPOH.Views
                 return;
             }
 
-            // Verifica si la opción seleccionada en los DropDownList es "Otro"
-            if (partes == "Otro" && sexox == "Otro")
+            // Verifica si la opción seleccionada en los DropDownList es "O"
+            if (partes == "O")
             {
-                // Asigna los valores de los TextBox de "espeParte" y "espeSexo"
+                if (espePartes == "")
+                {
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('El campo espeParte debe estar lleno');", true);
+                    return;
+                }
+                // Asigna el valor del TextBox de "espeParte"
                 partes = espePartes;
-                sexox = espeSexox;
+            }
+
+            if (sexos == "O")
+            {
+                if (espeSexos == "")
+                {
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('El campo espeSexo debe estar lleno');", true);
+                    return;
+                }
+                // Asigna el valor del TextBox de "espeSexo"
+                sexos = espeSexos;
             }
 
             // Convierte "I" y "V" a "Imputado" y "Víctima" respectivamente
@@ -801,13 +821,13 @@ namespace SIPOH.Views
             }
 
             // Convierte "F" y "M" a "Femenino" y "Masculino" respectivamente
-            if (sexox == "F")
+            if (sexos == "F")
             {
-                sexox = "Femenino";
+                sexos = "Femenino";
             }
-            else if (sexox == "M")
+            else if (sexos == "M")
             {
-                sexox = "Masculino";
+                sexos = "Masculino";
             }
 
             DataTable dt = GetDataTable2();
@@ -816,7 +836,7 @@ namespace SIPOH.Views
             // Corrige la asignación para concatenar los valores con un espacio
             newRow["Nombre"] = nom + " " + ap + " " + am;
             newRow["Parte"] = partes;
-            newRow["Genero"] = sexox;
+            newRow["Genero"] = sexos;
             dt.Rows.Add(newRow);
 
             gvPartes.DataSource = dt;
@@ -847,6 +867,8 @@ namespace SIPOH.Views
                 string amParte = partesNombre.Length > 2 ? partesNombre[2] : "";
             }
         }
+
+
 
 
         protected void gvPartes_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -904,12 +926,12 @@ namespace SIPOH.Views
             string ap = ap3.Text;
             string am = am3.Text;
             string partes = parte2.SelectedValue;
-            string sexox = sexo2.SelectedValue;
+            string sexos = sexo2.SelectedValue;
             string espePartes = espeParte2.Text;
-            string espeSexox = espeSexo2.Text;
+            string espeSexos = espeSexo2.Text;
 
             // Verificar si los campos están vacíos
-            if (nom == "" || ap == "" || am == "" || partes == "" || sexox == "")
+            if (nom == "" || ap == "" || am == "" || partes == "" || sexos == "")
             {
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
@@ -917,12 +939,31 @@ namespace SIPOH.Views
                 return;
             }
 
-            // Verifica si la opción seleccionada en los DropDownList es "Otro"
-            if (partes == "Otro" && sexox == "Otro")
+            // Verifica si la opción seleccionada en los DropDownList es "O"
+            if (partes == "O")
             {
-                // Asigna los valores de los TextBox de "espeParte" y "espeSexo"
+                if (espePartes == "")
+                {
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('El campo espeParte debe estar lleno');", true);
+                    return;
+                }
+                // Asigna el valor del TextBox de "espeParte"
                 partes = espePartes;
-                sexox = espeSexox;
+            }
+
+            if (sexos == "O")
+            {
+                if (espeSexos == "")
+                {
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('El campo espeSexo debe estar lleno');", true);
+                    return;
+                }
+                // Asigna el valor del TextBox de "espeSexo"
+                sexos = espeSexos;
             }
 
             // Convierte "I" y "V" a "Imputado" y "Víctima" respectivamente
@@ -936,29 +977,29 @@ namespace SIPOH.Views
             }
 
             // Convierte "F" y "M" a "Femenino" y "Masculino" respectivamente
-            if (sexox == "F")
+            if (sexos == "F")
             {
-                sexox = "Femenino";
+                sexos = "Femenino";
             }
-            else if (sexox == "M")
+            else if (sexos == "M")
             {
-                sexox = "Masculino";
+                sexos = "Masculino";
             }
 
-            DataTable dt = GetDataTable3();
+            DataTable dt = GetDataTable2();
             DataRow newRow = dt.NewRow();
 
             // Corrige la asignación para concatenar los valores con un espacio
             newRow["Nombre"] = nom + " " + ap + " " + am;
             newRow["Parte"] = partes;
-            newRow["Genero"] = sexox;
+            newRow["Genero"] = sexos;
             dt.Rows.Add(newRow);
 
-            gvPartes2.DataSource = dt;
-            gvPartes2.DataBind();
+            gvPartes.DataSource = dt;
+            gvPartes.DataBind();
 
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos();", true);
-            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario2();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.success('Partes Agregadas con exito');", true);
 
             //Obtener los valores de la fila seleccionada en gvPartes
@@ -972,8 +1013,8 @@ namespace SIPOH.Views
                 string tipoParte = row.Cells[2].Text; // La posición 2 corresponde a la columna de Parte
 
                 // Obtener otros valores del formulario de "Agregar Partes"
-                string especifiqueParte = espeParte2.Text;
-                string especifiqueSexo = espeSexo2.Text;
+                string especifiqueParte = espeParte.Text;
+                string especifiqueSexo = espeSexo.Text;
 
                 // Puedes desconcatenar el nombre si está en el formato "Nombre ApellidoPaterno ApellidoMaterno"
                 string[] partesNombre = nombre.Split(' ');
@@ -1030,31 +1071,51 @@ namespace SIPOH.Views
 
             return dt;
         }
+
         protected void btnAgregarParte_Click3(object sender, EventArgs e)
         {
             string nom = nom4.Text;
             string ap = ap4.Text;
             string am = am4.Text;
             string partes = parte3.SelectedValue;
-            string sexox = sexo3.SelectedValue;
+            string sexos = sexo3.SelectedValue;
             string espePartes = espeParte3.Text;
-            string espeSexox = espeSexo3.Text;
+            string espeSexos = espeSexo3.Text;
 
             // Verificar si los campos están vacíos
-            if (nom == "" || ap == "" || am == "" || partes == "" || sexox == "")
+            if (nom == "" || ap == "" || am == "" || partes == "" || sexos == "")
             {
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario3();", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('Todos los campos deben estar llenos');", true);
                 return;
             }
 
-            // Verifica si la opción seleccionada en los DropDownList es "Otro"
-            if (partes == "Otro" && sexox == "Otro")
+            // Verifica si la opción seleccionada en los DropDownList es "O"
+            if (partes == "O")
             {
-                // Asigna los valores de los TextBox de "espeParte" y "espeSexo"
+                if (espePartes == "")
+                {
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('El campo espeParte debe estar lleno');", true);
+                    return;
+                }
+                // Asigna el valor del TextBox de "espeParte"
                 partes = espePartes;
-                sexox = espeSexox;
+            }
+
+            if (sexos == "O")
+            {
+                if (espeSexos == "")
+                {
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('El campo espeSexo debe estar lleno');", true);
+                    return;
+                }
+                // Asigna el valor del TextBox de "espeSexo"
+                sexos = espeSexos;
             }
 
             // Convierte "I" y "V" a "Imputado" y "Víctima" respectivamente
@@ -1068,26 +1129,26 @@ namespace SIPOH.Views
             }
 
             // Convierte "F" y "M" a "Femenino" y "Masculino" respectivamente
-            if (sexox == "F")
+            if (sexos == "F")
             {
-                sexox = "Femenino";
+                sexos = "Femenino";
             }
-            else if (sexox == "M")
+            else if (sexos == "M")
             {
-                sexox = "Masculino";
+                sexos = "Masculino";
             }
 
-            DataTable dt = GetDataTable4();
+            DataTable dt = GetDataTable2();
             DataRow newRow = dt.NewRow();
 
             // Corrige la asignación para concatenar los valores con un espacio
             newRow["Nombre"] = nom + " " + ap + " " + am;
             newRow["Parte"] = partes;
-            newRow["Genero"] = sexox;
+            newRow["Genero"] = sexos;
             dt.Rows.Add(newRow);
 
-            gvPartes3.DataSource = dt;
-            gvPartes3.DataBind();
+            gvPartes.DataSource = dt;
+            gvPartes.DataBind();
 
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos();", true);
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
@@ -1104,8 +1165,8 @@ namespace SIPOH.Views
                 string tipoParte = row.Cells[2].Text; // La posición 2 corresponde a la columna de Parte
 
                 // Obtener otros valores del formulario de "Agregar Partes"
-                string especifiqueParte = espeParte3.Text;
-                string especifiqueSexo = espeSexo3.Text;
+                string especifiqueParte = espeParte.Text;
+                string especifiqueSexo = espeSexo.Text;
 
                 // Puedes desconcatenar el nombre si está en el formato "Nombre ApellidoPaterno ApellidoMaterno"
                 string[] partesNombre = nombre.Split(' ');
@@ -1232,68 +1293,6 @@ namespace SIPOH.Views
 
 
         //AQUI EMPIEZA EL INSERT EXHORTO
-
-        //public static class StorageFolio
-        //{
-        //    public static (int? folioNuevo, int? idFolio, int? idAsunto) EjecutarControlAsignarFolio(SqlTransaction transaction, int idJuzgado, string tipoDocumento, string nuevoNumero, string tipoAsunto)
-        //    {
-        //        // Primero, ejecutamos el procedimiento almacenado AC_AsignarFolio
-        //        using (SqlCommand cmd = new SqlCommand("AC_AsignarFolio", transaction.Connection, transaction))
-        //        {
-        //            cmd.CommandType = CommandType.StoredProcedure;
-
-        //            // Parámetros de entrada
-        //            cmd.Parameters.AddWithValue("@IdJuzgado", idJuzgado);
-        //            cmd.Parameters.AddWithValue("@TipoDocumento", tipoDocumento);
-
-        //            // Ejecutar el procedimiento almacenado
-        //            SqlDataReader reader = cmd.ExecuteReader();
-
-        //            // Si hay resultados
-        //            if (reader.HasRows)
-        //            {
-        //                while (reader.Read())
-        //                {
-        //                    int folioNuevo = reader.GetInt32(0);  // Captura el valor del folio nuevo
-        //                    int idFolio = reader.GetInt32(1);  // Captura el valor del idFolio
-        //                    Debug.WriteLine($"Folio nuevo obtenido: {folioNuevo}, IdFolio obtenido: {idFolio}");
-
-        //                    // Luego, ejecutamos el procedimiento almacenado AC_verificar_disponibilidad_folio_en_PAsunto
-        //                    using (SqlCommand cmd2 = new SqlCommand("AC_verificar_disponibilidad_folio_en_PAsunto", transaction.Connection, transaction))
-        //                    {
-        //                        cmd2.CommandType = CommandType.StoredProcedure;
-
-        //                        // Parámetros de entrada
-        //                        cmd2.Parameters.AddWithValue("@NuevoNumero", nuevoNumero);
-        //                        cmd2.Parameters.AddWithValue("@IdJuzgado", idJuzgado);
-        //                        cmd2.Parameters.AddWithValue("@TipoAsunto", tipoAsunto);
-
-        //                        // Ejecutar el procedimiento almacenado
-        //                        var result = cmd2.ExecuteScalar();
-
-        //                        // Si el resultado es nulo, significa que no hay un número de documento replicado
-        //                        if (result == null)
-        //                        {
-        //                            return (folioNuevo, idFolio, null);
-        //                        }
-
-        //                        // Si el resultado no es nulo, devuelve el IdAsunto
-        //                        return (folioNuevo, idFolio, (int)result);
-        //                    }
-        //                }
-        //            }
-
-        //            // Si no hay resultados, devuelve null
-        //            return (null, null, null);
-        //        }
-        //    }
-        //}
-
-
-
-
-
-
         protected void btnGuardarDatosJudiciales_Click(object sender, EventArgs e)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
@@ -1397,6 +1396,7 @@ namespace SIPOH.Views
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Exito", "EjemploExito();", true);
                     LimpiarYRestablecerPanel();
+                    OpExhorto.Enabled = false;
                     //ScriptManager.RegisterStartupScript(this, this.GetType(), "ImprimirScript", "imprimirTicket();", true);
 
 
@@ -1861,13 +1861,6 @@ namespace SIPOH.Views
         //AQUI ACABA EL INSERT EXHORTO
 
 
-
-
-
-
-
-
-
         //AQUI EMPIEZA EL INSERT DESPACHO
 
 
@@ -1965,7 +1958,7 @@ namespace SIPOH.Views
                     InsertExhorto.Style.Add("display", "block");
 
                     // Generar el ticket
-                    string ticket = CrearTicketSELLO();
+                    string ticket = CrearTicketSELLO2();
 
                     // Insertar el ticket en el div
                     TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
@@ -1973,7 +1966,8 @@ namespace SIPOH.Views
                     // Ejecutar los scripts
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Exito", "EjemploExito();", true);
-                    LimpiarYRestablecerPanel();
+                    LimpiarYRestablecerPanel2();
+                    OpExhorto.Enabled = false;
                     //ScriptManager.RegisterStartupScript(this, this.GetType(), "ImprimirScript", "imprimirTicket();", true);
 
 
@@ -1993,7 +1987,7 @@ namespace SIPOH.Views
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
                     //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Limpiar", "limpiarFormularioInsert();", true);
                     //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
-                    LimpiarYRestablecerPanel();
+                    LimpiarYRestablecerPanel2();
                 }
                 finally
                 {
@@ -2007,7 +2001,7 @@ namespace SIPOH.Views
         private int InsertarEnPAsunto2(SqlConnection conn, SqlTransaction transaction)
         {
             string Numero = Session["FolioNuevoInicial"] as string;
-            int IdJuzgado = ObtenerIdJuzgadoDesdeSesion();
+            int IdJuzgado = ObtenerIdJuzgadoDesdeSesion2();
 
             string fIngresoTexto = fecha2.Text;
             DateTime fIngreso;
@@ -2078,8 +2072,8 @@ namespace SIPOH.Views
                 {
                     // Obtén los datos de las celdas de la fila
                     string nombreCompleto = row.Cells[0].Text;
-                    string genero = row.Cells[1].Text;
-                    string tipoParte = row.Cells[2].Text;
+                    string genero = row.Cells[1].Text.Substring(0, 1).ToUpper();
+                    string tipoParte = row.Cells[2].Text.Substring(0, 1).ToUpper();
 
                     // Desconcatena el nombre
                     string[] nombres = nombreCompleto.Split(' ');
@@ -2111,7 +2105,6 @@ namespace SIPOH.Views
                         apParte = nombres[2];
                         amParte = nombres[3];
                     }
-
 
                     // Realizar la inserción en P_PartesAsunto
                     string query = "INSERT INTO P_PartesAsunto (IdAsunto, Nombre, APaterno, AMaterno, Genero, TipoParte, Alias) VALUES (@IdAsunto, @Nombre, @APaterno, @AMaterno, @Genero, @TipoParte, NULL);";
@@ -2259,20 +2252,6 @@ namespace SIPOH.Views
                 }
             }
         }
-
-        //private void ActualizarFolios2(SqlConnection conn, SqlTransaction transaction, int idJuzgado)
-        //{
-        //    string query = @"
-        //    UPDATE [SIPOH].[dbo].[P_Folios]
-        //    SET Folio = Folio + 1, frecuencia = frecuencia + 1
-        //    WHERE IdJuzgado = @IdJuzgado AND Tipo = 'C'";
-
-        //    using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
-        //    {
-        //        cmd.Parameters.AddWithValue("@IdJuzgado", idJuzgado);
-        //        cmd.ExecuteNonQuery();
-        //    }
-        //}
 
         private int ObtenerIdUsuarioDesdeSesion2()
         {
@@ -2425,7 +2404,7 @@ namespace SIPOH.Views
 
         protected void btnImprimir_Click2(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ImprimirScript", "imprimirTicket();", true);
         }
         // Termina desarrollo de sello
         private void LimpiarYRestablecerPanel2()
@@ -2554,7 +2533,7 @@ namespace SIPOH.Views
                     InsertExhorto.Style.Add("display", "block");
 
                     // Generar el ticket
-                    string ticket = CrearTicketSELLO();
+                    string ticket = CrearTicketSELLO3();
 
                     // Insertar el ticket en el div
                     TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
@@ -2562,7 +2541,8 @@ namespace SIPOH.Views
                     // Ejecutar los scripts
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Exito", "EjemploExito();", true);
-                    LimpiarYRestablecerPanel();
+                    LimpiarYRestablecerPanel3();
+                    OpExhorto.Enabled = false;
                     //ScriptManager.RegisterStartupScript(this, this.GetType(), "ImprimirScript", "imprimirTicket();", true);
 
 
@@ -2582,7 +2562,7 @@ namespace SIPOH.Views
                     ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Cerrar", "CerrarConfirmacion();", true);
                     //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Limpiar", "limpiarFormularioInsert();", true);
                     //ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "Recarga", "Recargar();", true);
-                    LimpiarYRestablecerPanel();
+                    LimpiarYRestablecerPanel3();
                 }
                 finally
                 {
@@ -2596,7 +2576,7 @@ namespace SIPOH.Views
         private int InsertarEnPAsunto3(SqlConnection conn, SqlTransaction transaction)
         {
             string Numero = Session["FolioNuevoInicial"] as string;
-            int IdJuzgado = ObtenerIdJuzgadoDesdeSesion();
+            int IdJuzgado = ObtenerIdJuzgadoDesdeSesion3();
 
             string fIngresoTexto = fecha3.Text;
             DateTime fIngreso;
@@ -2667,8 +2647,8 @@ namespace SIPOH.Views
                 {
                     // Obtén los datos de las celdas de la fila
                     string nombreCompleto = row.Cells[0].Text;
-                    string genero = row.Cells[1].Text;
-                    string tipoParte = row.Cells[2].Text;
+                    string genero = row.Cells[1].Text.Substring(0, 1).ToUpper();
+                    string tipoParte = row.Cells[2].Text.Substring(0, 1).ToUpper();
 
                     // Desconcatena el nombre
                     string[] nombres = nombreCompleto.Split(' ');
@@ -2700,7 +2680,6 @@ namespace SIPOH.Views
                         apParte = nombres[2];
                         amParte = nombres[3];
                     }
-
 
                     // Realizar la inserción en P_PartesAsunto
                     string query = "INSERT INTO P_PartesAsunto (IdAsunto, Nombre, APaterno, AMaterno, Genero, TipoParte, Alias) VALUES (@IdAsunto, @Nombre, @APaterno, @AMaterno, @Genero, @TipoParte, NULL);";
@@ -3027,6 +3006,19 @@ namespace SIPOH.Views
             Panel3.Visible = false;
         }
         //AQUI ACABA EL INSERT REQUISITORIA
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         protected void GenerarOtro_Click(object sender, EventArgs e)
