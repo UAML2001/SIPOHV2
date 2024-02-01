@@ -2018,7 +2018,7 @@ namespace SIPOH.Views
                 throw new FormatException("La fecha ingresada no tiene el formato correcto.");
             }
 
-            string tAsunto = "D";
+            string tAsunto = "E";
             int digital = 0;
             string fCaptura = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             //string fCaptura = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
@@ -2593,7 +2593,7 @@ namespace SIPOH.Views
                 throw new FormatException("La fecha ingresada no tiene el formato correcto.");
             }
 
-            string tAsunto = "R";
+            string tAsunto = "E";
             int digital = 0;
             string fCaptura = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             //string fCaptura = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
