@@ -127,8 +127,10 @@
                                                 </asp:TemplateField>
                                             </Columns>
                                         </asp:GridView>
-                                    </div>
+                                       
 
+                                    </div>
+                                   
                                     <div id="divrelacionar" runat="server">
                                         <asp:Label ID="lbltituloRelacionCausa" runat="server" CssClass="textoTablasArriba">
                                             <h2 class="textoTablasArriba"><i class="bi bi-table"> Relacionar Causas</i>
@@ -154,7 +156,10 @@
                                                             <label class="form-check-label" for="CheckJuicioOral">
                                                                 Juicio Oral
                                                             </label>
+                                                             
                                                         </div>
+                                                          <asp:HiddenField ID="HiddenTipo" runat="server"
+                                                                  Value='' />
                                                     </div>
                                                 </div>
                                                 <div id="divAcusatorioRelacionar" runat="server" style="display: none;">
@@ -274,7 +279,9 @@
                                         </asp:GridView>
 
                                     </div>
-
+                                     <div class="row">
+                                         <asp:Label ID="lblMensajeSinDatos" runat="server" Text="" Visible="false" CssClass="alert alert-info"></asp:Label>
+                                    </div>
 
 
 

@@ -60,13 +60,11 @@
         <asp:BoundField DataField="TipoExpediente" HeaderText="Tipo Expediente">
             <HeaderStyle CssClass="bg-success text-white" />
         </asp:BoundField>
-        <asp:BoundField DataField="Proviene" HeaderText="Proviene">
-            <HeaderStyle CssClass="bg-success text-white" />
-        </asp:BoundField>
+       
         <asp:TemplateField>
             <HeaderStyle CssClass="bg-success text-white" />
             <ItemTemplate>
-                <asp:Button ID="btnVerDetalles3" runat="server" CommandName="VerDetalles" CommandArgument='<%# Eval("IdAsunto") %>' Text="Ver" CssClass="btn btn-secondary" />
+                <asp:Button ID="btnVerDetalles3" runat="server" CommandName="VerDetalles" CommandArgument='<%# Eval("IdEjecucion") %>' Text="Ver" CssClass="btn btn-secondary" />
             </ItemTemplate>
         </asp:TemplateField>
     </Columns>

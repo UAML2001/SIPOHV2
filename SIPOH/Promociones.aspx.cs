@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 using System.Text;
 using static SIPOH.Views.InicialAcusatorio;
 using System.Diagnostics;
-using static SIPOH.Views.InicialTradicional; 
+using static SIPOH.Views.InicialTradicional;
 
 namespace SIPOH
 {
@@ -150,6 +150,10 @@ namespace SIPOH
                 if (ViewState["IdEjecucionPrimerGrid"] != null &&
                    int.TryParse(ViewState["IdEjecucionPrimerGrid"].ToString(), out int idEjecucion))
                 {
+                    HiddenTipo.Value = "";
+                    CheckJAcusatorio.Checked = false;
+                    CheckJTradicional.Checked = false;
+                    CheckJuiciOral.Checked = false;
                     VerDetalles(idEjecucion);
                 }
                 else
@@ -175,98 +179,43 @@ namespace SIPOH
         //radio buttons de relacion en juzgado acusatorio o tradicional ocultar divs
         protected void juzgadosRelacionar_CheckedChanged(object sender, EventArgs e)
         {
+            
             if (CheckJAcusatorio.Checked)
             {
+                HiddenTipo.Value = "C";
                 divAcusatorioRelacionar.Style.Add("display", "block");
                 divTradicionalRelacionar.Style.Add("display", "none");
-                divJuicioOralRelacionar.Style.Add("display", "none"); // Asumiendo que este es el ID del tercer div
+                divJuicioOralRelacionar.Style.Add("display", "none");
             }
             else if (CheckJTradicional.Checked)
             {
+                HiddenTipo.Value = "T";
                 divTradicionalRelacionar.Style.Add("display", "block");
                 divAcusatorioRelacionar.Style.Add("display", "none");
-                divJuicioOralRelacionar.Style.Add("display", "none"); // Asumiendo que este es el ID del tercer div
+                divJuicioOralRelacionar.Style.Add("display", "none"); 
             }
-            else if (CheckJuiciOral.Checked) // Esta es la nueva condición para el tercer botón de radio
+            else if (CheckJuiciOral.Checked) 
             {
+                HiddenTipo.Value = "JO";
                 divJuicioOralRelacionar.Style.Add("display", "block");
                 divAcusatorioRelacionar.Style.Add("display", "none");
                 divTradicionalRelacionar.Style.Add("display", "none");
             }
-        }
-        //----------------------------------------- ACUSATORIO -------------------------------------------------------------
-        //CODIGO PARA MOSTRAR EN EL SELECT DE RELACION CAUSAS ACUSATORIO
-        private void CargarJuzgadosAcusatorio()
-        {
-            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                con.Open();
-                int circuito = Convert.ToInt32(HttpContext.Current.Session["IdCircuito"]);
 
-                using (SqlCommand cmd = new SqlCommand("Ejecucion_Cat_JuzgadosConTipoYSubtipo", con))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdCircuito", circuito);
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            ListItem item = new ListItem(dr["Nombre"].ToString(), dr["IdJuzgado"].ToString());
-                            JuzgadoAcusatorio.Items.Add(item);
-                        }
-                    }
-                }
-            }
-        }
-        //BOTON DE AGREGAR A TABLA EN ACUSATORIO:
-        protected void btnAgregarAcusatorio_Click(object sender, EventArgs e)
-        {
-            try
+            if (ViewState["IdEjecucionPrimerGrid"] != null)
             {
-                // Obtener valores de los controles de interfaz
-                string juzgadoValor = Request.Form[JuzgadoAcusatorio.UniqueID];
-                if (string.IsNullOrEmpty(juzgadoValor) || juzgadoValor == "Seleccionar")
-                {
-                    MostrarMensajeError("Por favor, selecciona un juzgado.");
-                    return;
-                }
-                // Convertir el valor a entero
-                int juzgado = Convert.ToInt32(juzgadoValor);
-                string numero = inputCausaNuc.Value;
-                // Obtener IdAsunto
-                int idAsunto = ObtenerIdAsunto(juzgado, numero);
-                if (idAsunto == -1)
-                {
-                    MostrarMensajeError("Verifica que la causa sea correcta o pertenezca a ese juzgado");
-                    return;
-                }
-                // Obtener IdEjecucion de ViewState
                 int idEjecucion = Convert.ToInt32(ViewState["IdEjecucionPrimerGrid"]);
-                // Insertar relación en la base de datos
-                if (!RelacionarCausaConEjecucion(idAsunto, idEjecucion))
-                {
-                    MostrarMensajeError("Puede que la causa ya exista en la base de datos o verifique que sea la causa correcta en el juzgado seleccionado");
-                    return;
-                }
-                // Actualizar GridView
                 VerDetalles(idEjecucion);
-                string mensaje = "Se relaciono la CAUSA|NUC con el numero de ejecucion correctamente";
-                string script = $"mostrarToast('{mensaje}');";
-                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
             }
-            catch (FormatException)
+            else
             {
-                MostrarMensajeError("El valor seleccionado en el juzgado no es válido.");
+                MostrarMensajeToast("No se pudo obtener la informacion en la tabla");
             }
-            catch (Exception ex)
-            {
-                MostrarMensajeError("Ocurrió un error: " + ex.Message);
-            }
+
         }
-        //CODIGO PARA INSERTAR EN P_EJECUCIONASUNTO POR STORAGE RELACIONARCAUSAPROMOCION
-        private bool RelacionarCausaConEjecucion(int idAsunto, int idEjecucion)
+
+        //---------------------------- INSERT DE RELACION CAUSA A NO EJECUCION ----------------------------------------------
+        private bool RelacionarCausaConEjecucion(int idAsunto, int idEjecucion, string tipoAsuntoEsperado)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             bool result = false;
@@ -278,6 +227,7 @@ namespace SIPOH
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
                     cmd.Parameters.AddWithValue("@IdEjecucion", idEjecucion);
+                    cmd.Parameters.AddWithValue("@TipoAsuntoEsperado", tipoAsuntoEsperado);
 
                     con.Open();
                     int rowsAffected = cmd.ExecuteNonQuery();
@@ -317,8 +267,111 @@ namespace SIPOH
 
             return idAsunto;
         }
+        private bool ValidarExistenciaDeCausa(string numero, int juzgado)
+        {
+            bool existe = false;
+            string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
 
-        //----------------------------------------- TRADICIONAL -----------------------------------------------------------
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Ejecucion_ValidarAsunto", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Numero", numero);
+                    cmd.Parameters.AddWithValue("@IdJuzgado", juzgado);
+
+                    con.Open();
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && Convert.ToInt32(result) == 1)
+                    {
+                        existe = true;
+                    }
+                }
+            }
+
+            return existe;
+        }
+
+        //----------------------------------------- ACUSATORIO -------------------------------------------------------------
+        //CODIGO PARA MOSTRAR EN EL SELECT DE RELACION CAUSAS ACUSATORIO
+        private void CargarJuzgadosAcusatorio()
+        {
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                int circuito = Convert.ToInt32(HttpContext.Current.Session["IdCircuito"]);
+
+                using (SqlCommand cmd = new SqlCommand("Ejecucion_Cat_JuzgadosConTipoYSubtipo", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdCircuito", circuito);
+                    cmd.Parameters.AddWithValue("@Tipo", 'a');
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            ListItem item = new ListItem(dr["Nombre"].ToString(), dr["IdJuzgado"].ToString());
+                            JuzgadoAcusatorio.Items.Add(item);
+                        }
+                    }
+                }
+            }
+        }
+        //BOTON DE AGREGAR A TABLA EN ACUSATORIO:
+        protected void btnAgregarAcusatorio_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string juzgadoValor = Request.Form[JuzgadoAcusatorio.UniqueID];
+                if (string.IsNullOrEmpty(juzgadoValor) || juzgadoValor == "Seleccionar")
+                {
+                    MostrarMensajeError("Por favor, selecciona un juzgado.");
+                    return;
+                }
+                int juzgado = Convert.ToInt32(juzgadoValor);
+                string numero = inputCausaNuc.Value;
+                // Validar si existe la causa
+                bool causaExiste = ValidarExistenciaDeCausa(numero, juzgado);
+                if (!causaExiste)
+                {
+                    MostrarMensajeError("La CAUSA|NUC no existe en el sistema para el juzgado seleccionado, Favor de verificarlo.");
+                    return;
+                }
+                // Obtener IdAsunto
+                int idAsunto = ObtenerIdAsunto(juzgado, numero);
+                if (idAsunto == -1)
+                {
+                    MostrarMensajeError("No se pudo obtener el folio del asunto, verifica que la causa sea correcta o pertenezca a ese juzgado");
+                    return;
+                }
+                // Obtener IdEjecucion de ViewState
+                int idEjecucion = Convert.ToInt32(ViewState["IdEjecucionPrimerGrid"]);
+
+                // Insertar relación en la base de datos
+                if (!RelacionarCausaConEjecucion(idAsunto, idEjecucion, "C"))
+                {
+                    MostrarMensajeError("Puede que la causa ya exista en la base de datos o verifique que sea la causa correcta en el juzgado seleccionado y el tipo de asunto.");
+                    return;
+                }
+                // Actualizar GridView
+                VerDetalles(idEjecucion);
+                string mensaje = "Se relacionó la CAUSA|NUC con el número de ejecución correctamente";
+                string script = $"mostrarToast('{mensaje}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+            }
+            catch (FormatException)
+            {
+                MostrarMensajeError("El valor seleccionado en el juzgado no es válido.");
+            }
+            catch (Exception ex)
+            {
+                MostrarMensajeError("Ocurrió un error: " + ex.Message);
+            }
+        }
+        //CODIGO PARA INSERTAR EN P_EJECUCIONASUNTO POR STORAGE RELACIONARCAUSAPROMOCION
+      
+        //----------------------------------------- TRADICIONAL -------------------------------------------------------------
         //CHANGE JUXGADOS TRADICIONALES 
         protected void DistritoTradicional_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -335,7 +388,7 @@ namespace SIPOH
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdDistrito", distritoId);
-
+                    cmd.Parameters.AddWithValue("@Opcion", 2);
                     conn.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -387,11 +440,19 @@ namespace SIPOH
 
                 string numero = inputCausaTradicional.Value;
 
+                // Validar si existe la causa
+                bool causaExiste = ValidarExistenciaDeCausa(numero, juzgado);
+                if (!causaExiste)
+                {
+                    MostrarMensajeError("La CAUSA no existe en el sistema para el juzgado seleccionado.");
+                    return;
+                }
+
                 // Obtener IdAsunto
                 int idAsunto = ObtenerIdAsunto(juzgado, numero);
                 if (idAsunto == -1)
                 {
-                    MostrarMensajeError("Verifica que la CAUSA sea correcta o pertenezca al juzgado seleccionado");
+                    MostrarMensajeError("No se pudo obtener el folio del asunto, verifica que la causa sea correcta o pertenezca a ese juzgado");
                     return;
                 }
 
@@ -399,15 +460,15 @@ namespace SIPOH
                 int idEjecucion = Convert.ToInt32(ViewState["IdEjecucionPrimerGrid"]);
 
                 // Insertar relación en la base de datos
-                if (!RelacionarCausaConEjecucion(idAsunto, idEjecucion))
+                if (!RelacionarCausaConEjecucion(idAsunto, idEjecucion, "T"))
                 {
-                    MostrarMensajeError("Puede que la causa ya exista en la base de datos o verifique que sea la causa correcta en el juzgado seleccionado");
+                    MostrarMensajeError("Puede que la causa ya exista en la base de datos o verifique que sea la causa correcta en el juzgado seleccionado y el tipo de asunto.");
                     return;
                 }
 
                 // Actualizar GridView
                 VerDetalles(idEjecucion);
-                string mensaje = "Se relaciono la CAUSA con el numero de ejecucion correctamente";
+                string mensaje = "Se relacionó la CAUSA con el número de ejecución correctamente";
                 string script = $"mostrarToast('{mensaje}');";
                 ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
             }
@@ -420,7 +481,6 @@ namespace SIPOH
                 MostrarMensajeError("Ocurrió un error: " + ex.Message);
             }
         }
-
         //------------------------------------------ JUICIO ORAL -----------------------------------------------------------
         private void CargarJuzgadosJuicioOral()
         {
@@ -434,7 +494,7 @@ namespace SIPOH
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdCircuito", circuito);
-
+                    cmd.Parameters.AddWithValue("@Tipo", 'a');
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         while (dr.Read())
@@ -449,7 +509,53 @@ namespace SIPOH
         //CODIGO BOTON DE AGREGAR JUICIO ORAL AL GRID PRINCIPAL
         protected void btnAgregarJuicioOral_Click(object sender, EventArgs e)
         {
-            MostrarMensajeToast("Se ha presionado agregar JUICIO ORAL");
+            try
+            {
+                string juzgadoValor = Request.Form[JuzgadoJuicioOral.UniqueID];
+                if (string.IsNullOrEmpty(juzgadoValor) || juzgadoValor == "Seleccionar")
+                {
+                    MostrarMensajeError("Por favor, selecciona un juzgado.");
+                    return;
+                }
+                int juzgado = Convert.ToInt32(juzgadoValor);
+                string numero = inputNumeroJuicio.Value;
+
+                // Validar si existe la causa
+                bool causaExiste = ValidarExistenciaDeCausa(numero, juzgado);
+                if (!causaExiste)
+                {
+                    MostrarMensajeError("El Juicio Oral no existe en el sistema para el juzgado seleccionado.");
+                    return;
+                }
+
+                int idAsunto = ObtenerIdAsunto(juzgado, numero);
+                if (idAsunto == -1)
+                {
+                    // Si no se encuentra el IdAsunto después de validar su existencia, manejar el error
+                    MostrarMensajeError("No se pudo obtener el folio del asunto, verifica que la causa sea correcta o pertenezca a ese juzgado");
+                    return;
+                }
+                int idEjecucion = Convert.ToInt32(ViewState["IdEjecucionPrimerGrid"]);
+
+                if (!RelacionarCausaConEjecucion(idAsunto, idEjecucion, "JO"))
+                {
+                    MostrarMensajeError("Puede que el juicio ya exista en la base de datos o verifique que sea el juicio correcto en el juzgado seleccionado y el tipo de asunto");
+                    return;
+                }
+
+                VerDetalles(idEjecucion);
+                string mensaje = "Se relacionó el Juicio Oral con el número de ejecución correctamente";
+                string script = $"mostrarToast('{mensaje}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+            }
+            catch (FormatException)
+            {
+                MostrarMensajeError("El valor seleccionado en el juzgado no es válido.");
+            }
+            catch (Exception ex)
+            {
+                MostrarMensajeError("Ocurrió un error: " + ex.Message);
+            }
         }
         //------------------------------------ SEGUNDO GRID DE DETALLES -----------------------------------------------------
         //CODIGO DE VER DETALLES DE LA CAUSA CONSUMIENDO Ejecucion_MostrarCausasRelacionadas
@@ -464,6 +570,7 @@ namespace SIPOH
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdEjecucion", idEjecucion);
+                    cmd.Parameters.AddWithValue("@TipoAsunto", HiddenTipo.Value);
                     con.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -473,31 +580,49 @@ namespace SIPOH
             }
             GridViewDetalles.DataSource = dt;
             GridViewDetalles.DataBind();
+            bool tieneDatos = dt.Rows.Count > 0;
             tituloTablaPromociones.Visible = dt.Rows.Count > 0;
             tituloDetallesCausa.Visible = dt.Rows.Count > 0;
             insertarPromoventeAnexos.Style.Add("display", dt.Rows.Count > 0 ? "block" : "none");
+            lblMensajeSinDatos.Visible = !tieneDatos;
+            if (!tieneDatos)
+            {
+                lblMensajeSinDatos.Text = "No se encontraron datos.";
+            }
         }
         //CODIGO PARA BORRAR RELACION DE CAUSAS A EJEUCION EN EL SEGUNDO GRID
         protected void BorrarCausa_Click(object sender, EventArgs e)
         {
-            Button btn = (Button)sender;
-            int idAsunto = Convert.ToInt32(btn.CommandArgument);
-            // Obtener IdEjecucion de ViewState
-            int idEjecucion = Convert.ToInt32(ViewState["IdEjecucionPrimerGrid"]);
-            string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                using (SqlCommand cmd = new SqlCommand("Ejecucion_EliminarEjecucionAsunto", con))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdEjecucion", idEjecucion);
-                    cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            VerDetalles(idEjecucion);
+            // Obtener el conteo de registros actualmente en la GridView
+            int conteoRegistros = GridViewDetalles.Rows.Count;
 
+            // Verificar si hay más de un registro antes de permitir la eliminación
+            if (conteoRegistros > 1)
+            {
+                Button btn = (Button)sender;
+                int idAsunto = Convert.ToInt32(btn.CommandArgument);
+                // Obtener IdEjecucion de ViewState
+                int idEjecucion = Convert.ToInt32(ViewState["IdEjecucionPrimerGrid"]);
+                string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("Ejecucion_EliminarEjecucionAsunto", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@IdEjecucion", idEjecucion);
+                        cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                VerDetalles(idEjecucion);
+            }
+            else
+            {
+                string mensaje = "No puede eliminar la ultima causa relacionada a este numero de ejecucion";
+                string script = $"toastInfo('{mensaje}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+            }
         }
         //--------------------------------------------------ANEXOS------------------------------------------------------------
         private void CargarAnexos()
@@ -628,6 +753,7 @@ namespace SIPOH
                 e.Row.Cells[0].Style.Add("display", "none");
             }
         }
+        //--------------------------------------------- INSERT ANEXOS --------------------------------------------------------
         //CODIGO BOTON DE INSERCION HACIA 
         //protected void btnGuardarPromocion_Click(object sender, EventArgs e)
         //{
@@ -683,13 +809,13 @@ namespace SIPOH
         //                }
         //            }
         //            transaction.Commit();
-        //             ScriptManager.RegisterStartupScript(
-        //                this.UpdatePanelPromociones,
-        //                this.UpdatePanelPromociones.GetType(),
-        //                "CerrarModalGuardarDatos2",
-        //                "CerrarModalGuardarDatos2();",
-        //                true
-        //            );
+        //            ScriptManager.RegisterStartupScript(
+        //               this.UpdatePanelPromociones,
+        //               this.UpdatePanelPromociones.GetType(),
+        //               "CerrarModalGuardarDatos2",
+        //               "CerrarModalGuardarDatos2();",
+        //               true
+        //           );
         //            string mensajeExito = "¡Se guardaron los datos de la promocion exitoamente!.";
         //            ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastExito", $"mostrarToast('{mensajeExito}');", true);
         //            DatosSello datosSello = new DatosSello
@@ -858,13 +984,13 @@ namespace SIPOH
             ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrartoastWarning", script, true);
         }
         //CODIGO PARA LAS LISTAS DE ANEXOS
-        //private List<Anexo> ObtenerAnexosDesdeViewState()
+        //private List<AnexoPromocion> ObtenerAnexosDesdeViewState()
         //{
         //    // Transforma los datos de anexos en ViewState a una lista de Anexo
         //    List<Sala> salas = ViewState["anexos"] as List<Sala>;
         //    return salas?.Select(s => new Anexo { Descripcion = s.NombreSala, Cantidad = Convert.ToInt32(s.NumeroToca) }).ToList();
         //}
-        //CODIGO NUEVO DE OBTENER DATOS DEL SELLO
+        ////CODIGO NUEVO DE OBTENER DATOS DEL SELLO
         //public class DatosSello
         //{
         //    public string Juzgado { get; set; }
@@ -880,7 +1006,7 @@ namespace SIPOH
         //    }
         //    public int TotalAnexos { get; set; }
         //}
-        // fin de nueva obtencion de datos sello
+        ////fin de nueva obtencion de datos sello
         //private List<string> DividirTextoEnLineas(string texto, int maxCaracteresPorLinea)
         //{
         //    List<string> lineas = new List<string>();
@@ -937,6 +1063,6 @@ namespace SIPOH
         //    return ticket.ToString();
         //}
 
-        //
+// fin 
     }
 }

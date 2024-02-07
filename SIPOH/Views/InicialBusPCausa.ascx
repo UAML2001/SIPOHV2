@@ -50,7 +50,7 @@
 <asp:Label ID="tituloPartesCausa" runat="server" CssClass="textoTablasArriba">
         <h2 class="textoTablasArriba"><i class="bi bi-table">Consulta partes de la causa</i></h2>
 </asp:Label>
-<asp:GridView ID="GridViewPCausa" CssClass="table custom-gridview" runat="server" OnRowCommand="GridViewPCausa_RowCommand" OnRowDataBound="GridViewPCausa_RowDataBound" AutoGenerateColumns="False" AllowPaging="True" PageSize="1" OnPageIndexChanging="GridViewPCausa_PageIndexChanging">
+<asp:GridView ID="GridViewPCausa" CssClass="table custom-gridview" runat="server" OnRowCommand="GridViewPCausa_RowCommand" OnRowDataBound="GridViewPCausa_RowDataBound" AutoGenerateColumns="False" AllowPaging="True" PageSize="5" OnPageIndexChanging="GridViewPCausa_PageIndexChanging">
     <Columns>
         <asp:BoundField DataField="NoEjecucion" HeaderText="N° Ejecución">
            <HeaderStyle CssClass="bg-success text-white" />
@@ -79,7 +79,7 @@
         <asp:TemplateField>
             <HeaderStyle CssClass="bg-success text-white" />
             <ItemTemplate>
-                <asp:Button ID="btnVerDetalles" runat="server" CommandName="VerDetalles" CommandArgument='<%# Eval("IdAsunto") %>' Text="Ver" CssClass="btn btn-secondary" />
+                <asp:Button ID="btnVerDetalles" runat="server" CommandName="VerDetalles" CommandArgument='<%# Eval("IdEjecucion") %>' Text="Ver" CssClass="btn btn-secondary" />
             </ItemTemplate>
         </asp:TemplateField>
 

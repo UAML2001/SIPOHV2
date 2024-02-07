@@ -62,7 +62,6 @@ namespace SIPOH.Views
                 inputJuzgadoProcedencia.Items.Add(new ListItem("Seleccionar", ""));
             }
         }
-
         private void CargarJuzgados(int idDistrito)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
@@ -74,6 +73,7 @@ namespace SIPOH.Views
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdDistrito", idDistrito);
+                    cmd.Parameters.AddWithValue("@Opcion", 1);
 
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -89,7 +89,6 @@ namespace SIPOH.Views
                 }
             }
         }
-
         protected void btnBuscarPCausa3_Click(object sender, EventArgs e)
         {
             try
@@ -124,6 +123,7 @@ namespace SIPOH.Views
                 ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastError", $"toastError('{mensajeError}');", true);
             }
         }
+
         private DataTable BindDataToGridView(int circuito, int opcion, string idJuzgado, string numeroCausa)
         {
             DataTable dt = new DataTable();
@@ -156,19 +156,17 @@ namespace SIPOH.Views
 
             return dt;
         }
-
-
-        protected void VerDetalles(int idAsunto)
+        protected void VerDetalles(int IdEjecucion)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             StringBuilder htmlTable = new StringBuilder();
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("Ejecucion_ModuloConsultasDetalle", con))
+                using (SqlCommand cmd = new SqlCommand("Ejecucion_MostrarCausasRelacionadas", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                    cmd.Parameters.AddWithValue("@IdEjecucion", IdEjecucion);
 
                     con.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -229,8 +227,8 @@ namespace SIPOH.Views
         {
             if (e.CommandName == "VerDetalles")
             {
-                int idAsunto = Convert.ToInt32(e.CommandArgument);
-                VerDetalles(idAsunto);
+                int IdEjecucion = Convert.ToInt32(e.CommandArgument);
+                VerDetalles(IdEjecucion);
             }
         }
         protected void GridViewPCausa3_PageIndexChanging(object sender, GridViewPageEventArgs e)
@@ -246,7 +244,6 @@ namespace SIPOH.Views
             GridViewPCausa3.DataSource = dt;
             GridViewPCausa3.DataBind();
         }
-
         protected void GridViewPCausa3_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             // Lógica para RowDataBound si es necesario

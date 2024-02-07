@@ -71,7 +71,8 @@ namespace SIPOH.Views
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdCircuito", circuito);
-
+                    cmd.Parameters.AddWithValue("@Tipo", 'a');
+                    
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
                         while (dr.Read())

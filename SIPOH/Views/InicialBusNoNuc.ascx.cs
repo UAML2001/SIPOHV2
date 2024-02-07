@@ -34,6 +34,7 @@ namespace SIPOH.Views
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdDistrito", idDistrito);
+                    cmd.Parameters.AddWithValue("@Opcion", 1);
 
                     SqlDataReader dr = cmd.ExecuteReader();
                     while (dr.Read())
@@ -102,17 +103,17 @@ namespace SIPOH.Views
             }
         }
 
-        protected void VerDetalles(int idAsunto)
+        protected void VerDetalles(int IdEjecucion)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             StringBuilder htmlTable = new StringBuilder();
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("Ejecucion_ModuloConsultasDetalle", con))
+                using (SqlCommand cmd = new SqlCommand("Ejecucion_MostrarCausasRelacionadas", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                    cmd.Parameters.AddWithValue("@IdEjecucion", IdEjecucion);
 
                     con.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
@@ -174,8 +175,8 @@ namespace SIPOH.Views
         {
             if (e.CommandName == "VerDetalles")
             {
-                int idAsunto = Convert.ToInt32(e.CommandArgument);
-                VerDetalles(idAsunto);
+                int IdEjecucion = Convert.ToInt32(e.CommandArgument);
+                VerDetalles(IdEjecucion);
             }
         }
         protected void GridViewPCausa4_PageIndexChanging(object sender, GridViewPageEventArgs e)

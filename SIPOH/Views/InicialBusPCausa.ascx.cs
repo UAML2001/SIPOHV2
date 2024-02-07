@@ -89,8 +89,8 @@ namespace SIPOH.Views
         {
             if (e.CommandName == "VerDetalles")
             {
-                int idAsunto = Convert.ToInt32(e.CommandArgument);
-                VerDetalles(idAsunto);
+                int IdEjecucion = Convert.ToInt32(e.CommandArgument);
+                VerDetalles(IdEjecucion);
             }
         }
         protected void btnCancelar_Click(object sender, EventArgs e)
@@ -166,17 +166,17 @@ namespace SIPOH.Views
             }
         }
         //termina busqueda de tabla
-        protected void VerDetalles(int idAsunto)
+        protected void VerDetalles(int IdEjecucion)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             StringBuilder htmlTable = new StringBuilder();
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("Ejecucion_ModuloConsultasDetalle", con))
+                using (SqlCommand cmd = new SqlCommand("Ejecucion_MostrarCausasRelacionadas", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                    cmd.Parameters.AddWithValue("@IdEjecucion", IdEjecucion);
 
                     con.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())

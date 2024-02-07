@@ -141,6 +141,15 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.RadioButton CheckJuiciOral;
 
         /// <summary>
+        /// Control HiddenTipo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField HiddenTipo;
+
+        /// <summary>
         /// Control divAcusatorioRelacionar.
         /// </summary>
         /// <remarks>
@@ -319,6 +328,15 @@ namespace SIPOH
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridViewDetalles;
+
+        /// <summary>
+        /// Control lblMensajeSinDatos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensajeSinDatos;
 
         /// <summary>
         /// Control insertarPromoventeAnexos.

@@ -51,7 +51,7 @@
         <asp:TemplateField>
             <HeaderStyle CssClass="bg-success text-white" />
             <ItemTemplate>
-                <asp:Button ID="btnVerDetalles2" runat="server" CommandName="VerDetalles" CommandArgument='<%# Eval("IdAsunto") %>' Text="Ver" CssClass="btn btn-secondary" />
+                <asp:Button ID="btnVerDetalles2" runat="server" CommandName="VerDetalles" CommandArgument='<%# Eval("IdEjecucion") %>' Text="Ver" CssClass="btn btn-secondary" />
             </ItemTemplate>
         </asp:TemplateField>
     </Columns>

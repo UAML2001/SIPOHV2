@@ -92,6 +92,7 @@ namespace SIPOH.Views
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdDistrito", distritoId);
+                    cmd.Parameters.AddWithValue("@Opcion", 2);
 
                     conn.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader())
