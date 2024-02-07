@@ -1,0 +1,48 @@
+﻿.disabled-select {
+    background-color: #f0f0f0; /* Cambia el color de fondo a un tono gris */
+    color: #888; /* Cambia el color del texto a gris */
+}
+.disabled-input {
+    background-color: #f0f0f0; /* Cambia el color de fondo a un tono gris */
+    color: #888; /* Cambia el color del texto a gris */
+}
+.modalExitoso {
+    background-color: #00BB7F !important;
+    color: white;
+}
+.modalError {
+    background-color: #d35043 !important;
+    color: white;
+}
+.modalGuardar {
+    background-color: #ffc107 !important;
+    color: white;
+}
+.textoTablasArriba {
+    font-size:15px;
+    color:#00BB7F !important;
+}
+.DatosModal{
+    font-size:16px;
+    font-weight:600;
+}
+.custom-gridview {
+    font-size: 14px !important;
+}
+.boton-relacionar {
+    color: green !important;
+}
+.boton-borrar {
+    color: green !important;
+}
+/* Aumentando la especificidad */
+#gridRelacionarCausas .boton-relacionar {
+    color: #00BB7F ;
+}
+
+#gridRelacionarCausas .boton-borrar {
+    color: red !important;
+}
+
+
+
