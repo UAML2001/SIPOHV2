@@ -986,7 +986,7 @@ namespace SIPOH.Views
                 sexos = "Masculino";
             }
 
-            DataTable dt = GetDataTable2();
+            DataTable dt = GetDataTable3();
             DataRow newRow = dt.NewRow();
 
             // Corrige la asignación para concatenar los valores con un espacio
@@ -995,8 +995,8 @@ namespace SIPOH.Views
             newRow["Genero"] = sexos;
             dt.Rows.Add(newRow);
 
-            gvPartes.DataSource = dt;
-            gvPartes.DataBind();
+            gvPartes2.DataSource = dt;
+            gvPartes2.DataBind();
 
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos();", true);
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
@@ -1138,7 +1138,7 @@ namespace SIPOH.Views
                 sexos = "Masculino";
             }
 
-            DataTable dt = GetDataTable2();
+            DataTable dt = GetDataTable4();
             DataRow newRow = dt.NewRow();
 
             // Corrige la asignación para concatenar los valores con un espacio
@@ -1147,8 +1147,8 @@ namespace SIPOH.Views
             newRow["Genero"] = sexos;
             dt.Rows.Add(newRow);
 
-            gvPartes.DataSource = dt;
-            gvPartes.DataBind();
+            gvPartes3.DataSource = dt;
+            gvPartes3.DataBind();
 
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos();", true);
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
