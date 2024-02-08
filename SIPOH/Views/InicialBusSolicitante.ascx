@@ -8,8 +8,8 @@
     <div class="col-12 d-flex flex-column">
         <label for="inputDetalleSolicitante5" class="form-label text-secondary">Solicitante</label>
         <div class="d-flex w-100">
-            <select class="form-select form-select-sm flex-grow-1" id="selectDetalleSolicitante5" runat="server">
-                <option value="">Seleccionar...</option>
+            <select class="form-select form-select-sm flex-grow-1 mayusculas" id="selectDetalleSolicitante5" runat="server">
+                <option value="">Seleccionar</option>
             </select>
             <asp:Button ID="btnBuscarPCausa5" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm ml-2" OnClick="btnBuscarPCausa5_Click" />
             <button id="btnLimpiar5" runat="server" type="button" class="btn btn-outline-danger btn-sm ml-2" OnServerClick="btnLimpiar5_Click">Limpiar</button>

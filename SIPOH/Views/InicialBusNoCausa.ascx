@@ -10,21 +10,21 @@
         <asp:DropDownList ID="InputDistritoProcedencia" runat="server" 
                           AutoPostBack="True" 
                           OnSelectedIndexChanged="InputDistritoProcedencia_SelectedIndexChanged" 
-                          CssClass="form-select form-select-sm">
+                          CssClass="form-select form-select-sm mayusculas">
             <asp:ListItem Value="" Text="Seleccionar" Selected="True"></asp:ListItem>
         </asp:DropDownList>
     </div>
     <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
         <label for="inputIncomJuzgado" class="form-label text-secondary">Juzgado de Procedencia</label>
         <asp:DropDownList ID="inputJuzgadoProcedencia" runat="server" 
-                          CssClass="form-select form-select-sm">
+                          CssClass="form-select form-select-sm mayusculas">
             <asp:ListItem Value="" Text="Seleccionar" Selected="True"></asp:ListItem>
         </asp:DropDownList>
     </div>
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
             <label for="inputNuc" class="form-label text-secondary">Numero de Causa</label>
             <div class="input-group">
-                <input type="text" class="form-control form-control-sm" id="inputNucBusqueda" runat="server" maxlength="9" onblur="padLeadingZeros(this)" placeholder="">
+                <input type="text" class="form-control form-control-sm mayusculas" id="inputNucBusqueda" runat="server" maxlength="9" onblur="padLeadingZeros(this)" placeholder="">
                 <div class="input-group-append">
                      <asp:Button ID="btnBuscarPCausa3" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm ml-2" OnClick="btnBuscarPCausa3_Click" />
                     <button id="btnLimpiar3" runat="server" type="button" class="btn btn-outline-danger btn-sm ml-2" OnServerClick="btnLimpiar3_Click">Limpiar</button>

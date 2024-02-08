@@ -11,6 +11,11 @@
                 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
             <link rel="stylesheet" type="text/css"
                 href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+            <style type="text/css">
+                .mayusculas {
+                    text-transform: uppercase;
+                }
+            </style>
             <div>
                 <h1 style="margin-left: 5%" class="h5">Iniciales <i class="fas fa-angle-right"></i><span id="dataSplash"
                         class="text-success fw-bold">Iniciales</span> </h1>

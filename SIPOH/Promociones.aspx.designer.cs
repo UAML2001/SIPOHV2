@@ -33,6 +33,15 @@ namespace SIPOH
         protected global::System.Web.UI.UpdatePanel UpdatePanelPromociones;
 
         /// <summary>
+        /// Control btnGuardarAcusatorio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGuardarAcusatorio;
+
+        /// <summary>
         /// Control primerRowPromocion.
         /// </summary>
         /// <remarks>
@@ -310,6 +319,15 @@ namespace SIPOH
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnJuicioOral;
+
+        /// <summary>
+        /// Control rowGridDetalles.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl rowGridDetalles;
 
         /// <summary>
         /// Control tituloDetallesCausa.

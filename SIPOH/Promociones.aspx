@@ -2,6 +2,12 @@
     CodeBehind="Promociones.aspx.cs" Inherits="SIPOH.Promociones" %>
 
     <asp:Content ID="ContentPromociones7" ContentPlaceHolderID="ContentEPromociones" runat="server">
+        
+<style type="text/css">
+    .mayusculas {
+        text-transform: uppercase;
+    }
+</style>
         <div class="container">
             <asp:ScriptManager ID="ScriptManagerPromociones" runat="server"></asp:ScriptManager>
             <link href="Content/css/Consignaciones.css" rel="stylesheet" />
@@ -39,9 +45,9 @@
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-outline-danger"
                                                         data-bs-dismiss="modal">Cancelar</button>
-                                                   <%-- <asp:Button ID="btnGuardarAcusatorio" runat="server"
+                                                   <asp:Button ID="btnGuardarAcusatorio" runat="server"
                                                         CssClass="btn btn-outline-warning"
-                                                        OnClick="btnGuardarPromocion_Click" Text="Guardar" />--%>
+                                                        OnClick="btnGuardarPromocion_Click" Text="Guardar" />
                                                 </div>
                                             </div>
                                         </div>
@@ -51,7 +57,7 @@
                                         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                             <label for="inputRadicacion" class="form-label text-secondary">Nombre de
                                                 Juzgado</label>
-                                            <select class="form-select form-select-sm" id="selectBusJuzgados"
+                                            <select class="form-select form-select-sm mayusculas" id="selectBusJuzgados"
                                                 runat="server">
                                                 <option selected>Seleccionar</option>
                                             </select>
@@ -60,7 +66,7 @@
                                             <label for="LabelEjecucion" class="form-label text-secondary">Número de
                                                 Ejecución</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control form-control-sm"
+                                                <input type="text" class="form-control form-control-sm mayusculas"
                                                     id="inpuBusEjecucion" runat="server" maxlength="9" onblur="padLeadingZeros(this)" placeholder="">
                                                 <div class="input-group-append">
                                                     <asp:Button ID="btnBuscarPromocion" runat="server" Text="Buscar"
@@ -168,21 +174,21 @@
                                                         
                                                             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                                 <label for="lbljuzgadoProcedencia" class="form-label text-secondary">Juzgado de Procedencia</label>
-                                                            <select class="form-select form-select-sm" id="JuzgadoAcusatorio" runat="server" autopostback="true">
+                                                            <select class="form-select form-select-sm mayusculas" id="JuzgadoAcusatorio" runat="server" autopostback="true">
                                                                 <option value="Seleccionar">Seleccionar</option>
                                                             </select>
                                                             </div>
                                                             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                                 <label for="lblCausaNuc" class="form-label text-secondary">Causa | NUC</label>
-                                                                <select class="form-select form-select-sm" id="inputIncomJuzgado" clientidmode="Static" runat="server" onchange="mostrarValorSeleccionado(this)">
+                                                                <select class="form-select form-select-sm mayusculas" id="inputIncomJuzgado" clientidmode="Static" runat="server" onchange="mostrarValorSeleccionado(this)">
                                                                     <option selected>Causa</option>
                                                                     <option value="2">NUC</option>
                                                                 </select>
                                                             </div>
                                                             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
-                                                                <label for="lblNumeroCausa" class="form-label text-secondary">Número de Causa</label>
+                                                                <label for="lblNumeroCausa" class="form-label text-secondary mayusculas">Número de Causa</label>
                                                                 <div class="input-group">
-                                                                    <input type="text" class="form-control form-control-sm" id="inputCausaNuc" clientidmode="Static" runat="server" minlength="9" maxlength="12" onblur="aplicarFormatoSegunSeleccion(this)">
+                                                                    <input type="text" class="form-control form-control-sm mayusculas" id="inputCausaNuc" clientidmode="Static" runat="server" minlength="9" maxlength="12" onblur="aplicarFormatoSegunSeleccion(this)">
                                                                     <div class="input-group-append">
                                                                         <asp:Button ID="btnAgregarAcusatorio" runat="server" Text="Agregar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnAgregarAcusatorio_Click" />
                                                                     </div>
@@ -197,20 +203,20 @@
                                                     <div class="row" id="RowJuzgadosTradicional" runat="server">
                                                         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                             <label class="form-label text-secondary">Distrito de Procedencia</label>
-                                                            <asp:DropDownList ID="ddlDistritoTradicional" runat="server" CssClass="form-select form-select-sm" AutoPostBack="true" OnSelectedIndexChanged="DistritoTradicional_SelectedIndexChanged">
+                                                            <asp:DropDownList ID="ddlDistritoTradicional" runat="server" CssClass="form-select form-select-sm mayusculas" AutoPostBack="true" OnSelectedIndexChanged="DistritoTradicional_SelectedIndexChanged">
                                                                 <asp:ListItem Value="0">Seleccionar</asp:ListItem>
                                                             </asp:DropDownList>
                                                         </div>
                                                         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                             <label class="form-label text-secondary">Juzgado de Procedencia</label>
-                                                            <asp:DropDownList ID="ddlJuzgadoTradicional" runat="server" CssClass="form-select form-select-sm">
+                                                            <asp:DropDownList ID="ddlJuzgadoTradicional" runat="server" CssClass="form-select form-select-sm mayusculas">
                                                                 <asp:ListItem Text="Seleccionar" Value="0" Selected="True" />
                                                             </asp:DropDownList>
                                                         </div>
                                                         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                             <label class="form-label text-secondary">Número de Causa</label>
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control form-control-sm" id="inputCausaTradicional" runat="server" maxlength="9" onblur="padLeadingZeros(this)" placeholder="">
+                                                                <input type="text" class="form-control form-control-sm mayusculas" id="inputCausaTradicional" runat="server" maxlength="9" onblur="padLeadingZeros(this)" placeholder="">
                                                                 <div class="input-group-append">
                                                                     <asp:Button ID="btnAgregarTradicional" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnAgregarTradicional_Click" Text="Agregar" />
                                                                 </div>
@@ -223,14 +229,14 @@
                                                     <div class="row" id="row1JucioOral" runat="server">
                                                         <div class="mb-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                             <label for="lbljuzgadoProcedencia" class="form-label text-secondary">Juzgado de Procedencia</label>
-                                                            <select class="form-select form-select-sm" id="JuzgadoJuicioOral" runat="server" autopostback="true">
+                                                            <select class="form-select form-select-sm mayusculas" id="JuzgadoJuicioOral" runat="server" autopostback="true">
                                                                 <option value="Seleccionar">Seleccionar</option>
                                                             </select>
                                                         </div>
                                                         <div class="mb-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                             <label for="lblNumeroJuicio" class="form-label text-secondary">Número de Juicio</label>
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control form-control-sm" id="inputNumeroJuicio" clientidmode="Static" runat="server" maxlength="9" onblur="padLeadingZeros(this)">
+                                                                <input type="text" class="form-control form-control-sm mayusculas" id="inputNumeroJuicio" clientidmode="Static" runat="server" maxlength="9" onblur="padLeadingZeros(this)">
                                                                 <div class="input-group-append">
                                                                     <asp:Button ID="btnJuicioOral" runat="server" Text="Agregar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnAgregarJuicioOral_Click" />
                                                                 </div>
@@ -242,7 +248,7 @@
                                             </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="row" id="rowGridDetalles" runat="server">
                                         <asp:Label ID="tituloDetallesCausa" runat="server" CssClass="textoTablasArriba">
                                             <h2 class="textoTablasArriba"><i class="bi bi-table"> Causas Relacionadas</i>
                                             </h2>
@@ -295,14 +301,14 @@
                                                 <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                     <label for="labelPromoNombre"
                                                         class="form-label text-secondary">Promovente Nombre(s)</label>
-                                                    <input type="text" class="form-control form-control-sm"
+                                                    <input type="text" class="form-control form-control-sm mayusculas"
                                                         id="inPromoventeNombre" runat="server"
                                                         onkeyup="verificarCampos()">
                                                 </div>
                                                 <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                     <label for="LabelPromoApellidoP"
                                                         class="form-label text-secondary">Apellido Paterno</label>
-                                                    <input type="text" class="form-control form-control-sm"
+                                                    <input type="text" class="form-control form-control-sm mayusculas"
                                                         id="inPromoventePaterno" runat="server"
                                                         onkeyup="verificarCampos()">
                                                 </div>
@@ -310,7 +316,7 @@
                                                     <label for="LabelPromoApellidoM"
                                                         class="form-label text-secondary">Apellido Materno</label>
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control form-control-sm"
+                                                        <input type="text" class="form-control form-control-sm mayusculas"
                                                             id="inPromoventeMaterno" clientidmode="Static"
                                                             runat="server" onkeyup="verificarCampos()">
                                                     </div>
@@ -322,21 +328,21 @@
                                             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                                                 <label class="form-label-sm text-secondary">Anexos</label>
                                                 <asp:DropDownList ID="CatAnexosDD" runat="server"
-                                                    CssClass="form-select form-select-sm" AutoPostBack="true"
+                                                    CssClass="form-select form-select-sm mayusculas" AutoPostBack="true"
                                                     OnSelectedIndexChanged="CatAnexosDD_SelectedIndexChanged">
                                                     <asp:ListItem Text="Seleccionar" />
                                                 </asp:DropDownList>
                                             </div>
                                             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                                                 <label class="form-label text-secondary">Otro Anexo</label>
-                                                <input type="text" id="OtroAnexo" class="form-control form-control-sm"
+                                                <input type="text" id="OtroAnexo" class="form-control form-control-sm mayusculas"
                                                     runat="server" clientidmode="Static" />
                                             </div>
                                             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                 <label class="form-label text-secondary">Cantidad</label>
                                                 <div class="input-group">
                                                     <input type="number" id="CantidadInput"
-                                                        class="form-control form-control-sm" runat="server"
+                                                        class="form-control form-control-sm mayusculas" runat="server"
                                                         clientidmode="Static">
                                                     <div class="input-group-append">
                                                         <asp:Button ID="AgregarBtn" runat="server" Text="Agregar"
@@ -356,10 +362,10 @@
                                                     AutoGenerateColumns="False" OnRowDeleting="BorrarFila"
                                                     OnRowDataBound="tablaDatos_RowDataBound">
                                                     <Columns>
-                                                        <asp:BoundField DataField="NombreSala" HeaderText="Anexo">
+                                                        <asp:BoundField DataField="NombreAnexo" HeaderText="Anexo">
                                                             <HeaderStyle CssClass="bg-success text-white" />
                                                         </asp:BoundField>
-                                                        <asp:BoundField DataField="NumeroToca" HeaderText="Cantidad">
+                                                        <asp:BoundField DataField="CantidadAnexo" HeaderText="Cantidad">
                                                             <HeaderStyle CssClass="bg-success text-white" />
                                                         </asp:BoundField>
                                                         <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar"

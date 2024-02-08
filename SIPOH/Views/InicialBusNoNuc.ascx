@@ -10,14 +10,14 @@
 <div class="row">
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
             <label for="inputJuzgadoProcedencia" class="form-label text-secondary">Juzgado de Procedencia</label>
-              <select class="form-select form-select-sm" id="InputDistritoProcedencia" runat="server">
+              <select class="form-select form-select-sm mayusculas" id="InputDistritoProcedencia" runat="server">
                 <option selected>Seleccionar</option>
             </select>
         </div>
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
             <label for="inputNuc" class="form-label text-secondary">Numero Unico de Caso</label>
             <div class="input-group">
-                <input type="text" class="form-control form-control-sm" id="inputNucBusqueda" runat="server" maxlength="12" placeholder="">
+                <input type="text" class="form-control form-control-sm mayusculas" id="inputNucBusqueda" runat="server" maxlength="12" placeholder="">
                 <div class="input-group-append">
                    <asp:Button ID="btnBuscarPCausa4" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm ml-2" OnClick="btnBuscarPCausa4_Click" />
                     <button id="btnLimpiar4" runat="server" type="button" class="btn btn-outline-danger btn-sm ml-2" OnServerClick="btnLimpiar4_Click">Limpiar</button>

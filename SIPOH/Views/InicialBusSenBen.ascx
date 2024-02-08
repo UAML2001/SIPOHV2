@@ -8,15 +8,15 @@
     <div class="row">
         <div class="col-sm-6 col-md-4">
             <label for="inputNombreBeneficiario2" class="form-label text-secondary">Nombre(s) Beneficiario</label>
-            <input type="text" class="form-control form-control-sm" id="inputNombreBeneficiario2" runat="server" />
+            <input type="text" class="form-control form-control-sm mayusculas" id="inputNombreBeneficiario2" runat="server" />
         </div>
         <div class="col-sm-6 col-md-3">
             <label for="inputApellidoPaterno2" class="form-label text-secondary">Apellido Paterno</label>
-            <input type="text" class="form-control form-control-sm" id="inputApellidoPaterno2" runat="server" />
+            <input type="text" class="form-control form-control-sm mayusculas" id="inputApellidoPaterno2" runat="server" />
         </div>
         <div class="col-sm-6 col-md-3">
             <label for="inputApellidoMaterno2" class="form-label text-secondary">Apellido Materno</label>
-            <input type="text" class="form-control form-control-sm" id="inputApellidoMaterno2" runat="server" />
+            <input type="text" class="form-control form-control-sm mayusculas" id="inputApellidoMaterno2" runat="server" />
         </div>
         <div class="col-sm-6 col-md-2 d-flex align-items-end justify-content-center">
             <asp:Button ID="btnBuscarPCausa2" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnBuscarPCausa2_Click" />

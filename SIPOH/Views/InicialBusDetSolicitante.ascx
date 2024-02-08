@@ -9,7 +9,7 @@
     <div class="col-12 d-flex flex-column">
         <label for="inputDetalleSolicitante6" class="form-label text-secondary">Detalle del Solicitante</label>
         <div class="d-flex w-100">
-            <input type="text" class="form-control form-control-sm flex-grow-1" id="inputDetalleSolicitante6" runat="server" />
+            <input type="text" class="form-control form-control-sm flex-grow-1 mayusculas" id="inputDetalleSolicitante6" runat="server" />
             <asp:Button ID="btnBuscarPCausa6" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm ml-2" OnClick="btnBuscarPCausa6_Click" />
             <button id="btnLimpiar6" runat="server" type="button" class="btn btn-outline-danger btn-sm ml-2" OnServerClick="btnLimpiar6_Click">Limpiar</button>
         </div>

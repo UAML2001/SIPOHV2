@@ -330,7 +330,7 @@ namespace SIPOH.Views
             {
                 foreach (TableCell cell in e.Row.Cells)
                 {
-                    cell.CssClass = "text-secondary";
+                    cell.CssClass = "text-secondary text-uppercase";
                 }
             }
         }
@@ -340,7 +340,7 @@ namespace SIPOH.Views
             {
                 foreach (TableCell cell in e.Row.Cells)
                 {
-                    cell.CssClass = "text-secondary";
+                    cell.CssClass = "text-secondary text-uppercase";
                 }
             }
         }
@@ -350,7 +350,7 @@ namespace SIPOH.Views
             {
                 foreach (TableCell cell in e.Row.Cells)
                 {
-                    cell.CssClass = "text-secondary";
+                    cell.CssClass = "text-secondary text-uppercase";
                 }
             }
         }
