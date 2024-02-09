@@ -47,13 +47,25 @@
         ventanaImpresion.print();
         
     }
+    function validarFecha() {
+        var inputFechaRecepcion = document.getElementById('<%= inputFechaRecepcion.ClientID %>');
+        var fechaSeleccionada = new Date(inputFechaRecepcion.value);
+        var fechaActual = new Date();
+        fechaActual.setHours(0, 0, 0, 0);
+
+        if (fechaSeleccionada > fechaActual) {
+            //toastError("!Estas loco!, o ¿Vives en el futuro?");
+            toastError("No se puede seleccionar una fecha posterior a hoy.");
+            inputFechaRecepcion.value = "";
+        }
+    }
     function seleccionarVictima(victima) {
         var inputPromovente = document.getElementById('<%= inputPromovente.ClientID %>');
-        inputPromovente.value = victima;
+        inputPromovente.value +=victima + ", ";
     }
     function seleccionarImputado(imputado) {
         var inputPromovente = document.getElementById('<%= inputPromovente.ClientID %>');
-        inputPromovente.value = imputado;
+        inputPromovente.value += imputado + ", ";
     }
     function mostrarOcultarDescripcion() {
         var dropdown = $("#<%= txtAnexosTipo.ClientID %>")
@@ -179,7 +191,7 @@
                     
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                         <label for="inputFechaRecepcion" class="form-label text-secondary"><b>Fecha de Recepción:</b></label>                                        
-                        <asp:TextBox runat="server" ID="inputFechaRecepcion" CssClass="form-control form-control-sm" TextMode="Date"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="inputFechaRecepcion" CssClass="form-control form-control-sm" TextMode="Date" onblur="validarFecha()"></asp:TextBox>
                     </div>
                 </div>
 
@@ -316,7 +328,6 @@
    
 </script>
 
-<script src="../Scripts/Ejecucion/formatoInput.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>

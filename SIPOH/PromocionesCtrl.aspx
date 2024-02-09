@@ -20,7 +20,7 @@
 </div>
         </div>
     
-            
+    <script src="Scripts/Ejecucion/formatoInput.js"></script>   
             <script>
                     toastr.options = {
                         closeButton: true,
