@@ -104,7 +104,7 @@ namespace SIPOH.Views
             if (valorSala.Equals("Seleccionar", StringComparison.OrdinalIgnoreCase))
             {
                 // Manejar el caso de opción "Seleccionar" seleccionada
-                string mensaje = "Debes seleccionar una sala válida";
+                string mensaje = "Debes seleccionar una sala valida";
                 string script = $"toastError('{mensaje}');";
                 ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
                 return; // Finaliza la ejecución de la función
@@ -232,7 +232,7 @@ namespace SIPOH.Views
             // Verificar si se seleccionó un juzgado válido
             if (juzgadoSeleccionado == "Seleccionar" || string.IsNullOrEmpty(juzgadoSeleccionado))
             {
-                string mensaje = "Por favor seleccione un juzgado, no puede estar vacio";
+                string mensaje = "Por favor seleccione un juzgado, no puede estar vacío";
                 string script = $"toastError('{mensaje}');";
                 ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
                 return; // Detener la ejecución adicional del método
@@ -241,7 +241,7 @@ namespace SIPOH.Views
             // Verificar si se proporcionó un número de causa
             if (string.IsNullOrEmpty(numeroCausaNuc))
             {
-                string mensaje = "Por favor seleccione un numero de causa valido";
+                string mensaje = "Por favor seleccione un número de CAUSA|NUC valido";
                 string script = $"toastError('{mensaje}');";
                 ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
                 return; // Detener la ejecución adicional del método
@@ -328,7 +328,7 @@ namespace SIPOH.Views
             }
             else
             {
-                lblResultado.Text = "El juzgado seleccionado no es válido.";
+                lblResultado.Text = "El juzgado seleccionado no es valido.";
             }
         }
 
@@ -389,7 +389,7 @@ namespace SIPOH.Views
                     {
                         GridView1.DataSource = null;
                         GridView1.DataBind();
-                        string mensaje = "No se encontro registro, puedes guardar un nuevo dato pero verifica antes que sea correcto.";
+                        string mensaje = "No se encontró registro, puedes guardar un nuevo dato pero verifica antes que sea correcto.";
                         string scriptToast = $"toastInfo('{mensaje}');";
                         ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
                     }
@@ -648,7 +648,7 @@ namespace SIPOH.Views
                             }
                             else
                             {
-                                System.Diagnostics.Debug.WriteLine("Error en el else de insertaranexos  "); // Manejar el caso en que el ID no se encuentre
+                                System.Diagnostics.Debug.WriteLine("Error anexos");
                             }
                         }
                     }
@@ -692,7 +692,7 @@ namespace SIPOH.Views
                         "CerrarModalGuardarDatos();",
                         true
                     );
-                    string mensaje = "Falto algun dato que es necesario para guardar revisa por favor";
+                    string mensaje = "Fallo el guardado de datos, verifica que la longitud de tus datos sea correcta";
                     string script = $"toastError('{mensaje}');";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
                 }
@@ -819,12 +819,12 @@ namespace SIPOH.Views
                 if (rowsAffected == 0)
                 {
                     // La inserción falló, mostrar un mensaje de error
-                    string mensaje = "Error al insertar en la tabla P_EjecucionAsunto.";
+                    string mensaje = "Error al guardar la relacion entre el Asunto y Ejecucion.";
                     string script = $"toastError('{mensaje}');";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastErrorScript", script, true);
 
                     // Puedes decidir si lanzar una excepción aquí para manejar el rollback en el bloque try-catch
-                    throw new Exception("Error al insertar en P_EjecucionAsunto");
+                    throw new Exception("Error al Guardar en Ejecucion Asunto");
                 }
             }
         }
@@ -1017,10 +1017,11 @@ namespace SIPOH.Views
             if (CheckSi.Checked)
             {
                 RegistroPartesIn.Style["display"] = "block";
+                divBotonBuscar.Style["display"] = "block";
             }
             else if (CheckNo.Checked)
             {
-                RegistroPartesIn.Style["display"] = "none";
+                divBotonBuscar.Style["display"] = "none";
             }
         }
         protected void btSiRegistro2_Click(object sender, EventArgs e)
@@ -1034,10 +1035,22 @@ namespace SIPOH.Views
         protected void CatAnexosDD_SelectedIndexChanged(object sender, EventArgs e)
         {
             OtroAnexo.Disabled = CatAnexosDD.SelectedValue != "OTRO";
+
         }
         protected void CatSolicitudDD_SelectedIndexChanged(object sender, EventArgs e)
         {
-            InputOtraSolicitud.Disabled = CatSolicitudDD.SelectedValue != "OTRO";
+            bool esOtroSeleccionado = CatSolicitudDD.SelectedValue == "OTRO";
+            InputOtraSolicitud.Disabled = !esOtroSeleccionado;
+
+            // Agregar o quitar el atributo "required" basado en la selección
+            if (esOtroSeleccionado)
+            {
+                InputOtraSolicitud.Attributes["required"] = "required";
+            }
+            else
+            {
+                InputOtraSolicitud.Attributes.Remove("required");
+            }
         }
         //fin nuevas funcionalidades
         //FUNCION QUE GUARDA DATOS QUE INSERTARA PARA LUEGO MOSTRAR EN EL INSERT

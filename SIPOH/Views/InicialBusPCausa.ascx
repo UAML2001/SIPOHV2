@@ -27,11 +27,11 @@
     <div class="row">
         <div class="col-sm-6 col-md-4">
             <label for="inputNombre" class="form-label text-secondary">Nombre(s) Parte</label>
-            <input type="text" class="form-control form-control-sm mayusculas" id="inputNombre" minlength="2" maxlength="250" runat="server" />
+            <input type="text" class="form-control form-control-sm mayusculas" id="inputNombre" maxlength="250" runat="server" />
         </div>
         <div class="col-sm-6 col-md-3">
             <label for="inputApellidoPaterno" class="form-label text-secondary">Apellido Paterno</label>
-            <input type="text" class="form-control form-control-sm mayusculas" maxlength="100" minlength="2" id="inputApellidoPaterno" runat="server" />
+            <input type="text" class="form-control form-control-sm mayusculas" maxlength="100" id="inputApellidoPaterno" runat="server" />
         </div>
         <div class="col-sm-6 col-md-3">
             <label for="inputApellidoMaterno" class="form-label text-secondary">Apellido Materno</label>

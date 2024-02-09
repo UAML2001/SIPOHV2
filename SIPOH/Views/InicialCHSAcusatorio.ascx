@@ -2,14 +2,14 @@
 <div class="row">
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
             <label for="inputRadicacion" class="form-label text-secondary">Juzgado de Procedencia</label>
-            <select class="form-select" id="inputRadicacion">
+            <select class="form-select form-select-sm" id="inputRadicacion">
                 <option selected>Seleccionar</option>
                 <option value="1">. . .</option>
             </select>
         </div>
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
             <label for="inputIncomJuzgado" class="form-label text-secondary">Causa | Nuc</label>
-            <select class="form-select" id="inputIncomJuzgado">
+            <select class="form-select form-select-sm" id="inputIncomJuzgado">
                 <option selected>Seleccionar</option>
                 <option value="1">. . .</option>
             </select>
@@ -17,7 +17,7 @@
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
             <label for="inputNuc" class="form-label text-secondary">Numero de Causa</label>
             <div class="input-group">
-                <input type="text" class="form-control" id="inputNuc" placeholder="0000/0000">
+                <input type="text" class="form-control form-control-sm mayusculas" id="inputNuc" placeholder="" maxlength="16" onblur="padLeadingZeros(this)">
                 <div class="input-group-append">
                     <button class="btn btn-outline-primary btn-sm" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -55,10 +55,6 @@
             </tbody>
         </table>
     </div>
-    <div class="nav-item d-flex justify-content-end mt-2">
-        <a class="nav-link btn btn-outline-secondary btn-sm rounded-pill mr-1" role="tab"><span class="fs-7">Anterior</span></a>
-        <a class="nav-link btn-secondary btn-sm rounded-circle mr-1 fs-7"><span class="fs-7">1</span></a>
-        <a class="nav-link btn btn-outline-secondary btn-sm rounded-pill" role="tab"><span class="fs-7">Siguiente</span></a>
-    </div>
+
 
 </div>

@@ -108,7 +108,7 @@
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
             <label for="inputNuc" class="form-label text-secondary">Número de Causa</label>
             <div class="input-group">
-                <input type="text" class="form-control form-control-sm mayusculas" id="inputNuc" ClientIDMode="Static" runat="server" minlength="9" maxlength="12" onblur="aplicarFormatoSegunSeleccion(this)">
+                <input type="text" class="form-control form-control-sm mayusculas" id="inputNuc" ClientIDMode="Static" runat="server" minlength="9" maxlength="16" onblur="aplicarFormatoSegunSeleccion(this)">
                 <div class="input-group-append">
                     <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnBuscar_Click" />
                 </div>
@@ -131,7 +131,7 @@
         <div class="mb-5 col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
             <label class="form-label text-secondary">Número de Toca</label>
             <div class="input-group">
-                <asp:TextBox ID="inputNumeroToca" runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="" onblur="padLeadingZeros(this)"></asp:TextBox>
+                <asp:TextBox ID="inputNumeroToca" runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="" onblur="padLeadingZeros(this)" MaxLength="9"></asp:TextBox>
                 <div class="input-group-append">
                     <asp:Button ID="btnAgregar" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="AgregarSalaATabla" Text="Agregar" />
                 </div>
@@ -140,7 +140,7 @@
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
             <label class="form-label text-secondary">Sentencia de Amparo Vinculada</label>
             <div class="input-group">
-                <asp:TextBox ID="inputSentencia" runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Busca Sentencia"></asp:TextBox>
+                <asp:TextBox ID="inputSentencia" runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Busca Sentencia" MaxLength="15"></asp:TextBox>
                 <div class="input-group-append">
                     <asp:Button ID="Button1" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="AgregarSentenciaATabla" Text="Agregar" />
                 </div>
@@ -207,17 +207,17 @@
     <div class="row">
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
             <label for="InputNombreBusqueda" class="form-label text-secondary">Nombre(s) Parte</label>
-            <input type="text" id="InputNombreBusqueda" class="form-control form-control-sm mayusculas" placeholder="" runat="server" />
+            <input type="text" id="InputNombreBusqueda" class="form-control form-control-sm mayusculas" placeholder="" maxlength="250" runat="server" />
         </div>
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
             <label for="InputApPaternoBusqueda" class="form-label text-secondary">Ap. Paterno Parte</label>
-            <input type="text" id="InputApPaternoBusqueda" class="form-control form-control-sm mayusculas" placeholder="" runat="server" />
+            <input type="text" id="InputApPaternoBusqueda" class="form-control form-control-sm mayusculas" placeholder="" maxlength="100" runat="server" />
         </div>
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
             <label for="inputNuc" class="form-label text-secondary">Ap. Materno de Causa</label>
             <div class="input-group">
-                <input type="text" id="inputApMaterno" class="form-control form-control-sm mayusculas" placeholder="" runat="server">
-                <div class="input-group-append">
+                <input type="text" id="inputApMaterno" class="form-control form-control-sm mayusculas" placeholder="" maxlength="100" runat="server">
+                <div class="input-group-append" id="divBotonBuscar" runat="server">
                     <asp:Button ID="BuscarPartes" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" OnClick="BuscarPartes_Click" />
                 </div>
             </div>
@@ -282,7 +282,7 @@
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                 <label class="form-label text-secondary">Detalle del Solicitante</label>
-                <input type="text" class="form-control form-control-sm mayusculas" id="detalleSolicitantes" runat="server"/>
+                <input type="text" class="form-control form-control-sm mayusculas" id="detalleSolicitantes" runat="server" maxlength="250"/>
             </div>
         </div>
         <div class="row">
@@ -294,7 +294,7 @@
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                 <label class="form-label text-secondary">Otra Solicitud</label>
-                <input type="text" id="InputOtraSolicitud" runat="server" class="form-control form-control-sm mayusculas" ClientIDMode="Static" />
+                <input type="text" id="InputOtraSolicitud" runat="server" class="form-control form-control-sm mayusculas" maxlength="250" ClientIDMode="Static" />
             </div>
         </div>
         <br />
@@ -307,12 +307,12 @@
             </div>
             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                 <label class="form-label text-secondary">Otro Anexo</label>
-                <input type="text" id="OtroAnexo" class="form-control form-control-sm mayusculas" runat="server" clientidmode="Static" />
+                <input type="text" id="OtroAnexo" class="form-control form-control-sm mayusculas" runat="server" maxlength="100" clientidmode="Static" />
             </div>
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                 <label  class="form-label text-secondary">Cantidad</label>
                 <div class="input-group">
-                    <input type="number" id="CantidadInput" class="form-control form-control-sm mayusculas" runat="server" ClientIDMode="Static">
+                    <input type="number" id="CantidadInput" class="form-control form-control-sm mayusculas" runat="server" max="1000" ClientIDMode="Static">
                     <div class="input-group-append">
                         <asp:Button ID="AgregarBtn" runat="server" Text="Agregar" CssClass="btn btn-outline-secondary btn-sm" OnClick="AgregarATabla" />
                     </div>
@@ -443,3 +443,4 @@
                }
            }, true);
        </script>
+

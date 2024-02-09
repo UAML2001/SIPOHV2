@@ -186,7 +186,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
-                                                                <label for="lblNumeroCausa" class="form-label text-secondary mayusculas">Número de Causa</label>
+                                                                <label for="lblNumeroCausa" class="form-label text-secondary">Número de Causa</label>
                                                                 <div class="input-group">
                                                                     <input type="text" class="form-control form-control-sm mayusculas" id="inputCausaNuc" clientidmode="Static" runat="server" minlength="9" maxlength="12" onblur="aplicarFormatoSegunSeleccion(this)">
                                                                     <div class="input-group-append">
@@ -303,14 +303,14 @@
                                                         class="form-label text-secondary">Promovente Nombre(s)</label>
                                                     <input type="text" class="form-control form-control-sm mayusculas"
                                                         id="inPromoventeNombre" runat="server"
-                                                        onkeyup="verificarCampos()">
+                                                        onkeyup="verificarCampos()" maxlength="90">
                                                 </div>
                                                 <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                     <label for="LabelPromoApellidoP"
                                                         class="form-label text-secondary">Apellido Paterno</label>
                                                     <input type="text" class="form-control form-control-sm mayusculas"
                                                         id="inPromoventePaterno" runat="server"
-                                                        onkeyup="verificarCampos()">
+                                                        onkeyup="verificarCampos()" maxlength="90">
                                                 </div>
                                                 <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                     <label for="LabelPromoApellidoM"
@@ -318,7 +318,7 @@
                                                     <div class="input-group">
                                                         <input type="text" class="form-control form-control-sm mayusculas"
                                                             id="inPromoventeMaterno" clientidmode="Static"
-                                                            runat="server" onkeyup="verificarCampos()">
+                                                            runat="server" onkeyup="verificarCampos()" maxlength="90">
                                                     </div>
                                                 </div>
                                            
@@ -336,14 +336,14 @@
                                             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                                                 <label class="form-label text-secondary">Otro Anexo</label>
                                                 <input type="text" id="OtroAnexo" class="form-control form-control-sm mayusculas"
-                                                    runat="server" clientidmode="Static" />
+                                                    runat="server" clientidmode="Static" maxlength="100" />
                                             </div>
                                             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                                 <label class="form-label text-secondary">Cantidad</label>
                                                 <div class="input-group">
                                                     <input type="number" id="CantidadInput"
                                                         class="form-control form-control-sm mayusculas" runat="server"
-                                                        clientidmode="Static">
+                                                        clientidmode="Static" max="1000">
                                                     <div class="input-group-append">
                                                         <asp:Button ID="AgregarBtn" runat="server" Text="Agregar"
                                                             CssClass="btn btn-outline-secondary btn-sm"
@@ -405,7 +405,7 @@
                                             <div
                                                 class="col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 d-flex justify-content-center">
                                                 <button class="btn btn-primary" onclick="recargarPagina()">Registrar
-                                                    otra inicial</button>
+                                                    otra promoción</button>
                                             </div>
                                         </div>
                                     </div>

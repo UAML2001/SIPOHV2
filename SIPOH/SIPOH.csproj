@@ -2222,6 +2222,7 @@
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatTipoSolicitudController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\P_CatSolicitanteController.cs" />
     <Compile Include="Controllers\AC_RegistroInicialJuicioOral\InicialJuicioOralController.cs" />
+    <Compile Include="Controllers\EJ_ConsultasHistoricasAcusatorio\ChAcusatorioController.cs" />
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

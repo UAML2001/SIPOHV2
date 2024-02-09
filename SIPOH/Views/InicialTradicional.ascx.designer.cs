@@ -357,6 +357,15 @@ namespace SIPOH.Views
         protected global::System.Web.UI.HtmlControls.HtmlInputText inputApMaternoTradicional;
 
         /// <summary>
+        /// Control divBotonBuscarTradicional.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divBotonBuscarTradicional;
+
+        /// <summary>
         /// Control BuscarPartesTradicional.
         /// </summary>
         /// <remarks>
@@ -447,13 +456,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.DropDownList CatSolicitudDDTradicional;
 
         /// <summary>
-        /// Control InputOtraSolicitud.
+        /// Control InputOtraSolicitudTradicional.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText InputOtraSolicitud;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText InputOtraSolicitudTradicional;
 
         /// <summary>
         /// Control CatAnexosDDTradicional.

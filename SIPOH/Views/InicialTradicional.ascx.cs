@@ -37,7 +37,7 @@ namespace SIPOH.Views
                 tituloSentencias.Visible = false;
                 //DESHABILITAR INPUTS INICIALMENTE
                 OtroAnexoTradicional.Disabled = true;
-                InputOtraSolicitud.Disabled = true;
+                InputOtraSolicitudTradicional.Disabled = true;
                 //INICIALIZAR DIV EN INVIISBLE
                 OcultarTradicional.Style["display"] = "none";
                 RegistroPartesInTradicional.Style["display"] = "none";
@@ -245,7 +245,7 @@ namespace SIPOH.Views
 
             if (valorSalaTradicional.Equals("Seleccionar", StringComparison.OrdinalIgnoreCase))
             {
-                MostrarMensajeError("Debes seleccionar una sala válida");
+                MostrarMensajeError("Debes seleccionar una sala valida");
                 return;
             }
 
@@ -473,7 +473,7 @@ namespace SIPOH.Views
             List<Sala> salasTradicional = ViewState["anexosTradicional"] as List<Sala> ?? new List<Sala>();
             if (valorAnexo.Equals("Seleccionar", StringComparison.OrdinalIgnoreCase))
             {
-                MostrarMensajeToast("Debes seleccionar una opción válida");
+                MostrarMensajeToast("Debes seleccionar una opción valida");
                 return;
             }
             if (!string.IsNullOrWhiteSpace(anexo) && int.TryParse(cantidad, out int cantidadNumerica) && cantidadNumerica > 0)
@@ -546,10 +546,11 @@ namespace SIPOH.Views
             if (CheckSiTradicional.Checked)
             {
                 RegistroPartesInTradicional.Style["display"] = "block";
+                divBotonBuscarTradicional.Style["display"] = "block";
             }
             else if (CheckNoTradicional.Checked)
             {
-                RegistroPartesInTradicional.Style["display"] = "none";
+                divBotonBuscarTradicional.Style["display"] = "none";
             }
         }
         protected void btSiRegistro_Click(object sender, EventArgs e)
@@ -567,7 +568,18 @@ namespace SIPOH.Views
 
         protected void CatSolicitudDDTradicional_SelectedIndexChanged(object sender, EventArgs e)
         {
-            InputOtraSolicitud.Disabled = CatSolicitudDDTradicional.SelectedValue != "OTRO";
+            bool esOtroSeleccionado = CatSolicitudDDTradicional.SelectedValue == "OTRO";
+            InputOtraSolicitudTradicional.Disabled = !esOtroSeleccionado;
+
+            // Similar al otro DropDownList, agregar o quitar el atributo "required"
+            if (esOtroSeleccionado)
+            {
+                InputOtraSolicitudTradicional.Attributes["required"] = "required";
+            }
+            else
+            {
+                InputOtraSolicitudTradicional.Attributes.Remove("required");
+            }
         }
         //FIN NUEVAS FUNCIONES
         private string ObtenerNombreJuzgadoPorID(string idJuzgado)
@@ -691,7 +703,7 @@ namespace SIPOH.Views
                             }
                             else
                             {
-                                System.Diagnostics.Debug.WriteLine("Error en el else de anexo  "); // Manejar el caso en que el ID no se encuentre
+                                System.Diagnostics.Debug.WriteLine("Error guardar anexo  "); // Manejar el caso en que el ID no se encuentre
                             }
                         }
                     }
@@ -738,7 +750,7 @@ namespace SIPOH.Views
                         "CerrarModalGuardarDatos();",
                         true
                     );
-                    string mensaje = "Falto algun dato que es necesario para guardar revisa por favor";
+                    string mensaje = "Fallo al guardar la inicial, por favor verifica la longitud de tus datos y que sean correctos";
                     string script = $"toastError('{mensaje}');";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
                 }
@@ -890,7 +902,7 @@ namespace SIPOH.Views
 
             //string idusuario= (string)Session["IdUsuario"];
             string detalleSolicitante = detalleSolicitantes.Value;
-            string otraSolicitud = InputOtraSolicitud.Value;
+            string otraSolicitud = InputOtraSolicitudTradicional.Value;
             string interno = siInterno.Checked ? "S" : "N"; // Asumiendo que solo hay dos opciones "S" o "N"
             string nombreBeneficiario = InputNombreBusquedaTradicional.Value;
             string apellidoPaternoBeneficiario = InputApPaternoBusquedaTradicional.Value;
@@ -1036,7 +1048,7 @@ namespace SIPOH.Views
             string nombreSolicitanteSeleccionado = CatSolicitantesDDTradicional.SelectedItem.Text;
             string nombreSolicitudSeleccionado = CatSolicitudDDTradicional.SelectedItem.Text;
             string detalleSolicitante = detalleSolicitantes.Value;
-            string otraSolicitud = InputOtraSolicitud.Value;
+            string otraSolicitud = InputOtraSolicitudTradicional.Value;
             string interno = siInterno.Checked ? "S" : "N";
             string numeroCausa = Session["NumeroCausa"] as string;
             //aqui ando
@@ -1069,7 +1081,7 @@ namespace SIPOH.Views
             lbldetalleSolicitante.Text = detalleSolicitante;
             lblotraSolicitud.Text = otraSolicitud;
             lblinterno.Text = interno;
-            ltTituloModal.Text = $"¿Quieres guardar los siguientes datos en la causa - {numeroCausa} ?";
+            ltTituloModal.Text = $"¿Quieres guardar los siguientes datos en la CAUSA - {numeroCausa} ?";
         }
         // recolectar datos fin
         //INICIO SELLO
@@ -1101,7 +1113,7 @@ namespace SIPOH.Views
             CatSolicitantesDDTradicional.ClearSelection();
             detalleSolicitantes.Value = "";
             CatSolicitudDDTradicional.ClearSelection();
-            InputOtraSolicitud.Value = "";
+            InputOtraSolicitudTradicional.Value = "";
             CatAnexosDDTradicional.ClearSelection();
             OtroAnexoTradicional.Value = "";
             CantidadInputTradicional.Value = "";
