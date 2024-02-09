@@ -129,7 +129,7 @@
     function valoresFinales() {
         copiarNUC();
         copiarTipoAsunto();
-        copiarRadicacion();
+        
         copiarFechaRecepcion();
         copiarNumeroFojas();
         copiarQuienIngresa();
@@ -149,13 +149,13 @@
     function copiarTipoAsunto() {
         var inputTipoAsunto = $("#<%= inputTipoAsunto.ClientID %>");
         var copyDropDownTipoAsunto = $("#<%= copyDropDownTipoAsunto.ClientID %>");
-
-        copyDropDownTipoAsunto.val(inputTipoAsunto.val());
+        
+        copyDropDownTipoAsunto.val(inputTipoAsunto.val() === 'C' ? 'CAUSA' : (inputTipoAsunto.val() === 'CP' ? 'CUPRE' : '') );
     }
     function copiarRadicacion() {
         var inputRadicacion = $("#<%= inputRadicacion.ClientID %>");
         var copyDropDownTipoSolicitud = $("#<%= copyDropDownTipoSolicitud.ClientID %>");
-        copyDropDownTipoSolicitud.val(inputRadicacion.val());
+        copyDropDownTipoSolicitud.val(inputRadicacion.text());
     }
     function copiarFechaRecepcion() {
         var inputFechaRecepcion = $("#<%= inputFechaRecepcion.ClientID %>");
@@ -170,7 +170,7 @@
     function copiarQuienIngresa() {
         var inputQuienIngresa = $("#<%= inputQuienIngresa.ClientID %>");
         var copyQuienIngresa = $("#<%= copyQuienIngresa.ClientID %>");
-        copyQuienIngresa.val(inputQuienIngresa.val());
+        copyQuienIngresa.val(inputQuienIngresa.val() === 'P' ? 'PARTICULAR' : (inputQuienIngresa.val() === 'O' ? 'OTRA PERSONA' : (inputQuienIngresa.val() === 'M' ? 'MP' : '')));
     }
     function copiarEspecificarNombre() {
         var inputNombreParticular = $("#<%= inputNombreParticular.ClientID %>");
@@ -180,13 +180,26 @@
     function copiarTipoRadicacion() {
         var inpuTipoRadicacion = $("#<%= inpuTipoRadicacion.ClientID %>");
         var copyTipoRadicacion = $("#<%= copyTipoRadicacion.ClientID %>");
-        copyTipoRadicacion.val(inpuTipoRadicacion.val());
+        copyTipoRadicacion.val(inpuTipoRadicacion.val() === 'C' ? 'C/DETENIDO' : (inpuTipoRadicacion.val() === 'S' ? 'S/DETENIDO' : ''));
     }
 
     function copiarObservacione() {
         var inputObservaciones = $("#<%= inputObservaciones.ClientID %>");
         var copyObservaciones = $("#<%= copyObservaciones.ClientID %>");
         copyObservaciones.val(inputObservaciones.val());
+    }
+
+    function validarFecha() {
+        var inputFechaRecepcion = document.getElementById('<%= inputFechaRecepcion.ClientID %>');
+        var fechaSeleccionada = new Date(inputFechaRecepcion.value);
+        var fechaActual = new Date();
+        fechaActual.setHours(0, 0, 0, 0); 
+
+        if (fechaSeleccionada > fechaActual) {
+            //toastError("!Estas loco!, o ¿Vives en el futuro?");
+            toastError("No se puede seleccionar una fecha posterior a hoy.");
+            inputFechaRecepcion.value = ""; 
+        }
     }
 
 
@@ -269,14 +282,17 @@
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inpuTipoSolicitud" class="form-label text-secondary">Tipo solicitud: </label>
 
-                    <asp:DropDownList runat="server" ID="inputRadicacion" CssClass="form-select form-select-sm text-secondary" AppendDataBoundItems="true">
+                    <asp:DropDownList runat="server" ID="inputRadicacion" CssClass="form-select form-select-sm text-secondary" AppendDataBoundItems="true" OnSelectedIndexChanged="inputRadicacion_SelectedIndexChanged" AutoPostBack="true">
                         <asp:ListItem Text="Selecciona una opción" Value="" />
                     </asp:DropDownList>
+
 
                 </div>
                 <div class=" mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inputFechaRecepcion" class="form-label text-secondary">Fecha de recepción</label>
-                    <asp:TextBox runat="server" ID="inputFechaRecepcion" CssClass="form-control form-control-sm" TextMode="Date"></asp:TextBox>
+                   <asp:TextBox runat="server" ID="inputFechaRecepcion" CssClass="form-control form-control-sm" TextMode="Date" onblur="validarFecha()"></asp:TextBox>
+
+
                 </div>
 
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
@@ -359,9 +375,9 @@
                                     <asp:Repeater ID="Repeater1" runat="server">
                                         <ItemTemplate>
                                             <tr>
-                                                <th scope="row" class=""><%# !string.IsNullOrEmpty(Eval("Nombre").ToString()) ? Eval("Nombre") : Eval("ApellidoPaterno") %></th>
-                                                <th class="text-secondary"><%# Eval("ApellidoPaterno") %> <%# Eval("ApellidoMaterno") %></th>
-                                                <td class="text-secondary "><%# Eval("Genero") %></td>
+                                                <th scope="row" class="text-uppercase"><%# !string.IsNullOrEmpty(Eval("Nombre").ToString()) ? Eval("Nombre") : Eval("ApellidoPaterno") %></th>
+                                                <th class="text-secondary text-uppercase"><%# Eval("ApellidoPaterno") %> <%# Eval("ApellidoMaterno") %></th>
+                                                <td class="text-secondary text-uppercase"><%# Eval("Genero").ToString().Equals("F") ? "FEMENINO" : (Eval("Genero").ToString().Equals("M") ? "MASCULINO" : "OTRO") %></td>
                                                 <td>
                                                     <asp:Button runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" OnClick="btnEliminarVictima" /></i></td>
                                             </tr>
@@ -396,9 +412,9 @@
                                     <asp:Repeater ID="Repeater2" runat="server">
                                         <ItemTemplate>
                                             <tr>
-                                                <th scope="row" class=""><%# Eval("NombreCulpado") %></th>
-                                                <th class="text-secondary"><%# Eval("APCulpado") %> <%# Eval("AMCulpado") %></th>
-                                                <td class="text-secondary "><%# Eval("GeneroCulpado") %></td>
+                                                <th scope="row" class="text-uppercase"><%# Eval("NombreCulpado") %></th>
+                                                <th class="text-secondary text-uppercase"><%# Eval("APCulpado") %> <%# Eval("AMCulpado") %></th>
+                                                <td class="text-secondary text-uppercase"><%# Eval("GeneroCulpado").ToString().Equals("F") ? "FEMENINO" : (Eval("GeneroCulpado").ToString().Equals("M") ? "MASCULINO" : "OTRO") %></td>
                                                 <td>
                                                     <asp:Button runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" OnClick="btnEliminarCulpado" /></td>
                                             </tr>
@@ -449,7 +465,7 @@
                                         <ItemTemplate>
                                             
                                             <tr>
-                                                <td class="text-secondary text-capitalize "><%# Eval("DescripcionDelito") %></td>
+                                                <td class="text-secondary text-uppercase "><%# Eval("DescripcionDelito") %></td>
                                                 <td class="">
                                                     <asp:Button runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" OnClick="btnEliminarDelito" />                                                    
                                                 </td>
@@ -503,7 +519,7 @@
                                     <asp:Repeater ID="Repeater3" runat="server">
                                         <ItemTemplate>
                                             <tr>
-                                                <th class="text-secondary"><%# Eval("DescripcionAnexo") %></th>
+                                                <th class="text-secondary text-uppercase"><%# Eval("DescripcionAnexo") %></th>
                                                 <td class="text-secondary"><%# Eval("CantidadAnexo") %></td>
                                                 <td>
                                                     <asp:Button runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" OnClick="btnEliminarAnexo" />
@@ -761,7 +777,7 @@
         </div>
     </ContentTemplate>
 </asp:UpdatePanel>
-<script src="../Scripts/Ejecucion/formatoInput.js"></script>
+
 
 <script src="../Scripts/consignaciones/RegistroIniciales.js"></script>
 <!-- Asegúrate de tener una referencia a la biblioteca jQuery en tu proyecto -->

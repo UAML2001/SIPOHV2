@@ -265,7 +265,7 @@ namespace SIPOH.Views
             updPanel.Update();
         }
 
-
+       
         protected void inputTipoAsunto_SelectedIndexChanged(object sender, EventArgs e)
         {
             string valorSeleccionado = inputTipoAsunto.SelectedValue;
@@ -288,6 +288,21 @@ namespace SIPOH.Views
             // Actualiza el UpdatePanel después de realizar la operación
             updPanel.Update();
         }
+        protected void LimpiarRadioButtonList(RadioButtonList radioButtonList)
+        {
+            foreach (ListItem item in radioButtonList.Items)
+            {
+                item.Selected = false;
+            }
+        }
+        protected void inputRadicacion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            string valorSeleccionado = inputRadicacion.SelectedItem.Text;
+            copyDropDownTipoSolicitud.Text = valorSeleccionado.ToUpper() ;
+            updPanel.Update();
+        }
+
 
 
 
@@ -464,12 +479,19 @@ namespace SIPOH.Views
                 updPanel.Update();  
             
         }
-        
+
 
         protected void btnGuardarAnexos_Click(object sender, EventArgs e)
         {
             string inputTipoAnexo = txtAnexosTipo.SelectedValue;
             string inputCantidadAnexo = txtCantidadAnexos.Text;
+            if (txtCantidadAnexos.Text == "0")
+            {
+
+                string script = $"toastError('{"Por favor, selecciona una cantidad válida."}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+                return;
+            }
             if (inputTipoAnexo == "Otro")
             {
                 string inputDescripcionAnexo = txtDescripcionAnexos.Text;
@@ -719,6 +741,7 @@ namespace SIPOH.Views
             CleanEtiquetaFormDelito();
             CleanEtiquetaFormVictima();
             CleanEtiquetasForm();
+            LimpiarRadioButtonList(inputPrioridad);
             Session["Victimas"] = new List<Victima>();
             Session["Imputados"] = new List<Imputado>();
             Session["Delitos"] = new List<int>();
@@ -884,6 +907,13 @@ namespace SIPOH.Views
             // Obtener el ID del delito seleccionado
             string inputIDDelito = inputDelitos.SelectedValue;
             string descripcionDelito = inputDelitos.SelectedItem.Text;
+            if (inputDelitos.SelectedValue == "")
+            {
+                
+                string script = $"toastError('{"Por favor, selecciona una opción válida."}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);               
+                return;
+            }
             // Crear un objeto CatDelito con los datos seleccionados
             CatDelito delito = new CatDelito
             {
