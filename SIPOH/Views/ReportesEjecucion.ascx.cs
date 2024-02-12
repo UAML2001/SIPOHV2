@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using System;
+using System.Configuration;
 using System.Data;
-using System.IO;
-using System.Linq;
+using System.Data.SqlClient;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
-using SIPOH.Reportes;
-using System.Configuration.Provider;
-using CrystalDecisions.ReportAppServer;
-using System.Globalization;
-using System.Web.DynamicData;
-using System.Configuration;
 
 namespace SIPOH.Views
 {
@@ -47,58 +39,28 @@ namespace SIPOH.Views
 
         // Empieza el back del informe
 
-        public static class StorageReporteInicial
-        {
-            public static DataTable EjecutarReporteInicial(SqlTransaction transaction, int idJuzgado, DateTime fechaInicial, DateTime fechaFinal)
-            {
-                using (SqlCommand cmd = new SqlCommand("Ejecucion_ReporteInicial", transaction.Connection, transaction))
-                {
-                    cmd.CommandType = CommandType.StoredProcedure;
-
-                    // Parámetros de entrada
-                    cmd.Parameters.Add("@IdJuzgado", SqlDbType.Int).Value = idJuzgado;
-                    cmd.Parameters.Add("@FechaInicial", SqlDbType.DateTime).Value = fechaInicial;
-                    cmd.Parameters.Add("@FechaFinal", SqlDbType.DateTime).Value = fechaFinal;
-
-                    // Ejecutar el procedimiento almacenado y capturar los resultados
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        DataTable dt = new DataTable();
-                        dt.Load(reader);
-                        return dt;  // Devuelve los resultados como un DataTable
-                    }
-                }
-            }
-        }
-
-        //protected void botonmostrarpromocion(object sender, EventArgs e)
+        //public static class StorageReporteInicial
         //{
-        //    // Configura la ruta del informe Crystal Reports (.rpt)
-        //    string rutaInforme = Server.MapPath("~/ReportesEjecucion/PromocionEjecucion.rpt");
+        //    public static DataTable EjecutarReporteInicial(SqlTransaction transaction, int idJuzgado, DateTime fechaInicial, DateTime fechaFinal)
+        //    {
+        //        using (SqlCommand cmd = new SqlCommand("Ejecucion_ReporteInicial", transaction.Connection, transaction))
+        //        {
+        //            cmd.CommandType = CommandType.StoredProcedure;
 
-        //    // Crea el informe
-        //    ReportDocument reporte = new ReportDocument();
-        //    reporte.Load(rutaInforme);
+        //            // Parámetros de entrada
+        //            cmd.Parameters.Add("@IdJuzgado", SqlDbType.Int).Value = idJuzgado;
+        //            cmd.Parameters.Add("@FechaInicial", SqlDbType.DateTime).Value = fechaInicial;
+        //            cmd.Parameters.Add("@FechaFinal", SqlDbType.DateTime).Value = fechaFinal;
 
-        //    // Asignar el DataTable como fuente de datos del informe
-
-        //    // Configurar el formato de salida como PDF
-        //    reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
-        //    reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
-        //    string rutaArchivoPDF = Server.MapPath("~/ReportesEjecucion/PromocionEjecucion.pdf");
-        //    reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
-
-        //    // Exportar el informe a PDF
-        //    reporte.Export();
-
-        //    // Mostrar el archivo PDF en el iframe
-        //    iframePDF.Src = "~/ReportesEjecucion/PromocionEjecucion.pdf";
-        //    iframePDF.Visible = true;
-        //    GenerarOtro.Visible = true;
-        //    TituloReporte.Visible = true;
-        //    btnMostrarInforme.Enabled = false;
-        //    // No hay datos para mostrar, mostrar mensaje Toastr
-        //    Toastr("Reporte generado con exito", "success");
+        //            // Ejecutar el procedimiento almacenado y capturar los resultados
+        //            using (SqlDataReader reader = cmd.ExecuteReader())
+        //            {
+        //                DataTable dt = new DataTable();
+        //                dt.Load(reader);
+        //                return dt;  // Devuelve los resultados como un DataTable
+        //            }
+        //        }
+        //    }
         //}
 
         protected void btnMostrarInforme_Click(object sender, EventArgs e)
@@ -144,6 +106,14 @@ namespace SIPOH.Views
                         {
                             fDesde = DateTime.Parse(calFechaDesde.Text);
                             fHasta = DateTime.Parse(calFechaHasta.Text);
+
+                            // Verificar que la FechaFinal no sea menor que la FechaInicial
+                            if (fHasta < fDesde)
+                            {
+                                Toastr("La Fecha Final no puede ser menor que la Fecha Inicial", "error");
+                                return;
+                            }
+
                             fechas.Visible = true;
                         }
                         else
@@ -200,7 +170,7 @@ namespace SIPOH.Views
                                 var valorFechaIngreso = dt.Rows[0]["FechaIngreso"].ToString();
                                 var valorPromovente = dt.Rows[0]["Promovente"].ToString();
                                 var valorSolicitud = dt.Rows[0]["Solicitud"].ToString();
-                                var valorNoAnexo = dt.Rows[0]["NoAnexo"].ToString();
+                                var valorNoAnexo = dt.Rows[0]["TAnexos"].ToString();
                             }
                             else
                             {
@@ -216,7 +186,7 @@ namespace SIPOH.Views
                             }
 
                             // Configura la ruta del informe Crystal Reports (.rpt)
-                            string rutaInforme = ddlFormatoReporte.SelectedValue == "P" ? Server.MapPath("~/Reportes/PromocionEjecucion.rpt") : Server.MapPath("~/Reportes/InicialEjecucion.rpt");
+                            string rutaInforme = ddlFormatoReporte.SelectedValue == "P" ? Server.MapPath("~/Reportes/PosteriorEjecucion.rpt") : Server.MapPath("~/Reportes/InicialEjecucion.rpt");
 
                             // Crea el informe
                             ReportDocument reporte = new ReportDocument();
@@ -233,14 +203,14 @@ namespace SIPOH.Views
                             // Configurar el formato de salida como PDF
                             reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
                             reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
-                            string rutaArchivoPDF = ddlFormatoReporte.SelectedValue == "P" ? Server.MapPath("~/Reportes/PromocionEjecucion.pdf") : Server.MapPath("~/Reportes/InicialEjecucion.pdf");
+                            string rutaArchivoPDF = ddlFormatoReporte.SelectedValue == "P" ? Server.MapPath("~/Reportes/PosteriorEjecucion.pdf") : Server.MapPath("~/Reportes/InicialEjecucion.pdf");
                             reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
 
                             // Exportar el informe a PDF
                             reporte.Export();
 
                             // Mostrar el archivo PDF en el iframe
-                            iframePDF.Src = ddlFormatoReporte.SelectedValue == "P" ? "~/Reportes/PromocionEjecucion.pdf" : "~/Reportes/InicialEjecucion.pdf";
+                            iframePDF.Src = ddlFormatoReporte.SelectedValue == "P" ? "~/Reportes/PosteriorEjecucion.pdf" : "~/Reportes/InicialEjecucion.pdf";
                             iframePDF.Visible = true;
                             GenerarOtro.Visible = true;
                             TituloReporte.Visible = true;

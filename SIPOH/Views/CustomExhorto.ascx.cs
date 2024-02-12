@@ -1,20 +1,14 @@
-﻿using DatabaseConnection;
-using Microsoft.Ajax.Utilities;
+﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Numerics;
 using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using static SIPOH.Views.CustomRegistroIniciales;
-using static SIPOH.Views.InicialAcusatorio;
 
 namespace SIPOH.Views
 {
@@ -36,16 +30,25 @@ namespace SIPOH.Views
                 tablaPartes.Columns.Add("Parte", typeof(string));
                 ViewState["TablaPartes"] = tablaPartes;
 
-
                 DataTable tablaAnexos = new DataTable();
-                tablaPartes.Columns.Add("descripcion", typeof(string));
-                tablaPartes.Columns.Add("Cantidad", typeof(string));
+                tablaAnexos.Columns.Add("descripcion", typeof(string));
+                tablaAnexos.Columns.Add("Cantidad", typeof(string));
                 ViewState["tablaAnexos"] = tablaAnexos;
-
 
                 // Cargar los delitos en el DropDownList
                 CargarDelitos();
                 CargarAnexos();
+
+                fecha1.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                fecha1.Enabled = false;
+
+
+                fecha2.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                fecha2.Enabled = false;
+
+
+                fecha3.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                fecha3.Enabled = false;
 
                 InsertExhorto.Style.Add("display", "none");
             }
@@ -93,14 +96,14 @@ namespace SIPOH.Views
             string anexoSeleccionado = ddlAnexos.SelectedItem.Text;
             string cantidadAnexo = noAnexos.Text;
 
-            // Verificar si el valor de "noAnexos" es 0
-            if (cantidadAnexo == "0")
+            // Verificar si el valor de "noAnexos" es 0 o mayor a 99
+            if (int.Parse(cantidadAnexo) <= 0 || int.Parse(cantidadAnexo) > 99)
             {
                 // Mostrar un mensaje de error específico para la cantidad de anexos
-
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "EjemploErrorCantAnexo();", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "toastr.error('La cantidad de anexos debe ser mayor a 0 y menor a 100');", true);
                 return;
             }
+
 
             // Verificar si el anexo seleccionado es "Seleccione el anexo a agregar:"
             if (anexoSeleccionado == "Seleccione el anexo a agregar:")
@@ -215,11 +218,11 @@ namespace SIPOH.Views
             string anexoSeleccionado = ddlAnexos2.SelectedItem.Text;
             string cantidadAnexo = noAnexos2.Text;
 
-            // Verificar si el valor de "noAnexos" es 0
-            if (cantidadAnexo == "0")
+            // Verificar si el valor de "noAnexos" es 0 o mayor a 99
+            if (int.Parse(cantidadAnexo) <= 0 || int.Parse(cantidadAnexo) > 99)
             {
                 // Mostrar un mensaje de error específico para la cantidad de anexos
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "EjemploErrorCantAnexo();", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "toastr.error('La cantidad de anexos debe ser mayor a 0 y menor a 100');", true);
                 return;
             }
 
@@ -332,11 +335,11 @@ namespace SIPOH.Views
             string anexoSeleccionado = ddlAnexos3.SelectedItem.Text;
             string cantidadAnexo = noAnexos3.Text;
 
-            // Verificar si el valor de "noAnexos" es 0
-            if (cantidadAnexo == "0")
+            // Verificar si el valor de "noAnexos" es 0 o mayor a 99
+            if (int.Parse(cantidadAnexo) <= 0 || int.Parse(cantidadAnexo) > 99)
             {
                 // Mostrar un mensaje de error específico para la cantidad de anexos
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "EjemploErrorCantAnexo3();", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "toastr.error('La cantidad de anexos debe ser mayor a 0 y menor a 100');", true);
                 return;
             }
 
@@ -512,36 +515,6 @@ namespace SIPOH.Views
 
 
 
-        //protected void btnAgregarDelito_Click(object sender, EventArgs e)
-        //{
-        //    string delitoSeleccionado = ddlDelitos1.SelectedItem.Text;
-
-        //    // Verificar si el delito ya está en la tabla
-        //    if (!DelitoYaEnTabla(delitoSeleccionado))
-        //    {
-        //        // Agregar el delito a la tabla
-        //        // Puedes agregar el código necesario para agregar el delito a tu fuente de datos
-
-        //        string idDelito = ddlDelitos1.SelectedValue;
-        //        string nombreDelito = ddlDelitos1.SelectedItem.Text;
-
-        //        DataTable dt = GetDataTable();
-        //        DataRow newRow = dt.NewRow();
-        //        newRow["IdDelito"] = idDelito;
-        //        newRow["NombreDelito"] = nombreDelito;
-        //        dt.Rows.Add(newRow);
-
-        //        gvDelitos.DataSource = dt;
-        //        gvDelitos.DataBind();
-        //    }
-        //    else
-        //    {
-        //        ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ErrorTblDelitos", "EjemploErrorTblDelitos();", true);
-        //    }
-        //}
-
-
-
         private DataTable GetDataTable()
         {
             DataTable dt;
@@ -611,7 +584,7 @@ namespace SIPOH.Views
 
                 DataTable dt = GetDataTableRe();
                 DataRow newRow = dt.NewRow();
-                //newRow["IdDelito2"] = idDelito;
+                newRow["IdDelito2"] = idDelito;
                 newRow["NombreDelito2"] = nombreDelito;
                 dt.Rows.Add(newRow);
 
@@ -626,16 +599,16 @@ namespace SIPOH.Views
         private DataTable GetDataTableRe()
         {
             DataTable dt;
-            if (ViewState["Delitos"] == null)
+            if (ViewState["Delitos2"] == null)
             {
                 dt = new DataTable();
                 dt.Columns.Add("IdDelito2", typeof(string));
                 dt.Columns.Add("NombreDelito2", typeof(string));
-                ViewState["Delitos"] = dt;
+                ViewState["Delitos2"] = dt;
             }
             else
             {
-                dt = (DataTable)ViewState["Delitos"];
+                dt = (DataTable)ViewState["Delitos2"];
             }
 
             return dt;
@@ -709,16 +682,16 @@ namespace SIPOH.Views
         private DataTable GetDataTableDe()
         {
             DataTable dt;
-            if (ViewState["Delitos"] == null)
+            if (ViewState["Delitos3"] == null)
             {
                 dt = new DataTable();
                 dt.Columns.Add("IdDelito3", typeof(string));
                 dt.Columns.Add("NombreDelito3", typeof(string));
-                ViewState["Delitos"] = dt;
+                ViewState["Delitos3"] = dt;
             }
             else
             {
-                dt = (DataTable)ViewState["Delitos"];
+                dt = (DataTable)ViewState["Delitos3"];
             }
 
             return dt;
@@ -775,60 +748,55 @@ namespace SIPOH.Views
             string espeSexos = espeSexo.Text;
 
             // Verificar si los campos están vacíos
-            if (nom == "" || ap == "" || am == "" || partes == "" || sexos == "")
+            if (nom == "")
             {
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('Todos los campos deben estar llenos');", true);
+                MostrarError("El campo Nombre debe estar lleno");
+                return;
+            }
+            if (ap == "")
+            {
+                MostrarError("El campo Apellido Paterno debe estar lleno");
+                return;
+            }
+            if (am == "")
+            {
+                MostrarError("El campo Apellido Materno debe estar lleno");
+                return;
+            }
+            if (partes == "Seleccionar")
+            {
+                MostrarError("Debe seleccionar una opcion en el campo Partes");
+                return;
+            }
+            if (sexos == "Seleccionar")
+            {
+                MostrarError("Debe seleccionar una opcion en el campo Sexo");
                 return;
             }
 
             // Verifica si la opción seleccionada en los DropDownList es "O"
-            if (partes == "O")
+            if (partes == "O" && espePartes == "")
             {
-                if (espePartes == "")
-                {
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('El campo espeParte debe estar lleno');", true);
-                    return;
-                }
-                // Asigna el valor del TextBox de "espeParte"
-                partes = espePartes;
+                MostrarError("El campo Especifique Parte debe estar lleno");
+                return;
+            }
+            if (sexos == "O" && espeSexos == "")
+            {
+                MostrarError("El campo Especifique Sexo debe estar lleno");
+                return;
             }
 
-            if (sexos == "O")
-            {
-                if (espeSexos == "")
-                {
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('El campo espeSexo debe estar lleno');", true);
-                    return;
-                }
-                // Asigna el valor del TextBox de "espeSexo"
-                sexos = espeSexos;
-            }
+            // Asigna el valor del TextBox de "espeParte" y "espeSexo"
+            if (partes == "O") partes = espePartes;
+            if (sexos == "O") sexos = espeSexos;
 
             // Convierte "I" y "V" a "Imputado" y "Víctima" respectivamente
-            if (partes == "I")
-            {
-                partes = "Imputado";
-            }
-            if (partes == "V")
-            {
-                partes = "Víctima";
-            }
+            if (partes == "I") partes = "Imputado";
+            if (partes == "V") partes = "Víctima";
 
             // Convierte "F" y "M" a "Femenino" y "Masculino" respectivamente
-            if (sexos == "F")
-            {
-                sexos = "Femenino";
-            }
-            else if (sexos == "M")
-            {
-                sexos = "Masculino";
-            }
+            if (sexos == "F") sexos = "Femenino";
+            else if (sexos == "M") sexos = "Masculino";
 
             DataTable dt = GetDataTable2();
             DataRow newRow = dt.NewRow();
@@ -845,6 +813,7 @@ namespace SIPOH.Views
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos();", true);
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.success('Partes Agregadas con exito');", true);
+
 
             //Obtener los valores de la fila seleccionada en gvPartes
             GridViewRow row = gvPartes.SelectedRow;
@@ -869,7 +838,12 @@ namespace SIPOH.Views
         }
 
 
-
+        private void MostrarError(string mensaje)
+        {
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", $"toastr.error('{mensaje}');", true);
+        }
 
         protected void gvPartes_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -904,17 +878,17 @@ namespace SIPOH.Views
         private DataTable GetDataTable3()
         {
             DataTable dt;
-            if (ViewState["Partes"] == null)
+            if (ViewState["Partes2"] == null)
             {
                 dt = new DataTable();
                 dt.Columns.Add("Nombre", typeof(string));
                 dt.Columns.Add("Parte", typeof(string));
                 dt.Columns.Add("Genero", typeof(string));
-                ViewState["Partes"] = dt;
+                ViewState["Partes2"] = dt;
             }
             else
             {
-                dt = (DataTable)ViewState["Partes"];
+                dt = (DataTable)ViewState["Partes2"];
             }
 
             return dt;
@@ -922,6 +896,7 @@ namespace SIPOH.Views
 
         protected void btnAgregarParte_Click2(object sender, EventArgs e)
         {
+
             string nom = nom3.Text;
             string ap = ap3.Text;
             string am = am3.Text;
@@ -931,60 +906,55 @@ namespace SIPOH.Views
             string espeSexos = espeSexo2.Text;
 
             // Verificar si los campos están vacíos
-            if (nom == "" || ap == "" || am == "" || partes == "" || sexos == "")
+            if (nom == "")
             {
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('Todos los campos deben estar llenos');", true);
+                MostrarError2("El campo Nombre debe estar lleno");
+                return;
+            }
+            if (ap == "")
+            {
+                MostrarError2("El campo Apellido Paterno debe estar lleno");
+                return;
+            }
+            if (am == "")
+            {
+                MostrarError2("El campo Apellido Materno debe estar lleno");
+                return;
+            }
+            if (partes == "Seleccionar")
+            {
+                MostrarError2("Debe seleccionar una opcion en el campo Partes");
+                return;
+            }
+            if (sexos == "Seleccionar")
+            {
+                MostrarError2("Debe seleccionar una opcion en el campo Sexo");
                 return;
             }
 
             // Verifica si la opción seleccionada en los DropDownList es "O"
-            if (partes == "O")
+            if (partes == "O" && espePartes == "")
             {
-                if (espePartes == "")
-                {
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('El campo espeParte debe estar lleno');", true);
-                    return;
-                }
-                // Asigna el valor del TextBox de "espeParte"
-                partes = espePartes;
+                MostrarError2("El campo Especifique Parte debe estar lleno");
+                return;
+            }
+            if (sexos == "O" && espeSexos == "")
+            {
+                MostrarError2("El campo Especifique Sexo debe estar lleno");
+                return;
             }
 
-            if (sexos == "O")
-            {
-                if (espeSexos == "")
-                {
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('El campo espeSexo debe estar lleno');", true);
-                    return;
-                }
-                // Asigna el valor del TextBox de "espeSexo"
-                sexos = espeSexos;
-            }
+            // Asigna el valor del TextBox de "espeParte" y "espeSexo"
+            if (partes == "O") partes = espePartes;
+            if (sexos == "O") sexos = espeSexos;
 
             // Convierte "I" y "V" a "Imputado" y "Víctima" respectivamente
-            if (partes == "I")
-            {
-                partes = "Imputado";
-            }
-            if (partes == "V")
-            {
-                partes = "Víctima";
-            }
+            if (partes == "I") partes = "Imputado";
+            if (partes == "V") partes = "Víctima";
 
             // Convierte "F" y "M" a "Femenino" y "Masculino" respectivamente
-            if (sexos == "F")
-            {
-                sexos = "Femenino";
-            }
-            else if (sexos == "M")
-            {
-                sexos = "Masculino";
-            }
+            if (sexos == "F") sexos = "Femenino";
+            else if (sexos == "M") sexos = "Masculino";
 
             DataTable dt = GetDataTable3();
             DataRow newRow = dt.NewRow();
@@ -999,7 +969,7 @@ namespace SIPOH.Views
             gvPartes2.DataBind();
 
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos();", true);
-            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario2();", true);
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.success('Partes Agregadas con exito');", true);
 
             //Obtener los valores de la fila seleccionada en gvPartes
@@ -1022,6 +992,13 @@ namespace SIPOH.Views
                 string apParte = partesNombre.Length > 1 ? partesNombre[1] : "";
                 string amParte = partesNombre.Length > 2 ? partesNombre[2] : "";
             }
+        }
+
+        private void MostrarError2(string mensaje)
+        {
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario2();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", $"toastr.error('{mensaje}');", true);
         }
 
         protected void gvPartes_RowCommand2(object sender, GridViewCommandEventArgs e)
@@ -1056,17 +1033,17 @@ namespace SIPOH.Views
         private DataTable GetDataTable4()
         {
             DataTable dt;
-            if (ViewState["Partes"] == null)
+            if (ViewState["Partes3"] == null)
             {
                 dt = new DataTable();
                 dt.Columns.Add("Nombre", typeof(string));
                 dt.Columns.Add("Parte", typeof(string));
                 dt.Columns.Add("Genero", typeof(string));
-                ViewState["Partes"] = dt;
+                ViewState["Partes3"] = dt;
             }
             else
             {
-                dt = (DataTable)ViewState["Partes"];
+                dt = (DataTable)ViewState["Partes3"];
             }
 
             return dt;
@@ -1083,60 +1060,55 @@ namespace SIPOH.Views
             string espeSexos = espeSexo3.Text;
 
             // Verificar si los campos están vacíos
-            if (nom == "" || ap == "" || am == "" || partes == "" || sexos == "")
+            if (nom == "")
             {
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('Todos los campos deben estar llenos');", true);
+                MostrarError3("El campo Nombre debe estar lleno");
+                return;
+            }
+            if (ap == "")
+            {
+                MostrarError3("El campo Apellido Paterno debe estar lleno");
+                return;
+            }
+            if (am == "")
+            {
+                MostrarError3("El campo Apellido Materno debe estar lleno");
+                return;
+            }
+            if (partes == "Seleccionar")
+            {
+                MostrarError3("Debe seleccionar una opcion en el campo Partes");
+                return;
+            }
+            if (sexos == "Seleccionar")
+            {
+                MostrarError3("Debe seleccionar una opcion en el campo Sexo");
                 return;
             }
 
             // Verifica si la opción seleccionada en los DropDownList es "O"
-            if (partes == "O")
+            if (partes == "O" && espePartes == "")
             {
-                if (espePartes == "")
-                {
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('El campo espeParte debe estar lleno');", true);
-                    return;
-                }
-                // Asigna el valor del TextBox de "espeParte"
-                partes = espePartes;
+                MostrarError3("El campo Especifique Parte debe estar lleno");
+                return;
+            }
+            if (sexos == "O" && espeSexos == "")
+            {
+                MostrarError3("El campo Especifique Sexo debe estar lleno");
+                return;
             }
 
-            if (sexos == "O")
-            {
-                if (espeSexos == "")
-                {
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
-                    ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.error('El campo espeSexo debe estar lleno');", true);
-                    return;
-                }
-                // Asigna el valor del TextBox de "espeSexo"
-                sexos = espeSexos;
-            }
+            // Asigna el valor del TextBox de "espeParte" y "espeSexo"
+            if (partes == "O") partes = espePartes;
+            if (sexos == "O") sexos = espeSexos;
 
             // Convierte "I" y "V" a "Imputado" y "Víctima" respectivamente
-            if (partes == "I")
-            {
-                partes = "Imputado";
-            }
-            if (partes == "V")
-            {
-                partes = "Víctima";
-            }
+            if (partes == "I") partes = "Imputado";
+            if (partes == "V") partes = "Víctima";
 
             // Convierte "F" y "M" a "Femenino" y "Masculino" respectivamente
-            if (sexos == "F")
-            {
-                sexos = "Femenino";
-            }
-            else if (sexos == "M")
-            {
-                sexos = "Masculino";
-            }
+            if (sexos == "F") sexos = "Femenino";
+            else if (sexos == "M") sexos = "Masculino";
 
             DataTable dt = GetDataTable4();
             DataRow newRow = dt.NewRow();
@@ -1151,7 +1123,7 @@ namespace SIPOH.Views
             gvPartes3.DataBind();
 
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos();", true);
-            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario3();", true);
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.success('Partes Agregadas con exito');", true);
 
             //Obtener los valores de la fila seleccionada en gvPartes
@@ -1174,6 +1146,13 @@ namespace SIPOH.Views
                 string apParte = partesNombre.Length > 1 ? partesNombre[1] : "";
                 string amParte = partesNombre.Length > 2 ? partesNombre[2] : "";
             }
+        }
+
+        private void MostrarError3(string mensaje)
+        {
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalPartes();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario3();", true);
+            ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", $"toastr.error('{mensaje}');", true);
         }
 
 
@@ -1449,7 +1428,7 @@ namespace SIPOH.Views
             }
 
             string tAsunto = "E";
-            int digital = 0;
+            string digital = "N";
             string fCaptura = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
             int IdUsuario = ObtenerIdUsuarioDesdeSesion();
             int IdAudiencia = 0;
@@ -1721,7 +1700,7 @@ namespace SIPOH.Views
         public static string GlobalNomJuzgado;
         public static string GlobalDescripcion;
         public static string GlobalCantidad;
-        public static int GlobalExhorto = 1;
+        public static int GlobalExhorto = 0;
 
         private void ProcesarDatosDeInsercion(DateTime fIngresoFormateado, string Numero)
         {
@@ -1791,7 +1770,7 @@ namespace SIPOH.Views
             ticket.AppendLine($"Fecha: {GlobalFechaRecepcion}");
 
             // Sección del total
-            ticket.AppendLine(AlinearTexto("EXHORTO", GlobalExhorto.ToString(), anchoLinea));
+            //ticket.AppendLine(AlinearTexto("EXHORTO", GlobalExhorto.ToString(), anchoLinea));
 
             foreach (GridViewRow row in gvAnexos.Rows)
             {
@@ -1801,8 +1780,13 @@ namespace SIPOH.Views
                     Label descripcion = (Label)row.FindControl("lblAnexo");
                     Label cantidad = (Label)row.FindControl("lblCantAnexos");
 
-                    ticket.AppendLine(AlinearTexto(descripcion.Text, cantidad.Text, anchoLinea));
+                    // Convierte los textos a mayúsculas
+                    string descripcionEnMayusculas = descripcion.Text.ToUpper();
+                    string cantidadEnMayusculas = cantidad.Text.ToUpper();
+
+                    ticket.AppendLine(AlinearTexto3(descripcionEnMayusculas, cantidadEnMayusculas, anchoLinea));
                     total += Convert.ToInt32(cantidad.Text);
+
                 }
             }
             ticket.AppendLine(AlinearTexto("TOTAL", total.ToString(), anchoLinea));
@@ -2019,7 +2003,7 @@ namespace SIPOH.Views
             }
 
             string tAsunto = "E";
-            int digital = 0;
+            string digital = "N";
             string fCaptura = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             //string fCaptura = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
             int IdUsuario = ObtenerIdUsuarioDesdeSesion2();
@@ -2294,7 +2278,7 @@ namespace SIPOH.Views
         public static string GlobalNomJuzgado2;
         public static string GlobalDescripcion2;
         public static string GlobalCantidad2;
-        public static int GlobalExhorto2 = 1;
+        public static int GlobalExhorto2 = 0;
 
         private void ProcesarDatosDeInsercion3(DateTime fIngresoFormateado, string Numero)
         {
@@ -2364,7 +2348,7 @@ namespace SIPOH.Views
             ticket.AppendLine($"Fecha: {GlobalFechaRecepcion2}");
 
             // Sección del total
-            ticket.AppendLine(AlinearTexto2("EXHORTO", GlobalExhorto2.ToString(), anchoLinea));
+            //ticket.AppendLine(AlinearTexto2("EXHORTO", GlobalExhorto2.ToString(), anchoLinea));
 
             foreach (GridViewRow row in gvAnexos2.Rows)
             {
@@ -2374,8 +2358,13 @@ namespace SIPOH.Views
                     Label descripcion = (Label)row.FindControl("lblAnexo2");
                     Label cantidad = (Label)row.FindControl("lblCantAnexos2");
 
-                    ticket.AppendLine(AlinearTexto2(descripcion.Text, cantidad.Text, anchoLinea));
+                    // Convierte los textos a mayúsculas
+                    string descripcionEnMayusculas = descripcion.Text.ToUpper();
+                    string cantidadEnMayusculas = cantidad.Text.ToUpper();
+
+                    ticket.AppendLine(AlinearTexto3(descripcionEnMayusculas, cantidadEnMayusculas, anchoLinea));
                     total += Convert.ToInt32(cantidad.Text);
+
                 }
             }
 
@@ -2410,6 +2399,7 @@ namespace SIPOH.Views
         private void LimpiarYRestablecerPanel2()
         {
             // Limpia y restablece los controles dentro de Panel2
+            OpExhorto.SelectedValue = "SO";
             numdesp.Text = string.Empty;
             quejoso.Text = string.Empty;
             fecha2.Text = string.Empty;
@@ -2594,7 +2584,7 @@ namespace SIPOH.Views
             }
 
             string tAsunto = "E";
-            int digital = 0;
+            string digital = "N";
             string fCaptura = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             //string fCaptura = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
             int IdUsuario = ObtenerIdUsuarioDesdeSesion3();
@@ -2869,7 +2859,7 @@ namespace SIPOH.Views
         public static string GlobalNomJuzgado3;
         public static string GlobalDescripcion3;
         public static string GlobalCantidad3;
-        public static int GlobalExhorto3 = 1;
+        public static int GlobalExhorto3 = 0;
 
         private void ProcesarDatosDeInsercion5(DateTime fIngresoFormateado, string Numero)
         {
@@ -2939,7 +2929,7 @@ namespace SIPOH.Views
             ticket.AppendLine($"Fecha: {GlobalFechaRecepcion3}");
 
             // Sección del total
-            ticket.AppendLine(AlinearTexto3("EXHORTO", GlobalExhorto3.ToString(), anchoLinea));
+            //ticket.AppendLine(AlinearTexto3("EXHORTO", GlobalExhorto3.ToString(), anchoLinea));
 
             foreach (GridViewRow row in gvAnexos3.Rows)
             {
@@ -2949,8 +2939,13 @@ namespace SIPOH.Views
                     Label descripcion = (Label)row.FindControl("lblAnexo3");
                     Label cantidad = (Label)row.FindControl("lblCantAnexos3");
 
-                    ticket.AppendLine(AlinearTexto3(descripcion.Text, cantidad.Text, anchoLinea));
+                    // Convierte los textos a mayúsculas
+                    string descripcionEnMayusculas = descripcion.Text.ToUpper();
+                    string cantidadEnMayusculas = cantidad.Text.ToUpper();
+
+                    ticket.AppendLine(AlinearTexto3(descripcionEnMayusculas, cantidadEnMayusculas, anchoLinea));
                     total += Convert.ToInt32(cantidad.Text);
+
                 }
             }
 
@@ -2986,6 +2981,7 @@ namespace SIPOH.Views
         private void LimpiarYRestablecerPanel3()
         {
             // Limpia y restablece los controles dentro del Panel3
+            OpExhorto.SelectedValue = "SO";
             numtoca.Text = string.Empty;
             salaproc.Text = string.Empty;
             fecha3.Text = string.Empty;
@@ -3008,22 +3004,13 @@ namespace SIPOH.Views
         //AQUI ACABA EL INSERT REQUISITORIA
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
         protected void GenerarOtro_Click(object sender, EventArgs e)
         {
-            Response.Redirect(Request.RawUrl);
+            InsertExhorto.Style.Add("display", "none");
+            OpExhorto.Enabled = true;
+
+            // Actualiza el UpdatePanel
+            updPanel.Update();
         }
 
     }

@@ -74,7 +74,7 @@
                                 <asp:DropDownList runat="server" CssClass="form-select mayusculas" ID="ddlFormatoReporte" AutoPostBack="true">
                                     <asp:ListItem Value="S" Text="Seleccione el formato del reporte" Selected="True"></asp:ListItem>
                                     <asp:ListItem Value="I">Inicial</asp:ListItem>
-                                    <asp:ListItem Value="P">Promociones</asp:ListItem>
+                                    <asp:ListItem Value="P">Posterior</asp:ListItem>
                                 </asp:DropDownList>
                             </div>
 
