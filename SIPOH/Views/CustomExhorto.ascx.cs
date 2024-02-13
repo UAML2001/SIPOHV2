@@ -39,17 +39,6 @@ namespace SIPOH.Views
                 CargarDelitos();
                 CargarAnexos();
 
-                fecha1.Text = DateTime.Now.ToString("yyyy-MM-dd");
-                fecha1.Enabled = false;
-
-
-                fecha2.Text = DateTime.Now.ToString("yyyy-MM-dd");
-                fecha2.Enabled = false;
-
-
-                fecha3.Text = DateTime.Now.ToString("yyyy-MM-dd");
-                fecha3.Enabled = false;
-
                 InsertExhorto.Style.Add("display", "none");
             }
         }
@@ -96,11 +85,11 @@ namespace SIPOH.Views
             string anexoSeleccionado = ddlAnexos.SelectedItem.Text;
             string cantidadAnexo = noAnexos.Text;
 
-            // Verificar si el valor de "noAnexos" es 0 o mayor a 99
-            if (int.Parse(cantidadAnexo) <= 0 || int.Parse(cantidadAnexo) > 99)
+            // Verificar si el valor de "noAnexos" es 0 o mayor a 999
+            if (int.Parse(cantidadAnexo) <= 0 || int.Parse(cantidadAnexo) > 999)
             {
                 // Mostrar un mensaje de error específico para la cantidad de anexos
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "toastr.error('La cantidad de anexos debe ser mayor a 0 y menor a 100');", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "toastr.error('La cantidad de anexos debe ser mayor a 0 y menor a 1000');", true);
                 return;
             }
 
@@ -218,11 +207,11 @@ namespace SIPOH.Views
             string anexoSeleccionado = ddlAnexos2.SelectedItem.Text;
             string cantidadAnexo = noAnexos2.Text;
 
-            // Verificar si el valor de "noAnexos" es 0 o mayor a 99
-            if (int.Parse(cantidadAnexo) <= 0 || int.Parse(cantidadAnexo) > 99)
+            // Verificar si el valor de "noAnexos" es 0 o mayor a 999
+            if (int.Parse(cantidadAnexo) <= 0 || int.Parse(cantidadAnexo) > 999)
             {
                 // Mostrar un mensaje de error específico para la cantidad de anexos
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "toastr.error('La cantidad de anexos debe ser mayor a 0 y menor a 100');", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "toastr.error('La cantidad de anexos debe ser mayor a 0 y menor a 1000');", true);
                 return;
             }
 
@@ -335,11 +324,11 @@ namespace SIPOH.Views
             string anexoSeleccionado = ddlAnexos3.SelectedItem.Text;
             string cantidadAnexo = noAnexos3.Text;
 
-            // Verificar si el valor de "noAnexos" es 0 o mayor a 99
-            if (int.Parse(cantidadAnexo) <= 0 || int.Parse(cantidadAnexo) > 99)
+            // Verificar si el valor de "noAnexos" es 0 o mayor a 999
+            if (int.Parse(cantidadAnexo) <= 0 || int.Parse(cantidadAnexo) > 999)
             {
                 // Mostrar un mensaje de error específico para la cantidad de anexos
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "toastr.error('La cantidad de anexos debe ser mayor a 0 y menor a 100');", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "toastr.error('La cantidad de anexos debe ser mayor a 0 y menor a 1000');", true);
                 return;
             }
 
@@ -1336,7 +1325,6 @@ namespace SIPOH.Views
                         }
                     }
 
-
                     // Insertar datos en la tabla P_Asunto
                     int idAsunto = InsertarEnPAsunto(conn, transaction);
 
@@ -1412,7 +1400,7 @@ namespace SIPOH.Views
             string Numero = Session["FolioNuevoInicial"] as string;
             int IdJuzgado = ObtenerIdJuzgadoDesdeSesion();
 
-            string fIngresoTexto = fecha1.Text;
+            string fIngresoTexto = fecha1.Text.ToUpper();
             DateTime fIngreso;
 
             if (DateTime.TryParse(fIngresoTexto, out fIngreso))
@@ -1432,11 +1420,11 @@ namespace SIPOH.Views
             string fCaptura = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
             int IdUsuario = ObtenerIdUsuarioDesdeSesion();
             int IdAudiencia = 0;
-            string Observa = observa1.Text;
-            string QuienIngresa = "";
-            string MP = "";
-            string nPrioridad = prioridad.SelectedValue;
-            string nFojas = fojas1.Text;
+            string Observa = observa1.Text.ToUpper();
+            string QuienIngresa = "".ToUpper();
+            string MP = "".ToUpper();
+            string nPrioridad = prioridad.SelectedValue.ToUpper();
+            string nFojas = fojas1.Text.ToUpper();
             int idAsunto;
 
             // Realizar la inserción en P_Asunto
@@ -1533,11 +1521,11 @@ namespace SIPOH.Views
 
         private void InsertarEnPExhortos(SqlConnection conn, SqlTransaction transaction, int idAsunto)
         {
-            string juzProce = procede1.Text;
-            string asuProce = numdoc1.Text;
-            string diligSoli = Diligencia1.Text;
-            string tipoExor = OpExhorto.SelectedValue;
-            string observa = observa1.Text;
+            string juzProce = procede1.Text.ToUpper();
+            string asuProce = numdoc1.Text.ToUpper();
+            string diligSoli = Diligencia1.Text.ToUpper();
+            string tipoExor = OpExhorto.SelectedValue.ToUpper();
+            string observa = observa1.Text.ToUpper();
 
             string query = "INSERT INTO P_Exhortos (IdAsunto, JuzgadoProce, AsuntoProce, DiligenciaSolicitada, TipoExhorto, Observación) VALUES (@IdAsunto, @JuzgadoProce, @AsuntoProce, @DiligenciaSolicitada, @TipoExhorto, @Observacion);";
 
@@ -1638,6 +1626,9 @@ namespace SIPOH.Views
                     Label descripcion = (Label)row.FindControl("lblAnexo");
                     Label cantidad = (Label)row.FindControl("lblCantAnexos");
 
+                    // Convierte la descripción a mayúsculas antes de insertarla en la base de datos
+                    string descripcionMayusculas = descripcion.Text.ToUpper();
+
                     // Realizar la inserción en P_PartesAsunto
                     string query = "INSERT INTO P_Anexos (IdAsunto, IdPosterior, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @IdPosterior, @Descripcion, @Cantidad, @Digitalizado);";
 
@@ -1645,7 +1636,7 @@ namespace SIPOH.Views
                     {
                         cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
                         cmd.Parameters.AddWithValue("@IdPosterior", idPost);
-                        cmd.Parameters.AddWithValue("@Descripcion", descripcion.Text); // Aquí está la corrección
+                        cmd.Parameters.AddWithValue("@Descripcion", descripcionMayusculas); // Aquí está la corrección
                         cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(cantidad.Text)); // Asegúrate de que este es el tipo correcto
                         cmd.Parameters.AddWithValue("@Digitalizado", digital);
 
@@ -2008,11 +1999,11 @@ namespace SIPOH.Views
             //string fCaptura = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
             int IdUsuario = ObtenerIdUsuarioDesdeSesion2();
             int IdAudiencia = 0;
-            string Observa = observa2.Text;
+            string Observa = observa2.Text.ToUpper();
             string QuienIngresa = "";
             string MP = "";
-            string nPrioridad = prioridad2.SelectedValue;
-            string nFojas = fojas2.Text;
+            string nPrioridad = prioridad2.SelectedValue.ToUpper();
+            string nFojas = fojas2.Text.ToUpper();
             int idAsunto;
 
             // Realizar la inserción en P_Asunto
@@ -2111,11 +2102,11 @@ namespace SIPOH.Views
 
         private void InsertarEnPExhortos2(SqlConnection conn, SqlTransaction transaction, int idAsunto)
         {
-            string juzProce = quejoso.Text;
-            string asuProce = numdesp.Text;
-            string diligSoli = Diligencia2.Text;
-            string tipoExor = OpExhorto.SelectedValue;
-            string observa = observa2.Text;
+            string juzProce = quejoso.Text.ToUpper();
+            string asuProce = numdesp.Text.ToUpper();
+            string diligSoli = Diligencia2.Text.ToUpper();
+            string tipoExor = OpExhorto.SelectedValue.ToUpper();
+            string observa = observa2.Text.ToUpper();
 
             string query = "INSERT INTO P_Exhortos (IdAsunto, JuzgadoProce, AsuntoProce, DiligenciaSolicitada, TipoExhorto, Observación) VALUES (@IdAsunto, @JuzgadoProce, @AsuntoProce, @DiligenciaSolicitada, @TipoExhorto, @Observacion);";
 
@@ -2216,6 +2207,9 @@ namespace SIPOH.Views
                     Label descripcion = (Label)row.FindControl("lblAnexo2");
                     Label cantidad = (Label)row.FindControl("lblCantAnexos2");
 
+                    // Convierte la descripción a mayúsculas antes de insertarla en la base de datos
+                    string descripcionMayusculas = descripcion.Text.ToUpper();
+
                     // Realizar la inserción en P_PartesAsunto
                     string query = "INSERT INTO P_Anexos (IdAsunto, IdPosterior, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @IdPosterior, @Descripcion, @Cantidad, @Digitalizado);";
 
@@ -2223,7 +2217,7 @@ namespace SIPOH.Views
                     {
                         cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
                         cmd.Parameters.AddWithValue("@IdPosterior", idPost);
-                        cmd.Parameters.AddWithValue("@Descripcion", descripcion.Text); // Aquí está la corrección
+                        cmd.Parameters.AddWithValue("@Descripcion", descripcionMayusculas); // Aquí está la corrección
                         cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(cantidad.Text)); // Asegúrate de que este es el tipo correcto
                         cmd.Parameters.AddWithValue("@Digitalizado", digital);
 
@@ -2589,11 +2583,11 @@ namespace SIPOH.Views
             //string fCaptura = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss}";
             int IdUsuario = ObtenerIdUsuarioDesdeSesion3();
             int IdAudiencia = 0;
-            string Observa = observa3.Text;
+            string Observa = observa3.Text.ToUpper();
             string QuienIngresa = "";
             string MP = "";
-            string nPrioridad = prioridad3.SelectedValue;
-            string nFojas = fojas3.Text;
+            string nPrioridad = prioridad3.SelectedValue.ToUpper();
+            string nFojas = fojas3.Text.ToUpper();
             int idAsunto;
 
             // Realizar la inserción en P_Asunto
@@ -2692,11 +2686,11 @@ namespace SIPOH.Views
 
         private void InsertarEnPExhortos3(SqlConnection conn, SqlTransaction transaction, int idAsunto)
         {
-            string juzProce = salaproc.Text;
-            string asuProce = numtoca.Text;
-            string diligSoli = Diligencia3.Text;
-            string tipoExor = OpExhorto.SelectedValue;
-            string observa = observa3.Text;
+            string juzProce = salaproc.Text.ToUpper();
+            string asuProce = numtoca.Text.ToUpper();
+            string diligSoli = Diligencia3.Text.ToUpper();
+            string tipoExor = OpExhorto.SelectedValue.ToUpper();
+            string observa = observa3.Text.ToUpper();
 
             string query = "INSERT INTO P_Exhortos (IdAsunto, JuzgadoProce, AsuntoProce, DiligenciaSolicitada, TipoExhorto, Observación) VALUES (@IdAsunto, @JuzgadoProce, @AsuntoProce, @DiligenciaSolicitada, @TipoExhorto, @Observacion);";
 
@@ -2797,6 +2791,9 @@ namespace SIPOH.Views
                     Label descripcion = (Label)row.FindControl("lblAnexo3");
                     Label cantidad = (Label)row.FindControl("lblCantAnexos3");
 
+                    // Convierte la descripción a mayúsculas antes de insertarla en la base de datos
+                    string descripcionMayusculas = descripcion.Text.ToUpper();
+
                     // Realizar la inserción en P_PartesAsunto
                     string query = "INSERT INTO P_Anexos (IdAsunto, IdPosterior, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @IdPosterior, @Descripcion, @Cantidad, @Digitalizado);";
 
@@ -2804,7 +2801,7 @@ namespace SIPOH.Views
                     {
                         cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
                         cmd.Parameters.AddWithValue("@IdPosterior", idPost);
-                        cmd.Parameters.AddWithValue("@Descripcion", descripcion.Text); // Aquí está la corrección
+                        cmd.Parameters.AddWithValue("@Descripcion", descripcionMayusculas); // Aquí está la corrección
                         cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(cantidad.Text)); // Asegúrate de que este es el tipo correcto
                         cmd.Parameters.AddWithValue("@Digitalizado", digital);
 
@@ -3004,14 +3001,83 @@ namespace SIPOH.Views
         //AQUI ACABA EL INSERT REQUISITORIA
 
 
+        private void ReestablecerTodo()
+        {
+            // Limpia y restablece los controles dentro del Panel3
+            OpExhorto.SelectedValue = "SO";
+            numtoca.Text = string.Empty;
+            salaproc.Text = string.Empty;
+            fecha3.Text = string.Empty;
+            fojas3.Text = "0";
+            ddlDelitos3.SelectedIndex = 0;
+            gvPartes3.DataSource = null;
+            gvPartes3.DataBind();
+            gvDelitos3.DataSource = null;
+            gvDelitos3.DataBind();
+            Diligencia3.Text = string.Empty;
+            prioridad3.SelectedIndex = 0;
+            gvAnexos3.DataSource = null;
+            gvAnexos3.DataBind();
+            observa3.Text = string.Empty;
+
+            numdesp.Text = string.Empty;
+            quejoso.Text = string.Empty;
+            fecha2.Text = string.Empty;
+            fojas2.Text = "0";
+            ddlDelitos2.SelectedIndex = 0;
+            gvPartes2.DataSource = null;
+            gvPartes2.DataBind();
+            gvDelitos2.DataSource = null;
+            gvDelitos2.DataBind();
+            Diligencia2.Text = string.Empty;
+            prioridad2.SelectedIndex = 0;
+            gvAnexos2.DataSource = null;
+            gvAnexos2.DataBind();
+            observa2.Text = string.Empty;
+
+            numdoc1.Text = string.Empty;
+            procede1.Text = string.Empty;
+            fecha1.Text = string.Empty;
+            fojas1.Text = "0";
+            ddlDelitos1.SelectedIndex = 0;
+            gvPartes.DataSource = null;
+            gvPartes.DataBind();
+            gvDelitos.DataSource = null;
+            gvDelitos.DataBind();
+            Diligencia1.Text = string.Empty;
+            prioridad.SelectedIndex = 0;
+            gvAnexos.DataSource = null;
+            gvAnexos.DataBind();
+            observa1.Text = string.Empty;
+            // ... limpia otros controles según sea necesario ...
+        }
+
         protected void GenerarOtro_Click(object sender, EventArgs e)
         {
+            ReestablecerTodo();
             InsertExhorto.Style.Add("display", "none");
             OpExhorto.Enabled = true;
 
             // Actualiza el UpdatePanel
             updPanel.Update();
         }
+
+        public static void ConvertirAMayusculas(object obj)
+        {
+            var properties = obj.GetType().GetProperties();
+            foreach (var property in properties)
+            {
+                if (property.PropertyType == typeof(string))
+                {
+                    string value = (string)property.GetValue(obj);
+                    if (value != null)
+                    {
+                        property.SetValue(obj, value.ToUpper());
+                    }
+                }
+            }
+        }
+
 
     }
 }

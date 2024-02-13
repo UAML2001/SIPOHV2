@@ -28,7 +28,7 @@
 
 
 <div>
-            <h1 style="margin-left: 5%" class="h5">Ejecucion <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold"> Reportes</span> </h1>
+            <h1 style="margin-left: 5%" class="h5">Control <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold"> Reportes</span> </h1>
         </div>
 
     <!-- Include Toastr CSS -->

@@ -205,7 +205,7 @@
                         <Columns>
                             <asp:TemplateField HeaderText="Anexo" SortExpression="NombreDelito">
                                 <ItemTemplate>
-                                    <asp:Label ID="lblAnexo" runat="server" Text='<%# Bind("descripcion") %>' CssClass="mayusculas"></asp:Label>
+                                    <asp:Label ID="lblAnexo" runat="server" CssClass="mayusculas" Text='<%# Bind("descripcion") %>'></asp:Label>
                                 </ItemTemplate>
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:TemplateField>
@@ -1031,6 +1031,15 @@
             return;
         }
 
+        let fechaUsuario = new Date(fecha); // Fecha proporcionada por el usuario
+        let fechaActual = new Date(); // Fecha actual
+
+        // Verificar si la fecha del usuario es mayor a la fecha actual
+        if (fechaUsuario > fechaActual) {
+            toastr.error('La fecha no puede ser mayor a la fecha actual.');
+            return;
+        }
+
         // Verificar si el valor de "fecha" está vacío
         if (fecha == "") {
             toastr.error('El campo Fecha de Recepción no puede estar vacío.');
@@ -1223,6 +1232,15 @@
             return;
         }
 
+        let fechaUsuario = new Date(fecha); // Fecha proporcionada por el usuario
+        let fechaActual = new Date(); // Fecha actual
+
+        // Verificar si la fecha del usuario es mayor a la fecha actual
+        if (fechaUsuario > fechaActual) {
+            toastr.error('La fecha no puede ser mayor a la fecha actual.');
+            return;
+        }
+
         // Verificar si el valor de "fecha" está vacío
         if (fecha == "") {
             toastr.error('El campo Fecha de Recepción no puede estar vacío.');
@@ -1403,11 +1421,20 @@
         return;
     }
 
-    // Verificar si el valor de "fecha" está vacío
-    if (fecha == "") {
-        toastr.error('El campo Fecha de Recepción no puede estar vacío.');
-        return;
-    }
+        let fechaUsuario = new Date(fecha); // Fecha proporcionada por el usuario
+        let fechaActual = new Date(); // Fecha actual
+
+        // Verificar si la fecha del usuario es mayor a la fecha actual
+        if (fechaUsuario > fechaActual) {
+            toastr.error('La fecha no puede ser mayor a la fecha actual.');
+            return;
+        }
+
+        // Verificar si el valor de "fecha" está vacío
+        if (fecha == "") {
+            toastr.error('El campo Fecha de Recepción no puede estar vacío.');
+            return;
+        }
 
     // Verificar si el valor de "fojas" es 0
     if (fojas == "0") {
@@ -1687,14 +1714,11 @@ function habilitarTextBoxSelecSexo3() {
 
 <script type="text/javascript">
     function formatoNumeroToca(input) {
-        // Obtén el número ingresado por el usuario
-        var number = input.value;
+        // Divide el valor ingresado en el número y el año
+        var [number, year] = input.value.split("/");
 
         // Rellena el número con ceros a la izquierda hasta que tenga 4 dígitos
         number = number.padStart(4, '0');
-
-        // Obtén el año actual
-        var year = new Date().getFullYear();
 
         // Combina el número y el año para obtener el número de toca
         var numeroToca = number + "/" + year;
