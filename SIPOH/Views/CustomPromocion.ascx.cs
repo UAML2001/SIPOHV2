@@ -483,7 +483,7 @@ namespace SIPOH.Views
 
             // Obtener la fila del Repeater que contiene el botón
             RepeaterItem item = (RepeaterItem)btnEliminar.NamingContainer;
-            item.Visible = false;
+            //item.Visible = false;
             // Obtener el índice de la fila en el Repeater
             int indice = item.ItemIndex;
 
@@ -494,12 +494,13 @@ namespace SIPOH.Views
             if (listaAnexos != null && listaAnexos.Count > indice)
             {
                 // Eliminar el elemento en la posición indicada por el índice
-                item.Visible = false;
+                //item.Visible = false;
                 listaAnexos.RemoveAt(indice);
-                RepeaterAnexos.Controls.RemoveAt(indice);
-                Session["Anexos"] = listaAnexos;
+                //RepeaterAnexos.Controls.RemoveAt(indice);
+                //Session["Anexos"] = listaAnexos;
 
-
+                RepeaterAnexos.DataSource = listaAnexos;
+                RepeaterAnexos.DataBind();
             }
             // Verificar si la lista no es nula y tiene elementos
             promocionPanel.Update();
