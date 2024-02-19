@@ -64,8 +64,8 @@ namespace SIPOH.Views
         {
             public string IdDelito { get; set; }
             public string DescripcionDelito { get; set; }
-            
-            
+
+
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -158,7 +158,7 @@ namespace SIPOH.Views
 
             // Obtener la fila del Repeater que contiene el botón
             RepeaterItem item = (RepeaterItem)btnEliminar.NamingContainer;
-            item.Visible = false;
+            //item.Visible = false;
             // Obtener el índice de la fila en el Repeater
             int indice = item.ItemIndex;
 
@@ -169,10 +169,12 @@ namespace SIPOH.Views
             if (listaAnexos != null && listaAnexos.Count > indice)
             {
                 // Eliminar el elemento en la posición indicada por el índice
-                item.Visible = false;
+                //item.Visible = false;
                 listaAnexos.RemoveAt(indice);
-                Repeater3.Controls.RemoveAt(indice);
-                Session["Anexos"] = listaAnexos;
+                //Repeater3.Controls.RemoveAt(indice);
+                //Session["Anexos"] = listaAnexos;
+                Repeater3.DataSource = listaAnexos;
+                Repeater3.DataBind();
 
 
             }
@@ -188,7 +190,7 @@ namespace SIPOH.Views
 
             // Obtener la fila del Repeater que contiene el botón
             RepeaterItem item = (RepeaterItem)btnEliminarVictima.NamingContainer;
-            item.Visible = false;
+            //item.Visible = false;
             // Obtener el índice de la fila en el Repeater
             int indiceListVictima = item.ItemIndex;
 
@@ -199,16 +201,18 @@ namespace SIPOH.Views
             if (listaVictima != null && listaVictima.Count > indiceListVictima)
             {
                 // Eliminar el elemento en la posición indicada por el índice
-                item.Visible = false;
+                //item.Visible = false;
                 listaVictima.RemoveAt(indiceListVictima);
-                Repeater1.Controls.RemoveAt(indiceListVictima);
-                Session["Victimas"] = listaVictima;
+                //Repeater1.Controls.RemoveAt(indiceListVictima);
+                //Session["Victimas"] = listaVictima;
+                Repeater1.DataSource = listaVictima;
+                Repeater1.DataBind();
 
-                
+
             }
             // Verificar si la lista no es nula y tiene elementos
-                updPanel.Update();
-            
+            updPanel.Update();
+
         }
         protected void btnEliminarCulpado(object sender, EventArgs e)
         {
@@ -217,7 +221,7 @@ namespace SIPOH.Views
 
             // Obtener la fila del Repeater que contiene el botón
             RepeaterItem item = (RepeaterItem)btnEliminarCulpados.NamingContainer;
-            item.Visible = false;
+            //item.Visible = false;
             // Obtener el índice de la fila en el Repeater
             int indice = item.ItemIndex;
 
@@ -228,10 +232,12 @@ namespace SIPOH.Views
             if (listaImputados != null && listaImputados.Count > indice)
             {
                 // Eliminar el elemento en la posición indicada por el índice
-                item.Visible = false;
+                //item.Visible = false;
                 listaImputados.RemoveAt(indice);
-                Repeater2.Controls.RemoveAt(indice);
-                Session["Imputados"] = listaImputados;
+                //Repeater2.Controls.RemoveAt(indice);
+                //Session["Imputados"] = listaImputados;
+                Repeater2.DataSource = listaImputados;
+                Repeater2.DataBind();
 
 
             }
@@ -248,24 +254,27 @@ namespace SIPOH.Views
             if (quienIngresa == "M")
             {
                 quienIngresa = "MP";
-            }else if (quienIngresa == "P")
+            }
+            else if (quienIngresa == "P")
             {
                 quienIngresa = "particular";
-            }else if (quienIngresa == "O")
+            }
+            else if (quienIngresa == "O")
             {
                 quienIngresa = "otra persona";
-            }else
+            }
+            else
             {
                 quienIngresa = "";
             }
-               
+
             lblTipoPersona.Text = quienIngresa;
 
             ScriptManager.RegisterStartupScript(this, GetType(), "mostrarValor", "mostrarValorSeleccionado();", true);
             updPanel.Update();
         }
 
-       
+
         protected void inputTipoAsunto_SelectedIndexChanged(object sender, EventArgs e)
         {
             string valorSeleccionado = inputTipoAsunto.SelectedValue;
@@ -297,9 +306,9 @@ namespace SIPOH.Views
         }
         protected void inputRadicacion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+
             string valorSeleccionado = inputRadicacion.SelectedItem.Text;
-            copyDropDownTipoSolicitud.Text = valorSeleccionado.ToUpper() ;
+            copyDropDownTipoSolicitud.Text = valorSeleccionado.ToUpper();
             updPanel.Update();
         }
 
@@ -338,7 +347,7 @@ namespace SIPOH.Views
                     string.IsNullOrWhiteSpace(apellidoPaternoVictima) ||
                     string.IsNullOrWhiteSpace(generoVictima))
                 {
-                    
+
 
                     string mensaje = "Todos los campos de la víctima son obligatorios.";
                     string script = $"toastError('{mensaje}');";
@@ -468,16 +477,17 @@ namespace SIPOH.Views
             {
                 valorSeleccionado = "Normal";
                 copyPrioridad.Text = valorSeleccionado;
-                
-            }else if (valorSeleccionado == "A")
+
+            }
+            else if (valorSeleccionado == "A")
             {
                 valorSeleccionado = "Alta";
                 copyPrioridad.Text = valorSeleccionado;
 
             }
-            
-                updPanel.Update();  
-            
+
+            updPanel.Update();
+
         }
 
 
@@ -519,11 +529,11 @@ namespace SIPOH.Views
                 listaDeAnexos.Add(anexo);
                 Session["Anexos"] = listaDeAnexos;
                 Session["AnexosT"] = listaDeAnexos;
-                Debug.WriteLine("Anexos para ticket: "+ Session["AnexosT"]);
+                Debug.WriteLine("Anexos para ticket: " + Session["AnexosT"]);
                 Repeater3.DataSource = listaDeAnexos;
                 Repeater3.DataBind();
                 CleanEtiquetaFormAnexo();
-                updPanel.Update();  
+                updPanel.Update();
             }
             else
             {
@@ -560,14 +570,14 @@ namespace SIPOH.Views
                 listaDeAnexos.Add(anexo);
                 Session["Anexos"] = listaDeAnexos;
                 //Session["AnexosT"] = Session["Anexos"];
-                
+
                 Repeater3.DataSource = listaDeAnexos;
                 Repeater3.DataBind();
                 CleanEtiquetaFormAnexo();
                 updPanel.Update();
             }
 
-            
+
         }
 
 
@@ -585,11 +595,11 @@ namespace SIPOH.Views
                 }
 
                 ProcesarDatos();
-               
+
             }
             catch (Exception ex)
             {
-                
+
                 MostrarMensajeError("Sucedió un error en su consulta, verifica si es correcta.");
                 Debug.WriteLine("Problemas en la consulta: " + ex);
             }
@@ -628,10 +638,10 @@ namespace SIPOH.Views
 
         private void MostrarMensajeError(string mensaje)
         {
-            
+
             string script = $"toastError('{mensaje}');";
             ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
-            
+
         }
 
         private void ProcesarDatos()
@@ -667,8 +677,8 @@ namespace SIPOH.Views
             ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
             try
             {
-                bool transaccionExitosa =  RegistroIniciales.SendRegistroIniciales(FeIngreso, TipoAsunto, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas, TipoRadicacion, NUC, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
-                
+                bool transaccionExitosa = RegistroIniciales.SendRegistroIniciales(FeIngreso, TipoAsunto, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas, TipoRadicacion, NUC, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
+
 
                 if (transaccionExitosa)
                 {
@@ -706,7 +716,7 @@ namespace SIPOH.Views
             listaDeAnexos.Clear();
             // método para realizar las inserciones
 
-            
+
 
             LimpiarDatosDespuesDeProcesar();
         }
@@ -745,7 +755,7 @@ namespace SIPOH.Views
             Session["Victimas"] = new List<Victima>();
             Session["Imputados"] = new List<Imputado>();
             Session["Delitos"] = new List<int>();
-            
+
             Session["Anexos"] = new List<Anexos>();
         }
 
@@ -777,7 +787,7 @@ namespace SIPOH.Views
 
             return lineas;
         }
-        
+
         public static List<string> listaDeAnexos = new List<string>();
         private void ImprimirCentrado(StringBuilder ticket, string texto)
         {
@@ -792,7 +802,7 @@ namespace SIPOH.Views
         public string CrearTicketSELLO()
         {
             string TipoAsunto = inputTipoAsunto.SelectedValue;
-            
+
             StringBuilder ticket = new StringBuilder();
             string nombreJuzgado = Session["NombreJuzgado"] as string;
             List<Anexos> anexos = Session["Anexos"] as List<Anexos>;
@@ -805,7 +815,7 @@ namespace SIPOH.Views
             //string Causa = inputNumeroDocumento.Text;
             string Causa = Session["FolioNuevoInicial"] as string;
 
-          
+
             ImprimirCentrado(ticket, "TRIBUNAL SUPERIOR");
             ImprimirCentrado(ticket, "DE JUSTICIA");
             ImprimirCentrado(ticket, "DEL ESTADO DE HIDALGO");
@@ -814,27 +824,27 @@ namespace SIPOH.Views
             foreach (string linea in lineasNombreJuzgado)
             {
                 ImprimirCentrado(ticket, linea);
-            }            
-            ImprimirCentrado(ticket, "INICIAL");           
-            ImprimirCentrado(ticket, ".........");                        
+            }
+            ImprimirCentrado(ticket, "INICIAL");
+            ImprimirCentrado(ticket, ".........");
             if (TipoAsunto == "C")
             {
                 var AsuntoIncial = "CAUSA";
                 ticket.AppendLine($"{AsuntoIncial}: {Causa}");
-                
+
             }
             else if (TipoAsunto == "CP")
             {
                 var AsuntoIncial = "CUPRE";
-                
+
 
                 ticket.AppendLine($"{AsuntoIncial}:{Causa}");
             }
             ticket.AppendLine($"FECHA RECEPCIÒN:{GetFechaYHora()}");
             ticket.AppendLine($"NUC:{NUC.ToUpper()}");
 
-            int maxLength = 36; 
-            int maxLengthT = 30; 
+            int maxLength = 36;
+            int maxLengthT = 30;
 
             foreach (var anexo in anexos)
             {
@@ -845,7 +855,7 @@ namespace SIPOH.Views
                 ticket.AppendLine(linea);
             }
 
-            
+
             int espacioEntreColumnasT = 3; // Puedes ajustar este valor según tus necesidades
             int longitudTotalT = maxLengthT - espacioEntreColumnasT;
 
@@ -855,13 +865,13 @@ namespace SIPOH.Views
 
 
 
-            
+
             return ticket.ToString();
         }
 
 
         private int CantidadAnexos(List<Anexos> anexos)
-        { 
+        {
             return anexos?.Sum(a => Convert.ToInt32(a.CantidadAnexo)) ?? 0;
         }
         protected string GetFechaYHora()
@@ -879,7 +889,7 @@ namespace SIPOH.Views
 
             // Obtener la fila del Repeater que contiene el botón
             RepeaterItem item = (RepeaterItem)btnEliminarDelitos.NamingContainer;
-            item.Visible = false;
+            //item.Visible = false;
             // Obtener el índice de la fila en el Repeater
             int indiceD = item.ItemIndex;
 
@@ -890,11 +900,12 @@ namespace SIPOH.Views
             if (listaDelitos != null && listaDelitos.Count > indiceD)
             {
                 // Eliminar el elemento en la posición indicada por el índice
-                item.Visible = false;
+                //item.Visible = false;
                 listaDelitos.RemoveAt(indiceD);
-                RepeaterDelitos.Controls.RemoveAt(indiceD);
-                Session["Delitos"] = listaDelitos;
-
+                //RepeaterDelitos.Controls.RemoveAt(indiceD);
+                //Session["Delitos"] = listaDelitos;
+                RepeaterDelitos.DataSource = listaDelitos;
+                RepeaterDelitos.DataBind();
 
             }
             // Verificar si la lista no es nula y tiene elementos
@@ -909,9 +920,9 @@ namespace SIPOH.Views
             string descripcionDelito = inputDelitos.SelectedItem.Text;
             if (inputDelitos.SelectedValue == "")
             {
-                
+
                 string script = $"toastError('{"Por favor, selecciona una opción válida."}');";
-                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);               
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
                 return;
             }
             // Crear un objeto CatDelito con los datos seleccionados
@@ -955,7 +966,7 @@ namespace SIPOH.Views
 
 
 
-       
+
 
 
 
@@ -988,8 +999,8 @@ namespace SIPOH.Views
                 inputDelitos.Items.Add(listItem);
             }
         }
-        
-        
+
+
 
 
 
@@ -1036,7 +1047,7 @@ namespace SIPOH.Views
             inputQuienIngresa.SelectedIndex = 0;
             inputNombreParticular.Text = "";
             //inputPrioridad.SelectedIndex = ;
-            
+
             inputNumeroFojas.Text = "";
             //inputRadicacion.SelectedValue = "";
             inputFechaRecepcion.Text = "";
@@ -1052,7 +1063,7 @@ namespace SIPOH.Views
             Repeater3.DataBind();
             RepeaterDelitos.DataSource = null;
             RepeaterDelitos.DataBind();
-            
+
         }
 
 

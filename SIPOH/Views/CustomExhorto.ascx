@@ -35,7 +35,7 @@
     </div>
 </div>
 
-<asp:UpdatePanel ID="updPanel" runat="server" EnableViewState="true" >
+<asp:UpdatePanel ID="updPanel" runat="server" EnableViewState="true" UpdateMode="Conditional">
     <ContentTemplate>
 
         <div class="row ">
@@ -45,7 +45,7 @@
                     <asp:ListItem Value="SO">Selecciona una opción</asp:ListItem>
                     <asp:ListItem Value="E">Exhorto</asp:ListItem>
                     <asp:ListItem Value="D">Despacho</asp:ListItem>
-                    <asp:ListItem Value="R">Requesitoria</asp:ListItem>
+                    <asp:ListItem Value="R">Requisitoria</asp:ListItem>
                 </asp:DropDownList> 
             </div>
         </div>
@@ -205,7 +205,7 @@
                         <Columns>
                             <asp:TemplateField HeaderText="Anexo" SortExpression="NombreDelito">
                                 <ItemTemplate>
-                                    <asp:Label ID="lblAnexo" runat="server" Text='<%# Bind("descripcion") %>' CssClass="mayusculas"></asp:Label>
+                                    <asp:Label ID="lblAnexo" runat="server" CssClass="mayusculas" Text='<%# Bind("descripcion") %>'></asp:Label>
                                 </ItemTemplate>
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:TemplateField>
@@ -334,17 +334,17 @@
      <div class="modal-dialog" role="document">
          <div class="modal-content">
              <div class="modal-header" style="background-color: #ffcc00">
-                 <h5 class="modal-title" style="color: white; font-weight: bold">¿Los datos son correctos?<br />
+                 <h5 class="modal-title mayusculas" style="color: white; font-weight: bold">¿Los datos son correctos?<br />
                      Revise los datos antes de continuar...</h5>
                  <button type="button" class="close" data-dismiss="modal" style="color: white" aria-label="Cerrar">
                      <span aria-hidden="true">&times;</span>
                  </button>
              </div>
-             <div class="modal-body">
+             <div class="modal-body mayusculas">
              </div>
              <div class="modal-footer">
-                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                 <asp:Button ID="btnGuardarCambios" runat="server" Text="Guardar cambios" CssClass="btn btn-success" OnClick="btnGuardarDatosJudiciales_Click"  />
+                 <button type="button" class="btn btn-danger mayusculas" data-bs-dismiss="modal">Cerrar</button>
+                 <asp:Button ID="btnGuardarCambios" runat="server" Text="Guardar cambios" CssClass="btn btn-success mayusculas" OnClick="btnGuardarDatosJudiciales_Click"  />
                  
              </div>
          </div>
@@ -493,7 +493,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-6">
                     <h6 class="help-block text-muted small-font">Cantidad de Anexos: </h6>
                     <div class="form-outline">
-                        <asp:TextBox runat="server" ID="noAnexos2" CssClass="form-control mayusculas" Text="0" Type="Number"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="noAnexos2" CssClass="form-control" Text="0" Type="Number"></asp:TextBox>
                     </div>
                 </div>
 
@@ -628,17 +628,17 @@
      <div class="modal-dialog" role="document">
          <div class="modal-content">
              <div class="modal-header" style="background-color: #ffcc00">
-                 <h5 class="modal-title" style="color: white; font-weight: bold">¿Los datos son correctos?<br />
+                 <h5 class="modal-title mayusculas" style="color: white; font-weight: bold">¿Los datos son correctos?<br />
                      Revise los datos antes de continuar...</h5>
                  <button type="button" class="close" data-dismiss="modal" style="color: white" aria-label="Cerrar">
                      <span aria-hidden="true">&times;</span>
                  </button>
              </div>
-             <div class="modal-body">
+             <div class="modal-body mayusculas">
              </div>
              <div class="modal-footer">
-                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                 <asp:Button ID="Button9" runat="server" Text="Guardar cambios" CssClass="btn btn-success" OnClick="btnGuardarDatosJudiciales_Click2"  />
+                 <button type="button" class="btn btn-danger mayusculas" data-bs-dismiss="modal">Cerrar</button>
+                 <asp:Button ID="Button9" runat="server" Text="Guardar cambios" CssClass="btn btn-success mayusculas" OnClick="btnGuardarDatosJudiciales_Click2"  />
              </div>
          </div>
      </div>
@@ -658,7 +658,7 @@
             <div class="row ">
                 <div class="col-md-3 col-sm-3 col-xs-3">
                     <h6 class="help-block text-muted small-font">Número de Toca: </h6>
-                    <asp:TextBox runat="server" CssClass="form-control mayusculas" placeholder="Número de Toca" ID="numtoca"></asp:TextBox>
+                    <asp:TextBox runat="server" CssClass="form-control mayusculas" placeholder="Número de Toca" ID="numtoca" onchange="formatoNumeroToca(this)"></asp:TextBox>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-3">
                     <h6 class="help-block text-muted small-font">Sala de procedencia: </h6>
@@ -788,7 +788,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-6">
                     <h6 class="help-block text-muted small-font">Cantidad de Anexos: </h6>
                     <div class="form-outline">
-                        <asp:TextBox runat="server" ID="noAnexos3" CssClass="form-control mayusculas" Text="0" Type="Number"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="noAnexos3" CssClass="form-control" Text="0" Type="Number"></asp:TextBox>
                     </div>
                 </div>
 
@@ -925,7 +925,7 @@
      <div class="modal-dialog" role="document">
          <div class="modal-content">
              <div class="modal-header" style="background-color: #ffcc00">
-                 <h5 class="modal-title" style="color: white; font-weight: bold">¿Los datos son correctos?<br />
+                 <h5 class="modal-title mayusculas" style="color: white; font-weight: bold">¿Los datos son correctos?<br />
                      Revise los datos antes de continuar...</h5>
                  <button type="button" class="close" data-dismiss="modal" style="color: white" aria-label="Cerrar">
                      <span aria-hidden="true">&times;</span>
@@ -934,8 +934,8 @@
              <div class="modal-body">
              </div>
              <div class="modal-footer">
-                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                 <asp:Button ID="Button10" runat="server" Text="Guardar cambios" CssClass="btn btn-success" OnClick="btnGuardarDatosJudiciales_Click3" />
+                 <button type="button" class="btn btn-danger mayusculas" data-bs-dismiss="modal">Cerrar</button>
+                 <asp:Button ID="Button10" runat="server" Text="Guardar cambios" CssClass="btn btn-success mayusculas" OnClick="btnGuardarDatosJudiciales_Click3" />
              </div>
          </div>
      </div>
@@ -1016,7 +1016,7 @@
         var fecha = document.getElementById('<%= fecha1.ClientID %>').value;
         var fojas = document.getElementById('<%= fojas1.ClientID %>').value;
         var observa = document.getElementById('<%= observa1.ClientID %>').value;
-        var prioridad = document.getElementById('<%= prioridad.ClientID %>').checked; // Asumiendo que "prioridad" es un checkbox
+
         var diligencia1 = document.getElementById('<%= Diligencia1.ClientID %>').value;
 
         // Verificar si el valor de "numdoc" está vacío
@@ -1028,6 +1028,15 @@
         // Verificar si el valor de "procede" está vacío
         if (procede == "") {
             toastr.error('El campo Procedente de no puede estar vacío.');
+            return;
+        }
+
+        let fechaUsuario = new Date(fecha); // Fecha proporcionada por el usuario
+        let fechaActual = new Date(); // Fecha actual
+
+        // Verificar si la fecha del usuario es mayor a la fecha actual
+        if (fechaUsuario > fechaActual) {
+            toastr.error('La fecha no puede ser mayor a la fecha actual.');
             return;
         }
 
@@ -1043,15 +1052,24 @@
             return;
         }
 
-        // Verificar si el valor de "Diligencia1" está vacío
-        if (diligencia1 == "") {
-            toastr.error('El campo Diligencia no puede estar vacío.');
+        // Obtén todos los elementos de radio con el mismo nombre
+        var prioridad = document.getElementsByName('<%= prioridad.UniqueID %>');
+        // Verificar si se ha seleccionado una opción en "prioridad"
+        var prioridadSeleccionada = false;
+        for (var i = 0; i < prioridad.length; i++) {
+            if (prioridad[i].checked) {
+                prioridadSeleccionada = true;
+                break;
+            }
+        }
+        if (!prioridadSeleccionada) {
+            toastr.error('Debe seleccionar una opción en el campo Prioridad.');
             return;
         }
 
-        // Verificar si el valor de "observa" está vacío
-        if (observa == "") {
-            toastr.error('El campo Observaciones no puede estar vacío.');
+        // Verificar si el valor de "Diligencia1" está vacío
+        if (diligencia1 == "") {
+            toastr.error('El campo Diligencia no puede estar vacío.');
             return;
         }
 
@@ -1200,7 +1218,6 @@
         var fecha = document.getElementById('<%= fecha2.ClientID %>').value;
         var fojas = document.getElementById('<%= fojas2.ClientID %>').value;
         var observa = document.getElementById('<%= observa2.ClientID %>').value;
-        var prioridad = document.getElementById('<%= prioridad2.ClientID %>').checked; // Asumiendo que "prioridad" es un checkbox
         var diligencia1 = document.getElementById('<%= Diligencia2.ClientID %>').value;
 
         // Verificar si el valor de "numdoc" está vacío
@@ -1212,6 +1229,15 @@
         // Verificar si el valor de "procede" está vacío
         if (quejo == "") {
             toastr.error('El campo Quejoso de no puede estar vacío.');
+            return;
+        }
+
+        let fechaUsuario = new Date(fecha); // Fecha proporcionada por el usuario
+        let fechaActual = new Date(); // Fecha actual
+
+        // Verificar si la fecha del usuario es mayor a la fecha actual
+        if (fechaUsuario > fechaActual) {
+            toastr.error('La fecha no puede ser mayor a la fecha actual.');
             return;
         }
 
@@ -1227,15 +1253,24 @@
             return;
         }
 
-        // Verificar si el valor de "Diligencia1" está vacío
-        if (diligencia1 == "") {
-            toastr.error('El campo Diligencia no puede estar vacío.');
+        // Obtén todos los elementos de radio con el mismo nombre
+        var prioridad = document.getElementsByName('<%= prioridad2.UniqueID %>');
+        // Verificar si se ha seleccionado una opción en "prioridad"
+        var prioridadSeleccionada = false;
+        for (var i = 0; i < prioridad.length; i++) {
+            if (prioridad[i].checked) {
+                prioridadSeleccionada = true;
+                break;
+            }
+        }
+        if (!prioridadSeleccionada) {
+            toastr.error('Debe seleccionar una opción en el campo Prioridad.');
             return;
         }
 
-        // Verificar si el valor de "observa" está vacío
-        if (observa == "") {
-            toastr.error('El campo Observaciones no puede estar vacío.');
+        // Verificar si el valor de "Diligencia1" está vacío
+        if (diligencia1 == "") {
+            toastr.error('El campo Diligencia no puede estar vacío.');
             return;
         }
 
@@ -1372,7 +1407,6 @@
     var fecha = document.getElementById('<%= fecha3.ClientID %>').value;
     var fojas = document.getElementById('<%= fojas3.ClientID %>').value;
     var observa = document.getElementById('<%= observa3.ClientID %>').value;
-    var prioridad = document.getElementById('<%= prioridad3.ClientID %>').checked; // Asumiendo que "prioridad" es un checkbox
     var diligencia1 = document.getElementById('<%= Diligencia3.ClientID %>').value;
 
     // Verificar si el valor de "numdoc" está vacío
@@ -1387,27 +1421,45 @@
         return;
     }
 
-    // Verificar si el valor de "fecha" está vacío
-    if (fecha == "") {
-        toastr.error('El campo Fecha de Recepción no puede estar vacío.');
-        return;
-    }
+        let fechaUsuario = new Date(fecha); // Fecha proporcionada por el usuario
+        let fechaActual = new Date(); // Fecha actual
+
+        // Verificar si la fecha del usuario es mayor a la fecha actual
+        if (fechaUsuario > fechaActual) {
+            toastr.error('La fecha no puede ser mayor a la fecha actual.');
+            return;
+        }
+
+        // Verificar si el valor de "fecha" está vacío
+        if (fecha == "") {
+            toastr.error('El campo Fecha de Recepción no puede estar vacío.');
+            return;
+        }
 
     // Verificar si el valor de "fojas" es 0
     if (fojas == "0") {
         toastr.error('El campo Número de Fojas no puede ser 0.');
         return;
-    }
+        }
+
+        // Obtén todos los elementos de radio con el mismo nombre
+        var prioridad = document.getElementsByName('<%= prioridad3.UniqueID %>');
+        // Verificar si se ha seleccionado una opción en "prioridad"
+        var prioridadSeleccionada = false;
+        for (var i = 0; i < prioridad.length; i++) {
+            if (prioridad[i].checked) {
+                prioridadSeleccionada = true;
+                break;
+            }
+        }
+        if (!prioridadSeleccionada) {
+            toastr.error('Debe seleccionar una opción en el campo Prioridad.');
+            return;
+        }
 
     // Verificar si el valor de "Diligencia1" está vacío
     if (diligencia1 == "") {
         toastr.error('El campo Diligencia no puede estar vacío.');
-        return;
-    }
-
-    // Verificar si el valor de "observa" está vacío
-    if (observa == "") {
-        toastr.error('El campo Observaciones no puede estar vacío.');
         return;
     }
 
@@ -1644,5 +1696,34 @@ function habilitarTextBoxSelecSexo3() {
         // Restablecemos los valores
         ddlAnexos.selectedIndex = 0;
         noAnexos.value = 0;
+    }
+
+
+
+    $(document).ready(function () {
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            sessionStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+
+        var activeTab = sessionStorage.getItem('activeTab');
+        if (activeTab) {
+            $('#myTab a[href="' + activeTab + '"]').tab('show');
+        }
+    });
+</script>
+
+<script type="text/javascript">
+    function formatoNumeroToca(input) {
+        // Divide el valor ingresado en el número y el año
+        var [number, year] = input.value.split("/");
+
+        // Rellena el número con ceros a la izquierda hasta que tenga 4 dígitos
+        number = number.padStart(4, '0');
+
+        // Combina el número y el año para obtener el número de toca
+        var numeroToca = number + "/" + year;
+
+        // Establece el valor del input al número de toca
+        input.value = numeroToca;
     }
 </script>
