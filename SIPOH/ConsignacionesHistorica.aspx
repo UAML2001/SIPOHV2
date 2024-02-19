@@ -4,6 +4,8 @@
      <div class="container">
         <link href="Content/css/Consignaciones.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                     <link rel="stylesheet" type="text/css"
+                href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
           <style type="text/css">
                 .mayusculas {
                     text-transform: uppercase;
@@ -20,36 +22,28 @@
                         <div class="card-header">
                             <ul class="nav nav-tabs justify-content-center" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active  onSplash" data-toggle="tab" href="#ICHAcusatorio" role="tab">Sistema Acusatorio
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link  onSplash" data-toggle="tab" href="#ICHTradicional" role="tab">Sistema Tradicional
+                                    <a class="nav-link active  onSplash" data-toggle="tab" href="#ICH" role="tab">Sistema Acusatorio o Tradicional
                                     </a>
                                 </li>
                                  <li class="nav-item">
-                                    <a class="nav-link  onSplash" data-toggle="tab" href="#ICHCausa" role="tab">Consignación Histotica CAUSA
+                                    <a class="nav-link  onSplash" data-toggle="tab" href="#ICHCausa" role="tab">Consignación Histórica CAUSA
                                     </a>
                                 </li>
                             </ul>
                         </div>
                         <div class="card-body">
+                            <asp:ScriptManager ID="ScriptManagerCH" runat="server"></asp:ScriptManager>
                             <!-- Tab panes -->
                             <div class="tab-content ">
-                                <div class="tab-pane active" id="ICHAcusatorio" role="tabpanel">
+                                <div class="tab-pane active" id="ICH" role="tabpanel">
                                     <%--Importacion de Controles--%>
-                                    <%@ Register Src="~/Views/InicialCHSAcusatorio.ascx" TagPrefix="uc1" TagName="InicialCHSAcusatorio" %>
-                                    <uc1:InicialCHSAcusatorio runat="server" id="InicialCHSAcusatorio" />
-                                </div>
-                                <div class="tab-pane" id="ICHTradicional" role="tabpanel">
-                                    <%--Importacion de Controles--%>
-                                    <%@ Register Src="~/Views/InicialCHSTradicional.ascx" TagPrefix="uc1" TagName="InicialCHSTradicional" %>
-                                    <uc1:InicialCHSTradicional runat="server" id="InicialCHSTradicional" />
+                                    <%@ Register Src="~/Views/InicialConsignacionesHistoricas.ascx" TagPrefix="uc1" TagName="InicialConsignacionesHistoricas" %>
+                                    <uc1:InicialConsignacionesHistoricas runat="server" id="InicialConsignacionesHistoricas" />
                                 </div>
                                 <div class="tab-pane" id="ICHCausa" role="tabpanel">
                                     <%--Importacion de Controles--%>
-                                    <%@ Register Src="~/Views/InicialCHCausa.ascx" TagPrefix="uc1" TagName="InicialCHCausa" %>
-                                    <uc1:InicialCHCausa runat="server" id="InicialCHCausa" />
+                                    <%@ Register Src="~/Views/InicialCHCausa.ascx" TagPrefix="uc2" TagName="InicialCHCausa" %>
+                                    <uc2:InicialCHCausa runat="server" id="InicialCHCausa" />
                                 </div>
                             </div>
                         </div>
@@ -62,5 +56,51 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
         <script src="Scripts/consignaciones/Consignaciones.js"></script>
          <script src="Scripts/Ejecucion/formatoInput.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+            <script>
+                toastr.options = {
+                    closeButton: true,
+                    debug: false,
+                    newestOnTop: false,
+                    progressBar: true,
+                    positionClass: "toast-bottom-right",
+                    preventDuplicates: false,
+                    onclick: null,
+                    showDuration: "300",
+                    hideDuration: "1000",
+                    timeOut: "5000",
+                    extendedTimeOut: "1000",
+                    showEasing: "swing",
+                    hideEasing: "linear",
+                    showMethod: "fadeIn",
+                    hideMethod: "fadeOut"
+                };
+                function toastExito(mensaje) {
+                    toastr.success(mensaje, "Exito");
+                }
+                function toastError(mensaje) {
+                    toastr.error(mensaje, "Error");
+                }
+                function toastInfo(mensaje) {
+                    toastr.info(mensaje, "Informacion");
+                }
+                function toastWarning(mensaje) {
+                    toastr.warning(mensaje, "Atención");
+                }
+            </script>
+            <script>
+                window.addEventListener('keydown', function (e) {
+                    var node = (e.target) ? e.target : ((e.srcElement) ? e.srcElement : null);
+                    if ((e.keyCode == 13) && (node.type == "text")) {
+                        e.preventDefault();
+                        return false;
+                    }
+                }, true);
+            </script>
+         <script type="text/javascript">
+
+
+         </script>
+
     </div>
 </asp:Content>

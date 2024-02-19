@@ -455,7 +455,7 @@ namespace SIPOH.Views
                         ListItem listItem = new ListItem();
                         listItem.Text = dr["Descripcion"].ToString();
                         listItem.Value = dr["Descripcion"].ToString();
-                        CatAnexosDDTradicional.Items.Add(listItem); // Asegúrate de que este ID está actualizado en tu front-end
+                        CatAnexosDDTradicional.Items.Add(listItem);
                     }
                 }
             }

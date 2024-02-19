@@ -34,4 +34,10 @@ function aplicarFormatoSegunSeleccion(num) {
     } else {
         padLeadingZeros(num);
     }
+    var seleccion2 = document.getElementById('<%= CausaNucCHA.ClientID %>').SelectedValue;
+    if (seleccion2 === "2") {
+        formatNuc(num);
+    } else {
+        padLeadingZeros(num);
+    }
 }

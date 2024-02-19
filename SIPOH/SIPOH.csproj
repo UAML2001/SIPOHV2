@@ -111,6 +111,7 @@
       <HintPath>..\packages\CrystalReports.Shared.13.0.4003\lib\net40\CrystalDecisions.Shared.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CrystalDecisions.Web, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
     </Reference>
@@ -2157,8 +2158,7 @@
     <Content Include="Views\InicialBusSenBen.ascx" />
     <Content Include="Views\InicialBusSolicitante.ascx" />
     <Content Include="Views\InicialCHCausa.ascx" />
-    <Content Include="Views\InicialCHSAcusatorio.ascx" />
-    <Content Include="Views\InicialCHSTradicional.ascx" />
+    <Content Include="Views\InicialConsignacionesHistoricas.ascx" />
     <Content Include="Views\InicialTradicional.ascx" />
     <Content Include="Views\ReportesControl.ascx" />
     <Content Include="Views\ReportesEjecucion.ascx" />
@@ -2219,10 +2219,20 @@
       <DependentUpon>Consulta.aspx</DependentUpon>
     </Compile>
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatAnexosController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\CatEjecucion_CatAnexosController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\CatEjecucion_CatSolicitanteController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\CatEjecucion_CatSolicitudController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\CatEjecucion_Cat_DistritosController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\CatEjecucion_Cat_JuzgadosController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\CatEjecucion_Cat_JuzgadosEjecucionController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\CatJuzgadosConTipoYSubtipoController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatTipoSolicitudController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\Cat_Ejecucion_Cat_JuzgadosPorCircuitoEController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\EJ_ValidarNumeroEjecucionController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\P_CatSolicitanteController.cs" />
     <Compile Include="Controllers\AC_RegistroInicialJuicioOral\InicialJuicioOralController.cs" />
-    <Compile Include="Controllers\EJ_ConsultasHistoricasAcusatorio\ChAcusatorioController.cs" />
+    <Compile Include="Controllers\EJ_Storages\Ejecucion_ConsultarCausaController.cs" />
+    <Compile Include="Controllers\EJ_Storages\ObtenerNombreJuzgadoPorIDController.cs" />
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2500,19 +2510,12 @@
     <Compile Include="Views\InicialCHCausa.ascx.designer.cs">
       <DependentUpon>InicialCHCausa.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Views\InicialCHSAcusatorio.ascx.cs">
-      <DependentUpon>InicialCHSAcusatorio.ascx</DependentUpon>
+    <Compile Include="Views\InicialConsignacionesHistoricas.ascx.cs">
+      <DependentUpon>InicialConsignacionesHistoricas.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\InicialCHSAcusatorio.ascx.designer.cs">
-      <DependentUpon>InicialCHSAcusatorio.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\InicialCHSTradicional.ascx.cs">
-      <DependentUpon>InicialCHSTradicional.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\InicialCHSTradicional.ascx.designer.cs">
-      <DependentUpon>InicialCHSTradicional.ascx</DependentUpon>
+    <Compile Include="Views\InicialConsignacionesHistoricas.ascx.designer.cs">
+      <DependentUpon>InicialConsignacionesHistoricas.ascx</DependentUpon>
     </Compile>
     <Compile Include="Views\InicialTradicional.ascx.cs">
       <DependentUpon>InicialTradicional.ascx</DependentUpon>
@@ -2547,6 +2550,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\CatEjecucion_CatAnexos\" />
+    <Folder Include="Views\CatEjecucion_CatSolicitud\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

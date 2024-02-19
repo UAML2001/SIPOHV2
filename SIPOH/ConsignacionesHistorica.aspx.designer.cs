@@ -15,22 +15,22 @@ namespace SIPOH
     {
 
         /// <summary>
-        /// Control InicialCHSAcusatorio.
+        /// Control ScriptManagerCH.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::SIPOH.Views.InicialCHSAcusatorio InicialCHSAcusatorio;
+        protected global::System.Web.UI.ScriptManager ScriptManagerCH;
 
         /// <summary>
-        /// Control InicialCHSTradicional.
+        /// Control InicialConsignacionesHistoricas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::SIPOH.Views.InicialCHSTradicional InicialCHSTradicional;
+        protected global::SIPOH.Views.InicialConsignacionesHistoricas InicialConsignacionesHistoricas;
 
         /// <summary>
         /// Control InicialCHCausa.
