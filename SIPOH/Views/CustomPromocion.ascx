@@ -250,8 +250,8 @@
                         </div>
                     </div>
                 </div>
-                <div class=" d-flex justify-content-center mt-1 mt-3">
-                    <a  class="btn btn-success btn-sm" data-bs-toggle="modal" onclick="valoresFinales();" data-bs-target="#modalEnviarPromocion"><i class="bi bi-floppy-fill mr-1"></i>Enviar</a>
+                <div class=" d-flex justify-content-center mt-1 mt-3" id="ocultarBtnModal" runat="server" style="display:none !important;">
+                    <a  class="btn btn-success btn-sm" data-bs-toggle="modal" onclick="valoresFinales();" data-bs-target="#modalEnviarPromocion"><i class="bi bi-floppy-fill mr-1"></i>Guardar</a>
                 </div>
                 <asp:Label runat="server" ID="lblSuccess" Text="" CssClass="text-success text-center"></asp:Label>
                 <asp:Label runat="server" ID="lblError" Text="" CssClass="text-danger text-center"></asp:Label>
@@ -314,7 +314,7 @@
                     </div>
                     <div class="modal-footer">
                          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i>Cerrar</button>
-                        <asp:Button runat="server" ID="btnPromocion" CssClass="btn btn-success btn-sm" Text="Enviar" OnClick="btnEnviarPromocion" AutoPostBack="true" data-bs-dismiss="modal"/>
+                        <asp:Button runat="server" ID="btnPromocion" CssClass="btn btn-success btn-sm" Text="Guardar" OnClick="btnEnviarPromocion" AutoPostBack="true" data-bs-dismiss="modal"/>
                     </div>
                 </div>
             </div>

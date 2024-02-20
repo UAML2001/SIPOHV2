@@ -7,11 +7,12 @@
     <link href="Content/css/Consignaciones.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
-    <div>
-        <h1 style="margin-left: 5%" class="h5" >Consignaciones <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-success fw-bold">Amparo</span> </h1>
+    <div class="d-flex justify-content-between px-3 mb-4">
+        <span  class="text-sm" >Consignaciones <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-success fw-bold ">Amparo</span> </span>
+        <b>Registro</b>
 	</div>
     
-            <div class="col-md-10 ml-0 col-xl-12 m-0">
+            <div class="col-md-10  col-xl-12 m-0">
                 <!-- Nav tabs -->
                 <div class="card">
                     <div class="card-header">
@@ -42,7 +43,7 @@
                     </div>
 
                     <%--importante--%>
-                    <div class="card-body mx-3 my-2 p-0">
+                    <div class="card-body mx-3  p-0">
                         <!-- Tab panes -->
                         <asp:ScriptManager ID="ScriptManagerConsignaciones" runat="server"></asp:ScriptManager>
                         <div class="tab-content ">

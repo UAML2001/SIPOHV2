@@ -325,7 +325,7 @@ namespace SIPOH
                         command.Connection = connection;
                         command.Transaction = transaction;
                         // Paso 1: Inserción en P_Asunto
-                        command.CommandText = "INSERT INTO P_Asunto(Numero, IdJuzgado, FeIngreso, TipoAsunto, Digitalizado, FeCaptura, IdUsuario, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas) OUTPUT INSERTED.IdAsunto VALUES (@NumeroDocumento, @IdJuzgado, @FeIngreso, @TipoAsunto, '0', GETDATE(), @IdUsuario, @IdAudiencia, @Observaciones, @QuienIngresa, @MP, @Prioridad, @Fojas)";
+                        command.CommandText = "INSERT INTO P_Asunto(Numero, IdJuzgado, FeIngreso, TipoAsunto, Digitalizado, FeCaptura, IdUsuario, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas) OUTPUT INSERTED.IdAsunto VALUES (@NumeroDocumento, @IdJuzgado, @FeIngreso, @TipoAsunto, 'N', GETDATE(), @IdUsuario, @IdAudiencia, @Observaciones, @QuienIngresa, @MP, @Prioridad, @Fojas)";
                         command.Parameters.AddWithValue("@NumeroDocumento", Session["FolioNuevoInicial"]);
                         command.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
                         command.Parameters.AddWithValue("@FeIngreso", FeIngresoAsunto);

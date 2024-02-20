@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-auto">
 
-                    <asp:Button runat="server" CssClass="btn btn-outline-success btn-sm" Text="Buscar" OnClick="btnConsultaCausa" AutoPostBack="true" />
+                    <asp:Button runat="server" CssClass="btn btn-outline-success btn-sm" Text="Buscar" OnClick="btnConsultaCausa"  AutoPostBack="true" />
                 </div>
 
             </div>
@@ -72,7 +72,7 @@
                             <div>
                                 <b class="mr-2 text-secondary" id="labelApellido"><%# Eval("Nombre") %></b> <i class="mr-2 text-secondary" id="labelNombre"><%# Eval("Apellidos") %></i>
                             </div>
-                            <asp:Button runat="server"  CssClass="btn  btn-sm border btn-light border-0 rounded " Text="➕" OnClick="ObtenerDelitos_Click" CommandArgument='<%# Eval("IdPartes") %>' />
+                            <asp:Button runat="server"  CssClass="btn  btn-sm border btn-light border-0 rounded " ID="controlSelected" Text="➕" OnClick="ObtenerDelitos_Click" CommandArgument='<%# Eval("IdPartes") %>' />
                             
 
                             <b style="display: none;"><%# Eval("IdAsuntoCausa") %></b>
@@ -221,17 +221,18 @@
             <pre id="TicketJO" runat="server"></pre>
 
         </div>
-        <div class=" d-flex justify-content-center my-5">
-            <a class="btn btn-success btn-sm" data-bs-toggle="modal" onclick="valoresFinales();" data-bs-target="#envioRelaciones"><i class="bi bi-floppy-fill mr-1"></i>Enviar</a>
+        <div class=" d-flex justify-content-center my-5" id="ocultarAGuardar" runat="server" style="display:none !important;">
+            <a class="btn btn-success btn-sm" data-bs-toggle="modal" onclick="valoresFinales();" data-bs-target="#envioRelaciones"><i class="bi bi-floppy-fill mr-1"></i>Guardar</a>
         </div>
-        <div class="container d-flex flex-row-reverse justify-content-center align-content-center w-100vw m-0 " id="tituloSelloJOIniciales" style="display: none !important;" runat="server">
-            <div class="col-auto flex-column-reverse btn btn-info d-flex btn-sm" onclick="imprimirTicketJOIniciales()" style="cursor: pointer;">
-                <h6 class="text-center align-self-center m-0 p-0 ">¡Imprimir <span class="text-black">ticket!</span></h6>
-                <div class="col-auto ">
-                    <i class="bi bi-printer-fill  btn-sm"></i>
+            <div class="container d-flex flex-row-reverse justify-content-center align-content-center w-100vw m-0 " Id="tituloSelloJOIniciales" style="display: none !important ;" runat="server">
+                <div class="col-auto flex-column-reverse btn btn-info d-flex btn-sm" onclick="imprimirTicketJOIniciales()" style="cursor: pointer; ">
+                    <h6 class="text-center align-self-center m-0 p-0 " >¡Imprimir <span class="text-black">ticket!</span></h6>
+                    <div class="col-auto ">
+                        <i class="bi bi-printer-fill  btn-sm"></i>
+                    </div>
                 </div>
             </div>
-        </div>
+        <br />
         <%--modales--%>
         <%--        MODAL AGREGAR RELACION--%>
         <div class="modal fade" id="modalAgregarJuicioOral" tabindex="-1" aria-labelledby="modalAgregarJuicioOral" aria-hidden="true">
@@ -309,9 +310,8 @@
                 </div>
             </div>
         </div>
-        <script type="text/javascript">    textBox.value = '';
-                }
-            }
+        <script type="text/javascript">    
+                
             function MostrarDescripcionAnexos() {
                 var dropdownListaAnexos = $("#<%= txtAnexosTipoJuicio.ClientID %>");
                 var containerDescripcion = $("#contenedorDescripcionAnexos");
@@ -321,6 +321,7 @@
                     containerDescripcion.fadeOut();
                 }
             }
+            
 
             function validarNumero(input) {
                 // Obtener el valor del campo
@@ -363,6 +364,7 @@
                     tituloSello.style.display = 'block';
                 }
             }
+           
             function imprimirTicketJOIniciales() {
                 var contenido = document.getElementById('<%= TicketJO.ClientID %>').innerHTML;
                 var ventanaImpresion = window.open('', '_blank');

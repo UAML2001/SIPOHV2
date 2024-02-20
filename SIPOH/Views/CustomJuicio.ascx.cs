@@ -52,7 +52,9 @@ namespace SIPOH.Views
                 string NombreInculpado = DataBinder.Eval(e.Item.DataItem, "Nombre").ToString();
                 lblIdSeleccionado.Text = NombreInculpado;
                 HiddenIdAsuntoCausa.Value = idAsuntoCausa;
+                  
             }
+
         }
         protected void btnGenerarRelacion_Click(object sender, EventArgs e)
         {
@@ -140,17 +142,17 @@ namespace SIPOH.Views
                                             idVictima = infoRelacionTemporal.idVictima,
                                             // Añade otras propiedades que desees aquí
                                         };
-                                        MensajeExito("¡Exito!, Se añadieron las partes al Juicio Oral");
+                                        MensajeExito("Se añadieron las partes al Juicio Oral");
                                         relacionesVI.Rows.Add(newRow);
                                         listaRelacionesVI.Add(relacion);
                                         Session["Partes"] = listaRelacionesVI;
-                                        chkVictima.Enabled = false;
+                                        //chkVictima.Enabled = false;
                                         
                                     }
                                     else
                                     {
-                                        //string mensajeError = $"¡Registro que estas intentando añadir ya se realizo!, se añadio solo lo que no fueron repetidos";
-                                        //MensajeError(mensajeError);
+                                        string mensajeError ="En tu actual petición solo se añadio los que no fueron repetidos";
+                                        MensajeError(mensajeError);
                                     }
 
                                     
@@ -295,6 +297,8 @@ namespace SIPOH.Views
 
                             MensajeExito(infoJOs.MensajeError);
                             string ticket = CrearTicketSELLO(infoJOs.NumeroJO);
+                            TicketJO.Style["display"] = "block";
+                            ocultarAGuardar.Style["display"] = "none !important";
                             TicketJO.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
                             ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicketJOIniciales();", true);
                             tituloSelloJOIniciales.Style["display"] = "block";
@@ -316,7 +320,7 @@ namespace SIPOH.Views
                     // Mostrar el mensaje de error en una ventana emergente
                     // Hubo un error en el proceso de inserción
                     
-                    MensajeError("Error en insersión de datos, no se pudo generar tu relación de partes, verifica tu consulta.");
+                    MensajeError("Error en inserción de datos, no se pudo generar tu relación de partes, verifica tu consulta.");
                     
                     
                     //JuicioOralPanel.Update();
@@ -366,6 +370,7 @@ namespace SIPOH.Views
             string centeredLine = texto.PadLeft(padLeft).PadRight(maxLength);
             ticket.AppendLine(centeredLine);
         }
+       
         public string CrearTicketSELLO(string NumeroJO)
         {
             StringBuilder ticket = new StringBuilder();
@@ -420,7 +425,14 @@ namespace SIPOH.Views
             int longitudTotalT = maxLengthT - espacioEntreColumnasT;
 
             string separador = new string('.', longitudTotalT);
-            ticket.AppendLine($"TOTAL:{separador}{cantidadAnexos}");
+            if (cantidadAnexos != 0)
+            {
+                ticket.AppendLine($"TOTAL:{separador}{cantidadAnexos}");
+            }else
+            {
+                Debug.WriteLine("No hay anexos");
+            }
+            
 
 
 
@@ -497,6 +509,8 @@ namespace SIPOH.Views
         
         protected void btnConsultaCausa(object sender, EventArgs e)
         {
+            
+            //el boton de mostrar tiket no desaparece
             Session["Partes"] = new List<DataRelacionesVI>();
             LimpiarTablaRelaciones();
             LimpiarDatosEspecifico();
@@ -511,6 +525,9 @@ namespace SIPOH.Views
                 {
                     // Si hay resultados, los mostramos
                     ConsultaCausa.Visible = true;
+                    TicketJO.Style["display"] = "none";
+                    tituloSelloJOIniciales.Style["display"] = "none !important";
+                    ocultarAGuardar.Style["display"] = "block";
                     string mensajeExito = "¡Búsqueda exitosa!, Este es tu resultado.";
                     MensajeExito(mensajeExito);
                     RepeaterListaPersonas.DataSource = infoCausa;
@@ -536,14 +553,23 @@ namespace SIPOH.Views
         }
         protected void ObtenerDelitos_Click(object sender, EventArgs e)
         {
+            Button btnw = (Button)sender;
+            foreach (RepeaterItem item in RepeaterListaPersonas.Items)
+            {
+                Button btnItem = (Button)item.FindControl("controlSelected"); // Reemplaza 'tuBotonID' con el ID de tu botón
+                btnItem.CssClass = btnItem.CssClass.Replace("bg-success", "");
+            }
 
-            
+            // Agrega la clase 'bg-succes' al botón que recibió el clic
+            btnw.CssClass += " bg-success";
+
             try
             {
                 string idAsuntoCausa = HiddenIdAsuntoCausa.Value;
                 lblIdSeleccionado.Text = idAsuntoCausa;
 
                 Button btn = (Button)sender;
+                
                 string idPartes = btn.CommandArgument;
                 int idPartesInt = int.Parse(idPartes);
                 
@@ -572,16 +598,6 @@ namespace SIPOH.Views
         }
         protected void ObtenerVictimas_Click(object sender, EventArgs e)
         {
-
-
-            //Button btn = (Button)sender;
-            //string idPartes = btn.CommandArgument;
-            //int idPartesInt = int.Parse(idPartes);
-            //List<DataGetCausaDelitosJuicioOral> infoDelito = GetDelitos(idPartesInt);
-            //RepeaterTraerDelitosID.DataSource = infoDelito;
-            //RepeaterTraerDelitosID.DataBind();
-
-            //JuicioOralPanel.Update();
         }
 
        

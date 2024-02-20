@@ -151,6 +151,8 @@ namespace SIPOH.Views
                 ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
                 // CODIGOTICKET
                 string ticket = CrearTicketSELLO();
+                TicketDiv.Style["display"] = "block";
+                ocultarBtnModal.Style["display"] = "none !important";
                 TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
                 ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
                 tituloSello.Style["display"] = "block";
@@ -300,7 +302,15 @@ namespace SIPOH.Views
             int longitudTotalT = maxLengthT - espacioEntreColumnasT;
 
             string separador = new string('.', longitudTotalT);
-            ticket.AppendLine($"TOTAL:{separador}{cantidadAnexos}");
+            
+            if (cantidadAnexos != 0)
+            {
+                ticket.AppendLine($"TOTAL:{separador}{cantidadAnexos}");
+            }
+            else
+            {
+                Debug.WriteLine("No hay anexos");
+            }
 
 
 
@@ -344,6 +354,7 @@ namespace SIPOH.Views
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
                     return;
             }
+            
             //string tipoDocumento = "C";
             RegistroPromociones.GetDataPromocion(numeroPromocion, tipoDocumento);
             lblVictimasPromocion.Text = Session["VictimasPromocion"] as string;
@@ -371,14 +382,19 @@ namespace SIPOH.Views
                 if (lblNumeroAmparoPromocion.Text == "")
                 {
                     string Mensaje = "Este documento no tiene un Amparo";
-
+                    
                     ResultadoSolicitudPromociones.Text = Mensaje;
-                }
+            }
                 else
                 {
                     ResultadoSolicitudPromociones.Visible = false;
                 }
-                lblAutoridadResponsablePromocion.Text = Session["AutoridadResponsablePromocion"] as string;
+                
+                ocultarBtnModal.Style["display"] = "block";
+            TicketDiv.Style["display"] = "none";
+            tituloSello.Style["display"] = "none !important";
+            //ocultarBtnModal.Style["display"] = "block";
+            lblAutoridadResponsablePromocion.Text = Session["AutoridadResponsablePromocion"] as string;
                 lblEstatusPromocion.Text = Session["EstatusPromocion"] as string;
                 lblEtapaPromocion.Text = Session["EtapaPromocion"] as string;
                 

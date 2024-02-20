@@ -218,9 +218,6 @@
 
     <ContentTemplate>
 
-
-
-
         <div class="d-flex justify-content-between align-items-center flex-wrap">
             <h5 class="text-secondary mb-0">Registro de iniciales</h5>
 
@@ -375,7 +372,7 @@
                                     <asp:Repeater ID="Repeater1" runat="server">
                                         <ItemTemplate>
                                             <tr>
-                                                <th scope="row" class="text-uppercase"><%# !string.IsNullOrEmpty(Eval("Nombre").ToString()) ? Eval("Nombre") : Eval("ApellidoPaterno") %></th>
+                                                <th scope="row" class="text-uppercase"><%# Eval("Nombre")%></th>
                                                 <th class="text-secondary text-uppercase"><%# Eval("ApellidoPaterno") %> <%# Eval("ApellidoMaterno") %></th>
                                                 <td class="text-secondary text-uppercase"><%# Eval("Genero").ToString().Equals("F") ? "FEMENINO" : (Eval("Genero").ToString().Equals("M") ? "MASCULINO" : "OTRO") %></td>
                                                 <td>
@@ -537,7 +534,7 @@
                     </div>
                 </div>
                 <div class=" d-flex justify-content-center mt-5">
-                    <a class="btn btn-success btn-sm" data-bs-toggle="modal" onclick="valoresFinales();" data-bs-target="#modal3"><i class="bi bi-floppy-fill mr-1"></i>Enviar</a>
+                    <a class="btn btn-success btn-sm" data-bs-toggle="modal" onclick="valoresFinales();" data-bs-target="#modal3"><i class="bi bi-floppy-fill mr-1"></i>Guardar</a>
                 </div>
                 <asp:Label runat="server" ID="lblSuccess" Text="" CssClass="text-success text-center"></asp:Label>
                 <asp:Label runat="server" ID="lblError" Text="" CssClass="text-danger text-center"></asp:Label>
@@ -766,7 +763,7 @@
                         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                             <ContentTemplate>
 
-                                <asp:Button runat="server" CssClass="btn btn-success btn-sm" Text="Enviar" OnClick="btnEnviarInicial_Click" OnClientClick="return validarNumero();" data-bs-dismiss="modal" postback="true" />
+                                <asp:Button runat="server" CssClass="btn btn-success btn-sm" Text="Guardar" OnClick="btnEnviarInicial_Click" OnClientClick="return validarNumero();" data-bs-dismiss="modal" postback="true" />
 
                             </ContentTemplate>
                         </asp:UpdatePanel>

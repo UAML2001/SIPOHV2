@@ -860,7 +860,14 @@ namespace SIPOH.Views
             int longitudTotalT = maxLengthT - espacioEntreColumnasT;
 
             string separador = new string('.', longitudTotalT);
-            ticket.AppendLine($"TOTAL:{separador}{cantidadAnexos}");
+            if (cantidadAnexos != 0)
+            {
+                ticket.AppendLine($"TOTAL:{separador}{cantidadAnexos}");
+            }
+            else
+            {
+                Debug.WriteLine("No hay anexos");
+            }
 
 
 

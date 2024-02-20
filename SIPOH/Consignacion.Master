@@ -36,7 +36,7 @@
             <!-- Sidebar -->
             <ul class="navbar-nav bg-gradient-white sidebar sidebar-danger accordion" id="accordionSidebar">
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" style="background-color: #3F5259;" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" style="background-color: #3F5259;" href="inicio.aspx">
               
                     <div class="sidebar-brand-text mx-3"><img src="<%= ResolveUrl("content/img/PoderJudicialLargo.png") %>" alt="" width="130" height="50" /></div>
                 </a>
@@ -45,9 +45,10 @@
                 <a class="nav-link" href="Error.aspx">
                 <div class="row text-center">
                     <div class="col-12" >
-                        <asp:Label CssClass="text-break text-capitalize" ID="NombreJuzgado" runat="server"></asp:Label>
+                        <asp:Label CssClass="text-break text-capitalize fs-9" ID="NombreJuzgado" runat="server"></asp:Label>
                         <br />
-                        <asp:Label CssClass="text-break text-capitalize" ID="tipoCircuito" runat="server"></asp:Label>
+                        
+                        <asp:Label CssClass="text-break text-capitalize text-success fs-7 fw-bolder" ID="tipoCircuito" runat="server"></asp:Label>
                     </div>
                 </div>
                     </a>
@@ -64,7 +65,7 @@
                 <!-- Divider -->
                 <hr class="sidebar-divider">
                 <!-- Heading -->
-                <div class="sidebar-heading">
+                <div class="sidebar-heading text-success">
                     MODULOS
                 </div>
                 <!-- Nav Item - Pages Collapse Menu Control Distrito-->
@@ -152,7 +153,7 @@
                 </asp:Panel>
                 <hr class="sidebar-divider">
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <div class="sidebar-heading text-success">
                 SOPORTE TÉCNICO
             </div>
             <!-- Nav Item - Pages Collapse Menu -->
