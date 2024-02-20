@@ -2,7 +2,7 @@
 
 
 <script type="text/javascript">
-
+    
     function seleccionarOpcion() {
         var ddlTipoFiltrado = document.getElementById('<%= ddlTipoFiltrado.ClientID %>');
         var inputBuscarInicial = document.getElementById('<%= inputBuscarInicial.ClientID %>');
@@ -126,10 +126,9 @@
             contenedor.fadeOut();
         }
     }
-    function valoresFinales() {
+    function valoresFinalesCC() {
         copiarNUC();
         copiarTipoAsunto();
-        
         copiarFechaRecepcion();
         copiarNumeroFojas();
         copiarQuienIngresa();
@@ -534,7 +533,8 @@
                     </div>
                 </div>
                 <div class=" d-flex justify-content-center mt-5">
-                    <a class="btn btn-success btn-sm" data-bs-toggle="modal" onclick="valoresFinales();" data-bs-target="#modal3"><i class="bi bi-floppy-fill mr-1"></i>Guardar</a>
+                    <a class="btn btn-success btn-sm" data-bs-toggle="modal" OnClick="valoresFinalesCC();" data-bs-target="#modal3"><i class="bi bi-floppy-fill mr-1"></i>Guardar</a>
+                    
                 </div>
                 <asp:Label runat="server" ID="lblSuccess" Text="" CssClass="text-success text-center"></asp:Label>
                 <asp:Label runat="server" ID="lblError" Text="" CssClass="text-danger text-center"></asp:Label>
