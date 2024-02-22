@@ -13,6 +13,7 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
 
         public class DataSolicitante
         {
+            public string Clave { get; set; }
             public string Nombre { get; set; }
         }
         public static List<DataSolicitante> GetSolicitantes()
@@ -22,7 +23,7 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT Solicitante FROM P_EjecucionCatSolicitante ORDER BY CASE WHEN Solicitante = 'OTRO' THEN 1 ELSE 0 END, Solicitante", con))
+                using (SqlCommand cmd = new SqlCommand("SELECT * FROM P_EjecucionCatSolicitante ORDER BY CASE WHEN Solicitante = 'OTRO' THEN 1 ELSE 0 END, Solicitante", con))
                 {
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {
@@ -30,6 +31,7 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
                         {
                             solicitantes.Add(new DataSolicitante
                             {
+                                Clave = dr["CveSolicitante"].ToString(),
                                 Nombre = dr["Solicitante"].ToString()
                             });
                         }

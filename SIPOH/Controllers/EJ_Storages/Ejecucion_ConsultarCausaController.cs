@@ -17,7 +17,7 @@ namespace SIPOH.Controllers.EJ_Storages
             public string NumeroCausa { get; set; }
             public string NUC { get; set; }
             public string NumeroJuzgado { get; set; }
-            public string NombreJuzgado { get; set; } // Nombre del juzgado por clase obtener nombre
+            public string NombreJuzgado { get; set; }
             public string NombreOfendido { get; set; }
             public string NombreInculpado { get; set; }
             public string NombreDelito { get; set; }
@@ -26,7 +26,7 @@ namespace SIPOH.Controllers.EJ_Storages
 
         private string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
 
-        public List<DataCausa> ConsultarCausa(string juzgadoSeleccionado, string numeroCausaNuc)
+        public List<DataCausa> ConsultarCausa(string juzgadoSeleccionado, string numeroCausaNuc, string tipoCausa)
         {
             List<DataCausa> causas = new List<DataCausa>();
             ObtenerNombreJuzgadoPorIDController obtenerNombreJuzgado = new ObtenerNombreJuzgadoPorIDController(); // Instancia de tu clase para obtener nombres de juzgados
@@ -38,6 +38,7 @@ namespace SIPOH.Controllers.EJ_Storages
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Juzgado", juzgadoSeleccionado);
                     cmd.Parameters.AddWithValue("@Numero", numeroCausaNuc);
+                    cmd.Parameters.AddWithValue("@Tipo", tipoCausa);
                     con.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())
                     {

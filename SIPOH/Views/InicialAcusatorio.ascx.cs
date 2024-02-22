@@ -255,14 +255,31 @@ namespace SIPOH.Views
                 {
                     con.Open();
                     string query = $"[dbo].[Ejecucion_ConsultarCausa]";
-
-                    Debug.WriteLine($"Consulta SQL: {query}");
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
                         cmd.CommandType = System.Data.CommandType.StoredProcedure;
                         cmd.Parameters.Add("@Juzgado", System.Data.SqlDbType.Int).Value = juzgadoSeleccionado;
                         cmd.Parameters.Add("@Numero", System.Data.SqlDbType.VarChar).Value = numeroCausaNuc;
 
+                        string tipoCausa = ""; // Inicialización con un valor predeterminado
+                        switch (tipoBusqueda)
+                        {
+                            case "1": // Causa
+                                tipoCausa = "C";
+                                break;
+                            case "2": // NUC
+                                tipoCausa = ""; // Se asume que un valor en blanco indica NUC
+                                break;
+                            case "3": // Juicio Oral
+                                tipoCausa = "JO";
+                                break;
+                            default:
+                                // Manejar caso predeterminado si es necesario
+                                break;
+                        }
+
+                        // Agregar el nuevo parámetro @Tipo al comando
+                        cmd.Parameters.Add("@Tipo", System.Data.SqlDbType.VarChar).Value = tipoCausa;
 
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {

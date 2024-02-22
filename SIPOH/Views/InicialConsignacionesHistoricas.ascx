@@ -54,10 +54,11 @@
                 <asp:DropDownList ID="JuzgadoProcedenciaCHA" runat="server" CssClass="form-select form-select-sm mayusculas"></asp:DropDownList>
             </div>
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
-                <label for="inputIncomJuzgado" class="form-label text-secondary">Causa | Nuc</label>
+                <label for="inputIncomJuzgado" class="form-label text-secondary">Causa | Nuc | Juicio Oral</label>
                 <asp:DropDownList ID="CausaNucCHA" runat="server" CssClass="form-select form-select-sm mayusculas" ClientIDMode="Static">
                     <asp:ListItem Text="Causa" Value="1"></asp:ListItem>
                     <asp:ListItem Text="NUC" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="Juicio Oral" Value="3"></asp:ListItem>
                 </asp:DropDownList>
             </div>
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
@@ -92,11 +93,12 @@
         <div class="row">
             <asp:GridView ID="GridViewCausas" runat="server" AutoGenerateColumns="False" CssClass="table table-sm table-striped table-hover">
                 <Columns>
-                    <asp:TemplateField HeaderText="IdAsunto" Visible="False">
+                   <asp:TemplateField>
                         <ItemTemplate>
-                            <%# Eval("IdAsunto") %>
+                            <asp:HiddenField ID="HiddenIdAsunto" runat="server" Value='<%# Eval("IdAsunto") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
+
                     <asp:TemplateField HeaderText="Causa|Nuc">
                         <ItemTemplate>
                             <%# Eval("NumeroCausa") %>

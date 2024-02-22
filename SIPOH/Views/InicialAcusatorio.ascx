@@ -101,8 +101,9 @@
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
             <label for="inputIncomJuzgado" class="form-label text-secondary">Causa | NUC</label>
             <select class="form-select form-select-sm mayusculas" id="inputIncomJuzgado" ClientIDMode="Static" runat="server" onchange="mostrarValorSeleccionado(this)">
-                <option selected >Causa</option>
+                <option value="1" selected >Causa</option>
                 <option value="2">NUC</option>
+                <option value="3">Juicio Oral</option>
             </select>
         </div>
         <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">

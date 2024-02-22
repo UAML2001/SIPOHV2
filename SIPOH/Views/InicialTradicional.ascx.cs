@@ -126,13 +126,12 @@ namespace SIPOH.Views
                 {
                     con.Open();
                     string storedProcedure = "[dbo].[Ejecucion_ConsultarCausa]";
-
-
                     using (SqlCommand cmd = new SqlCommand(storedProcedure, con))
                     {
-                        cmd.CommandType = System.Data.CommandType.StoredProcedure; // Asegúrate de establecer el tipo de comando
-                        cmd.Parameters.AddWithValue("@Juzgado", idJuzgado); // Verifica que el nombre del parámetro coincide exactamente
-                        cmd.Parameters.AddWithValue("@Numero", numeroCausa); // Verifica que el nombre del parámetro coincide exactamente
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@Juzgado", idJuzgado);
+                        cmd.Parameters.AddWithValue("@Numero", numeroCausa);
+                        cmd.Parameters.AddWithValue("@Tipo", "T");
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
                             if (dr.HasRows)

@@ -4,7 +4,7 @@
 
 
     <asp:Content ID="Content5" ContentPlaceHolderID="ContentEIniciales" runat="server">
-        <div class="container">
+        
 
             <link href="Content/css/Consignaciones.css" rel="stylesheet" />
             <link rel="stylesheet"
@@ -107,5 +107,5 @@
 
 
                     </script>
-                </div>
+                
     </asp:Content>

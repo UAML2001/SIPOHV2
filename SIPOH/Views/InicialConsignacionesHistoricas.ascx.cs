@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -165,8 +168,24 @@ namespace SIPOH.Views
             ObtenerNombreJuzgadoPorIDController obtenerNombreJuzgado = new ObtenerNombreJuzgadoPorIDController();
             var juzgado = obtenerNombreJuzgado.ObtenerJuzgadoPorID(idjuzgadoSeleccionado);
             string numeroCausaNuc = causaNucAcusatorio.Text;
+            string tipoCausa = "";
+            string seleccionCausaNucCHA = CausaNucCHA.SelectedValue;
+            switch (seleccionCausaNucCHA)
+            {
+                case "1": // Causa
+                    tipoCausa = "C";
+                    break;
+                case "2": // NUC
+                    tipoCausa = "";
+                    break;
+                case "3": // Juicio Oral
+                    tipoCausa = "JO";
+                    break;
+                default:
+                    break;
+            }
             Ejecucion_ConsultarCausaController controller = new Ejecucion_ConsultarCausaController();
-            var causas = controller.ConsultarCausa(idjuzgadoSeleccionado, numeroCausaNuc);
+            var causas = controller.ConsultarCausa(idjuzgadoSeleccionado, numeroCausaNuc, tipoCausa);
             if (causas.Any())
             {
                 GridViewCausas.DataSource = causas;
@@ -177,11 +196,10 @@ namespace SIPOH.Views
             }
             else
             {
-                GridViewCausas.DataSource = null;
-                GridViewCausas.DataBind();
                 string mensajeErrorModal = "No se encontró la CAUSA | NUC en el JUZGADO elegido, ¿Deseas registrar una nueva causa histórica? .";
                 divOcultarSinCausa.Style["display"] = "none";
                 MostrarMensaje(mensajeErrorModal, false);
+                LimpiarConsignaciones();
               
             }
         }
@@ -192,8 +210,9 @@ namespace SIPOH.Views
             ObtenerNombreJuzgadoPorIDController obtenerNombreJuzgado = new ObtenerNombreJuzgadoPorIDController();
             var juzgadoT = obtenerNombreJuzgado.ObtenerJuzgadoPorID(idjuzgadoT);
             string numeroCausaT = InputCausaTradicional.Text;
+            string tipoCausa = "T";
             Ejecucion_ConsultarCausaController controller = new Ejecucion_ConsultarCausaController();
-            var causas = controller.ConsultarCausa(idjuzgadoT, numeroCausaT);
+            var causas = controller.ConsultarCausa(idjuzgadoT, numeroCausaT, tipoCausa);
             if (causas.Any())
             {
                 GridViewCausas.DataSource = causas;
@@ -204,13 +223,10 @@ namespace SIPOH.Views
             }
             else
             {
-                GridViewCausas.DataSource = null;
-                GridViewCausas.DataBind();
                 string mensajeErrorModal = "No se encontró la CAUSA | NUC en el JUZGADO elegido, ¿Deseas registrar una nueva causa histórica?.";
                 divOcultarSinCausa.Style["display"] = "none";
                 MostrarMensaje(mensajeErrorModal, false);
-               
-
+                LimpiarConsignaciones();
             }
         }
         //------- SALAS Y TOCAS ------
@@ -342,8 +358,8 @@ namespace SIPOH.Views
             var solicitantes = SIPOH.Controllers.AC_CatalogosCompartidos.CatEjecucion_CatSolicitanteController.GetSolicitantes();
             foreach (var solicitante in solicitantes)
             {
-                ListItem listItem = new ListItem(solicitante.Nombre, solicitante.Nombre);
-                CatSolicitantesDDCon.Items.Add(listItem); // Asegúrate de que este es el ID correcto de tu DropDownList
+                ListItem listItem = new ListItem(solicitante.Nombre, solicitante.Clave);
+                CatSolicitantesDDCon.Items.Add(listItem);
             }
         }
         //FUNCION CARGAR SOLICITUDES DROPDOWN
@@ -352,16 +368,14 @@ namespace SIPOH.Views
             var solicitudes = SIPOH.Controllers.AC_CatalogosCompartidos.CatEjecucion_CatSolicitudController.GetSolicitudes();
             foreach (var solicitud in solicitudes)
             {
-                ListItem listItem = new ListItem(solicitud.Nombre, solicitud.Nombre);
-                CatSolicitudDDCon.Items.Add(listItem); // Asegúrate de que este es el ID correcto de tu DropDownList
+                ListItem listItem = new ListItem(solicitud.Nombre, solicitud.Clave);
+                CatSolicitudDDCon.Items.Add(listItem);
             }
         }
         protected void CatSolicitudDDCon_SelectedIndexChanged(object sender, EventArgs e)
         {
-            bool esOtroSeleccionado = CatSolicitudDDCon.SelectedValue == "OTRO";
+            bool esOtroSeleccionado = CatSolicitudDDCon.SelectedItem.Text == "OTRO";
             InputOtraSolicitud.Disabled = !esOtroSeleccionado;
-
-            // Similar al otro DropDownList, agregar o quitar el atributo "required"
             if (esOtroSeleccionado)
             {
                 InputOtraSolicitud.Attributes["required"] = "required";
@@ -448,11 +462,117 @@ namespace SIPOH.Views
                 MensajeError("No se puede eliminar la fila seleccionada.", true);
             }
         }
-        // FUNCION DE INSERCION
+        //---------------- INICIO INSERCION -----------
         protected void btnGuardarDatosCon_Click(object sender, EventArgs e)
         {
-            MensajeAdvertencia("AUN NO HE PROGRAMADO EL INSERT.", true);
+            string noEjecucion = inputBusNumeroEjecucion.Text;
+            string cveSolicitante = CatSolicitantesDDCon.SelectedValue;
+            string detalleSolicitante = detalleSolicitantes.Text;
+            string cveSolicitud = CatSolicitudDDCon.SelectedValue;
+            string otroSolicita = InputOtraSolicitud.Value;
+            string beneficiarioNombre = InputNombreBusqueda.Text;
+            string beneficiarioApellidoPaterno = InputApPaternoBusqueda.Text;
+            string beneficiarioApellidoMaterno = inputApMaterno.Text;
+            string idJuzgadoSeleccionado = busNombreJuzEjec.SelectedValue;
+            if (idJuzgadoSeleccionado == "Seleccionar" || string.IsNullOrEmpty(idJuzgadoSeleccionado))
+            {
+                MensajeError("Por favor, seleccione un juzgado.", false);
+                return;
+            }
+            int idJuzgado = int.Parse(idJuzgadoSeleccionado);
+            string interno = siInterno.Checked ? "S" : "N";
+            string idUser = HttpContext.Current.Session["IdUsuario"]?.ToString();
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                using (SqlTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        int idEjecucion = InsertarEjecucion(conn, transaction, idJuzgado, noEjecucion, cveSolicitante, detalleSolicitante, cveSolicitud, otroSolicita, beneficiarioNombre, beneficiarioApellidoPaterno, beneficiarioApellidoMaterno, interno, idUser);
+                        foreach (GridViewRow row in GridViewCausas.Rows)
+                        {
+                            HiddenField hiddenIdAsunto = (HiddenField)row.FindControl("HiddenIdAsunto");
+                            if (hiddenIdAsunto != null)
+                            {
+                                int idAsunto = Convert.ToInt32(hiddenIdAsunto.Value);
+                                bool resultado = InsertarEnEjecucionAsunto(conn, transaction, idEjecucion, idAsunto);
+                                if (!resultado)
+                                {
+                                    transaction.Rollback();
+                                    MensajeError("Error durante la inserción en P_EjecucionAsunto.", false);
+                                    return;
+                                }
+                            }
+                        }
+                        transaction.Commit();
+                        MensajeExito("Se ha guardado la información correctamente", true);
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        MensajeError("Error durante la inserción: " + ex.Message, false);
+                    }
+                }
+            }
         }
+        //INSERTAR EN P_EJECUCION
+        public int InsertarEjecucion(SqlConnection conn, SqlTransaction transaction, int idJuzgado, string noEjecucion, string cveSolicitante, string detalleSolicitante, string cveSolicitud, string otroSolicita, string beneficiarioNombre, string beneficiarioApellidoPaterno, string beneficiarioApellidoMaterno, string interno, string idUser)
+        {
+            try
+            {
+                string query = @"
+                INSERT INTO [SIPOH].[dbo].[P_Ejecucion]
+                ([NoEjecucion], [FechaEjecucion], [CveSolicitante], [DetalleSolicitante], [CveSolicitud], [OtroSolicita], [BeneficiarioNombre], [BeneficiarioApellidoPaterno], [BeneficiarioApellidoMaterno], [IdJuzgado], [Interno], [IdUser], [Tipo])
+                VALUES
+                (@NoEjecucion, GETDATE(), @CveSolicitante, @DetalleSolicitante, @CveSolicitud, @OtroSolicita, @BeneficiarioNombre, @BeneficiarioApellidoPaterno, @BeneficiarioApellidoMaterno, @IdJuzgado, @Interno, @IdUser, 'Ejecución');
+                SELECT CAST(scope_identity() AS int);";
+                using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@NoEjecucion", noEjecucion);
+                    cmd.Parameters.AddWithValue("@CveSolicitante", cveSolicitante);
+                    cmd.Parameters.AddWithValue("@DetalleSolicitante", detalleSolicitante);
+                    cmd.Parameters.AddWithValue("@CveSolicitud", cveSolicitud);
+                    cmd.Parameters.AddWithValue("@OtroSolicita", otroSolicita ?? (object)DBNull.Value);
+                    cmd.Parameters.AddWithValue("@BeneficiarioNombre", beneficiarioNombre);
+                    cmd.Parameters.AddWithValue("@BeneficiarioApellidoPaterno", beneficiarioApellidoPaterno);
+                    cmd.Parameters.AddWithValue("@BeneficiarioApellidoMaterno", beneficiarioApellidoMaterno ?? (object)DBNull.Value); // Manejo de posible valor nulo
+                    cmd.Parameters.AddWithValue("@IdJuzgado", idJuzgado);
+                    cmd.Parameters.AddWithValue("@Interno", interno);
+                    cmd.Parameters.AddWithValue("@IdUser", idUser);
+                    int idEjecucion = (int)cmd.ExecuteScalar();
+                    return idEjecucion;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al insertar en P_Ejecucion: " + ex.Message);
+            }
+        }
+        //FUNCION INSERTAR EN P_EJECUCIONASUNTO
+        private bool InsertarEnEjecucionAsunto(SqlConnection conn, SqlTransaction transaction, int idEjecucion, int idAsunto)
+        {
+            try
+            {
+                string query = @"
+                INSERT INTO [SIPOH].[dbo].[P_EjecucionAsunto] (IdEjecucion, IdAsunto)
+                VALUES (@IdEjecucion, @IdAsunto)";
+                using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                {
+                    cmd.Parameters.AddWithValue("@IdEjecucion", idEjecucion);
+                    cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
 
 
         //
