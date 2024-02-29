@@ -29,6 +29,8 @@ namespace SIPOH.Views
                 InputOtraSolicitud.Disabled = true;
                 OtroAnexo.Disabled = true;
                 CargarAnexosCon();
+                tituloSalasCon.Visible = false;
+                tituloSentencias.Visible = false;
             }
         }
         //FUNCION PARA CAMBIAR DE ACUSATORIO A TRADICIONAL
@@ -104,6 +106,8 @@ namespace SIPOH.Views
             tablaAnexosCon.DataBind();
             divOcultarSinCausa.Style["display"] = "none";
             divResultado.Style["display"] = "none";
+            Session["Causas"] = null;
+            Session.Remove("Causas");
 
         }
         //FUNCION MOSTRAR MENSAJE MODAL
@@ -168,39 +172,56 @@ namespace SIPOH.Views
             ObtenerNombreJuzgadoPorIDController obtenerNombreJuzgado = new ObtenerNombreJuzgadoPorIDController();
             var juzgado = obtenerNombreJuzgado.ObtenerJuzgadoPorID(idjuzgadoSeleccionado);
             string numeroCausaNuc = causaNucAcusatorio.Text;
-            string tipoCausa = "";
-            string seleccionCausaNucCHA = CausaNucCHA.SelectedValue;
-            switch (seleccionCausaNucCHA)
+            string tipoCausa = ObtenerTipoCausa(CausaNucCHA.SelectedValue);
+            var controller = new Ejecucion_ConsultarCausaController();
+            var nuevasCausas = controller.ConsultarCausa(idjuzgadoSeleccionado, numeroCausaNuc, tipoCausa);
+
+            // Verifica si ya existen causas almacenadas en la sesión
+            var causasExistentes = Session["Causas"] as List<Ejecucion_ConsultarCausaController.DataCausa>;
+            if (causasExistentes == null)
             {
-                case "1": // Causa
-                    tipoCausa = "C";
-                    break;
-                case "2": // NUC
-                    tipoCausa = "";
-                    break;
-                case "3": // Juicio Oral
-                    tipoCausa = "JO";
-                    break;
-                default:
-                    break;
+                causasExistentes = nuevasCausas;
             }
-            Ejecucion_ConsultarCausaController controller = new Ejecucion_ConsultarCausaController();
-            var causas = controller.ConsultarCausa(idjuzgadoSeleccionado, numeroCausaNuc, tipoCausa);
-            if (causas.Any())
+            else
             {
-                GridViewCausas.DataSource = causas;
-                GridViewCausas.DataBind();
-                string mensajeExito = $"Se encontro la CAUSA|NUC {numeroCausaNuc} en el juzgado {juzgado.Nombre}.";
+                foreach (var nuevaCausa in nuevasCausas)
+                {
+                    if (!causasExistentes.Any(c => c.IdAsunto == nuevaCausa.IdAsunto))
+                    {
+                        causasExistentes.Add(nuevaCausa);
+                    }
+                }
+            }
+
+            // Almacena la lista combinada de nuevo en la sesión
+            Session["Causas"] = causasExistentes;
+
+            // Vincula los datos combinados al GridView
+            GridViewCausas.DataSource = causasExistentes;
+            GridViewCausas.DataBind();
+
+            // Mensajes de éxito o error
+            if (causasExistentes.Any())
+            {
+                string mensajeExito = $"Se encontró la CAUSA|NUC {numeroCausaNuc} en el juzgado {juzgado.Nombre}.";
                 divOcultarSinCausa.Style["display"] = "block";
                 MostrarMensaje(mensajeExito, true);
             }
             else
             {
-                string mensajeErrorModal = "No se encontró la CAUSA | NUC en el JUZGADO elegido, ¿Deseas registrar una nueva causa histórica? .";
+                string mensajeErrorModal = "No se encontró la CAUSA | NUC en el JUZGADO elegido, ¿Deseas registrar una nueva causa histórica?.";
                 divOcultarSinCausa.Style["display"] = "none";
                 MostrarMensaje(mensajeErrorModal, false);
-                LimpiarConsignaciones();
-              
+            }
+        }
+        private string ObtenerTipoCausa(string seleccion)
+        {
+            switch (seleccion)
+            {
+                case "1": return "C";
+                case "2": return "";
+                case "3": return "JO";
+                default: return null;
             }
         }
         //FUNCION BUSCAR CAUSA DESDE TRADICIONAL
@@ -212,12 +233,28 @@ namespace SIPOH.Views
             string numeroCausaT = InputCausaTradicional.Text;
             string tipoCausa = "T";
             Ejecucion_ConsultarCausaController controller = new Ejecucion_ConsultarCausaController();
-            var causas = controller.ConsultarCausa(idjuzgadoT, numeroCausaT, tipoCausa);
-            if (causas.Any())
+            var nuevasCausas = controller.ConsultarCausa(idjuzgadoT, numeroCausaT, tipoCausa);
+            var causasExistentes = Session["Causas"] as List<Ejecucion_ConsultarCausaController.DataCausa>;
+            if (causasExistentes == null)
             {
-                GridViewCausas.DataSource = causas;
-                GridViewCausas.DataBind();
-                string mensajeExito = $"Se encontro la CAUSA {numeroCausaT} en el juzgado {juzgadoT.Nombre}.";
+                causasExistentes = nuevasCausas;
+            }
+            else
+            {
+                foreach (var nuevaCausa in nuevasCausas)
+                {
+                    if (!causasExistentes.Any(c => c.IdAsunto == nuevaCausa.IdAsunto))
+                    {
+                        causasExistentes.Add(nuevaCausa);
+                    }
+                }
+            }
+            Session["Causas"] = causasExistentes;
+            GridViewCausas.DataSource = causasExistentes;
+            GridViewCausas.DataBind();
+            if (causasExistentes.Any())
+            {
+                string mensajeExito = $"Se encontró la CAUSA {numeroCausaT} en el juzgado {juzgadoT.Nombre}.";
                 divOcultarSinCausa.Style["display"] = "block";
                 MostrarMensaje(mensajeExito, true);
             }
@@ -226,7 +263,36 @@ namespace SIPOH.Views
                 string mensajeErrorModal = "No se encontró la CAUSA | NUC en el JUZGADO elegido, ¿Deseas registrar una nueva causa histórica?.";
                 divOcultarSinCausa.Style["display"] = "none";
                 MostrarMensaje(mensajeErrorModal, false);
-                LimpiarConsignaciones();
+            }
+        }
+        //FUNCION ESTILOS DE LAS TABLAS
+        protected void GridViewCausas_RowCommand(object sender, GridViewCommandEventArgs e)
+        {
+            if (e.CommandName == "QuitarCausa")
+            {
+                int idAsunto = Convert.ToInt32(e.CommandArgument);
+                var causas = Session["Causas"] as List<Ejecucion_ConsultarCausaController.DataCausa>;
+                if (causas != null)
+                {
+                    var causaARemover = causas.FirstOrDefault(c => c.IdAsunto == idAsunto);
+                    if (causaARemover != null)
+                    {
+                        causas.Remove(causaARemover);
+                        Session["Causas"] = causas;
+                        GridViewCausas.DataSource = causas;
+                        GridViewCausas.DataBind();
+                    }
+                }
+            }
+        }
+        protected void GridViewCausas_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                foreach (TableCell cell in e.Row.Cells)
+                {
+                    cell.CssClass = "text-secondary text-uppercase";
+                }
             }
         }
         //------- SALAS Y TOCAS ------
@@ -249,6 +315,35 @@ namespace SIPOH.Views
             public string NombreSala { get; set; }
             public string NumeroToca { get; set; }
         }
+        //FUNCION PARA ACTUALIZAR VISIBILIDAD DE TITULOS DE LAS TABLAS
+        private void ActualizarVisibilidadTitulo()
+        {
+            bool haySalas = tablaSalasCon.Rows.Count > 0;
+            bool haySentencias = tablaSentenciasCon.Rows.Count > 0;
+            tituloSalasCon.Visible = haySalas;
+            tituloSentencias.Visible = haySentencias;
+        }
+        protected void tablaSalasCon_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                foreach (TableCell cell in e.Row.Cells)
+                {
+                    cell.CssClass = "text-secondary text-uppercase";
+                }
+            }
+        }
+        protected void tablaSentenciasCon_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                foreach (TableCell cell in e.Row.Cells)
+                {
+                    cell.CssClass = "text-secondary text-uppercase";
+                }
+            }
+        }
+ 
         //FUNCION AGREGAR SALAS Y TOCAS A LA TABLA
         protected void AgregarSalayTocaATabla(object sender, EventArgs e)
         {
@@ -269,7 +364,7 @@ namespace SIPOH.Views
                 ViewState["salas"] = salas;
                 tablaSalasCon.DataSource = salas;
                 tablaSalasCon.DataBind();
-                //ActualizarVisibilidadTitulo();
+                ActualizarVisibilidadTitulo();
             }
             else
             {
@@ -290,7 +385,7 @@ namespace SIPOH.Views
                     ViewState["sentencias"] = sentencias;
                     tablaSentenciasCon.DataSource = sentencias.Select(x => new { Sentencia = x }).ToList();
                     tablaSentenciasCon.DataBind();
-                    //ActualizarVisibilidadTitulo();
+                    ActualizarVisibilidadTitulo();
                 }
                 else
                 {
@@ -310,7 +405,7 @@ namespace SIPOH.Views
             ViewState["salas"] = salas;
             tablaSalasCon.DataSource = salas;
             tablaSalasCon.DataBind();
-            //ActualizarVisibilidadTitulo();
+            ActualizarVisibilidadTitulo();
         }
         protected void BorrarSentencia(object sender, GridViewDeleteEventArgs e)
         {
@@ -319,7 +414,7 @@ namespace SIPOH.Views
             ViewState["sentencias"] = sentencias;
             tablaSentenciasCon.DataSource = sentencias.Select(x => new { Sentencia = x }).ToList();
             tablaSentenciasCon.DataBind();
-            //ActualizarVisibilidadTitulo();
+            ActualizarVisibilidadTitulo();
         }
         //-------------------- Numero de Ejecucion ------------------------
         //CARGAR JUZGADO DE NUMEROS DE EJECUCION
@@ -446,6 +541,17 @@ namespace SIPOH.Views
                 MensajeError("No puedes dejar campos vacíos y la cantidad debe ser mayor que cero.", true);
             }
         }
+        //FUNCION ESTILOS TABLA Y MAYUSCULA
+        protected void tablaAnexosCon_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                foreach (TableCell cell in e.Row.Cells)
+                {
+                    cell.CssClass = "text-secondary text-uppercase";
+                }
+            }
+        }
         //FUNCION BORRAR DATOS DE LA GRIDVIEW:
         protected void BorrarFilaCon(object sender, GridViewDeleteEventArgs e)
         {
@@ -482,6 +588,17 @@ namespace SIPOH.Views
             int idJuzgado = int.Parse(idJuzgadoSeleccionado);
             string interno = siInterno.Checked ? "S" : "N";
             string idUser = HttpContext.Current.Session["IdUsuario"]?.ToString();
+            if (!ValidarCampos())
+            {
+                ScriptManager.RegisterStartupScript(
+                    this.UpdateInicialesConH,
+                    this.UpdateInicialesConH.GetType(),
+                    "cerrarModal",
+                    "CerrarModalGuardarDatos();",
+                    true
+                );
+                return;
+            }
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -506,6 +623,36 @@ namespace SIPOH.Views
                                 }
                             }
                         }
+                        //insert oritoca
+                        List<Sala> salas = ViewState["salas"] as List<Sala>;
+                        if (salas != null && salas.Count > 0)
+                        {
+                            foreach (var sala in salas)
+                            {
+                                int idJuzgadoSala = Convert.ToInt32(selectSalas.Items.FindByText(sala.NombreSala).Value);
+                                string numeroDeToca = sala.NumeroToca;
+                                InsertarDatosEjecucionOriToca(conn, transaction, numeroDeToca, idJuzgadoSala, idEjecucion);
+                            }
+                        }
+                        //insertar oriampa
+                        List<string> sentencias = ViewState["sentencias"] as List<string>;
+
+                        if (sentencias != null && sentencias.Count > 0)
+                        {
+                            foreach (var sentencia in sentencias)
+                            {
+                                InsertarDatosEjecucionOriAmpa(conn, transaction, sentencia, idEjecucion);
+                            }
+                        }
+                        //insertar anexos
+                        List<(string Descripcion, int Cantidad)> anexos = ObtenerAnexosDeGridView();
+                        foreach (var anexo in anexos)
+                        {
+                            InsertarDatosAnexos(conn, transaction, idEjecucion, anexo.Descripcion, anexo.Cantidad);
+                        }
+
+                        //fin anexos
+
                         transaction.Commit();
                         MensajeExito("Se ha guardado la información correctamente", true);
                     }
@@ -571,9 +718,100 @@ namespace SIPOH.Views
                 return false;
             }
         }
+        //FUNCION INSERTAR EN ORITOCA
+        private void InsertarDatosEjecucionOriToca(SqlConnection conn, SqlTransaction transaction, string numeroDeToca, int idJuzgado, int idEjecucion)
+        {
+            string query = @"INSERT INTO [SIPOH].[dbo].[P_EjecucionOriToca] ([IdEjecucion], [NumeroDeToca], [IdJuzgado])
+                     VALUES (@IdEjecucion, @NumeroDeToca, @IdJuzgado)";
+            using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+            {
+                cmd.Parameters.AddWithValue("@IdEjecucion", idEjecucion);
+                cmd.Parameters.AddWithValue("@NumeroDeToca", numeroDeToca);
+                cmd.Parameters.AddWithValue("@IdJuzgado", idJuzgado);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        //FUNCION INSERTAR EN ORIAMPARO
+        private void InsertarDatosEjecucionOriAmpa(SqlConnection conn, SqlTransaction transaction, string amparo, int idEjecucion) // Añade idEjecucion como parámetro
+        {
+            string query = @"INSERT INTO [SIPOH].[dbo].[P_EjecucionOriAmpa] ([IdEjecucion], [Amparo])
+                     VALUES (@IdEjecucion, @Amparo)";
+            using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+            {
+                cmd.Parameters.AddWithValue("@IdEjecucion", idEjecucion);
+                cmd.Parameters.AddWithValue("@Amparo", amparo);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        //FUNCION INSERTAR EN ANEXOS
+        private List<(string Descripcion, int Cantidad)> ObtenerAnexosDeGridView()
+        {
+            var anexos = new List<(string Descripcion, int Cantidad)>();
+            foreach (GridViewRow row in tablaAnexosCon.Rows)
+            {
+                string descripcion = row.Cells[0].Text;
+                int cantidad = int.Parse(row.Cells[1].Text);
+                anexos.Add((descripcion, cantidad));
+            }
+            return anexos;
+        }
+        private void InsertarDatosAnexos(SqlConnection conn, SqlTransaction transaction, int idEjecucion, string nombreAnexo, int cantidad)
+        {
+            string query = @"
+            INSERT INTO [SIPOH].[dbo].[P_EjecucionAnexos]
+            (IdEjecucion, Detalle, Cantidad)
+            VALUES
+            (@IdEjecucion, @Detalle, @Cantidad)";
 
+            using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+            {
+                cmd.Parameters.AddWithValue("@IdEjecucion", idEjecucion);
+                cmd.Parameters.AddWithValue("@Detalle", nombreAnexo);
+                cmd.Parameters.AddWithValue("@Cantidad", cantidad);
+                cmd.ExecuteNonQuery();
+            }
+        }
+        //FUNCION DE ALERTAS VALIDACION DE DATOS REQUERIDOS
+        private bool ValidarCampos()
+        {
+            List<string> mensajesError = new List<string>();
 
-
+            if (string.IsNullOrEmpty(InputNombreBusqueda.Text))
+            {
+                mensajesError.Add("El campo NOMBRE PARTE Parte está vacío.");
+            }
+            if (string.IsNullOrEmpty(InputApPaternoBusqueda.Text))
+            {
+                mensajesError.Add("El campo APELLIDO PATERNO está vacío.");
+            }
+            if (string.IsNullOrEmpty(inputApMaterno.Text))
+            {
+                mensajesError.Add("El campo APELLIDO MATERNO está vacío.");
+            }
+            if (!siInterno.Checked && !noInterno.Checked)
+            {
+                mensajesError.Add("Debe seleccionar una opción para saber el estado del SENTENCIADO INTERNO.");
+            }
+            if (string.IsNullOrEmpty(detalleSolicitantes.Text))
+            {
+                mensajesError.Add("El campo DETALLE SOLICITANTE está vacío.");
+            }
+            if (CatSolicitudDDCon.SelectedValue == "Seleccionar")
+            {
+                mensajesError.Add("Debe seleccionar una opción en el campo SOLICITUD.");
+            }
+            if (CatSolicitantesDDCon.SelectedValue == "Seleccionar")
+            {
+                mensajesError.Add("Debe seleccionar una opción en el campo SOLICITANTES.");
+            }
+            if (mensajesError.Any())
+            {
+                string script = $"toastError('{string.Join("<br>", mensajesError)}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), Guid.NewGuid().ToString(), script, true);
+                return false;
+            }
+            return true;
+        }
 
         //
     }

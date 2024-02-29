@@ -66,7 +66,7 @@
                 <div class="input-group">
                     <asp:TextBox ID="causaNucAcusatorio" CssClass="form-control form-control-sm mayusculas" runat="server" MaxLength="16" ClientIDMode="Static" onblur="aplicarFormatoSegunSeleccion(this)"></asp:TextBox>
                     <div class="input-group-append">
-                        <asp:Button ID="btnBuscarCHA" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnBuscarAcusatorio_Click" />
+                        <asp:Button ID="btnBuscarAcusatorio" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnBuscarAcusatorio_Click" />
                     </div>
                 </div>
             </div>
@@ -91,14 +91,13 @@
             </div>
         </div>
         <div class="row">
-            <asp:GridView ID="GridViewCausas" runat="server" AutoGenerateColumns="False" CssClass="table table-sm table-striped table-hover">
+            <asp:GridView ID="GridViewCausas" runat="server" AutoGenerateColumns="False" CssClass="table table-sm table-striped table-hover" OnRowCommand="GridViewCausas_RowCommand" OnRowDataBound="GridViewCausas_RowDataBound">
                 <Columns>
                    <asp:TemplateField>
                         <ItemTemplate>
                             <asp:HiddenField ID="HiddenIdAsunto" runat="server" Value='<%# Eval("IdAsunto") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
-
                     <asp:TemplateField HeaderText="Causa|Nuc">
                         <ItemTemplate>
                             <%# Eval("NumeroCausa") %>
@@ -135,12 +134,18 @@
                         </ItemTemplate>
                         <HeaderStyle CssClass="bg-success text-white" />
                     </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Acciones">
+                        <ItemTemplate>
+                            <asp:Button ID="IdQuitarCausa" runat="server" CommandName="QuitarCausa"
+                                CommandArgument='<%# Eval("IdAsunto") %>' Text="✖️" CssClass="btn btn-outline-danger" />
+                        </ItemTemplate>
+                        <HeaderStyle CssClass="bg-success text-white" />
+                    </asp:TemplateField>
                 </Columns>
             </asp:GridView>
 
         </div>
         <div id="divOcultarSinCausa" style="display: none;" runat="server">
-
 
             <div class="row">
                 <div class="mb-5 col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
@@ -174,7 +179,7 @@
                     <asp:Label ID="tituloSalasCon" runat="server" CssClass="textoTablasArriba">
                 <h2 class="textoTablasArriba"><i class="bi bi-table">Tabla De Salas</i></h2>
                     </asp:Label>
-                    <asp:GridView ID="tablaSalasCon" runat="server" CssClass="table" AutoGenerateColumns="False" OnRowDeleting="BorrarSala">
+                    <asp:GridView ID="tablaSalasCon" runat="server" CssClass="table" AutoGenerateColumns="False" OnRowDeleting="BorrarSala" OnRowDataBound="tablaSalasCon_RowDataBound">
                         <Columns>
                             <asp:BoundField DataField="NombreSala" HeaderText="Sala">
                                 <HeaderStyle CssClass="bg-success text-white" />
@@ -193,7 +198,7 @@
             <h2 class="textoTablasArriba"><i class="bi bi-table">Tabla De Amparos</i></h2>
                     </asp:Label>
 
-                    <asp:GridView ID="tablaSentenciasCon" runat="server" CssClass="table" AutoGenerateColumns="False" OnRowDeleting="BorrarSentencia">
+                    <asp:GridView ID="tablaSentenciasCon" runat="server" CssClass="table" AutoGenerateColumns="False" OnRowDeleting="BorrarSentencia" OnRowDataBound="tablaSentenciasCon_RowDataBound">
                         <Columns>
                             <asp:BoundField DataField="Sentencia" HeaderText="Sentencia">
                                 <HeaderStyle CssClass="bg-success text-white" />
@@ -313,7 +318,7 @@
                        <h2 class="textoTablasArriba"><i class="bi bi-table">Tabla de Anexos</i></h2>
                 </asp:Label>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                    <asp:GridView ID="tablaAnexosCon" CssClass="table" runat="server" AutoGenerateColumns="False" OnRowDeleting="BorrarFilaCon">
+                    <asp:GridView ID="tablaAnexosCon" CssClass="table" runat="server" AutoGenerateColumns="False" OnRowDeleting="BorrarFilaCon" OnRowDataBound="tablaAnexosCon_RowDataBound">
                         <Columns>
                             <asp:BoundField DataField="NombreSala" HeaderText="Anexo">
                                 <HeaderStyle CssClass="bg-success text-white" />
