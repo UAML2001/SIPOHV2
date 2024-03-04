@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Consignacion.Master" AutoEventWireup="true" CodeBehind="ConsignacionesHistorica.aspx.cs" Inherits="SIPOH.ConsignacionesHistorica" %>
 <asp:Content ID="ContentContentECHistorica10" ContentPlaceHolderID="ContentECHistorica" runat="server">
     
-     <div class="container">
+ 
         <link href="Content/css/Consignaciones.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
                      <link rel="stylesheet" type="text/css"
@@ -102,5 +102,5 @@
 
          </script>
 
-    </div>
+
 </asp:Content>

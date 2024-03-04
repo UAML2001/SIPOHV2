@@ -38,6 +38,66 @@
 
 <asp:UpdatePanel ID="UpdateInicialesConH" runat="server">
     <ContentTemplate>
+        <div class="modal fade" id="guardarDatos2" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header modalGuardar">
+                        <h5 class="modal-title">
+                            <asp:Literal ID="ltTituloModal" runat="server"></asp:Literal>
+                        </h5>
+                        <button type="button" class="close" data-bs-dismiss="modal">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="DatosModal mayusculas">
+                            <b>Fecha Ejecución:</b>
+                            <asp:Label ID="lblFechaEjecucion2" runat="server"></asp:Label>
+                        </p>
+                        <p class="DatosModal mayusculas">
+                            <b>Beneficiario: </b>
+                            <asp:Label ID="lblnombreBeneficiario2" runat="server"></asp:Label>
+                            <asp:Label ID="lblapellidoPaternoBeneficiario2" runat="server"></asp:Label>
+                            <asp:Label ID="lblapellidoMaternoBeneficiario2" runat="server"></asp:Label>
+                        </p>
+                        <p class="DatosModal mayusculas">
+                            <b>Solicitante: </b>
+                            <asp:Label ID="lblnombreSolicitanteSeleccionado2" runat="server"></asp:Label>
+                        </p>
+                        <p class="DatosModal mayusculas">
+                            <b>Solicitud: </b>
+                            <asp:Label ID="lblnombreSolicitudSeleccionado2" runat="server"></asp:Label>
+                        </p>
+                        <p class="DatosModal mayusculas">
+                            <b>Detalle de la solicitud: </b>
+                            <asp:Label ID="lbldetalleSolicitante2" runat="server"></asp:Label>
+                        </p>
+                        <p class="DatosModal mayusculas">
+                            <b>Otra Solicitud: </b>
+                            <asp:Label ID="lblotraSolicitud2" runat="server"></asp:Label>
+                        </p>
+                        <p class="DatosModal mayusculas">
+                            <b>Interno: </b>
+                            <asp:Label ID="lblinterno2" runat="server"></asp:Label>
+                        </p>
+                        <p class="DatosModal mayusculas">
+                            <b>Sala disponible y toca: </b>
+                            <asp:Label ID="lblSalasYTocas2" runat="server"></asp:Label>
+                        </p>
+                        <p class="DatosModal mayusculas">
+                            <b>Sentencias: </b>
+                            <asp:Label ID="lblSentencias2" runat="server"></asp:Label>
+                        </p>
+                        <p class="DatosModal mayusculas">
+                            <b>Anexos y Cantidad: </b>
+                            <asp:Label ID="lblAnexos2" runat="server"></asp:Label>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" onclick="CerrarModalGuardarDatos()" data-bs-dismiss="modal">Cancelar</button>
+                        <asp:Button ID="btnGuardarAcusatorio" runat="server" CssClass="btn btn-outline-warning" OnClick="btnGuardarDatosCon_Click" Text="Guardar" />
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="mb-5 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                 <label for="inputRadicacion" class="form-label text-secondary">Selecciona el tipo de sistema a usar</label>
@@ -47,7 +107,7 @@
                 </asp:DropDownList>
             </div>
         </div>
-        
+
         <div class="row" id="divAcusatorio" runat="server">
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                 <label for="inputRadicacion" class="form-label text-secondary">Juzgado de Procedencia</label>
@@ -64,7 +124,7 @@
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                 <label for="inputNuc" class="form-label text-secondary">Numero de Causa</label>
                 <div class="input-group">
-                    <asp:TextBox ID="causaNucAcusatorio" CssClass="form-control form-control-sm mayusculas" runat="server" MaxLength="16" ClientIDMode="Static" onblur="aplicarFormatoSegunSeleccion(this)"></asp:TextBox>
+                    <asp:TextBox ID="causaNucAcusatorio" CssClass="form-control form-control-sm mayusculas" runat="server" MaxLength="16" ClientIDMode="Static" onblur="aplicarFormatoSegunSeleccion2(this)"></asp:TextBox>
                     <div class="input-group-append">
                         <asp:Button ID="btnBuscarAcusatorio" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnBuscarAcusatorio_Click" />
                     </div>
@@ -93,7 +153,7 @@
         <div class="row">
             <asp:GridView ID="GridViewCausas" runat="server" AutoGenerateColumns="False" CssClass="table table-sm table-striped table-hover" OnRowCommand="GridViewCausas_RowCommand" OnRowDataBound="GridViewCausas_RowDataBound">
                 <Columns>
-                   <asp:TemplateField>
+                    <asp:TemplateField>
                         <ItemTemplate>
                             <asp:HiddenField ID="HiddenIdAsunto" runat="server" Value='<%# Eval("IdAsunto") %>' />
                         </ItemTemplate>
@@ -242,7 +302,7 @@
                 <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                     <label for="lblApPaternoBusqueda" class="form-label text-secondary">Ap. Paterno Parte</label>
                     <asp:TextBox ID="InputApPaternoBusqueda" CssClass="form-control form-control-sm mayusculas" runat="server" MaxLength="100"></asp:TextBox>
-                    
+
                 </div>
                 <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                     <label for="lblMaternoBusqueda" class="form-label text-secondary">Ap. Materno de Causa</label>
@@ -287,7 +347,7 @@
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                     <label class="form-label text-secondary">Otra Solicitud</label>
-                    <input type="text" id="InputOtraSolicitud" class="form-control form-control-sm mayusculas" runat="server" MaxLength="250" clientidmode="Static">
+                    <input type="text" id="InputOtraSolicitud" class="form-control form-control-sm mayusculas" runat="server" maxlength="250" clientidmode="Static">
                 </div>
             </div>
             <br />
@@ -300,7 +360,7 @@
                 </div>
                 <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                     <label class="form-label text-secondary">Otro Anexo</label>
-                    <input type="text" id="OtroAnexo" class="form-control form-control-sm mayusculas" runat="server" MaxLength="100" clientidmode="Static">
+                    <input type="text" id="OtroAnexo" class="form-control form-control-sm mayusculas" runat="server" maxlength="100" clientidmode="Static">
                 </div>
                 <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                     <label class="form-label text-secondary">Cantidad</label>
@@ -335,7 +395,7 @@
             </div>
             <div class="row justify-content-md-center">
                 <div class="col-xl-2 col-sm-12 col-md-2">
-                    <asp:Button ID="btnGuardarDatosModal" runat="server" Text="Guardar Datos" CssClass="btn btn-outline-secondary btn-sm col-12" OnClick="btnGuardarDatosCon_Click" />
+                    <asp:Button ID="btnGuardarDatosModal" runat="server" Text="Guardar Datos" CssClass="btn btn-outline-secondary btn-sm col-12" OnClick="btnGuardarDatosModal2_Click" />
                 </div>
             </div>
         </div>
@@ -354,7 +414,7 @@
         $('#modalError .modal-body b').text(mensaje);
         $('#modalError').modal('show');
     }
- 
+
 </script>
 <script>
     window.addEventListener('keydown', function (e) {
@@ -373,4 +433,15 @@
         $('body').removeClass('modal-open').css('overflow', '');
         $('.modal-backdrop').remove();
     }
+
+    function abrirModalGuardarDatos2() {
+        $('#guardarDatos2').modal('show');
+    }
+
+    function CerrarModalGuardarDatos2() {
+        $('#guardarDatos2').modal('hide');
+        $('body').removeClass('modal-open').css('overflow', ''); // Restablece el overflow
+        $('.modal-backdrop').remove();
+    }
+
 </script>

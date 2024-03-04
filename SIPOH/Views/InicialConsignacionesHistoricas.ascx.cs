@@ -108,6 +108,9 @@ namespace SIPOH.Views
             divResultado.Style["display"] = "none";
             Session["Causas"] = null;
             Session.Remove("Causas");
+            ViewState.Remove("salas");
+            ViewState.Remove("sentencias");
+            ViewState.Remove("anexosCon");
 
         }
         //FUNCION MOSTRAR MENSAJE MODAL
@@ -343,7 +346,6 @@ namespace SIPOH.Views
                 }
             }
         }
- 
         //FUNCION AGREGAR SALAS Y TOCAS A LA TABLA
         protected void AgregarSalayTocaATabla(object sender, EventArgs e)
         {
@@ -569,6 +571,11 @@ namespace SIPOH.Views
             }
         }
         //---------------- INICIO INSERCION -----------
+        protected void btnGuardarDatosModal2_Click(object sender, EventArgs e)
+        {
+            RecolectarDatosParaModal();
+            ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "abrirModal", "abrirModalGuardarDatos2();", true);
+        }
         protected void btnGuardarDatosCon_Click(object sender, EventArgs e)
         {
             string noEjecucion = inputBusNumeroEjecucion.Text;
@@ -586,6 +593,14 @@ namespace SIPOH.Views
                 return;
             }
             int idJuzgado = int.Parse(idJuzgadoSeleccionado);
+
+            var resultadoValidacion = EJ_ValidarNumeroEjecucionController.ValidarNumeroEjecucion(noEjecucion, idJuzgado);
+            if (resultadoValidacion.ExisteNumeroEjecucion)
+            {
+                MensajeError("El número de ejecución ya existe para el juzgado seleccionado. No se pueden guardar los datos.", false);
+                return;
+            }
+
             string interno = siInterno.Checked ? "S" : "N";
             string idUser = HttpContext.Current.Session["IdUsuario"]?.ToString();
             if (!ValidarCampos())
@@ -655,6 +670,7 @@ namespace SIPOH.Views
 
                         transaction.Commit();
                         MensajeExito("Se ha guardado la información correctamente", true);
+                        LimpiarConsignaciones();
                     }
                     catch (Exception ex)
                     {
@@ -812,7 +828,51 @@ namespace SIPOH.Views
             }
             return true;
         }
+        //FUNCION MOSTRAR DATOS EN MODAL
+        public void RecolectarDatosParaModal()
+        {
+            string fechaEjecucion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string nombreBeneficiario = InputNombreBusqueda.Text;
+            string apellidoPaternoBeneficiario = InputApPaternoBusqueda.Text;
+            string apellidoMaternoBeneficiario = inputApMaterno.Text;
+            string nombreSolicitanteSeleccionado = CatSolicitantesDDCon.SelectedItem.Text;
+            string nombreSolicitudSeleccionado = CatSolicitudDDCon.SelectedItem.Text;
+            string detalleSolicitante = detalleSolicitantes.Text;
+            string otraSolicitud = InputOtraSolicitud.Value;
+            string interno = siInterno.Checked ? "SI" : "NO";
+            string numeroCausaNuc = Session["NumeroCausaNuc"] as string;
 
+            List<Sala> salas = ViewState["salas"] as List<Sala>;
+            if (salas != null && salas.Count > 0)
+            {
+                var salasYTocas = salas.Select(s => $"{s.NombreSala} - {s.NumeroToca}");
+                string todasLasSalasYTocas = string.Join(", ", salasYTocas);
+                lblSalasYTocas2.Text = todasLasSalasYTocas; // Asegúrate de tener una etiqueta lblSalasYTocas en tu interfaz de usuario
+            }
+            List<string> sentencias = ViewState["sentencias"] as List<string>;
+            if (sentencias != null && sentencias.Count > 0)
+            {
+                string todasLasSentencias = string.Join(", ", sentencias);
+                lblSentencias2.Text = todasLasSentencias;
+            }
+            List<Sala> anexos = ViewState["anexosCon"] as List<Sala>;
+            if (anexos != null && anexos.Count > 0)
+            {
+                var anexosConCantidad = anexos.Select(a => $"{a.NombreSala} - {a.NumeroToca}");
+                string todosLosAnexos = string.Join(", ", anexosConCantidad);
+                lblAnexos2.Text = todosLosAnexos;
+            }
+            lblFechaEjecucion2.Text = fechaEjecucion;
+            lblnombreBeneficiario2.Text = nombreBeneficiario;
+            lblapellidoPaternoBeneficiario2.Text = apellidoPaternoBeneficiario;
+            lblapellidoMaternoBeneficiario2.Text = apellidoMaternoBeneficiario;
+            lblnombreSolicitanteSeleccionado2.Text = nombreSolicitanteSeleccionado;
+            lblnombreSolicitudSeleccionado2.Text = nombreSolicitudSeleccionado;
+            lbldetalleSolicitante2.Text = detalleSolicitante;
+            lblotraSolicitud2.Text = otraSolicitud;
+            lblinterno2.Text = interno;
+            ltTituloModal.Text = $"¿Quieres guardar los siguientes datos: ?";
+        }
         //
     }
 }

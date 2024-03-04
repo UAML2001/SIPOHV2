@@ -30,13 +30,17 @@ function formatNuc(num) {
 function aplicarFormatoSegunSeleccion(num) {
     var seleccion = document.getElementById('inputIncomJuzgado').value;
     if (seleccion === "2") {
-        formatNuc(num);
+        //se quito el formato de nuc
+        //formatNuc(num);
     } else {
         padLeadingZeros(num);
     }
-    var seleccion2 = document.getElementById('<%= CausaNucCHA.ClientID %>').SelectedValue;
+   
+}
+function aplicarFormatoSegunSeleccion2(num) {
+    var seleccion2 = document.getElementById('CausaNucCHA').value;;
     if (seleccion2 === "2") {
-        formatNuc(num);
+        //quite el formato de nuc
     } else {
         padLeadingZeros(num);
     }
