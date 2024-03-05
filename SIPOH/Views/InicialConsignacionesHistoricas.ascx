@@ -219,7 +219,7 @@
                     <div class="input-group">
                         <asp:TextBox ID="inputNumeroToca" runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="" onblur="padLeadingZeros(this)" MaxLength="9"></asp:TextBox>
                         <div class="input-group-append">
-                            <asp:Button ID="btnAddSalayToca" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="AgregarSalayTocaATabla" Text="Agregar" />
+                            <asp:Button ID="btnAddSalayToca" runat="server" CssClass="btn btn-success btn-sm" OnClick="AgregarSalayTocaATabla" Text="+" />
                         </div>
                     </div>
                 </div>
@@ -228,7 +228,7 @@
                     <div class="input-group">
                         <asp:TextBox ID="inputSentencia" runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Busca Sentencia" MaxLength="15"></asp:TextBox>
                         <div class="input-group-append">
-                            <asp:Button ID="btnAddSentencia" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="AgregarSentenciasATabla" Text="Agregar" />
+                            <asp:Button ID="btnAddSentencia" runat="server" CssClass="btn btn-success btn-sm" OnClick="AgregarSentenciasATabla" Text="+" />
                         </div>
                     </div>
                 </div>
@@ -247,7 +247,7 @@
                             <asp:BoundField DataField="NumeroToca" HeaderText="No° Toca">
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:BoundField>
-                            <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar" DeleteText="Borrar">
+                            <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar" DeleteText="✖️">
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:CommandField>
                         </Columns>
@@ -263,7 +263,7 @@
                             <asp:BoundField DataField="Sentencia" HeaderText="Sentencia">
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:BoundField>
-                            <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar" DeleteText="Borrar">
+                            <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar" DeleteText="✖️">
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:CommandField>
                         </Columns>
@@ -367,7 +367,7 @@
                     <div class="input-group">
                         <input type="number" id="CantidadInput" class="form-control form-control-sm mayusculas" runat="server" max="1000" clientidmode="Static">
                         <div class="input-group-append">
-                            <asp:Button ID="AgregarBtn" runat="server" Text="Agregar" CssClass="btn btn-outline-secondary btn-sm" OnClick="AgregarATablaCon" />
+                            <asp:Button ID="AgregarBtn" runat="server" Text="+" CssClass="btn btn-success btn-sm" OnClick="AgregarATablaCon" />
                         </div>
                     </div>
 
@@ -386,7 +386,7 @@
                             <asp:BoundField DataField="NumeroToca" HeaderText="Cantidad">
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:BoundField>
-                            <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar" DeleteText="Borrar">
+                            <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar" DeleteText="✖️">
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:CommandField>
                         </Columns>

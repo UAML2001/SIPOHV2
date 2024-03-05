@@ -120,7 +120,7 @@
                                                         <asp:Button ID="btnVerDetalleCausa" runat="server"
                                                             CommandName="VerDetalles"
                                                             CommandArgument='<%# Eval("IdEjecucion") %>' Text="Ver Causa"
-                                                            CssClass="btn btn-secondary" />
+                                                            CssClass="btn btn-outline-secondary btn-sm" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                                 <asp:TemplateField>
@@ -128,7 +128,7 @@
                                                     <ItemTemplate>
                                                         <asp:Button ID="btnNuevoBoton" runat="server" CommandName="RelacionarCausa"
                                                             CommandArgument='<%# Container.DataItemIndex %>'
-                                                            Text="Relacionar Causa" CssClass="btn btn-primary" />
+                                                            Text="Relacionar Causa" CssClass="btn btn-outline-primary btn-sm" />
                                                     </ItemTemplate>
                                                 </asp:TemplateField>
                                             </Columns>
@@ -275,10 +275,10 @@
                                                         <HeaderStyle CssClass="bg-success text-white" />
                                                         <ItemTemplate>
                                                             <asp:Button ID="BorrarCausa" runat="server"  
-                                                                        Text="Borrar" CommandArgument='<%# Eval("IdAsunto") %>' 
+                                                                        Text="✖️" CommandArgument='<%# Eval("IdAsunto") %>' 
                                                                         OnClick="BorrarCausa_Click"
-                                                                        OnClientClick="return confirm('¿Está seguro que desea eliminar esta relación?');"
-                                                                        Style="color: red; border: none;"/>
+                                                                        CssClass="btn"
+                                                                        OnClientClick="return confirm('¿Está seguro que desea eliminar esta relación?');"/>
                                                         </ItemTemplate>
                                                     </asp:TemplateField>
                                                     </Columns>
@@ -345,8 +345,8 @@
                                                         class="form-control form-control-sm mayusculas" runat="server"
                                                         clientidmode="Static" max="1000">
                                                     <div class="input-group-append">
-                                                        <asp:Button ID="AgregarBtn" runat="server" Text="Agregar"
-                                                            CssClass="btn btn-outline-secondary btn-sm"
+                                                        <asp:Button ID="AgregarBtn" runat="server" Text="+"
+                                                            CssClass="btn btn-success btn-sm"
                                                             OnClick="AgregarATabla" />
                                                     </div>
                                                 </div>

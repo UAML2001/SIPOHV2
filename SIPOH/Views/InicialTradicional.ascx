@@ -128,7 +128,7 @@
                     <div class="input-group">
                         <asp:TextBox ID="inputNumeroTocaTradicional" runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="" MaxLength="9" onblur="padLeadingZeros(this)"></asp:TextBox>
                         <div class="input-group-append">
-                            <asp:Button ID="btnAgregarTradicional" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="AgregarSalaATablaTradicional" Text="Agregar" />
+                            <asp:Button ID="btnAgregarTradicional" runat="server" CssClass="btn btn-success btn-sm" OnClick="AgregarSalaATablaTradicional" Text="+" />
                         </div>
                     </div>
                 </div>
@@ -137,7 +137,7 @@
                     <div class="input-group">
                         <asp:TextBox ID="inputSentenciaTradicional" runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Busca Sentencia" MaxLength="15"></asp:TextBox>
                         <div class="input-group-append">
-                            <asp:Button ID="Button1Tradicional" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="AgregarSentenciaATablaTradicional" Text="Agregar" />
+                            <asp:Button ID="Button1Tradicional" runat="server" CssClass="btn btn-success btn-sm" OnClick="AgregarSentenciaATablaTradicional" Text="+" />
                         </div>
                     </div>
                 </div>
@@ -155,7 +155,7 @@
                             <asp:BoundField DataField="NumeroToca" HeaderText="No° Toca">
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:BoundField>
-                            <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar" DeleteText="Borrar">
+                            <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar" DeleteText="✖️">
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:CommandField>
                         </Columns>
@@ -171,7 +171,7 @@
                             <asp:BoundField DataField="Sentencia" HeaderText="Sentencia">
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:BoundField>
-                            <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar" DeleteText="Borrar">
+                            <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar" DeleteText="✖️">
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:CommandField>
                         </Columns>
@@ -321,7 +321,7 @@
                         <div class="input-group">
                             <input type="number" id="CantidadInputTradicional" class="form-control form-control-sm mayusculas" max="1000" runat="server" clientidmode="Static">
                             <div class="input-group-append">
-                                <asp:Button ID="AgregarBtn" runat="server" Text="Agregar" CssClass="btn btn-outline-secondary btn-sm" OnClick="AgregarATablaTradicional" />
+                                <asp:Button ID="AgregarBtn" runat="server" Text="+" CssClass="btn btn-success btn-sm" OnClick="AgregarATablaTradicional" />
                             </div>
                         </div>
                     </div>
@@ -339,7 +339,7 @@
                                 <asp:BoundField DataField="NumeroToca" HeaderText="Cantidad">
                                     <HeaderStyle CssClass="bg-success text-white" />
                                 </asp:BoundField>
-                                <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar" DeleteText="Borrar">
+                                <asp:CommandField ShowDeleteButton="True" HeaderText="Quitar" DeleteText="✖️">
                                     <HeaderStyle CssClass="bg-success text-white" />
                                 </asp:CommandField>
                             </Columns>

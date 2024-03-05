@@ -316,7 +316,7 @@ namespace SIPOH.Views
                                     htmlTable.Append($"<td class='text-secondary'>{dr["NombreOfendido"]}</td>");
                                     htmlTable.Append($"<td class='text-secondary'>{dr["NombreInculpado"]}</td>");
                                     htmlTable.Append($"<td class='text-secondary'>{dr["NombreDelito"]}</td>");
-                                    htmlTable.Append("<td class='text-secondary'><button onclick='limpiarControles()' class='btn btn-sm btn-danger'>Quitar</button></td>");
+                                    htmlTable.Append("<td class='text-secondary'><button onclick='limpiarControles()' class='btn btn-sm btn-danger'>✖️</button></td>");
 
                                     htmlTable.Append("</tr>");
                                 }
