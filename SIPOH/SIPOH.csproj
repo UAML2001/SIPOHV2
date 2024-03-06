@@ -2142,6 +2142,8 @@
     <Content Include="Views\ConsultarControl.ascx" />
     <Content Include="Views\ContenidoDisponible\contenido-denegado.aspx" />
     <Content Include="Views\CustomAmparo.ascx" />
+    <Content Include="Views\CustomHistoricosCupreCausa.ascx" />
+    <Content Include="Views\CustomHistoricosJuicioOral.ascx" />
     <Content Include="Views\CustomRegistroIniciales.ascx" />
     <Content Include="Views\CustomDespacho.ascx" />
     <Content Include="Views\CustomExhorto.ascx" />
@@ -2232,8 +2234,11 @@
     <Compile Include="Controllers\AC_CatalogosCompartidos\EJ_ValidarNumeroEjecucionController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\P_CatSolicitanteController.cs" />
     <Compile Include="Controllers\AC_RegistroInicialJuicioOral\InicialJuicioOralController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\CatDelitosController.cs" />
     <Compile Include="Controllers\EJ_Storages\Ejecucion_ConsultarCausaController.cs" />
     <Compile Include="Controllers\EJ_Storages\ObtenerNombreJuzgadoPorIDController.cs" />
+    <Compile Include="Controllers\AC_RegistroHistoricos\RegistroHistoricoCausaController.cs" />
+    <Compile Include="Controllers\AC_RegistroHistoricos\RegistroHistoricoJOController.cs" />
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2399,6 +2404,20 @@
     </Compile>
     <Compile Include="Views\CustomAmparo.ascx.designer.cs">
       <DependentUpon>CustomAmparo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomHistoricosCupreCausa.ascx.cs">
+      <DependentUpon>CustomHistoricosCupreCausa.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\CustomHistoricosCupreCausa.ascx.designer.cs">
+      <DependentUpon>CustomHistoricosCupreCausa.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CustomHistoricosJuicioOral.ascx.cs">
+      <DependentUpon>CustomHistoricosJuicioOral.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\CustomHistoricosJuicioOral.ascx.designer.cs">
+      <DependentUpon>CustomHistoricosJuicioOral.ascx</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomRegistroIniciales.ascx.cs">
       <DependentUpon>CustomRegistroIniciales.ascx</DependentUpon>

@@ -24,15 +24,6 @@ namespace SIPOH
         protected global::System.Web.UI.ScriptManager ScriptManagerConsignaciones;
 
         /// <summary>
-        /// Control CustomAmparo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::SIPOH.Views.CustomAmparo CustomAmparo;
-
-        /// <summary>
         /// Control CustomRegistroIniciales1.
         /// </summary>
         /// <remarks>
@@ -58,5 +49,14 @@ namespace SIPOH
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::SIPOH.Views.CustomJuicio CustomJuicio;
+
+        /// <summary>
+        /// Control CustomAmparo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::SIPOH.Views.CustomAmparo CustomAmparo;
     }
 }
