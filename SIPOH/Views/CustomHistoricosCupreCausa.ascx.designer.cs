@@ -11,143 +11,62 @@ namespace SIPOH.Views
 {
 
 
-    public partial class CustomRegistroIniciales 
+    public partial class CustomHistoricosCupreCausa
     {
-         
-        /// <summary>
-        /// Control updPanel.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updPanel;
 
         /// <summary>
-        /// Control ddlTipoFiltrado.
+        /// Control HistoricosCausaPanel.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlTipoFiltrado;
+        protected global::System.Web.UI.UpdatePanel HistoricosCausaPanel;
 
         /// <summary>
-        /// Control inputBuscarInicial.
+        /// Control inputNumeroArchivo.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox inputBuscarInicial;
+        protected global::System.Web.UI.WebControls.TextBox inputNumeroArchivo;
 
         /// <summary>
-        /// Control btnSearch.
+        /// Control inputNUCHistorico.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearch;
+        protected global::System.Web.UI.WebControls.TextBox inputNUCHistorico;
 
         /// <summary>
-        /// Control BusquedaIniciales.
+        /// Control inputTipoSolicitudHistorico.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel BusquedaIniciales;
+        protected global::System.Web.UI.WebControls.DropDownList inputTipoSolicitudHistorico;
 
         /// <summary>
-        /// Control grdTblGetPromociones.
+        /// Control inputFechaRecepcionC.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grdTblGetPromociones;
+        protected global::System.Web.UI.WebControls.TextBox inputFechaRecepcionC;
 
         /// <summary>
-        /// Control errorConsulta.
+        /// Control inputNumeroFojasCHistorico.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label errorConsulta;
-
-        /// <summary>
-        /// Control inputNUC.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox inputNUC;
-
-        /// <summary>
-        /// Control inputTipoAsunto.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList inputTipoAsunto;
-
-        /// <summary>
-        /// Control inputRadicacion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList inputRadicacion;
-
-        /// <summary>
-        /// Control inputFechaRecepcion.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox inputFechaRecepcion;
-
-        /// <summary>
-        /// Control inputNumeroFojas.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox inputNumeroFojas;
-
-        /// <summary>
-        /// Control inputQuienIngresa.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList inputQuienIngresa;
-
-        /// <summary>
-        /// Control lblTipoPersona.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTipoPersona;
-
-        /// <summary>
-        /// Control inputNombreParticular.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox inputNombreParticular;
+        protected global::System.Web.UI.WebControls.TextBox inputNumeroFojasCHistorico;
 
         /// <summary>
         /// Control inpuTipoRadicacion.
@@ -159,15 +78,6 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.DropDownList inpuTipoRadicacion;
 
         /// <summary>
-        /// Control inputPrioridad.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList inputPrioridad;
-
-        /// <summary>
         /// Control inputObservaciones.
         /// </summary>
         /// <remarks>
@@ -177,22 +87,22 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.TextBox inputObservaciones;
 
         /// <summary>
-        /// Control Repeater1.
+        /// Control RepeaterVictimas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater Repeater1;
+        protected global::System.Web.UI.WebControls.Repeater RepeaterVictimas;
 
         /// <summary>
-        /// Control Repeater2.
+        /// Control RepeaterInputados.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater Repeater2;
+        protected global::System.Web.UI.WebControls.Repeater RepeaterInputados;
 
         /// <summary>
         /// Control inputDelitos.
@@ -213,42 +123,6 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Repeater RepeaterDelitos;
 
         /// <summary>
-        /// Control txtAnexosTipo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList txtAnexosTipo;
-
-        /// <summary>
-        /// Control txtDescripcionAnexos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescripcionAnexos;
-
-        /// <summary>
-        /// Control txtCantidadAnexos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCantidadAnexos;
-
-        /// <summary>
-        /// Control Repeater3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater Repeater3;
-
-        /// <summary>
         /// Control lblSuccess.
         /// </summary>
         /// <remarks>
@@ -265,24 +139,6 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblError;
-
-        /// <summary>
-        /// Control TicketDiv.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl TicketDiv;
-
-        /// <summary>
-        /// Control tituloSelloIniciales.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tituloSelloIniciales;
 
         /// <summary>
         /// Control lblAPaternoImputado.
@@ -465,6 +321,15 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.DropDownList ddlSexoVictima;
 
         /// <summary>
+        /// Control copyNumeroArchivo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox copyNumeroArchivo;
+
+        /// <summary>
         /// Control copyTextBoxNUC.
         /// </summary>
         /// <remarks>
@@ -483,49 +348,22 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.TextBox copyDropDownTipoAsunto;
 
         /// <summary>
-        /// Control copyDropDownTipoSolicitud.
+        /// Control copyFechaRecepcionC.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox copyDropDownTipoSolicitud;
+        protected global::System.Web.UI.WebControls.TextBox copyFechaRecepcionC;
 
         /// <summary>
-        /// Control copyFechaRecepcion.
+        /// Control copyNumeroFojasCHistorico.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox copyFechaRecepcion;
-
-        /// <summary>
-        /// Control copyNumeroFojas.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox copyNumeroFojas;
-
-        /// <summary>
-        /// Control copyQuienIngresa.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox copyQuienIngresa;
-
-        /// <summary>
-        /// Control copyinputNombreParticular.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox copyinputNombreParticular;
+        protected global::System.Web.UI.WebControls.TextBox copyNumeroFojasCHistorico;
 
         /// <summary>
         /// Control copyTipoRadicacion.
@@ -535,15 +373,6 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox copyTipoRadicacion;
-
-        /// <summary>
-        /// Control copyPrioridad.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox copyPrioridad;
 
         /// <summary>
         /// Control copyObservaciones.

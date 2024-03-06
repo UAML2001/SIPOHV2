@@ -218,7 +218,7 @@
     <ContentTemplate>
 
         <div class="d-flex justify-content-between align-items-center flex-wrap">
-            <h5 class="text-secondary mb-0">Registro de iniciales</h5>
+            <div></div>
 
             <div class="row g-1 ">
                 <div class="  d-flex col">

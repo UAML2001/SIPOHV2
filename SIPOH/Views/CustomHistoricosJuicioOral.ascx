@@ -1,7 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CustomJuicio.ascx.cs" Inherits="SIPOH.Views.CustomJuicio" %>
-
-
-<asp:UpdatePanel runat="server" ID="JuicioOralPanel" ChildrenAsTriggers="false" UpdateMode="Conditional">
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CustomHistoricosJuicioOral.ascx.cs" Inherits="SIPOH.Views.CustomHistoricosJuicioOral" %>
+<asp:UpdatePanel runat="server" ID="JuicioOralHistoricoPanel" ChildrenAsTriggers="false" UpdateMode="Conditional">
     <ContentTemplate>
 
 
@@ -17,54 +15,47 @@
                 </div>
                 <div class="col-auto">
 
-                    <asp:Button runat="server" CssClass="btn btn-outline-success btn-sm" Text="Buscar" OnClick="btnConsultaCausa"  AutoPostBack="true" />
+                    <asp:Button runat="server" CssClass="btn btn-outline-success btn-sm" Text="Buscar" OnClick="btnConsultaHistoricoCausa"  AutoPostBack="true" />
                 </div>
 
             </div>
         </div>
 
-        <div class="row mt-5 px-0 pt-0 pb-0 mb-1">
+        <div class="row mt-4 px-0 pt-0 pb-0 mb-1">
+            <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                <label class="help-block text-muted small-font">Número de juicio oral: </label>
+                <asp:TextBox runat="server" CssClass="form-control form-control-sm text-secondary" ID="inputNumeroArchivo" onblur="padLeadingZeros(this)"  MaxLength="9"/>
+            </div>
             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                 <label for="inputTipoAudiencia" class="form-label text-secondary">Tipo solicitud: </label>
-                <asp:DropDownList runat="server" ID="inputTipoAudiencia" CssClass="form-select form-select-sm text-secondary" AppendDataBoundItems="true" AutoPostBack="true" OnSelectedIndexChanged="inputRadicacion_SelectedIndexChanged">
+                <asp:DropDownList runat="server" ID="inputTipoAudiencia" CssClass="form-select form-select-sm text-secondary" AppendDataBoundItems="true" AutoPostBack="true" OnSelectedIndexChanged="ddlTipoAudiencia_Selected">
                     <asp:ListItem Text="Selecciona una opción" Value="" />
                 </asp:DropDownList>
+            </div>
+            <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                <label  class="form-label text-secondary">Fecha recepción: </label>
+                <asp:TextBox runat="server" CssClass="form-control form-control-sm text-secondary" ID="fechaRecepcion" TextMode="DateTimeLocal" onblur="validarFecha()"   MaxLength="6"/>
             </div>
             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                 <label class="help-block text-muted small-font">Número fojas: </label>
                 <asp:TextBox runat="server" CssClass="form-control form-control-sm text-secondary" ID="numeroFojas"   oninput="validarNumero(this)" MaxLength="6"/>
             </div>
+            
+            
             <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                <label class="form-label text-secondary">Quién ingresa: </label>
-
-                <asp:DropDownList runat="server" CssClass="form-select form-select-sm text-secondary" ID="inputQuienIngresa" AppendDataBoundItems="true" AutoPostBack="true" OnSelectedIndexChanged="inputQuienIngresa_SelectedIndexChanged">
-                    <asp:ListItem Text="Selecciona una opción" Value="" />                    
-                    <asp:ListItem Text="Otro" Value="O" />
-                </asp:DropDownList>
-
-            </div>
-            <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                <label for="inputNombreParticular" class="form-label text-secondary">
-                    Especificar nombre de 
-                       
-                        <asp:Label ID="lblTipoPersona" runat="server" Text="" CssClass="text-lowercase"></asp:Label>:
-                </label>
-                <asp:TextBox runat="server" ID="inputNombreParticular" CssClass="form-control form-control-sm text-secondary" MaxLength="150" />
-            </div>
-            <div class="mb-4 col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
                 <label class="help-block text-muted small-font">Observaciones: </label>
                 <asp:TextBox runat="server" CssClass="form-control form-control-sm text-secondary" ID="observacionesIncial" MaxLength="8000" />
             </div>
 
         </div>
 
-        <asp:Panel ID="ConsultaCausa" runat="server" Visible="false">
+        <asp:Panel ID="ConsultaCausa" runat="server" Visible="false">       
 
         <span class="text-success fw-bold m-2"><i class="bi bi-emoji-frown"></i> Inculpados de causa:</span>
 
 
         <div class="border border-light border-1 rounded my-2 ">
-            <asp:Repeater ID="RepeaterListaPersonas" runat="server" OnItemDataBound="RepeaterListaPersonas_ItemDataBound">
+            <asp:Repeater ID="RepeaterListaPartes" runat="server" OnItemDataBound="RepeaterListaPersonas_Items">
                 <ItemTemplate>
                     <div class="row   ml-3 py-2 btn btn-outline-light border-1 border-bottom">
 
@@ -95,7 +86,7 @@
         </div>
 
         <div class=" border-2 border-top border-bottom py-3 mb-3 row justify-content-center px-3 mx-0" style="background-color: #3F5259;">
-            <asp:Repeater ID="RepeaterTraerDelitosID" runat="server">
+            <asp:Repeater ID="RepeaterListaDelitos" runat="server">
                 <ItemTemplate>
                     <div class=" col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4 flex-wrap">
                         <asp:CheckBox ID="chkDelito1" runat="server" CssClass=""
@@ -117,9 +108,7 @@
 
         </div>
         <div class="border border-light border-1 rounded my-2 pr-4 ">
-
-
-            <asp:Repeater ID="RepeaterVictimasJO" runat="server">
+            <asp:Repeater ID="RepeaterListaVictimasJO" runat="server">
                 <ItemTemplate>
                     <div class="col-12 pr-5 d-flex flex-column justify-content-between align-content-center ml-3 p-2 btn btn-outline-light border-1 border-bottom">
                         <div class="d-flex justify-content-between align-content-center" id="ItemSelectedBox">
@@ -145,7 +134,7 @@
         </div>
             </asp:Panel>
         <div class="row mb-3">
-            <span class="text-success fw-bold m-2"><i class="bi bi-diagram-3-fill"></i>Tabla de relación:</span>
+            <span class="text-success fw-bold m-2 mt-4"><i class="bi bi-diagram-3-fill"></i>Tabla de relación:</span>
             <div class="table-responsive">
                 <asp:GridView ID="GridRelaciones" runat="server" AutoGenerateColumns="false" CssClass="table table-hover table-sm table-borderless" OnRowDeleting="GridRelaciones_RowDeleting">
     <Columns>
@@ -165,62 +154,14 @@
         </div>
         <%--<hr class="bg-success mt-5" />--%>
 
-        <%--Tabla de anexos--%>
-        <div class="row p-0 m-0">
-            <div class="col-md-4 col-sm-4 col-xs-4">
-                <label for="inputAnexos" class="help-block text-muted small-font">Anexos: </label>
-                <asp:DropDownList runat="server" CssClass="form-select form-select-sm text-secondary " ID="txtAnexosTipoJuicio" AppendDataBoundItems="true" AutoPostBack="false" onchange="MostrarDescripcionAnexos()">
-                    <asp:ListItem Text="Selecciona una opción" Value="" />
-                </asp:DropDownList>
-            </div>
+        
 
-            <div id="contenedorDescripcionAnexos" style="display: none;" class="col-md-4 col-sm-4 col-xs-4">
-                <label class="help-block text-muted small-font">Descripción: </label>
-                <asp:TextBox runat="server" CssClass="form-control form-control-sm " ID="txtDescripcionAnexos" MaxLength="600" />
-            </div>
-
-            <div class="mb-4 col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                <label class="help-block text-muted small-font">Cantidad: </label>
-                <div class="input-group">
-                    <asp:TextBox runat="server" CssClass="form-control form-control-sm" ID="txtCantidadAnexos" oninput="validarNumero(this)" MaxLength="10" />
-                    <div class="input-group-append">
-                        <asp:Button runat="server" CssClass="btn btn-success btn-sm" Text="+" OnClick="btnAñadirAnexo" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row m-0 p-0">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover mb-0  table-sm">
-                    <thead class=" text-center ">
-                        <tr class="">
-                            <th scope="col" class="bg-success text-white">Descripción</th>
-                            <th scope="col" class="bg-success text-white">Cantidad</th>
-                            <th scope="col" class="bg-success text-white">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table table-striped text-center table-sm">
-                        <asp:Repeater ID="RepeaterAnexos" runat="server">
-                            <ItemTemplate>
-                                <tr>
-                                    <th scope="row" class="text-uppercase"><%# Eval("Descripcion") %></th>
-                                    <td class="text-secondary"><%# Eval("cantidad") %></td>
-                                    <td class="text-secondary">
-                                        <asp:Button runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" OnClick="btnEliminarAnexo" />
-                                    </td>
-                                </tr>
-
-                            </ItemTemplate>
-                        </asp:Repeater>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+       
         <div class=" d-flex justify-content-center align-content-center w-100vw  mt-3">
             <pre id="TicketJO" runat="server"></pre>
 
         </div>
+        <%--<div class=" d-flex justify-content-center my-5" id="ocultarAGuardar" runat="server">--%>
         <div class=" d-flex justify-content-center my-5" id="ocultarAGuardar" runat="server" style="display:none !important;">
             <a class="btn btn-success btn-sm" data-bs-toggle="modal" onclick="valoresFinales();" data-bs-target="#envioRelaciones"><i class="bi bi-floppy-fill mr-1"></i>Guardar</a>
         </div>
@@ -265,42 +206,32 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                         <div class="col-12 pb-2">
+                            <span class="text-secondary">Número de causa:</span>
+                            <asp:TextBox runat="server" ID="copyInputNumero" CssClass="form-control form-control-sm text-center text-success" ReadOnly="true" />
+                        </div>
                         <div class="col-12 pb-2">
-                            <span class="text-secondary">Tipo de solicitud:</span>
-                            <asp:TextBox runat="server" ID="copyTipoSolicitud" CssClass="form-control form-control-sm text-center text-success" ReadOnly="true" />
+                            <span class="text-secondary">Número de juicio oral histórico:</span>
+                            <asp:TextBox runat="server" ID="copyInputNumeroArchivo" CssClass="form-control form-control-sm text-center text-success" ReadOnly="true" />
+                        </div>
+                        <div class="col-12 pb-2">
+                            <span class="text-secondary">Tipo de audiencia:</span>
+                            <asp:TextBox runat="server" ID="copyInputTipoAudiencia" CssClass="form-control form-control-sm text-center text-success" ReadOnly="true" />
+                        </div>
+                        <div class="col-12 pb-2">
+                            <span class="text-secondary">Fecha de recepción:</span>
+                            <asp:TextBox runat="server" ID="copyFechaRecepcion" CssClass="form-control form-control-sm text-center text-success" ReadOnly="true" />
                         </div>
                         <div class="col-12 pb-2">
                             <span class="text-secondary">Número de fojas:</span>
-                            <asp:TextBox runat="server" ID="copyNumeroFojas" CssClass="form-control form-control-sm text-center text-success" ReadOnly="true" />
-                        </div>
-                        <div class="col-12 pb-2">
-                            <span class="text-secondary">Quién ingresa:</span>
-                            <asp:TextBox runat="server" ID="copyQuienIngresa" CssClass="form-control form-control-sm text-center text-success" ReadOnly="true" />
-                        </div>
-                        <div class="col-12 pb-2">
-                            <span class="text-secondary">Nombre de quién ingresa:</span>
-                            <asp:TextBox runat="server" ID="copyNombreParticular" CssClass="form-control form-control-sm text-center text-success text-uppercase" ReadOnly="true" />
+                            <asp:TextBox runat="server" ID="copyNumeroFojas" CssClass="form-control form-control-sm text-center text-success text-uppercase" ReadOnly="true" />
                         </div>
                         <div class="col-12 pb-2">
                             <span class="text-secondary">Observaciones:</span>
-                            <asp:TextBox runat="server" ID="copyObservaciones" CssClass="form-control form-control-sm text-center text-success text-uppercase" ReadOnly="true" TextMode="MultiLine" Rows="4" />
+                            <asp:TextBox runat="server" ID="copyObservacionesInicial" CssClass="form-control form-control-sm text-center text-success text-uppercase" ReadOnly="true" TextMode="MultiLine" Rows="4" />
                         </div>
-                                    <span class="text-success fw-bold m-2"><i class="bi bi-folder-fill"></i> Anexos:</span>
-                         <asp:Repeater ID="CopyAnexos" runat="server">
-                            <ItemTemplate>
-                               
-                                  <ol class="list-group mb-1 mt-2 ">
-                                        <li class="list-group-item d-flex justify-content-between align-items-start bg-light">
-                                            <div class="ms-2 me-auto">
-                                                <div class="fw-bold text-secondary"><%# Eval("Descripcion") %></div>                                                
-                                            </div>
-                                            <span class=" text-success "><%# Eval("cantidad") %></span>
-                                        </li>                                                                                
-                                    </ol>  
-                                
+                                  
 
-                            </ItemTemplate>
-                        </asp:Repeater>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i>Cerrar</button>
@@ -312,15 +243,7 @@
         </div>
         <script type="text/javascript">    
                 
-            function MostrarDescripcionAnexos() {
-                var dropdownListaAnexos = $("#<%= txtAnexosTipoJuicio.ClientID %>");
-                var containerDescripcion = $("#contenedorDescripcionAnexos");
-                if (dropdownListaAnexos.val() === "Otro") {
-                    containerDescripcion.fadeIn();
-                } else {
-                    containerDescripcion.fadeOut();
-                }
-            }
+            
             
 
             function validarNumero(input) {
@@ -339,52 +262,56 @@
                 }
             }
             function valoresFinales() {
-                copiaNumeroFojas();
-                copiaNombreQuienIngresa();
-                copiaObservaciones();
+                copyInputNumero();
+                copyInputNumeroArchivo();
+                //copyInputTipoAudiencia();
+                copyFechaRecepcion();
+                copyNumeroFojas();
+                copyObservacionesInicial();
             }
-            function copiaNumeroFojas() {
+            function copyInputNumero() {
+                var inputNumero = $("#<%= inputNumero.ClientID %>");
+                var copyInputNumero = $("#<%= copyInputNumero.ClientID %>");
+                copyInputNumero.val(inputNumero.val());
+            }
+            function copyInputNumeroArchivo() {
+                var inputNumeroArchivo = $("#<%= inputNumeroArchivo.ClientID %>");
+                var copyInputNumeroArchivo = $("#<%= copyInputNumeroArchivo.ClientID %>");
+                copyInputNumeroArchivo.val(inputNumeroArchivo.val());
+            }
+            
+            function copyFechaRecepcion() {
+                var FechaRecepcion = $("#<%= fechaRecepcion.ClientID %>");
+                var copyFechaRecepcion = $("#<%= copyFechaRecepcion.ClientID %>");
+                copyFechaRecepcion.val(FechaRecepcion.val());
+            }
+
+            function copyNumeroFojas() {
                 var numeroFojas = $("#<%= numeroFojas.ClientID %>");
                 var copyNumeroFojas = $("#<%= copyNumeroFojas.ClientID %>");
                 copyNumeroFojas.val(numeroFojas.val());
             }
-            function copiaNombreQuienIngresa() {
-                var inputNombreParticular = $("#<%= inputNombreParticular.ClientID %>");
-                var copyNombreParticular = $("#<%= copyNombreParticular.ClientID %>");
-                copyNombreParticular.val(inputNombreParticular.val());
-            }
-            function copiaObservaciones() {
+            
+            function copyObservacionesInicial() {
                 var observacionesIncial = $("#<%= observacionesIncial.ClientID %>");
-                var copyObservaciones = $("#<%= copyObservaciones.ClientID %>");
+                var copyObservaciones = $("#<%= copyObservacionesInicial.ClientID %>");
                 copyObservaciones.val(observacionesIncial.val());
             }
-            function mostrarTituloSello() {
-                var tituloSello = document.getElementById('tituloSelloJOIniciales');
-                if (tituloSello) {
-                    tituloSello.style.display = 'block';
+            
+            function validarFecha() {
+                var inputFechaRecepcion = document.getElementById('<%= fechaRecepcion.ClientID %>');
+                var fechaSeleccionada = new Date(inputFechaRecepcion.value);
+                var fechaActual = new Date();
+                fechaActual.setHours(0, 0, 0, 0);
+
+                if (fechaSeleccionada > fechaActual) {
+                    //toastError("!Estas loco!, o ¿Vives en el futuro?");
+                    toastError("No se puede seleccionar una fecha posterior a hoy.");
+                    inputFechaRecepcion.value = "";
                 }
-            }
-           
-            function imprimirTicketJOIniciales() {
-                var contenido = document.getElementById('<%= TicketJO.ClientID %>').innerHTML;
-                var ventanaImpresion = window.open('', '_blank');
-
-                var estilos = `<style>
-                                    pre {
-                                        font-family: monospace;
-                                        white-space: pre;
-                                        margin: 1em 0;
-                                        }
-                              </style>`;
-
-                ventanaImpresion.document.write(estilos + '<pre>' + contenido + '</pre>');
-                ventanaImpresion.document.close();
-                ventanaImpresion.print();
-
             }
 
         </script>
         <script src="../Scripts/consignaciones/JuicioOral.js"></script>
     </ContentTemplate>
 </asp:UpdatePanel>
-

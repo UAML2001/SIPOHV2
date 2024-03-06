@@ -7,8 +7,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <asp:ScriptManager ID="ScriptManagerPromociones" runat="server"></asp:ScriptManager>
     <%--Importacion de Controles--%>
-    <div>
-        <h1 style="margin-left: 5%" class="h5" >Control <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-success fw-bold">Promociones</span> </h1>
+    
+    <div class="d-flex justify-content-between px-3 mb-4">
+        <span  class="text-sm" >Control <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-success fw-bold "> Promociones</span> </span>
+        <b>Registro</b>
 	</div>
     <div class="col-md-10 ml-auto col-xl-11 mr-auto">
                 <!-- Nav tabs -->

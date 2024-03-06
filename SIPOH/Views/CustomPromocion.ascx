@@ -93,12 +93,8 @@
 <asp:UpdatePanel runat="server" ID="promocionPanel" ChildrenAsTriggers="false" UpdateMode="Conditional">
     <ContentTemplate>
         <div class=" px-2 mx-1">
-            <h5 class="text-secondary mb-4">Registro de promociones</h5>
-
-
-
             <div class="row d-flex justify-content-end align-content-end">
-                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                <div class=" col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
 
                     <h6 class="help-block text-muted small-font">Tipo de Documento: </h6>
                     <asp:DropDownList runat="server" ID="DrpLstTipoDocumento" class="form-select form-select-sm text-secondary " AutoPostBack="true" OnSelectedIndexChanged="DrpLstObtenerTipoDocumento" >

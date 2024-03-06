@@ -1,5 +1,6 @@
 //FORMATO DE 0000/0000
 function padLeadingZeros(num) {
+    verificarNumeros(num);
     var valor = num.value.replace(/-/g, "");
     var partes = valor.split("/");
     if (partes.length === 1) {
@@ -10,6 +11,7 @@ function padLeadingZeros(num) {
             while (partes[i].length < 4) partes[i] = "0" + partes[i];
         }
         valor = partes.join("/");
+        
     }
     if (valor.length > 9) {
         valor = valor.substring(0, 9);
@@ -17,6 +19,23 @@ function padLeadingZeros(num) {
     num.value = valor;
     return valor;
 }
+function verificarNumeros(input) {
+    // Obtener el valor del input
+    var valor = input.value;
+    
+
+    // Obtener los últimos cuatro dígitos
+    var ultimosCuatroDigitos = valor.substring(valor.length - 4);
+
+    // Verificar si los últimos cuatro dígitos son todos ceros
+    if (ultimosCuatroDigitos === '0000') {
+        // Mostrar un mensaje de alerta o notificación
+        toastError('Numero de archivo incorrecto. Por favor, modificalo.');        
+        return
+    }
+
+}
+
 //FORMATO DE 00-0000-0000
 function formatNuc(num) {
     var valor = num.value.replace(/[\/\-]/g, "");
@@ -30,17 +49,7 @@ function formatNuc(num) {
 function aplicarFormatoSegunSeleccion(num) {
     var seleccion = document.getElementById('inputIncomJuzgado').value;
     if (seleccion === "2") {
-        //se quito el formato de nuc
-        //formatNuc(num);
-    } else {
-        padLeadingZeros(num);
-    }
-   
-}
-function aplicarFormatoSegunSeleccion2(num) {
-    var seleccion2 = document.getElementById('CausaNucCHA').value;;
-    if (seleccion2 === "2") {
-        //quite el formato de nuc
+        formatNuc(num);
     } else {
         padLeadingZeros(num);
     }

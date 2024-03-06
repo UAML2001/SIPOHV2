@@ -15,21 +15,30 @@ namespace SIPOH
     {
 
         /// <summary>
-        /// Control HistoricosCausa.
+        /// Control ScriptManagerHistoricos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UserControl HistoricosCausa;
+        protected global::System.Web.UI.ScriptManager ScriptManagerHistoricos;
 
         /// <summary>
-        /// Control HistoricosCupre.
+        /// Control CustomHistoricosCupreCausa.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UserControl HistoricosCupre;
+        protected global::SIPOH.Views.CustomHistoricosCupreCausa CustomHistoricosCupreCausa;
+
+        /// <summary>
+        /// Control CustomHistoricosJuicioOral.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::SIPOH.Views.CustomHistoricosJuicioOral CustomHistoricosJuicioOral;
     }
 }
