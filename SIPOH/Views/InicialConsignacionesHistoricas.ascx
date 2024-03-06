@@ -111,11 +111,11 @@
         <div class="row" id="divAcusatorio" runat="server">
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                 <label for="inputRadicacion" class="form-label text-secondary">Juzgado de Procedencia</label>
-                <asp:DropDownList ID="JuzgadoProcedenciaCHA" runat="server" CssClass="form-select form-select-sm mayusculas"></asp:DropDownList>
+                <asp:DropDownList ID="JuzgadoProcedenciaCHA" runat="server" CssClass="form-select form-select-sm mayusculas" OnSelectedIndexChanged="JuzgadoProcedenciaCHA_SelectedIndexChanged"></asp:DropDownList>
             </div>
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                 <label for="inputIncomJuzgado" class="form-label text-secondary">Causa | Nuc | Juicio Oral</label>
-                <asp:DropDownList ID="CausaNucCHA" runat="server" CssClass="form-select form-select-sm mayusculas" ClientIDMode="Static">
+                <asp:DropDownList ID="CausaNucCHA" runat="server" CssClass="form-select form-select-sm mayusculas" ClientIDMode="Static" OnSelectedIndexChanged="CausaNucCHA_SelectedIndexChanged" AutoPostBack="True">
                     <asp:ListItem Text="Causa" Value="1"></asp:ListItem>
                     <asp:ListItem Text="NUC" Value="2"></asp:ListItem>
                     <asp:ListItem Text="Juicio Oral" Value="3"></asp:ListItem>
@@ -138,7 +138,7 @@
             </div>
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                 <label for="inputIncomJuzgado" class="form-label text-secondary">Juzgado de Procedencia</label>
-                <asp:DropDownList ID="ddlJuzgadoProcedencia" runat="server" CssClass="form-select form-select-sm mayusculas"></asp:DropDownList>
+                <asp:DropDownList ID="ddlJuzgadoProcedencia" runat="server" CssClass="form-select form-select-sm mayusculas" OnSelectedIndexChanged="ddlJuzgadoProcedencia_SelectedIndexChanged"></asp:DropDownList>
             </div>
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                 <label for="inputcausa" class="form-label text-secondary">Numero de Causa</label>

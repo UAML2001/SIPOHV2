@@ -10,6 +10,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SIPOH.Controllers.AC_CatalogosCompartidos;
 using SIPOH.Controllers.EJ_Storages;
+using static SIPOH.Controllers.AC_CatalogosCompartidos.EJ_DatosConsignacionesHistoricasController;
 
 namespace SIPOH.Views
 {
@@ -31,14 +32,39 @@ namespace SIPOH.Views
                 CargarAnexosCon();
                 tituloSalasCon.Visible = false;
                 tituloSentencias.Visible = false;
+                
             }
         }
+
+    
         //FUNCION PARA CAMBIAR DE ACUSATORIO A TRADICIONAL
         protected void ddlSistemasAT_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Actualizar la visibilidad cuando se cambia la selección
             visibleAcusatorioTradicional();
+            
+            Session["TipoSistema"] = ddlSistemasAT.SelectedValue;
         }
+        protected void JuzgadoProcedenciaCHA_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Asegúrate de que este evento esté correctamente vinculado en tu aspx con AutoPostBack="true"
+            Session["JuzgadoSeleccionado"] = JuzgadoProcedenciaCHA.SelectedValue;
+        }
+
+        // Asegúrate de tener un método similar si `ddlJuzgadoProcedencia` es otro DropDownList relevante.
+        protected void ddlJuzgadoProcedencia_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Asegúrate de que este evento esté correctamente vinculado en tu aspx con AutoPostBack="true"
+            Session["JuzgadoSeleccionado"] = ddlJuzgadoProcedencia.SelectedValue;
+        }
+        protected void CausaNucCHA_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Asegúrate de que este evento esté correctamente vinculado en tu aspx con AutoPostBack="true"
+            Session["Tipo"] = CausaNucCHA.SelectedValue;
+        }
+
+
+        //fin de variables de sesion
         private void visibleAcusatorioTradicional()
         {
             // Ocultar ambos divs al inicio
@@ -139,6 +165,8 @@ namespace SIPOH.Views
             {
                 Console.WriteLine(ex.Message); //debug por si no mostro los juzgados
             }
+            //variable de sesion:
+            
 
         }
         //FUNCIONES CARGAR JUZGADOS EN EL DDL JUZGADO DE TRADICIONAL 
@@ -178,7 +206,7 @@ namespace SIPOH.Views
             string tipoCausa = ObtenerTipoCausa(CausaNucCHA.SelectedValue);
             var controller = new Ejecucion_ConsultarCausaController();
             var nuevasCausas = controller.ConsultarCausa(idjuzgadoSeleccionado, numeroCausaNuc, tipoCausa);
-
+            Session["NumeroCausaNucJuicio"] = causaNucAcusatorio.Text.Trim();
             // Verifica si ya existen causas almacenadas en la sesión
             var causasExistentes = Session["Causas"] as List<Ejecucion_ConsultarCausaController.DataCausa>;
             if (causasExistentes == null)
@@ -252,6 +280,7 @@ namespace SIPOH.Views
                     }
                 }
             }
+            Session["NumeroCausaNucJuicio"] = InputCausaTradicional.Text.Trim();
             Session["Causas"] = causasExistentes;
             GridViewCausas.DataSource = causasExistentes;
             GridViewCausas.DataBind();

@@ -2228,6 +2228,7 @@
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatJuzgadosConTipoYSubtipoController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatTipoSolicitudController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\Cat_Ejecucion_Cat_JuzgadosPorCircuitoEController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\EJ_DatosConsignacionesHistoricasController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\EJ_ValidarNumeroEjecucionController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\P_CatSolicitanteController.cs" />
     <Compile Include="Controllers\AC_RegistroInicialJuicioOral\InicialJuicioOralController.cs" />
@@ -2550,8 +2551,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\CatEjecucion_CatAnexos\" />
-    <Folder Include="Views\CatEjecucion_CatSolicitud\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
