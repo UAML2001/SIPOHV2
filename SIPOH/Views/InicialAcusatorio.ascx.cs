@@ -1038,6 +1038,7 @@ namespace SIPOH.Views
             }
             else if (CheckNo.Checked)
             {
+                RegistroPartesIn.Style["display"] = "block";
                 divBotonBuscar.Style["display"] = "none";
             }
         }
@@ -1048,6 +1049,7 @@ namespace SIPOH.Views
         protected void btNoRegistro2_Click(object sender, EventArgs e)
         {
             ContinuarRegistro.Style["display"] = "none";
+
         }
         protected void CatAnexosDD_SelectedIndexChanged(object sender, EventArgs e)
         {

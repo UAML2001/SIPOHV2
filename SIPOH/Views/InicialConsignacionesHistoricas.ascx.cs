@@ -10,7 +10,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SIPOH.Controllers.AC_CatalogosCompartidos;
 using SIPOH.Controllers.EJ_Storages;
-using static SIPOH.Controllers.AC_CatalogosCompartidos.EJ_DatosConsignacionesHistoricasController;
 
 namespace SIPOH.Views
 {
@@ -32,7 +31,6 @@ namespace SIPOH.Views
                 CargarAnexosCon();
                 tituloSalasCon.Visible = false;
                 tituloSentencias.Visible = false;
-                
             }
         }
 
@@ -637,8 +635,8 @@ namespace SIPOH.Views
                 ScriptManager.RegisterStartupScript(
                     this.UpdateInicialesConH,
                     this.UpdateInicialesConH.GetType(),
-                    "cerrarModal",
-                    "CerrarModalGuardarDatos();",
+                    "cerrarModal2",
+                    "CerrarModalGuardarDatos2();",
                     true
                 );
                 return;
@@ -698,8 +696,18 @@ namespace SIPOH.Views
                         //fin anexos
 
                         transaction.Commit();
+
+                        ScriptManager.RegisterStartupScript(
+                           this.UpdateInicialesConH,
+                           this.UpdateInicialesConH.GetType(),
+                           "cerrarModal2",
+                           "CerrarModalGuardarDatos2();",
+                           true
+                       );
+
                         MensajeExito("Se ha guardado la información correctamente", true);
                         LimpiarConsignaciones();
+
                     }
                     catch (Exception ex)
                     {

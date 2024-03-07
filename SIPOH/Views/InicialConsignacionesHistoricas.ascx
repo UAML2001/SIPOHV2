@@ -92,7 +92,7 @@
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-danger" onclick="CerrarModalGuardarDatos()" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-outline-danger" onclick="CerrarModalGuardarDatos2()" data-bs-dismiss="modal">Cancelar</button>
                         <asp:Button ID="btnGuardarAcusatorio" runat="server" CssClass="btn btn-outline-warning" OnClick="btnGuardarDatosCon_Click" Text="Guardar" />
                     </div>
                 </div>
@@ -350,6 +350,16 @@
                     <input type="text" id="InputOtraSolicitud" class="form-control form-control-sm mayusculas" runat="server" maxlength="250" clientidmode="Static">
                 </div>
             </div>
+               <div class="row">
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                    <label class="form-label-sm text-secondary">Fecha</label>
+                    <input type="date" class="form-control form-control-sm" id="inFecha" min="1900-01-01" max="2050-12-31" runat="server" clientidmode="Static"/>
+                </div>
+                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                    <label class="form-label text-secondary">Hora</label>
+                    <input type="time" id="inHora" class="form-control form-control-sm" runat="server" clientidmode="Static">
+                </div>
+            </div>
             <br />
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
@@ -401,9 +411,8 @@
         </div>
     </ContentTemplate>
 </asp:UpdatePanel>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 <script>
     function mostrarAlerta(message) {
@@ -414,16 +423,6 @@
         $('#modalError .modal-body b').text(mensaje);
         $('#modalError').modal('show');
     }
-
-</script>
-<script>
-    window.addEventListener('keydown', function (e) {
-        var node = (e.target) ? e.target : ((e.srcElement) ? e.srcElement : null);
-        if ((e.keyCode == 13) && (node.type == "text")) {
-            e.preventDefault();
-            return false;
-        }
-    }, true);
 
 </script>
 <script type="text/javascript">
@@ -437,10 +436,9 @@
     function abrirModalGuardarDatos2() {
         $('#guardarDatos2').modal('show');
     }
-
     function CerrarModalGuardarDatos2() {
         $('#guardarDatos2').modal('hide');
-        $('body').removeClass('modal-open').css('overflow', ''); // Restablece el overflow
+        $('body').removeClass('modal-open').css('overflow', '');
         $('.modal-backdrop').remove();
     }
 

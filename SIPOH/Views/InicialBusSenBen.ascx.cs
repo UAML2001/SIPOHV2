@@ -58,6 +58,14 @@ namespace SIPOH.Views
                 }
                 else
                 {
+                    tituloPartesCausa2.Visible = false;
+                    tituloDetalles2.Visible = false;
+                    inputNombreBeneficiario2.Value = "";
+                    inputApellidoPaterno2.Value = "";
+                    inputApellidoMaterno2.Value = "";
+                    GridViewPCausa2.DataSource = null;
+                    GridViewPCausa2.DataBind();
+                    detallesConsulta2.InnerHtml = "";
                     string mensajeNoDatos = "No se encontro resultado de la busqueda.";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastNoDatos", $"toastError('{mensajeNoDatos}');", true);
                 }

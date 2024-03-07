@@ -549,6 +549,7 @@ namespace SIPOH.Views
             }
             else if (CheckNoTradicional.Checked)
             {
+                RegistroPartesInTradicional.Style["display"] = "block";
                 divBotonBuscarTradicional.Style["display"] = "none";
             }
         }

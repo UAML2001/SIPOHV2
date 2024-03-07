@@ -291,6 +291,32 @@ namespace SIPOH
 
             return existe;
         }
+        private bool ValidarExistenciaDeJuicioOral(string numero, int juzgado)
+        {
+            bool existe = false;
+            string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("Ejecucion_ValidarJuicioOral", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Numero", numero);
+                    cmd.Parameters.AddWithValue("@IdJuzgado", juzgado);
+
+                    con.Open();
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && Convert.ToInt32(result) == 1)
+                    {
+                        existe = true;
+                    }
+                }
+            }
+
+            return existe;
+        }
+
+
         //----------------------------------------- ACUSATORIO -------------------------------------------------------------
         //CODIGO PARA MOSTRAR EN EL SELECT DE RELACION CAUSAS ACUSATORIO
         private void CargarJuzgadosAcusatorio()
@@ -330,30 +356,30 @@ namespace SIPOH
                 }
                 int juzgado = Convert.ToInt32(juzgadoValor);
                 string numero = inputCausaNuc.Value;
-                // Validar si existe la causa
-                bool causaExiste = ValidarExistenciaDeCausa(numero, juzgado);
-                if (!causaExiste)
+
+                // Verificar si la causa ya existe en el sistema
+                if (ValidarExistenciaDeCausa(numero, juzgado)) // Asume que este método verifica correctamente si la causa ya existe.
                 {
-                    MostrarMensajeError("La CAUSA|NUC no existe en el sistema para el juzgado seleccionado, Favor de verificarlo.");
+                    MostrarMensajeError("La CAUSA|NUC ya existe en el sistema para el juzgado seleccionado. Favor de verificarlo.");
                     return;
                 }
-                // Obtener IdAsunto
+
+                // Si la causa no existe, entonces procedemos a obtener el IdAsunto y las demás operaciones.
                 int idAsunto = ObtenerIdAsunto(juzgado, numero);
                 if (idAsunto == -1)
                 {
                     MostrarMensajeError("No se pudo obtener el folio del asunto, verifica que la causa sea correcta o pertenezca a ese juzgado");
                     return;
                 }
-                // Obtener IdEjecucion de ViewState
-                int idEjecucion = Convert.ToInt32(ViewState["IdEjecucionPrimerGrid"]);
 
-                // Insertar relación en la base de datos
+                int idEjecucion = Convert.ToInt32(ViewState["IdEjecucionPrimerGrid"]);
                 if (!RelacionarCausaConEjecucion(idAsunto, idEjecucion, "C"))
                 {
-                    MostrarMensajeError("Puede que la causa ya exista en la base de datos o verifique que sea la causa correcta en el juzgado seleccionado y el tipo de asunto.");
+                    MostrarMensajeError("Ocurrió un error al intentar relacionar la causa con la ejecución. Por favor, verifica la información e intenta nuevamente.");
                     return;
                 }
-                // Actualizar GridView
+
+                // Actualizar GridView y mostrar mensaje de éxito
                 VerDetalles(idEjecucion);
                 string mensaje = "Se relacionó la CAUSA|NUC con el número de ejecución correctamente";
                 string script = $"mostrarToast('{mensaje}');";
@@ -368,6 +394,7 @@ namespace SIPOH
                 MostrarMensajeError("Ocurrió un error: " + ex.Message);
             }
         }
+
         //CODIGO PARA INSERTAR EN P_EJECUCIONASUNTO POR STORAGE RELACIONARCAUSAPROMOCION
         //----------------------------------------- TRADICIONAL -------------------------------------------------------------
         //CHANGE JUXGADOS TRADICIONALES 
@@ -440,13 +467,13 @@ namespace SIPOH
 
                 // Validar si existe la causa
                 bool causaExiste = ValidarExistenciaDeCausa(numero, juzgado);
-                if (!causaExiste)
+                if (causaExiste)
                 {
-                    MostrarMensajeError("La CAUSA no existe en el sistema para el juzgado seleccionado.");
+                    MostrarMensajeError("La CAUSA ya existe en el sistema para el juzgado seleccionado.");
                     return;
                 }
 
-                // Obtener IdAsunto
+                // Si la causa no existe, procedemos con el flujo para agregarla
                 int idAsunto = ObtenerIdAsunto(juzgado, numero);
                 if (idAsunto == -1)
                 {
@@ -454,17 +481,14 @@ namespace SIPOH
                     return;
                 }
 
-                // Obtener IdEjecucion de ViewState
                 int idEjecucion = Convert.ToInt32(ViewState["IdEjecucionPrimerGrid"]);
 
-                // Insertar relación en la base de datos
                 if (!RelacionarCausaConEjecucion(idAsunto, idEjecucion, "T"))
                 {
                     MostrarMensajeError("Puede que la causa ya exista en la base de datos o verifique que sea la causa correcta en el juzgado seleccionado y el tipo de asunto.");
                     return;
                 }
 
-                // Actualizar GridView
                 VerDetalles(idEjecucion);
                 string mensaje = "Se relacionó la CAUSA con el número de ejecución correctamente";
                 string script = $"mostrarToast('{mensaje}');";
@@ -479,6 +503,7 @@ namespace SIPOH
                 MostrarMensajeError("Ocurrió un error: " + ex.Message);
             }
         }
+
         //------------------------------------------ JUICIO ORAL -----------------------------------------------------------
         private void CargarJuzgadosJuicioOral()
         {
@@ -509,6 +534,7 @@ namespace SIPOH
         {
             try
             {
+                // Obtener valor del juzgado desde el formulario
                 string juzgadoValor = Request.Form[JuzgadoJuicioOral.UniqueID];
                 if (string.IsNullOrEmpty(juzgadoValor) || juzgadoValor == "Seleccionar")
                 {
@@ -516,35 +542,40 @@ namespace SIPOH
                     return;
                 }
                 int juzgado = Convert.ToInt32(juzgadoValor);
+
+                // Obtener el número del juicio oral desde el formulario
                 string numero = inputNumeroJuicio.Value;
 
-                // Validar si existe la causa
-                bool causaExiste = ValidarExistenciaDeCausa(numero, juzgado);
-                if (!causaExiste)
+                // Verificar si el juicio oral ya existe en el sistema
+                if (ValidarExistenciaDeJuicioOral(numero, juzgado))
                 {
-                    MostrarMensajeError("El Juicio Oral no existe en el sistema para el juzgado seleccionado.");
+                    // Mostrar mensaje de error si el juicio oral ya existe
+                    MostrarMensajeError("El Juicio Oral ya existe en el sistema para el juzgado seleccionado. Favor de verificarlo.");
                     return;
                 }
 
+                // Si el juicio oral no existe, proceder con la obtención del IdAsunto y demás operaciones
                 int idAsunto = ObtenerIdAsunto(juzgado, numero);
                 if (idAsunto == -1)
                 {
-                    // Si no se encuentra el IdAsunto después de validar su existencia, manejar el error
-                    MostrarMensajeError("No se pudo obtener el folio del asunto, verifica que la causa sea correcta o pertenezca a ese juzgado");
+                    // Mostrar mensaje de error si no se puede obtener el IdAsunto
+                    MostrarMensajeError("No se pudo obtener el folio del asunto, verifica que el juicio oral sea correcto o pertenezca a ese juzgado");
                     return;
                 }
-                int idEjecucion = Convert.ToInt32(ViewState["IdEjecucionPrimerGrid"]);
 
+                // Proceder con la relación del juicio oral con la ejecución
+                int idEjecucion = Convert.ToInt32(ViewState["IdEjecucionPrimerGrid"]);
                 if (!RelacionarCausaConEjecucion(idAsunto, idEjecucion, "JO"))
                 {
-                    MostrarMensajeError("Puede que el juicio ya exista en la base de datos o verifique que sea el juicio correcto en el juzgado seleccionado y el tipo de asunto");
+                    // Manejar el error si no se puede relacionar el juicio oral con la ejecución
+                    MostrarMensajeError("Puede que el juicio ya exista en la base de datos o verifique que sea el juicio correcto en el juzgado seleccionado y el tipo de asunto.");
                     return;
                 }
 
+                // Actualizar la interfaz de usuario y mostrar mensaje de éxito
                 VerDetalles(idEjecucion);
                 string mensaje = "Se relacionó el Juicio Oral con el número de ejecución correctamente";
-                string script = $"mostrarToast('{mensaje}');";
-                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", $"mostrarToast('{mensaje}');", true);
             }
             catch (FormatException)
             {
@@ -555,6 +586,9 @@ namespace SIPOH
                 MostrarMensajeError("Ocurrió un error: " + ex.Message);
             }
         }
+
+
+
         //------------------------------------ SEGUNDO GRID DE DETALLES -----------------------------------------------------
         //CODIGO DE VER DETALLES DE LA CAUSA CONSUMIENDO Ejecucion_MostrarCausasRelacionadas
         protected void VerDetalles(int idEjecucion)

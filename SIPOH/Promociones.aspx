@@ -190,7 +190,7 @@
                                                                 <div class="input-group">
                                                                     <input type="text" class="form-control form-control-sm mayusculas" id="inputCausaNuc" clientidmode="Static" runat="server" minlength="9" maxlength="12" onblur="aplicarFormatoSegunSeleccion(this)">
                                                                     <div class="input-group-append">
-                                                                        <asp:Button ID="btnAgregarAcusatorio" runat="server" Text="Agregar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnAgregarAcusatorio_Click" />
+                                                                        <asp:Button ID="btnAgregarAcusatorio" runat="server" Text="+" CssClass="btn btn-success btn-sm" OnClick="btnAgregarAcusatorio_Click" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -218,7 +218,7 @@
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control form-control-sm mayusculas" id="inputCausaTradicional" runat="server" maxlength="9" onblur="padLeadingZeros(this)" placeholder="">
                                                                 <div class="input-group-append">
-                                                                    <asp:Button ID="btnAgregarTradicional" runat="server" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnAgregarTradicional_Click" Text="Agregar" />
+                                                                    <asp:Button ID="btnAgregarTradicional" runat="server" CssClass="btn btn-success btn-sm" OnClick="btnAgregarTradicional_Click" Text="+" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -238,7 +238,7 @@
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control form-control-sm mayusculas" id="inputNumeroJuicio" clientidmode="Static" runat="server" maxlength="9" onblur="padLeadingZeros(this)">
                                                                 <div class="input-group-append">
-                                                                    <asp:Button ID="btnJuicioOral" runat="server" Text="Agregar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnAgregarJuicioOral_Click" />
+                                                                    <asp:Button ID="btnJuicioOral" runat="server" Text="+" CssClass="btn btn-success btn-sm" OnClick="btnAgregarJuicioOral_Click" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -343,7 +343,7 @@
                                                 <div class="input-group">
                                                     <input type="number" id="CantidadInput"
                                                         class="form-control form-control-sm mayusculas" runat="server"
-                                                        clientidmode="Static" max="1000">
+                                                        clientidmode="Static" max="1000"/>
                                                     <div class="input-group-append">
                                                         <asp:Button ID="AgregarBtn" runat="server" Text="+"
                                                             CssClass="btn btn-success btn-sm"
@@ -495,11 +495,12 @@
             <script>
                 window.addEventListener('keydown', function (e) {
                     var node = (e.target) ? e.target : ((e.srcElement) ? e.srcElement : null);
-                    if ((e.keyCode == 13) && (node.type == "text")) {
+                    if ((e.keyCode == 13) && (node.type == "text" || node.type == "number")) {
                         e.preventDefault();
                         return false;
                     }
                 }, true);
+
             </script>
             <script>
                 function imprimirTicket() {

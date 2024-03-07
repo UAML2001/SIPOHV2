@@ -56,6 +56,12 @@ namespace SIPOH.Views
                 {
                     string mensajeNoDatos = "No se encontro resultado de la busqueda.";
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastNoDatos", $"toastError('{mensajeNoDatos}');", true);
+                    tituloPartesCausa6.Visible = false;
+                    tituloDetalles6.Visible = false;
+                    inputDetalleSolicitante6.Value = "";
+                    GridViewPCausa6.DataSource = null;
+                    GridViewPCausa6.DataBind();
+                    detallesConsulta6.InnerHtml = "";
                 }
             }
             catch (Exception ex)
