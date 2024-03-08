@@ -33,8 +33,6 @@ namespace SIPOH.Views
                 tituloSentencias.Visible = false;
             }
         }
-
-    
         //FUNCION PARA CAMBIAR DE ACUSATORIO A TRADICIONAL
         protected void ddlSistemasAT_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -48,7 +46,6 @@ namespace SIPOH.Views
             // Asegúrate de que este evento esté correctamente vinculado en tu aspx con AutoPostBack="true"
             Session["JuzgadoSeleccionado"] = JuzgadoProcedenciaCHA.SelectedValue;
         }
-
         // Asegúrate de tener un método similar si `ddlJuzgadoProcedencia` es otro DropDownList relevante.
         protected void ddlJuzgadoProcedencia_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -60,8 +57,6 @@ namespace SIPOH.Views
             // Asegúrate de que este evento esté correctamente vinculado en tu aspx con AutoPostBack="true"
             Session["Tipo"] = CausaNucCHA.SelectedValue;
         }
-
-
         //fin de variables de sesion
         private void visibleAcusatorioTradicional()
         {
@@ -613,6 +608,9 @@ namespace SIPOH.Views
             string beneficiarioNombre = InputNombreBusqueda.Text;
             string beneficiarioApellidoPaterno = InputApPaternoBusqueda.Text;
             string beneficiarioApellidoMaterno = inputApMaterno.Text;
+            DateTime fechaEjecucion = Convert.ToDateTime(inFecha.Value);
+            TimeSpan horaEjecucion = TimeSpan.Parse(inHora.Value);
+            DateTime fechaHoraEjecucion = fechaEjecucion.Add(horaEjecucion);
             string idJuzgadoSeleccionado = busNombreJuzEjec.SelectedValue;
             if (idJuzgadoSeleccionado == "Seleccionar" || string.IsNullOrEmpty(idJuzgadoSeleccionado))
             {
@@ -649,7 +647,7 @@ namespace SIPOH.Views
                 {
                     try
                     {
-                        int idEjecucion = InsertarEjecucion(conn, transaction, idJuzgado, noEjecucion, cveSolicitante, detalleSolicitante, cveSolicitud, otroSolicita, beneficiarioNombre, beneficiarioApellidoPaterno, beneficiarioApellidoMaterno, interno, idUser);
+                        int idEjecucion = InsertarEjecucion(conn, transaction, idJuzgado, noEjecucion, cveSolicitante, detalleSolicitante, cveSolicitud, otroSolicita, beneficiarioNombre, beneficiarioApellidoPaterno, beneficiarioApellidoMaterno, interno, idUser, fechaHoraEjecucion);
                         foreach (GridViewRow row in GridViewCausas.Rows)
                         {
                             HiddenField hiddenIdAsunto = (HiddenField)row.FindControl("HiddenIdAsunto");
@@ -718,19 +716,21 @@ namespace SIPOH.Views
             }
         }
         //INSERTAR EN P_EJECUCION
-        public int InsertarEjecucion(SqlConnection conn, SqlTransaction transaction, int idJuzgado, string noEjecucion, string cveSolicitante, string detalleSolicitante, string cveSolicitud, string otroSolicita, string beneficiarioNombre, string beneficiarioApellidoPaterno, string beneficiarioApellidoMaterno, string interno, string idUser)
+        public int InsertarEjecucion(SqlConnection conn, SqlTransaction transaction, int idJuzgado, string noEjecucion, string cveSolicitante, string detalleSolicitante, string cveSolicitud, string otroSolicita, string beneficiarioNombre, string beneficiarioApellidoPaterno, string beneficiarioApellidoMaterno, string interno, string idUser, DateTime fechaHoraEjecucion)
         {
             try
             {
                 string query = @"
-                INSERT INTO [SIPOH].[dbo].[P_Ejecucion]
-                ([NoEjecucion], [FechaEjecucion], [CveSolicitante], [DetalleSolicitante], [CveSolicitud], [OtroSolicita], [BeneficiarioNombre], [BeneficiarioApellidoPaterno], [BeneficiarioApellidoMaterno], [IdJuzgado], [Interno], [IdUser], [Tipo])
-                VALUES
-                (@NoEjecucion, GETDATE(), @CveSolicitante, @DetalleSolicitante, @CveSolicitud, @OtroSolicita, @BeneficiarioNombre, @BeneficiarioApellidoPaterno, @BeneficiarioApellidoMaterno, @IdJuzgado, @Interno, @IdUser, 'Ejecución');
-                SELECT CAST(scope_identity() AS int);";
+                    INSERT INTO [SIPOH].[dbo].[P_Ejecucion]
+                    ([NoEjecucion], [FechaEjecucion], [CveSolicitante], [DetalleSolicitante], [CveSolicitud], [OtroSolicita], [BeneficiarioNombre], [BeneficiarioApellidoPaterno], [BeneficiarioApellidoMaterno], [IdJuzgado], [Interno], [IdUser], [Tipo])
+                    VALUES
+                    (@NoEjecucion, @FechaHoraEjecucion, @CveSolicitante, @DetalleSolicitante, @CveSolicitud, @OtroSolicita, @BeneficiarioNombre, @BeneficiarioApellidoPaterno, @BeneficiarioApellidoMaterno, @IdJuzgado, @Interno, @IdUser, 'Ejecución');
+                    SELECT CAST(scope_identity() AS int);";
+
                 using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
                 {
                     cmd.Parameters.AddWithValue("@NoEjecucion", noEjecucion);
+                    cmd.Parameters.AddWithValue("@FechaHoraEjecucion", fechaHoraEjecucion);
                     cmd.Parameters.AddWithValue("@CveSolicitante", cveSolicitante);
                     cmd.Parameters.AddWithValue("@DetalleSolicitante", detalleSolicitante);
                     cmd.Parameters.AddWithValue("@CveSolicitud", cveSolicitud);
