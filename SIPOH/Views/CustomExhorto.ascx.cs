@@ -1387,9 +1387,6 @@ namespace SIPOH.Views
 
 
 
-
-
-
         //AQUI EMPIEZA EL INSERT EXHORTO
         protected void btnGuardarDatosJudiciales_Click(object sender, EventArgs e)
         {
@@ -1966,9 +1963,12 @@ namespace SIPOH.Views
         //AQUI ACABA EL INSERT EXHORTO
 
 
+
+
+
+
+
         //AQUI EMPIEZA EL INSERT DESPACHO
-
-
         protected void btnGuardarDatosJudiciales_Click2(object sender, EventArgs e)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
@@ -2032,7 +2032,6 @@ namespace SIPOH.Views
                             }
                         }
                     }
-
 
                     // Insertar datos en la tabla P_Asunto
                     int idAsunto = InsertarEnPAsunto2(conn, transaction);
@@ -2103,6 +2102,7 @@ namespace SIPOH.Views
             }
         }
 
+
         private int InsertarEnPAsunto2(SqlConnection conn, SqlTransaction transaction)
         {
             string Numero = Session["FolioNuevoInicial"] as string;
@@ -2156,18 +2156,14 @@ namespace SIPOH.Views
                 cmd.Parameters.AddWithValue("@MP", MP);
                 cmd.Parameters.AddWithValue("@Prioridad", nPrioridad);
                 cmd.Parameters.AddWithValue("@Fojas", nFojas);
-
-                ProcesarDatosDeInsercion3(fIngreso, Numero);
-
                 // Obtener el ID generado automáticamente
                 idAsunto = Convert.ToInt32(cmd.ExecuteScalar());
 
+                ProcesarDatosDeInsercion3(fIngreso, Numero);
+
                 return idAsunto;
-
             }
-
         }
-
 
         private void InsertarEnPPartesAsunto2(SqlConnection conn, SqlTransaction transaction, int idAsunto)
         {
@@ -2229,6 +2225,7 @@ namespace SIPOH.Views
                 }
             }
         }
+
 
         private void InsertarEnPExhortos2(SqlConnection conn, SqlTransaction transaction, int idAsunto)
         {
@@ -2297,12 +2294,12 @@ namespace SIPOH.Views
 
         private void InsertarEnPAsuntoDelito2(SqlConnection conn, SqlTransaction transaction, int idAsunto)
         {
-            foreach (GridViewRow row in gvDelitos.Rows)
+            foreach (GridViewRow row in gvDelitos2.Rows)
             {
                 if (row.RowType == DataControlRowType.DataRow)
                 {
                     // Encuentra el control Label dentro de la celda
-                    Label lblIdDelito = (Label)row.FindControl("lblIdDelito");
+                    Label lblIdDelito = (Label)row.FindControl("lblIdDelito2");
 
                     // Obtén el valor de texto del control Label y conviértelo a int
                     int idDelito = int.Parse(lblIdDelito.Text);
@@ -2361,6 +2358,7 @@ namespace SIPOH.Views
             }
         }
 
+
         private int ObtenerIdUsuarioDesdeSesion2()
         {
             int idUsuario = 0;
@@ -2394,7 +2392,6 @@ namespace SIPOH.Views
             // En caso de que la clave de sesión no esté presente o sea nula
             return "Nombre de juzgado no disponible"; // O un valor por defecto según tu lógica de negocio
         }
-
 
         // Variables Globales
         public static string GlobalNumero2;
@@ -2472,7 +2469,7 @@ namespace SIPOH.Views
             ticket.AppendLine($"Fecha: {GlobalFechaRecepcion2}");
 
             // Sección del total
-            //ticket.AppendLine(AlinearTexto2("EXHORTO", GlobalExhorto2.ToString(), anchoLinea));
+            //ticket.AppendLine(AlinearTexto("EXHORTO", GlobalExhorto.ToString(), anchoLinea));
 
             foreach (GridViewRow row in gvAnexos2.Rows)
             {
@@ -2486,14 +2483,12 @@ namespace SIPOH.Views
                     string descripcionEnMayusculas = descripcion.Text.ToUpper();
                     string cantidadEnMayusculas = cantidad.Text.ToUpper();
 
-                    ticket.AppendLine(AlinearTexto3(descripcionEnMayusculas, cantidadEnMayusculas, anchoLinea));
+                    ticket.AppendLine(AlinearTexto2(descripcionEnMayusculas, cantidadEnMayusculas, anchoLinea));
                     total += Convert.ToInt32(cantidad.Text);
 
                 }
             }
-
             ticket.AppendLine(AlinearTexto2("TOTAL", total.ToString(), anchoLinea));
-
             return ticket.ToString();
         }
 
@@ -2520,6 +2515,8 @@ namespace SIPOH.Views
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ImprimirScript", "imprimirTicket();", true);
         }
         // Termina desarrollo de sello
+
+
         private void LimpiarYRestablecerPanel2()
         {
             // Limpia y restablece los controles dentro de Panel2
@@ -2544,7 +2541,10 @@ namespace SIPOH.Views
             // Oculta Panel2
             Panel2.Visible = false;
         }
+
         //AQUI ACABA EL INSERT DESPACHO
+
+
 
 
 
@@ -3208,4 +3208,3 @@ namespace SIPOH.Views
 
     }
 }
-

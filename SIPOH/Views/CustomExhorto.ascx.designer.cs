@@ -546,13 +546,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.Button Button4;
 
         /// <summary>
-        /// Control Button9.
+        /// Control Button6.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button9;
+        protected global::System.Web.UI.WebControls.Button Button6;
 
         /// <summary>
         /// Control Panel3.
@@ -780,22 +780,22 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.TextBox espeSexo3;
 
         /// <summary>
-        /// Control Button8.
+        /// Control Button5.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button8;
+        protected global::System.Web.UI.WebControls.Button Button5;
 
         /// <summary>
-        /// Control Button10.
+        /// Control Button7.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button10;
+        protected global::System.Web.UI.WebControls.Button Button7;
 
         /// <summary>
         /// Control InsertExhorto.
