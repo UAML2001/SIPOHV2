@@ -1257,6 +1257,9 @@
           "es/Microsoft.AspNet.FriendlyUrls.resources.dll": {
             "locale": "es"
           },
+          "es/System.Web.Razor.resources.dll": {
+            "locale": "es"
+          },
           "es/System.Web.Mvc.resources.dll": {
             "locale": "es"
           },
@@ -1264,9 +1267,6 @@
             "locale": "es"
           },
           "es/System.Web.WebPages.Razor.resources.dll": {
-            "locale": "es"
-          },
-          "es/System.Web.Razor.resources.dll": {
             "locale": "es"
           },
           "es/System.Web.WebPages.Deployment.resources.dll": {
@@ -1300,6 +1300,43 @@
           }
         }
       },
+      "CrystalDecisions.CrystalReports.Engine/13.0.4000.0": {
+        "runtime": {
+          "CrystalDecisions.CrystalReports.Engine.dll": {
+            "assemblyVersion": "13.0.4000.0",
+            "fileVersion": "13.0.32.4286"
+          }
+        }
+      },
+      "CrystalDecisions.Shared/13.0.4000.0": {
+        "runtime": {
+          "CrystalDecisions.Shared.dll": {
+            "assemblyVersion": "13.0.4000.0",
+            "fileVersion": "13.0.32.4286"
+          }
+        }
+      },
+      "CrystalDecisions.ReportSource/13.0.4000.0": {
+        "runtime": {
+          "CrystalDecisions.ReportSource.dll": {
+            "assemblyVersion": "13.0.4000.0",
+            "fileVersion": "13.0.32.4286"
+          }
+        }
+      },
+      "System.Web.Razor/3.0.0.0": {
+        "runtime": {
+          "System.Web.Razor.dll": {
+            "assemblyVersion": "3.0.0.0",
+            "fileVersion": "3.0.61129.10"
+          }
+        },
+        "resources": {
+          "es/System.Web.Razor.resources.dll": {
+            "locale": "es"
+          }
+        }
+      },
       "System.Web.Mvc/5.2.9.0": {
         "runtime": {
           "System.Web.Mvc.dll": {
@@ -1310,6 +1347,22 @@
         "resources": {
           "es/System.Web.Mvc.resources.dll": {
             "locale": "es"
+          }
+        }
+      },
+      "CrystalDecisions.ReportAppServer.DataSetConversion/13.0.4000.0": {
+        "runtime": {
+          "CrystalDecisions.ReportAppServer.DataSetConversion.dll": {
+            "assemblyVersion": "13.0.4000.0",
+            "fileVersion": "13.0.32.4286"
+          }
+        }
+      },
+      "log4net/2.0.12.0": {
+        "runtime": {
+          "log4net.dll": {
+            "assemblyVersion": "2.0.12.0",
+            "fileVersion": "2.0.12.0"
           }
         }
       },
@@ -1335,19 +1388,6 @@
         },
         "resources": {
           "es/System.Web.WebPages.Razor.resources.dll": {
-            "locale": "es"
-          }
-        }
-      },
-      "System.Web.Razor/3.0.0.0": {
-        "runtime": {
-          "System.Web.Razor.dll": {
-            "assemblyVersion": "3.0.0.0",
-            "fileVersion": "3.0.61129.10"
-          }
-        },
-        "resources": {
-          "es/System.Web.Razor.resources.dll": {
             "locale": "es"
           }
         }
@@ -2102,7 +2142,37 @@
       "serviceable": false,
       "sha512": ""
     },
+    "CrystalDecisions.CrystalReports.Engine/13.0.4000.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CrystalDecisions.Shared/13.0.4000.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CrystalDecisions.ReportSource/13.0.4000.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Web.Razor/3.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
     "System.Web.Mvc/5.2.9.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CrystalDecisions.ReportAppServer.DataSetConversion/13.0.4000.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "log4net/2.0.12.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""
@@ -2113,11 +2183,6 @@
       "sha512": ""
     },
     "System.Web.WebPages.Razor/3.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "System.Web.Razor/3.0.0.0": {
       "type": "reference",
       "serviceable": false,
       "sha512": ""

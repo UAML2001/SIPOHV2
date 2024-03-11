@@ -124,6 +124,8 @@
     <Reference Include="System.Data.SqlClient, Version=4.6.1.5, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Data.SqlClient.4.8.5\lib\net461\System.Data.SqlClient.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -199,6 +201,280 @@
   <ItemGroup>
     <Content Include="Agenda.aspx" />
     <Content Include="Busqueda.aspx" />
+    <Content Include="Connected Services\Firma\SIPOH.Firma.AgregarPfxResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.ArregloCadenaVar.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.ArregloDigestionVar.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.BatchGetReferenceExtResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.BatchGetReferenceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.BatchPkcs1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.BatchReference.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.BatchState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.BatchTest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.CertificadoPropiedades.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.CertificadoPropiedadesExtendido.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.Estado.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.FirmaCadenaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.FirmaDigestionArchivoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.FirmaVar.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.GeneraFirmaMemoriaExtendidaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.GeneraFirmaMemoriaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.ObtienePdfSimplePersonalExtResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.ObtienePdfSimplePersonalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.ObtienePdfSimpleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.ObtieneSelloOriginalResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.OcspVar.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PdfEstado.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuDecodificaCertificadoExtendidoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuDecodificaCertificadoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuJarResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuObtienePdfExtResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuObtienePdfResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuObtienePdfSeguroResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuObtienePdfSeguroSinRubricaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuObtienePkcs7NsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuObtienePkcs7Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuOperFirmaCadena_CnResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuOperFirmaDigestionArchivo_CnResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuPkcs1EvidenciasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuPkcs1ExtendidoEvidenciasResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuPkcs1ExtendidoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.PwuPkcs1Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.RegistroTransferenciaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.RequestTsaResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.RespYucEstado.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.RespYucPdf.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.RespYucRegistro.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.RespYucSignCentral.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.SelloVar.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.TransCodigoActivacion.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.TransEstado.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.TransferenciaEstadoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.TransFirma.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.TransState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.TransVar.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.TsaProperties.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.ValidaOcspResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSCloseTokenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSCreatePdfEvidenceBCResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSCreatePdfEvidenceResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSCreatePdfEvidenceSecureBCResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSCreatePdfEvidenceSecureResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSCreatePdfEvidenceSecureSTExtResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSCreatePdfEvidenceSecureSTResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSCreatePdfResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSCreatePkcs7FromNsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSCreatePkcs7NOM151FromNodesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSDecodeCertificate.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSDecodeCertificateExtendedResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSGeneratePkcs7EvidencesFromPiecesPkcs7Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSGeneratePkcs7EvidencesFromSimplePkcs7Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSGetInformationFromNsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSGetInformationOcspFromNsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSGetInformationTspFromNsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSGetNom151Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSRegisterPairKeyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSRegisterPkcs12Response.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSResultCloseToken.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSResultRegisterPairKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSResultRegisterPkcs12.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSResultSignCentral.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSSignPkcs1CentralTokenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSSignPkcs7CentralTokenResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSStateInformationNs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSStateOcspInformationNs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSStateTspInformationNs.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSTransaction.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSTransformResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSTransState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSVerifyXmlResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSXmlState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\Firma\SIPOH.Firma.WSXmlVerifyState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\Firma\WebService.disco" />
+    <None Include="Connected Services\Firma\configuration91.svcinfo" />
+    <None Include="Connected Services\Firma\configuration.svcinfo" />
+    <None Include="Connected Services\Firma\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Consignaciones.aspx" />
     <Content Include="ConsignacionesHistorica.aspx" />
     <Content Include="Consulta.aspx" />
@@ -227,7 +503,11 @@
     <Content Include="Content\css\Permiso.css" />
     <Content Include="Content\css\sb-admin-2.css" />
     <Content Include="Content\css\sb-admin-2.min.css" />
+    <Content Include="Content\img\fondo.jpg" />
+    <Content Include="Content\img\law.png" />
+    <Content Include="Content\img\loading.gif" />
     <Content Include="Content\img\Login.jpeg" />
+    <Content Include="Content\img\LOGO-SUPERIOR.png" />
     <Content Include="Content\img\PoderJudicialHgo.png" />
     <Content Include="Content\img\PoderJudicialLargo.png" />
     <Content Include="Content\img\undraw_posting_photo.svg" />
@@ -1902,6 +2182,14 @@
     <Content Include="DigitalizarIniciales.aspx" />
     <Content Include="DigitalizarPosteriores.aspx" />
     <Content Include="Error.aspx" />
+    <Content Include="Externo\BandejaSeguimiento.aspx" />
+    <Content Include="Externo\FirmaDocumentos.aspx" />
+    <Content Include="Externo\InicialesDigitales.aspx" />
+    <Content Include="Externo\Inicio.aspx" />
+    <Content Include="Externo\LoginExterno.aspx" />
+    <Content Include="Externo\PosterioresDigitales.aspx" />
+    <Content Include="Externo\RegistroExterno.aspx" />
+    <Content Include="Externo\ServicioWeb.asmx" />
     <Content Include="Inicio.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Estadistica.aspx" />
@@ -2097,16 +2385,94 @@
     <Content Include="Reportes\InicialEjecucion.pdf" />
     <Content Include="Reportes\PosteriorControl.pdf" />
     <Content Include="Reportes\PosteriorEjecucion.pdf" />
+    <None Include="Connected Services\Firma\WebService.wsdl" />
+    <Content Include="Externo\MasterExterno.Master" />
+    <Content Include="Scripts\Firma\Controlador.ashx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\consignaciones\Consignaciones.js" />
     <Content Include="Scripts\consignaciones\RegistroIniciales.js" />
     <Content Include="Scripts\Ejecucion\formatoInput.js" />
     <Content Include="Scripts\Ejecucion\Inicial.js" />
     <Content Include="Scripts\Ejecucion\Tabs.js" />
+    <Content Include="Scripts\Firma\asn1\asn1-1.0.js" />
+    <Content Include="Scripts\Firma\asn1\asn1.js" />
+    <Content Include="Scripts\Firma\asn1\asn1hex-1.1.js" />
+    <Content Include="Scripts\Firma\asn1\base64.js" />
+    <Content Include="Scripts\Firma\Conexion.js" />
+    <Content Include="Scripts\Firma\cryptojs\crypto-1.1.js" />
+    <Content Include="Scripts\Firma\cryptojs\enc-base64.js" />
+    <Content Include="Scripts\Firma\cryptojs\pbkdf2.js" />
+    <Content Include="Scripts\Firma\cryptojs\tripledes.js" />
+    <Content Include="Scripts\Firma\FAccesoSistemasElectronicos.js" />
+    <Content Include="Scripts\Firma\FActivarExpedienteElectronico.js" />
+    <Content Include="Scripts\Firma\FDocumentos.js" />
+    <Content Include="Scripts\Firma\Firma.js" />
+    <Content Include="Scripts\Firma\FirmaLogin.js" />
+    <Content Include="Scripts\Firma\FirmaNotificacion.js" />
+    <Content Include="Scripts\Firma\forge\aes.js" />
+    <Content Include="Scripts\Firma\forge\aesCipherSuites.js" />
+    <Content Include="Scripts\Firma\forge\asn1.js" />
+    <Content Include="Scripts\Firma\forge\cipher.js" />
+    <Content Include="Scripts\Firma\forge\cipherModes.js" />
+    <Content Include="Scripts\Firma\forge\debug.js" />
+    <Content Include="Scripts\Firma\forge\des.js" />
+    <Content Include="Scripts\Firma\forge\forge.js" />
+    <Content Include="Scripts\Firma\forge\form.js" />
+    <Content Include="Scripts\Firma\forge\hmac.js" />
+    <Content Include="Scripts\Firma\forge\http.js" />
+    <Content Include="Scripts\Firma\forge\jsbn.js" />
+    <Content Include="Scripts\Firma\forge\kem.js" />
+    <Content Include="Scripts\Firma\forge\log.js" />
+    <Content Include="Scripts\Firma\forge\md.js" />
+    <Content Include="Scripts\Firma\forge\md5.js" />
+    <Content Include="Scripts\Firma\forge\mgf.js" />
+    <Content Include="Scripts\Firma\forge\mgf1.js" />
+    <Content Include="Scripts\Firma\forge\oids.js" />
+    <Content Include="Scripts\Firma\forge\pbe.js" />
+    <Content Include="Scripts\Firma\forge\pbkdf2.js" />
+    <Content Include="Scripts\Firma\forge\pem.js" />
+    <Content Include="Scripts\Firma\forge\pkcs1.js" />
+    <Content Include="Scripts\Firma\forge\pkcs12.js" />
+    <Content Include="Scripts\Firma\forge\pkcs7.js" />
+    <Content Include="Scripts\Firma\forge\pkcs7asn1.js" />
+    <Content Include="Scripts\Firma\forge\pki.js" />
+    <Content Include="Scripts\Firma\forge\prime.js" />
+    <Content Include="Scripts\Firma\forge\prime.worker.js" />
+    <Content Include="Scripts\Firma\forge\prng.js" />
+    <Content Include="Scripts\Firma\forge\pss.js" />
+    <Content Include="Scripts\Firma\forge\random.js" />
+    <Content Include="Scripts\Firma\forge\rc2.js" />
+    <Content Include="Scripts\Firma\forge\rsa.js" />
+    <Content Include="Scripts\Firma\forge\sha1.js" />
+    <Content Include="Scripts\Firma\forge\sha256.js" />
+    <Content Include="Scripts\Firma\forge\sha512.js" />
+    <Content Include="Scripts\Firma\forge\socket.js" />
+    <Content Include="Scripts\Firma\forge\ssh.js" />
+    <Content Include="Scripts\Firma\forge\task.js" />
+    <Content Include="Scripts\Firma\forge\tls.js" />
+    <Content Include="Scripts\Firma\forge\tlssocket.js" />
+    <Content Include="Scripts\Firma\forge\util.js" />
+    <Content Include="Scripts\Firma\forge\x509.js" />
+    <Content Include="Scripts\Firma\forge\xhr.js" />
+    <Content Include="Scripts\Firma\jsbn\jsbn.js" />
+    <Content Include="Scripts\Firma\jsbn\jsbn2.js" />
+    <Content Include="Scripts\Firma\jsrsasign\asn1-1.0.js" />
+    <Content Include="Scripts\Firma\jsrsasign\base64.js" />
+    <Content Include="Scripts\Firma\jsrsasign\crypto-1.1.js" />
+    <Content Include="Scripts\Firma\jsrsasign\rsasign-1.2.js" />
+    <Content Include="Scripts\Firma\jsrsasign\x509-1.1.js" />
+    <Content Include="Scripts\Firma\rsa\rsa.js" />
+    <Content Include="Scripts\Firma\rsa\rsa2.js" />
+    <Content Include="Scripts\Firma\rsa\rsasign-1.2.js" />
+    <Content Include="Scripts\Firma\rsa\SecureRandom.js" />
+    <Content Include="Scripts\Firma\sjcl\sha1.js" />
+    <Content Include="Scripts\Firma\sjcl\sjcl.js" />
+    <Content Include="Scripts\Firma\yahoo\yahoo-min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\Mensajes.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Permisos\Permisos.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
@@ -2187,6 +2553,11 @@
     <Compile Include="Busqueda.aspx.designer.cs">
       <DependentUpon>Busqueda.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\Firma\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Consignacion.Master.cs">
       <DependentUpon>Consignacion.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2263,6 +2634,67 @@
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Externo\BandejaSeguimiento.aspx.cs">
+      <DependentUpon>BandejaSeguimiento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Externo\BandejaSeguimiento.aspx.designer.cs">
+      <DependentUpon>BandejaSeguimiento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Externo\FirmaDocumentos.aspx.cs">
+      <DependentUpon>FirmaDocumentos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Externo\FirmaDocumentos.aspx.designer.cs">
+      <DependentUpon>FirmaDocumentos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Externo\InicialesDigitales.aspx.cs">
+      <DependentUpon>InicialesDigitales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Externo\InicialesDigitales.aspx.designer.cs">
+      <DependentUpon>InicialesDigitales.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Externo\Inicio.aspx.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Externo\Inicio.aspx.designer.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Externo\LoginExterno.aspx.cs">
+      <DependentUpon>LoginExterno.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Externo\LoginExterno.aspx.designer.cs">
+      <DependentUpon>LoginExterno.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Externo\MasterExterno.Master.cs">
+      <DependentUpon>MasterExterno.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Externo\MasterExterno.Master.designer.cs">
+      <DependentUpon>MasterExterno.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Externo\PosterioresDigitales.aspx.cs">
+      <DependentUpon>PosterioresDigitales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Externo\PosterioresDigitales.aspx.designer.cs">
+      <DependentUpon>PosterioresDigitales.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Externo\RegistroExterno.aspx.cs">
+      <DependentUpon>RegistroExterno.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Externo\RegistroExterno.aspx.designer.cs">
+      <DependentUpon>RegistroExterno.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Externo\ServicioWeb.asmx.cs">
+      <DependentUpon>ServicioWeb.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Firma\Controller.cs" />
     <Compile Include="Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2302,6 +2734,22 @@
     <Compile Include="Iniciales.aspx.designer.cs">
       <DependentUpon>Iniciales.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ArchivosFTP.cs" />
+    <Compile Include="Models\BandejaBuzonSolicitud.cs" />
+    <Compile Include="Models\BdConverter.cs" />
+    <Compile Include="Models\BusquedaPromocion.cs" />
+    <Compile Include="Models\BuzonDocDigitales.cs" />
+    <Compile Include="Models\BuzonSolicitud.cs" />
+    <Compile Include="Models\DatosFirmaUsuario.cs" />
+    <Compile Include="Models\DocumentoTransfer.cs" />
+    <Compile Include="Models\EnviarEmail.cs" />
+    <Compile Include="Models\Generales.cs" />
+    <Compile Include="Models\InfoDocumentosFirma.cs" />
+    <Compile Include="Models\LineamientosHash.cs" />
+    <Compile Include="Models\LineamientosTransfer.cs" />
+    <Compile Include="Models\MensajeAlerta.cs" />
+    <Compile Include="Models\NotificacionCorreo.cs" />
+    <Compile Include="Models\UsuarioExterno.cs" />
     <Compile Include="Permisos.aspx.cs">
       <DependentUpon>Permisos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2589,7 +3037,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -2622,6 +3069,12 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>PosteriorEjecucion.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\Firma\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

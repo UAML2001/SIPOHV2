@@ -19,5 +19,21 @@ namespace SIPOH.Models
         {
             return "uriel2001"; //"";
         }
+
+
+        internal static string ObtenerRutaFTPServer()
+        {
+            return "ftp://nas.pjhidalgo.gob.mx:22/Solicitudes/";
+        }
+        internal static string ObtenerUsuarioFTPServer()
+        {
+            return "FTP_Sipoh24"; //"";
+        }
+        internal static string ObtenerClaveFTPServer()
+        {
+            return "Acu24"; //"";
+        }
+
+
     }
 }

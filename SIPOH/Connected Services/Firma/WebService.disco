@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<discovery xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.xmlsoap.org/disco/">
+  <contractRef ref="http://192.168.73.212:8080/certifiel_bus/wscommercefiel/WebService.asmx?wsdl" docRef="http://192.168.73.212:8080/certifiel_bus/wscommercefiel/WebService.asmx" xmlns="http://schemas.xmlsoap.org/disco/scl/" />
+  <soap address="http://192.168.73.212:8080/certifiel_bus/wscommercefiel/WebService.asmx" xmlns:q1="www.XMLWebServiceSoapHeaderAuth.net" binding="q1:WebServiceSoap" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+  <soap address="http://192.168.73.212:8080/certifiel_bus/wscommercefiel/WebService.asmx" xmlns:q2="www.XMLWebServiceSoapHeaderAuth.net" binding="q2:WebServiceSoap12" xmlns="http://schemas.xmlsoap.org/disco/soap/" />
+</discovery>

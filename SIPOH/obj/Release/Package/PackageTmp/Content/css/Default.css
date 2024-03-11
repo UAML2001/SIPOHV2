@@ -36,11 +36,11 @@ body {
     background: linear-gradient(92deg, rgba(105,125,100,1) 50%, rgba(89,104,76,1) 74%);*/
     /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#697d64",endColorstr="#59684c",GradientType=1);*/
 
-    background-image: url('https://criteriohidalgo.com/wp-content/uploads/2023/06/CH10_F2_ESPECIAL-1-scaled-e1686810378160-780x470.jpg');
+    background-image: url('../img/fondo.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     backdrop-filter: blur(10px);
-    overflow-x:hidden;
+    overflow-x: hidden;
 }
 
 

@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\inetpub\wwwroot\SIPOH</_PublishTargetUrl>
-    <History>True|2024-02-07T16:42:07.8861754Z;False|2024-02-07T10:41:06.3332547-06:00;</History>
+    <History>False|2024-03-11T17:48:43.0024117Z;False|2024-03-11T11:45:04.5898535-06:00;False|2024-03-11T11:44:44.8376120-06:00;False|2024-03-11T11:43:37.4838491-06:00;False|2024-03-11T11:42:17.0853069-06:00;True|2024-02-07T10:42:07.8861754-06:00;False|2024-02-07T10:41:06.3332547-06:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -25,16 +25,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/31/2024 14:01:36</publishTime>
     </File>
     <File Include="bin/CrystalDecisions.CrystalReports.Engine.dll">
-      <publishTime>01/02/2024 15:43:12</publishTime>
+      <publishTime>05/16/2022 21:03:04</publishTime>
     </File>
     <File Include="bin/CrystalDecisions.ReportAppServer.DataSetConversion.dll">
-      <publishTime>01/02/2024 15:43:13</publishTime>
+      <publishTime>05/16/2022 21:03:04</publishTime>
     </File>
     <File Include="bin/CrystalDecisions.ReportSource.dll">
-      <publishTime>01/31/2024 14:01:35</publishTime>
+      <publishTime>05/16/2022 21:03:04</publishTime>
     </File>
     <File Include="bin/CrystalDecisions.Shared.dll">
-      <publishTime>01/02/2024 15:43:13</publishTime>
+      <publishTime>05/16/2022 21:03:04</publishTime>
+    </File>
+    <File Include="bin/CrystalDecisions.Web.dll">
+      <publishTime>05/16/2022 21:03:04</publishTime>
     </File>
     <File Include="bin/cs/CrystalDecisions.CrystalReports.Engine.resources.dll">
       <publishTime>01/02/2024 15:43:12</publishTime>
@@ -127,7 +130,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/02/2024 15:43:13</publishTime>
     </File>
     <File Include="bin/log4net.dll">
-      <publishTime>01/02/2024 15:43:13</publishTime>
+      <publishTime>02/01/2024 15:43:13</publishTime>
     </File>
     <File Include="bin/Microsoft.AspNet.FriendlyUrls.dll">
       <publishTime>01/31/2024 14:01:36</publishTime>
@@ -364,10 +367,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/02/2024 15:43:13</publishTime>
     </File>
     <File Include="bin/SIPOH.dll">
-      <publishTime>02/07/2024 10:48:37</publishTime>
+      <publishTime>03/11/2024 11:49:24</publishTime>
     </File>
     <File Include="bin/SIPOH.pdb">
-      <publishTime>02/07/2024 10:48:37</publishTime>
+      <publishTime>03/11/2024 11:49:24</publishTime>
     </File>
     <File Include="bin/sk/CrystalDecisions.CrystalReports.Engine.resources.dll">
       <publishTime>01/02/2024 15:43:12</publishTime>
@@ -436,16 +439,283 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/31/2024 14:01:32</publishTime>
     </File>
     <File Include="Busqueda.aspx">
-      <publishTime>01/31/2024 14:01:32</publishTime>
+      <publishTime>02/22/2024 16:58:20</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.AgregarPfxResponse.datasource">
+      <publishTime>03/11/2024 10:40:15</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.ArregloCadenaVar.datasource">
+      <publishTime>03/11/2024 10:40:13</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.ArregloDigestionVar.datasource">
+      <publishTime>03/11/2024 10:40:13</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.BatchGetReferenceExtResponse.datasource">
+      <publishTime>03/11/2024 10:40:24</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.BatchGetReferenceResponse.datasource">
+      <publishTime>03/11/2024 10:40:24</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.BatchPkcs1.datasource">
+      <publishTime>03/11/2024 10:40:09</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.BatchReference.datasource">
+      <publishTime>03/11/2024 10:40:08</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.BatchState.datasource">
+      <publishTime>03/11/2024 10:40:09</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.BatchTest.datasource">
+      <publishTime>03/11/2024 10:40:09</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.CertificadoPropiedades.datasource">
+      <publishTime>03/11/2024 10:40:12</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.CertificadoPropiedadesExtendido.datasource">
+      <publishTime>03/11/2024 10:40:10</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.Estado.datasource">
+      <publishTime>03/11/2024 10:40:10</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.FirmaCadenaResponse.datasource">
+      <publishTime>03/11/2024 10:40:19</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.FirmaDigestionArchivoResponse.datasource">
+      <publishTime>03/11/2024 10:40:19</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.FirmaVar.datasource">
+      <publishTime>03/11/2024 10:40:14</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.GeneraFirmaMemoriaExtendidaResponse.datasource">
+      <publishTime>03/11/2024 10:40:16</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.GeneraFirmaMemoriaResponse.datasource">
+      <publishTime>03/11/2024 10:40:15</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.ObtienePdfSimplePersonalExtResponse.datasource">
+      <publishTime>03/11/2024 10:40:18</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.ObtienePdfSimplePersonalResponse.datasource">
+      <publishTime>03/11/2024 10:40:17</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.ObtienePdfSimpleResponse.datasource">
+      <publishTime>03/11/2024 10:40:17</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.ObtieneSelloOriginalResponse.datasource">
+      <publishTime>03/11/2024 10:40:15</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.OcspVar.datasource">
+      <publishTime>03/11/2024 10:40:14</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PdfEstado.datasource">
+      <publishTime>03/11/2024 10:40:09</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuDecodificaCertificadoExtendidoResponse.datasource">
+      <publishTime>03/11/2024 10:40:20</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuDecodificaCertificadoResponse.datasource">
+      <publishTime>03/11/2024 10:40:20</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuJarResponse.datasource">
+      <publishTime>03/11/2024 10:40:17</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuObtienePdfExtResponse.datasource">
+      <publishTime>03/11/2024 10:40:23</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuObtienePdfResponse.datasource">
+      <publishTime>03/11/2024 10:40:23</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuObtienePdfSeguroResponse.datasource">
+      <publishTime>03/11/2024 10:40:23</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuObtienePdfSeguroSinRubricaResponse.datasource">
+      <publishTime>03/11/2024 10:40:24</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuObtienePkcs7NsResponse.datasource">
+      <publishTime>03/11/2024 10:40:22</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuObtienePkcs7Response.datasource">
+      <publishTime>03/11/2024 10:40:22</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuOperFirmaCadena_CnResponse.datasource">
+      <publishTime>03/11/2024 10:40:16</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuOperFirmaDigestionArchivo_CnResponse.datasource">
+      <publishTime>03/11/2024 10:40:16</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuPkcs1EvidenciasResponse.datasource">
+      <publishTime>03/11/2024 10:40:21</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuPkcs1ExtendidoEvidenciasResponse.datasource">
+      <publishTime>03/11/2024 10:40:21</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuPkcs1ExtendidoResponse.datasource">
+      <publishTime>03/11/2024 10:40:21</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.PwuPkcs1Response.datasource">
+      <publishTime>03/11/2024 10:40:20</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.RegistroTransferenciaResponse.datasource">
+      <publishTime>03/11/2024 10:40:18</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.RequestTsaResponse.datasource">
+      <publishTime>03/11/2024 10:40:20</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.RespYucEstado.datasource">
+      <publishTime>03/11/2024 10:40:07</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.RespYucPdf.datasource">
+      <publishTime>03/11/2024 10:40:08</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.RespYucRegistro.datasource">
+      <publishTime>03/11/2024 10:40:08</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.RespYucSignCentral.datasource">
+      <publishTime>03/11/2024 10:40:08</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.SelloVar.datasource">
+      <publishTime>03/11/2024 10:40:14</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.TransCodigoActivacion.datasource">
+      <publishTime>03/11/2024 10:40:12</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.TransEstado.datasource">
+      <publishTime>03/11/2024 10:40:12</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.TransferenciaEstadoResponse.datasource">
+      <publishTime>03/11/2024 10:40:19</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.TransFirma.datasource">
+      <publishTime>03/11/2024 10:40:12</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.TransState.datasource">
+      <publishTime>03/11/2024 10:40:13</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.TransVar.datasource">
+      <publishTime>03/11/2024 10:40:14</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.TsaProperties.datasource">
+      <publishTime>03/11/2024 10:40:10</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.ValidaOcspResponse.datasource">
+      <publishTime>03/11/2024 10:40:15</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSCloseTokenResponse.datasource">
+      <publishTime>03/11/2024 10:40:30</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSCreatePdfEvidenceBCResponse.datasource">
+      <publishTime>03/11/2024 10:40:27</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSCreatePdfEvidenceResponse.datasource">
+      <publishTime>03/11/2024 10:40:27</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSCreatePdfEvidenceSecureBCResponse.datasource">
+      <publishTime>03/11/2024 10:40:28</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSCreatePdfEvidenceSecureResponse.datasource">
+      <publishTime>03/11/2024 10:40:27</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSCreatePdfEvidenceSecureSTExtResponse.datasource">
+      <publishTime>03/11/2024 10:40:28</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSCreatePdfEvidenceSecureSTResponse.datasource">
+      <publishTime>03/11/2024 10:40:28</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSCreatePdfResponse.datasource">
+      <publishTime>03/11/2024 10:40:27</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSCreatePkcs7FromNsResponse.datasource">
+      <publishTime>03/11/2024 10:40:26</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSCreatePkcs7NOM151FromNodesResponse.datasource">
+      <publishTime>03/11/2024 10:40:25</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSDecodeCertificate.datasource">
+      <publishTime>03/11/2024 10:40:07</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSDecodeCertificateExtendedResponse.datasource">
+      <publishTime>03/11/2024 10:40:25</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSGeneratePkcs7EvidencesFromPiecesPkcs7Response.datasource">
+      <publishTime>03/11/2024 10:40:29</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSGeneratePkcs7EvidencesFromSimplePkcs7Response.datasource">
+      <publishTime>03/11/2024 10:40:29</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSGetInformationFromNsResponse.datasource">
+      <publishTime>03/11/2024 10:40:25</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSGetInformationOcspFromNsResponse.datasource">
+      <publishTime>03/11/2024 10:40:26</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSGetInformationTspFromNsResponse.datasource">
+      <publishTime>03/11/2024 10:40:26</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSGetNom151Response.datasource">
+      <publishTime>03/11/2024 10:40:25</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSRegisterPairKeyResponse.datasource">
+      <publishTime>03/11/2024 10:40:30</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSRegisterPkcs12Response.datasource">
+      <publishTime>03/11/2024 10:40:30</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSResultCloseToken.datasource">
+      <publishTime>03/11/2024 10:40:03</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSResultRegisterPairKey.datasource">
+      <publishTime>03/11/2024 10:40:04</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSResultRegisterPkcs12.datasource">
+      <publishTime>03/11/2024 10:40:04</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSResultSignCentral.datasource">
+      <publishTime>03/11/2024 10:40:04</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSSignPkcs1CentralTokenResponse.datasource">
+      <publishTime>03/11/2024 10:40:29</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSSignPkcs7CentralTokenResponse.datasource">
+      <publishTime>03/11/2024 10:40:30</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSState.datasource">
+      <publishTime>03/11/2024 10:40:04</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSStateInformationNs.datasource">
+      <publishTime>03/11/2024 10:40:06</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSStateOcspInformationNs.datasource">
+      <publishTime>03/11/2024 10:40:06</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSStateTspInformationNs.datasource">
+      <publishTime>03/11/2024 10:40:05</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSTransaction.datasource">
+      <publishTime>03/11/2024 10:40:07</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSTransformResponse.datasource">
+      <publishTime>03/11/2024 10:40:31</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSTransState.datasource">
+      <publishTime>03/11/2024 10:40:05</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSVerifyXmlResponse.datasource">
+      <publishTime>03/11/2024 10:40:31</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSXmlState.datasource">
+      <publishTime>03/11/2024 10:40:03</publishTime>
+    </File>
+    <File Include="Connected Services/Firma/SIPOH.Firma.WSXmlVerifyState.datasource">
+      <publishTime>03/11/2024 10:40:03</publishTime>
     </File>
     <File Include="Consignacion.Master">
-      <publishTime>01/31/2024 14:01:32</publishTime>
+      <publishTime>03/11/2024 10:35:06</publishTime>
     </File>
     <File Include="Consignaciones.aspx">
-      <publishTime>01/31/2024 14:01:32</publishTime>
+      <publishTime>03/07/2024 09:10:05</publishTime>
     </File>
     <File Include="ConsignacionesHistorica.aspx">
-      <publishTime>01/31/2024 14:01:32</publishTime>
+      <publishTime>03/07/2024 16:26:27</publishTime>
     </File>
     <File Include="Consulta.aspx">
       <publishTime>01/31/2024 14:01:32</publishTime>
@@ -556,7 +826,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/31/2024 14:01:32</publishTime>
     </File>
     <File Include="Content/css/Default.css">
-      <publishTime>01/31/2024 14:01:32</publishTime>
+      <publishTime>03/11/2024 11:12:45</publishTime>
     </File>
     <File Include="Content/css/Iniciales.css">
       <publishTime>01/31/2024 14:01:32</publishTime>
@@ -573,8 +843,20 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Content/css/sb-admin-2.min.css">
       <publishTime>01/31/2024 14:01:32</publishTime>
     </File>
+    <File Include="Content/img/fondo.jpg">
+      <publishTime>03/11/2024 10:56:05</publishTime>
+    </File>
+    <File Include="Content/img/law.png">
+      <publishTime>03/11/2024 10:56:05</publishTime>
+    </File>
+    <File Include="Content/img/loading.gif">
+      <publishTime>03/11/2024 10:56:05</publishTime>
+    </File>
     <File Include="Content/img/Login.jpeg">
       <publishTime>01/31/2024 14:01:32</publishTime>
+    </File>
+    <File Include="Content/img/LOGO-SUPERIOR.png">
+      <publishTime>03/11/2024 10:56:05</publishTime>
     </File>
     <File Include="Content/img/PoderJudicialHgo.png">
       <publishTime>01/31/2024 14:01:32</publishTime>
@@ -6039,11 +6321,44 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Default.aspx">
       <publishTime>01/31/2024 14:01:35</publishTime>
     </File>
+    <File Include="DigitalizarIniciales.aspx">
+      <publishTime>03/11/2024 10:35:06</publishTime>
+    </File>
+    <File Include="DigitalizarPosteriores.aspx">
+      <publishTime>03/11/2024 10:35:06</publishTime>
+    </File>
     <File Include="Error.aspx">
       <publishTime>01/31/2024 14:01:35</publishTime>
     </File>
     <File Include="Estadistica.aspx">
       <publishTime>01/31/2024 14:01:35</publishTime>
+    </File>
+    <File Include="Externo/BandejaSeguimiento.aspx">
+      <publishTime>03/11/2024 10:47:31</publishTime>
+    </File>
+    <File Include="Externo/FirmaDocumentos.aspx">
+      <publishTime>03/11/2024 10:47:31</publishTime>
+    </File>
+    <File Include="Externo/InicialesDigitales.aspx">
+      <publishTime>03/11/2024 10:47:31</publishTime>
+    </File>
+    <File Include="Externo/Inicio.aspx">
+      <publishTime>03/11/2024 10:47:31</publishTime>
+    </File>
+    <File Include="Externo/LoginExterno.aspx">
+      <publishTime>03/11/2024 10:47:31</publishTime>
+    </File>
+    <File Include="Externo/MasterExterno.Master">
+      <publishTime>03/11/2024 10:47:31</publishTime>
+    </File>
+    <File Include="Externo/PosterioresDigitales.aspx">
+      <publishTime>03/11/2024 10:47:31</publishTime>
+    </File>
+    <File Include="Externo/RegistroExterno.aspx">
+      <publishTime>03/11/2024 11:06:14</publishTime>
+    </File>
+    <File Include="Externo/ServicioWeb.asmx">
+      <publishTime>03/11/2024 10:47:31</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>01/31/2024 14:01:36</publishTime>
@@ -6052,43 +6367,46 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/31/2024 14:01:35</publishTime>
     </File>
     <File Include="HistoricosCtrl.aspx">
-      <publishTime>01/31/2024 14:01:35</publishTime>
+      <publishTime>03/07/2024 09:10:05</publishTime>
     </File>
     <File Include="Iniciales.aspx">
-      <publishTime>01/31/2024 14:01:35</publishTime>
+      <publishTime>02/22/2024 16:58:20</publishTime>
     </File>
     <File Include="Inicio.aspx">
-      <publishTime>01/31/2024 14:01:35</publishTime>
+      <publishTime>02/22/2024 16:57:14</publishTime>
     </File>
     <File Include="Permisos.aspx">
       <publishTime>01/31/2024 14:01:35</publishTime>
     </File>
+    <File Include="PortadasDigitalizacion.aspx">
+      <publishTime>03/11/2024 10:35:06</publishTime>
+    </File>
     <File Include="Promociones.aspx">
-      <publishTime>02/07/2024 10:26:45</publishTime>
+      <publishTime>03/07/2024 15:47:19</publishTime>
     </File>
     <File Include="PromocionesCtrl.aspx">
-      <publishTime>01/31/2024 14:01:35</publishTime>
+      <publishTime>03/07/2024 09:10:05</publishTime>
     </File>
     <File Include="Reportes/InicialControl.pdf">
-      <publishTime>01/02/2024 15:43:12</publishTime>
+      <publishTime>03/11/2024 10:35:06</publishTime>
     </File>
     <File Include="Reportes/InicialControl.rpt">
       <publishTime>01/31/2024 17:05:19</publishTime>
     </File>
     <File Include="Reportes/InicialEjecucion.pdf">
-      <publishTime>01/02/2024 15:43:12</publishTime>
+      <publishTime>03/11/2024 10:35:06</publishTime>
     </File>
     <File Include="Reportes/InicialEjecucion.rpt">
       <publishTime>01/31/2024 17:05:19</publishTime>
     </File>
     <File Include="Reportes/PosteriorControl.pdf">
-      <publishTime>01/31/2024 17:05:19</publishTime>
+      <publishTime>03/11/2024 10:35:06</publishTime>
     </File>
     <File Include="Reportes/PosteriorControl.rpt">
       <publishTime>01/31/2024 17:05:19</publishTime>
     </File>
     <File Include="Reportes/PosteriorEjecucion.pdf">
-      <publishTime>01/31/2024 17:05:19</publishTime>
+      <publishTime>03/11/2024 10:35:06</publishTime>
     </File>
     <File Include="Reportes/PosteriorEjecucion.rpt">
       <publishTime>01/31/2024 17:05:19</publishTime>
@@ -6142,13 +6460,238 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/31/2024 14:01:35</publishTime>
     </File>
     <File Include="Scripts/Ejecucion/formatoInput.js">
-      <publishTime>01/31/2024 14:01:35</publishTime>
+      <publishTime>03/07/2024 09:10:05</publishTime>
     </File>
     <File Include="Scripts/Ejecucion/Inicial.js">
       <publishTime>01/31/2024 14:01:35</publishTime>
     </File>
     <File Include="Scripts/Ejecucion/Tabs.js">
       <publishTime>01/31/2024 14:01:35</publishTime>
+    </File>
+    <File Include="Scripts/Firma/asn1/asn1-1.0.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/asn1/asn1.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/asn1/asn1hex-1.1.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/asn1/base64.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/Conexion.js">
+      <publishTime>03/11/2024 11:41:37</publishTime>
+    </File>
+    <File Include="Scripts/Firma/Controlador.ashx">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/cryptojs/crypto-1.1.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/cryptojs/enc-base64.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/cryptojs/pbkdf2.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/cryptojs/tripledes.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/FAccesoSistemasElectronicos.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/FActivarExpedienteElectronico.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/FDocumentos.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/Firma.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/FirmaLogin.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/FirmaNotificacion.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/aes.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/aesCipherSuites.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/asn1.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/cipher.js">
+      <publishTime>03/11/2024 10:53:24</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/cipherModes.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/debug.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/des.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/forge.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/form.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/hmac.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/http.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/jsbn.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/kem.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/log.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/md.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/md5.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/mgf.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/mgf1.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/oids.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/pbe.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/pbkdf2.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/pem.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/pkcs1.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/pkcs12.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/pkcs7.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/pkcs7asn1.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/pki.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/prime.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/prime.worker.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/prng.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/pss.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/random.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/rc2.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/rsa.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/sha1.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/sha256.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/sha512.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/socket.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/ssh.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/task.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/tls.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/tlssocket.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/util.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/x509.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/forge/xhr.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/jsbn/jsbn.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/jsbn/jsbn2.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/jsrsasign/asn1-1.0.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/jsrsasign/base64.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/jsrsasign/crypto-1.1.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/jsrsasign/rsasign-1.2.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/jsrsasign/x509-1.1.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/rsa/rsa.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/rsa/rsa2.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/rsa/rsasign-1.2.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/rsa/SecureRandom.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/sjcl/sha1.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/sjcl/sjcl.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
+    </File>
+    <File Include="Scripts/Firma/yahoo/yahoo-min.js">
+      <publishTime>03/11/2024 10:53:25</publishTime>
     </File>
     <File Include="Scripts/jquery-3.4.1.js">
       <publishTime>01/31/2024 14:01:35</publishTime>
@@ -6167,6 +6710,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     </File>
     <File Include="Scripts/jquery-3.4.1.slim.min.map">
       <publishTime>01/31/2024 14:01:35</publishTime>
+    </File>
+    <File Include="Scripts/Mensajes.js">
+      <publishTime>03/11/2024 10:54:05</publishTime>
     </File>
     <File Include="Scripts/modernizr-2.8.3.js">
       <publishTime>01/31/2024 14:01:35</publishTime>
@@ -6262,16 +6808,22 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/31/2024 14:01:35</publishTime>
     </File>
     <File Include="Views/CustomExhorto.ascx">
-      <publishTime>01/02/2024 15:43:12</publishTime>
+      <publishTime>03/11/2024 10:35:06</publishTime>
+    </File>
+    <File Include="Views/CustomHistoricosCupreCausa.ascx">
+      <publishTime>03/07/2024 09:10:05</publishTime>
+    </File>
+    <File Include="Views/CustomHistoricosJuicioOral.ascx">
+      <publishTime>03/07/2024 09:10:05</publishTime>
     </File>
     <File Include="Views/CustomJuicio.ascx">
-      <publishTime>01/31/2024 14:01:35</publishTime>
+      <publishTime>03/07/2024 09:10:05</publishTime>
     </File>
     <File Include="Views/CustomPromocion.ascx">
-      <publishTime>01/31/2024 14:01:35</publishTime>
+      <publishTime>03/07/2024 09:10:05</publishTime>
     </File>
     <File Include="Views/CustomRegistroIniciales.ascx">
-      <publishTime>01/31/2024 14:01:35</publishTime>
+      <publishTime>03/07/2024 09:10:05</publishTime>
     </File>
     <File Include="Views/CustomRequisitoria.ascx">
       <publishTime>01/31/2024 14:01:35</publishTime>
@@ -6283,28 +6835,28 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/31/2024 14:01:35</publishTime>
     </File>
     <File Include="Views/InicialAcusatorio.ascx">
-      <publishTime>01/31/2024 14:01:35</publishTime>
+      <publishTime>03/04/2024 16:44:29</publishTime>
     </File>
     <File Include="Views/InicialBusDetSolicitante.ascx">
-      <publishTime>02/02/2024 17:33:09</publishTime>
+      <publishTime>02/08/2024 16:18:21</publishTime>
     </File>
     <File Include="Views/InicialBusNoCausa.ascx">
-      <publishTime>02/02/2024 17:38:32</publishTime>
+      <publishTime>02/08/2024 10:59:04</publishTime>
     </File>
     <File Include="Views/InicialBusNoNuc.ascx">
-      <publishTime>02/02/2024 17:24:32</publishTime>
+      <publishTime>02/08/2024 11:00:28</publishTime>
     </File>
     <File Include="Views/InicialBusPCausa.ascx">
-      <publishTime>02/02/2024 13:18:42</publishTime>
+      <publishTime>02/08/2024 16:09:21</publishTime>
     </File>
     <File Include="Views/InicialBusSenBen.ascx">
-      <publishTime>02/02/2024 17:37:37</publishTime>
+      <publishTime>02/08/2024 16:12:10</publishTime>
     </File>
     <File Include="Views/InicialBusSolicitante.ascx">
-      <publishTime>02/02/2024 17:22:55</publishTime>
+      <publishTime>02/08/2024 11:01:44</publishTime>
     </File>
     <File Include="Views/InicialCHCausa.ascx">
-      <publishTime>01/31/2024 14:01:35</publishTime>
+      <publishTime>03/05/2024 16:30:28</publishTime>
     </File>
     <File Include="Views/InicialCHSAcusatorio.ascx">
       <publishTime>01/31/2024 14:01:35</publishTime>
@@ -6312,14 +6864,17 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="Views/InicialCHSTradicional.ascx">
       <publishTime>01/31/2024 14:01:35</publishTime>
     </File>
+    <File Include="Views/InicialConsignacionesHistoricas.ascx">
+      <publishTime>03/07/2024 16:33:45</publishTime>
+    </File>
     <File Include="Views/InicialTradicional.ascx">
-      <publishTime>01/31/2024 14:01:35</publishTime>
+      <publishTime>03/04/2024 17:00:21</publishTime>
     </File>
     <File Include="Views/ReportesControl.ascx">
-      <publishTime>01/31/2024 17:05:20</publishTime>
+      <publishTime>03/11/2024 10:35:06</publishTime>
     </File>
     <File Include="Views/ReportesEjecucion.ascx">
-      <publishTime>01/31/2024 17:05:20</publishTime>
+      <publishTime>03/11/2024 10:35:06</publishTime>
     </File>
     <File Include="Views/SolicitudCD.ascx">
       <publishTime>01/31/2024 14:01:35</publishTime>
@@ -6331,7 +6886,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>01/31/2024 14:01:35</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>02/07/2024 10:40:59</publishTime>
+      <publishTime>03/11/2024 11:49:28</publishTime>
     </File>
   </ItemGroup>
 </Project>
