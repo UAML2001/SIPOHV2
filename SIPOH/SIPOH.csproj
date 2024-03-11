@@ -1899,6 +1899,8 @@
     <Content Include="Content\vendor\jquery\jquery.min.js" />
     <Content Include="Content\vendor\jquery\jquery.slim.js" />
     <Content Include="Content\vendor\jquery\jquery.slim.min.js" />
+    <Content Include="DigitalizarIniciales.aspx" />
+    <Content Include="DigitalizarPosteriores.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="Inicio.aspx" />
     <Content Include="Default.aspx" />
@@ -1908,6 +1910,7 @@
     <Content Include="HistoricosCtrl.aspx" />
     <Content Include="Iniciales.aspx" />
     <Content Include="Permisos.aspx" />
+    <Content Include="PortadasDigitalizacion.aspx" />
     <Content Include="Promociones.aspx" />
     <Content Include="PromocionesCtrl.aspx" />
     <Content Include="ReportesCtrl.aspx" />
@@ -2090,18 +2093,10 @@
     <Content Include="Content\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Content\vendor\jquery\jquery.min.map" />
     <Content Include="Content\vendor\jquery\jquery.slim.min.map" />
-    <Content Include="Reportes\InicialEjecucion.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reportes\InicialControl.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reportes\PosteriorControl.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reportes\PosteriorEjecucion.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Reportes\InicialControl.pdf" />
+    <Content Include="Reportes\InicialEjecucion.pdf" />
+    <Content Include="Reportes\PosteriorControl.pdf" />
+    <Content Include="Reportes\PosteriorEjecucion.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\consignaciones\Consignaciones.js" />
     <Content Include="Scripts\consignaciones\RegistroIniciales.js" />
@@ -2232,12 +2227,35 @@
     <Compile Include="Controllers\AC_CatalogosCompartidos\Cat_Ejecucion_Cat_JuzgadosPorCircuitoEController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\EJ_ValidarNumeroEjecucionController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\P_CatSolicitanteController.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\ArchivosFTP.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\ConexionFTP.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\ConsultaCargaInicial.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\ConsultaCargaPosterior.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\ElegirInicial.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\GenerarIdJuzgadoPorSesion.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\ObtenerIdCircuito.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\PaginacionInicial.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\PaginacionPosterior.cs" />
     <Compile Include="Controllers\AC_RegistroInicialJuicioOral\InicialJuicioOralController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatDelitosController.cs" />
     <Compile Include="Controllers\EJ_Storages\Ejecucion_ConsultarCausaController.cs" />
     <Compile Include="Controllers\EJ_Storages\ObtenerNombreJuzgadoPorIDController.cs" />
     <Compile Include="Controllers\AC_RegistroHistoricos\RegistroHistoricoCausaController.cs" />
     <Compile Include="Controllers\AC_RegistroHistoricos\RegistroHistoricoJOController.cs" />
+    <Compile Include="DigitalizarIniciales.aspx.cs">
+      <DependentUpon>DigitalizarIniciales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DigitalizarIniciales.aspx.designer.cs">
+      <DependentUpon>DigitalizarIniciales.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DigitalizarPosteriores.aspx.cs">
+      <DependentUpon>DigitalizarPosteriores.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DigitalizarPosteriores.aspx.designer.cs">
+      <DependentUpon>DigitalizarPosteriores.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2291,6 +2309,13 @@
     <Compile Include="Permisos.aspx.designer.cs">
       <DependentUpon>Permisos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="PortadasDigitalizacion.aspx.cs">
+      <DependentUpon>PortadasDigitalizacion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PortadasDigitalizacion.aspx.designer.cs">
+      <DependentUpon>PortadasDigitalizacion.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Promociones.aspx.cs">
       <DependentUpon>Promociones.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2325,28 +2350,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InicialControl.rpt</DependentUpon>
       <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Reportes\InicialEjecucion1.cs">
+    <Compile Include="Reportes\InicialEjecucion.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>InicialEjecucion.rpt</DependentUpon>
       <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reportes\PosteriorControl.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PosteriorControl.rpt</DependentUpon>
       <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reportes\PosteriorEjecucion.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PosteriorEjecucion.rpt</DependentUpon>
       <SubType>Component</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -2582,29 +2603,25 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Reportes\InicialControl.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>InicialControl.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reportes\InicialEjecucion.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>InicialEjecucion1.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reportes\PosteriorControl.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>PosteriorControl.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Reportes\PosteriorEjecucion.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>PosteriorEjecucion.cs</LastGenOutput>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+    <EmbeddedResource Include="Reportes\InicialControl.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InicialControl.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InicialEjecucion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InicialEjecucion.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\PosteriorControl.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PosteriorControl.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\PosteriorEjecucion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PosteriorEjecucion.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -195,13 +195,13 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPermisos;
 
         /// <summary>
-        /// Control ContentError.
+        /// Control ContentDigitInici.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentError;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentDigitInici;
 
         /// <summary>
         /// Control CerrarSesion.

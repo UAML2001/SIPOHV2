@@ -19,21 +19,17 @@ namespace SIPOH.Views
             if (!IsPostBack)
             {
                 // Inicializar la tabla en ViewState
-                DataTable tablaDelitos = new DataTable();
-                tablaDelitos.Columns.Add("IdDelito", typeof(string));
-                tablaDelitos.Columns.Add("Nombre", typeof(string));
-                ViewState["TablaDelitos"] = tablaDelitos;
+                ViewState["TablaDelitos"] = InicializarTabla(new string[] { "IdDelito", "NombreDelito" }, gvDelitos);
+                ViewState["TablaPartes"] = InicializarTabla(new string[] { "Nombre", "Genero", "Parte" }, gvPartes);
+                ViewState["tablaAnexos"] = InicializarTabla(new string[] { "descripcion", "Cantidad" }, gvAnexos);
 
-                DataTable tablaPartes = new DataTable();
-                tablaPartes.Columns.Add("Nombre", typeof(string));
-                tablaPartes.Columns.Add("Genero", typeof(string));
-                tablaPartes.Columns.Add("Parte", typeof(string));
-                ViewState["TablaPartes"] = tablaPartes;
+                ViewState["TablaDelitos2"] = InicializarTabla(new string[] { "IdDelito2", "NombreDelito2" }, gvDelitos2);
+                ViewState["TablaPartes2"] = InicializarTabla(new string[] { "Nombre", "Genero", "Parte" }, gvPartes2);
+                ViewState["tablaAnexos2"] = InicializarTabla(new string[] { "descripcion2", "Cantidad2" }, gvAnexos2);
 
-                DataTable tablaAnexos = new DataTable();
-                tablaAnexos.Columns.Add("descripcion", typeof(string));
-                tablaAnexos.Columns.Add("Cantidad", typeof(string));
-                ViewState["tablaAnexos"] = tablaAnexos;
+                ViewState["TablaDelitos3"] = InicializarTabla(new string[] { "IdDelito3", "NombreDelito3" }, gvDelitos3);
+                ViewState["TablaPartes3"] = InicializarTabla(new string[] { "Nombre", "Genero", "Parte" }, gvPartes3);
+                ViewState["tablaAnexos3"] = InicializarTabla(new string[] { "descripcion3", "Cantidad3" }, gvAnexos3);
 
                 // Cargar los delitos en el DropDownList
                 CargarDelitos();
@@ -42,6 +38,27 @@ namespace SIPOH.Views
                 InsertExhorto.Style.Add("display", "none");
             }
         }
+
+        private DataTable InicializarTabla(string[] columnas, GridView gridView)
+        {
+            DataTable tabla = new DataTable();
+            foreach (string columna in columnas)
+            {
+                tabla.Columns.Add(columna, typeof(string));
+            }
+
+            // Si la tabla está vacía, agrega una fila vacía
+            if (tabla.Rows.Count == 0)
+            {
+                tabla.Rows.Add(tabla.NewRow());
+                gridView.DataSource = tabla;
+                gridView.DataBind();
+                gridView.Rows[0].Visible = false;
+            }
+
+            return tabla;
+        }
+
 
         //Back para cargar anexos exhortos
         private void CargarAnexos()
@@ -67,6 +84,7 @@ namespace SIPOH.Views
 
         // Back Anexo Exhorto
         // Método para verificar si el delito ya está en la tabla
+
         private bool AnexosYaEnTabla(string anexo)
         {
             foreach (GridViewRow row in gvAnexos.Rows)
@@ -93,7 +111,6 @@ namespace SIPOH.Views
                 return;
             }
 
-
             // Verificar si el anexo seleccionado es "Seleccione el anexo a agregar:"
             if (anexoSeleccionado == "Seleccione el anexo a agregar:")
             {
@@ -102,13 +119,10 @@ namespace SIPOH.Views
                 return;
             }
 
-            // Verificar si el delito ya está en la tabla
+            // Agregar el delito a la tabla
+            DataTable dt = GetDataTableAnex();
             if (!AnexosYaEnTabla(anexoSeleccionado))
             {
-                // Agregar el delito a la tabla
-                // Puedes agregar el código necesario para agregar el delito a tu fuente de datos
-
-                DataTable dt = GetDataTableAnex();
                 DataRow newRow = dt.NewRow();
                 newRow["descripcion"] = anexoSeleccionado;
                 newRow["Cantidad"] = cantidadAnexo;
@@ -117,6 +131,14 @@ namespace SIPOH.Views
                 gvAnexos.DataSource = dt;
                 gvAnexos.DataBind();
 
+                // Si la primera fila es la fila vacía, elimínala
+                if (dt.Rows.Count > 1 && dt.Rows[0][0] == DBNull.Value)
+                {
+                    dt.Rows[0].Delete();
+                    gvAnexos.DataSource = dt;
+                    gvAnexos.DataBind();
+                }
+
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarAnexos", "limpiarFormularioAnexos();", true);
             }
             else
@@ -124,8 +146,6 @@ namespace SIPOH.Views
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ErrorTblExhortos", "EjemploErrorTblAnexo();", true);
             }
         }
-
-
 
         private DataTable GetDataTableAnex()
         {
@@ -154,8 +174,19 @@ namespace SIPOH.Views
                 DataTable dt = GetDataTableAnex();
                 dt.Rows[rowIndex].Delete();
 
-                gvAnexos.DataSource = dt;
-                gvAnexos.DataBind();
+                // Si la tabla está vacía después de la eliminación, agrega una fila vacía
+                if (dt.Rows.Count == 0)
+                {
+                    dt.Rows.Add(dt.NewRow());
+                    gvAnexos.DataSource = dt;
+                    gvAnexos.DataBind();
+                    gvAnexos.Rows[0].Visible = false;
+                }
+                else
+                {
+                    gvAnexos.DataSource = dt;
+                    gvAnexos.DataBind();
+                }
             }
         }
 
@@ -180,7 +211,7 @@ namespace SIPOH.Views
             // Vuelve a enlazar los datos si es necesario
             gvAnexos.DataBind();
         }
-        // Termina Back Anexo Exhorto
+        //// Termina Back Anexo Exhorto
 
 
 
@@ -188,7 +219,8 @@ namespace SIPOH.Views
 
 
         // Back Anexo Despacho
-        // Método para verificar si el delito ya está en la tabla
+
+        // Método para verificar si el anexo ya está en la tabla
         private bool AnexosYaEnTabla2(string anexo)
         {
             foreach (GridViewRow row in gvAnexos2.Rows)
@@ -223,13 +255,10 @@ namespace SIPOH.Views
                 return;
             }
 
-            // Verificar si el delito ya está en la tabla
+            // Agregar el delito a la tabla
+            DataTable dt = GetDataTableAnex2();
             if (!AnexosYaEnTabla2(anexoSeleccionado))
             {
-                // Agregar el delito a la tabla
-                // Puedes agregar el código necesario para agregar el delito a tu fuente de datos
-
-                DataTable dt = GetDataTableAnex2();
                 DataRow newRow = dt.NewRow();
                 newRow["descripcion2"] = anexoSeleccionado;
                 newRow["Cantidad2"] = cantidadAnexo;
@@ -237,6 +266,14 @@ namespace SIPOH.Views
 
                 gvAnexos2.DataSource = dt;
                 gvAnexos2.DataBind();
+
+                // Si la primera fila es la fila vacía, elimínala
+                if (dt.Rows.Count > 1 && dt.Rows[0][0] == DBNull.Value)
+                {
+                    dt.Rows[0].Delete();
+                    gvAnexos2.DataSource = dt;
+                    gvAnexos2.DataBind();
+                }
 
                 ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarAnexos", "limpiarFormularioAnexos2();", true);
             }
@@ -264,6 +301,7 @@ namespace SIPOH.Views
             return dt;
         }
 
+
         protected void gvAnexos_RowCommand2(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "EliminarAnexo2")
@@ -273,8 +311,19 @@ namespace SIPOH.Views
                 DataTable dt = GetDataTableAnex2();
                 dt.Rows[rowIndex].Delete();
 
-                gvAnexos2.DataSource = dt;
-                gvAnexos2.DataBind();
+                // Si la tabla está vacía después de la eliminación, agrega una fila vacía
+                if (dt.Rows.Count == 0)
+                {
+                    dt.Rows.Add(dt.NewRow());
+                    gvAnexos2.DataSource = dt;
+                    gvAnexos2.DataBind();
+                    gvAnexos2.Rows[0].Visible = false;
+                }
+                else
+                {
+                    gvAnexos2.DataSource = dt;
+                    gvAnexos2.DataBind();
+                }
             }
         }
 
@@ -295,17 +344,16 @@ namespace SIPOH.Views
                     row.Cells[nombreIndex].Text = valorSeleccionado.ToUpper();
                 }
             }
-
             // Vuelve a enlazar los datos si es necesario
             gvAnexos2.DataBind();
         }
-
-        // Termina Back Anexo Despacho
-
+        //// Termina Back Anexo Exhorto
 
 
-        // Back Anexo Despacho
-        // Método para verificar si el delito ya está en la tabla
+
+
+        // Back Anexo Requisitoria
+        // Método para verificar si el anexo ya está en la tabla
         private bool AnexosYaEnTabla3(string anexo)
         {
             foreach (GridViewRow row in gvAnexos3.Rows)
@@ -328,7 +376,7 @@ namespace SIPOH.Views
             if (int.Parse(cantidadAnexo) <= 0 || int.Parse(cantidadAnexo) > 999)
             {
                 // Mostrar un mensaje de error específico para la cantidad de anexos
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos", "toastr.error('La cantidad de anexos debe ser mayor a 0 y menor a 1000');", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CantAnexos3", "toastr.error('La cantidad de anexos debe ser mayor a 0 y menor a 1000');", true);
                 return;
             }
 
@@ -336,17 +384,17 @@ namespace SIPOH.Views
             if (anexoSeleccionado == "Seleccione el anexo a agregar:")
             {
                 // Mostrar un mensaje de error específico para la selección de anexos
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "SelAnexos", "EjemploErrorSelAnexo();", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "SelAnexos3", "EjemploErrorSelAnexo3();", true);
                 return;
             }
 
-            // Verificar si el delito ya está en la tabla
+            // Obtener el DataTable de anexos
+            DataTable dt = GetDataTableAnex3();
+
+            // Verificar si el anexo ya está en la tabla
             if (!AnexosYaEnTabla3(anexoSeleccionado))
             {
-                // Agregar el delito a la tabla
-                // Puedes agregar el código necesario para agregar el delito a tu fuente de datos
-
-                DataTable dt = GetDataTableAnex3();
+                // Agregar el anexo a la tabla
                 DataRow newRow = dt.NewRow();
                 newRow["descripcion3"] = anexoSeleccionado;
                 newRow["Cantidad3"] = cantidadAnexo;
@@ -355,11 +403,19 @@ namespace SIPOH.Views
                 gvAnexos3.DataSource = dt;
                 gvAnexos3.DataBind();
 
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarAnexos", "limpiarFormularioAnexos3();", true);
+                // Si la primera fila es la fila vacía, elimínala
+                if (dt.Rows.Count > 1 && dt.Rows[0][0] == DBNull.Value)
+                {
+                    dt.Rows[0].Delete();
+                    gvAnexos3.DataSource = dt;
+                    gvAnexos3.DataBind();
+                }
+
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarAnexos3", "limpiarFormularioAnexos3();", true);
             }
             else
             {
-                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ErrorTblExhortos", "EjemploErrorTblAnexo();", true);
+                ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "ErrorTblExhortos3", "EjemploErrorTblAnexo3();", true);
             }
         }
 
@@ -390,8 +446,19 @@ namespace SIPOH.Views
                 DataTable dt = GetDataTableAnex3();
                 dt.Rows[rowIndex].Delete();
 
-                gvAnexos3.DataSource = dt;
-                gvAnexos3.DataBind();
+                // Si la tabla está vacía después de la eliminación, agrega una fila vacía
+                if (dt.Rows.Count == 0)
+                {
+                    dt.Rows.Add(dt.NewRow());
+                    gvAnexos3.DataSource = dt;
+                    gvAnexos3.DataBind();
+                    gvAnexos3.Rows[0].Visible = false;
+                }
+                else
+                {
+                    gvAnexos3.DataSource = dt;
+                    gvAnexos3.DataBind();
+                }
             }
         }
 
@@ -416,8 +483,8 @@ namespace SIPOH.Views
             // Vuelve a enlazar los datos si es necesario
             gvAnexos3.DataBind();
         }
+        // Termina Back Anexo Requisitoria
 
-        // Termina Back Anexo Despacho
 
 
 
@@ -495,6 +562,14 @@ namespace SIPOH.Views
 
                 gvDelitos.DataSource = dt;
                 gvDelitos.DataBind();
+
+                // Si la primera fila es la fila vacía, elimínala
+                if (dt.Rows.Count > 1 && dt.Rows[0][0] == DBNull.Value)
+                {
+                    dt.Rows[0].Delete();
+                    gvDelitos.DataSource = dt;
+                    gvDelitos.DataBind();
+                }
             }
             else
             {
@@ -531,10 +606,22 @@ namespace SIPOH.Views
                 DataTable dt = GetDataTable();
                 dt.Rows[rowIndex].Delete();
 
-                gvDelitos.DataSource = dt;
-                gvDelitos.DataBind();
+                // Si la tabla está vacía después de la eliminación, agrega una fila vacía
+                if (dt.Rows.Count == 0)
+                {
+                    dt.Rows.Add(dt.NewRow());
+                    gvDelitos.DataSource = dt;
+                    gvDelitos.DataBind();
+                    gvDelitos.Rows[0].Visible = false;
+                }
+                else
+                {
+                    gvDelitos.DataSource = dt;
+                    gvDelitos.DataBind();
+                }
             }
         }
+
 
         //Fin Delito Exhorto
 
@@ -799,6 +886,14 @@ namespace SIPOH.Views
             gvPartes.DataSource = dt;
             gvPartes.DataBind();
 
+            // Si la primera fila es la fila vacía, elimínala
+            if (dt.Rows.Count > 1 && dt.Rows[0][0] == DBNull.Value)
+            {
+                dt.Rows[0].Delete();
+                gvPartes.DataSource = dt;
+                gvPartes.DataBind();
+            }
+
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "cerrarModal", "CerrarModalGuardarDatos();", true);
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "limpiarForm", "LimpiarFormulario();", true);
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "CamposVacios", "toastr.success('Partes Agregadas con exito');", true);
@@ -843,10 +938,22 @@ namespace SIPOH.Views
                 DataTable dt = GetDataTable2();
                 dt.Rows[rowIndex].Delete();
 
-                gvPartes.DataSource = dt;
-                gvPartes.DataBind();
+                // Si la tabla está vacía después de la eliminación, agrega una fila vacía
+                if (dt.Rows.Count == 0)
+                {
+                    dt.Rows.Add(dt.NewRow());
+                    gvPartes.DataSource = dt;
+                    gvPartes.DataBind();
+                    gvPartes.Rows[0].Visible = false;
+                }
+                else
+                {
+                    gvPartes.DataSource = dt;
+                    gvPartes.DataBind();
+                }
             }
         }
+
 
         protected void gvPartes_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -1176,6 +1283,29 @@ namespace SIPOH.Views
             Panel1.Visible = OpExhorto.SelectedValue == "E";
             Panel2.Visible = OpExhorto.SelectedValue == "D";
             Panel3.Visible = OpExhorto.SelectedValue == "R";
+
+            // Ocultar todos los elementos h3
+            titulo.Visible = false;
+            lblExhorto.Visible = false;
+            lblDespacho.Visible = false;
+            lblRequisitoria.Visible = false;
+
+            // Mostrar el elemento h3 correspondiente a la opción seleccionada
+            switch (OpExhorto.SelectedValue)
+            {
+                case "SO":
+                    titulo.Visible = true;
+                    break;
+                case "E":
+                    lblExhorto.Visible = true;
+                    break;
+                case "D":
+                    lblDespacho.Visible = true;
+                    break;
+                case "R":
+                    lblRequisitoria.Visible = true;
+                    break;
+            }
 
         }
 
@@ -3057,9 +3187,6 @@ namespace SIPOH.Views
             ReestablecerTodo();
             InsertExhorto.Style.Add("display", "none");
             OpExhorto.Enabled = true;
-
-            // Actualiza el UpdatePanel
-            updPanel.Update();
         }
 
         public static void ConvertirAMayusculas(object obj)
@@ -3081,3 +3208,4 @@ namespace SIPOH.Views
 
     }
 }
+

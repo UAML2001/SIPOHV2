@@ -6,30 +6,30 @@
     }
 </style>
 
-    <!-- Include Toastr CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+<!-- Include Toastr CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
-    <!-- Include jQuery (Toastr depends on it) -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- Include jQuery (Toastr depends on it) -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-    <!-- Include Toastr JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<!-- Include Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    <!-- Toastr initialization -->
-    <script>
-        toastr.options = {
-            "closeButton": true,
-            "progressBar": true,
-            "positionClass": "toast-bottom-right",
-            "timeOut": "5000", // Time in milliseconds
-            // You can customize other options as needed
-        };
-    </script>
+<!-- Toastr initialization -->
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-bottom-right",
+        "timeOut": "5000", // Time in milliseconds
+        // You can customize other options as needed
+    };
+</script>
 
 
 <div>
-            <h1 style="margin-left: 5%" class="h5">Control <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold"> Reportes</span> </h1>
-        </div>
+    <h1 style="margin-left: 5%" class="h5">Control <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold">Reportes</span> </h1>
+</div>
 
     <!-- Include Toastr CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
@@ -127,33 +127,17 @@
 
                         <br />
 
-<%--                        <!-- Botón -->
-                        <asp:Button ID="btnMostrar" runat="server" Text="Mostrar" OnClick="btnMostrar_Click" CssClass="btn btn-primary" />
 
-                        <!-- Tabla -->
-                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" CssClass="table">
-                            <Columns>
-                                <asp:BoundField DataField="NoEjecucion" HeaderText="No. Ejecución" />
-                                <asp:BoundField DataField="DetalleSolicitante" HeaderText="Detalle Solicitante" />
-                                <asp:BoundField DataField="FechaEjecucion" HeaderText="Fecha Ejecución" />
-                                <asp:BoundField DataField="Solicitud" HeaderText="Solicitud" />
-                                <asp:BoundField DataField="Beneficiario" HeaderText="Beneficiario" />
-                                <asp:BoundField DataField="Causa" HeaderText="Causa" />
-                                <asp:BoundField DataField="NUC" HeaderText="NUC" />
-                                <asp:BoundField DataField="Juzgado" HeaderText="Juzgado" />
-                            </Columns>
-                        </asp:GridView>--%>
-
-
-
-
-                        <%--<asp:Button ID="btnConsultarReporte" runat="server" CssClass="btn btn-success align-content-center" Text="Consultar Reporte" OnClick="btnConsultarReporte_Click" />--%>
                         <center>
-                        <asp:Button ID="btnMostrarInforme" CssClass="btn btn-success align-content-center" runat="server" Text="📄 Generar Reporte" OnClick="btnMostrarInforme_Click" />
-                        <%--<asp:Button ID="Button1" CssClass="btn btn-success align-content-center" runat="server" Text="📄 Generar promocion" OnClick="botonmostrarpromocion" />--%>
-                        <br />
-                        <br />
-                        <br />
+                            <asp:Button ID="btnMostrarInforme" CssClass="btn btn-success align-content-center" runat="server" Text="📄 Generar Reporte" OnClick="btnMostrarInforme_Click" OnClientClick="mostrarIndicadorDeCarga()" />
+                            <br />
+                            <br />
+                            <div id="loadingDiv" style="display: none; text-align: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(128, 128, 128, 0.5); justify-content: center; align-items: center; z-index: 9999;">
+                                <img src="https://cms.hvhs.org/carelink/images/loading.gif" alt="Cargando..." height="100px" width="100px" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                <br />
+                                <h5 style="position: absolute; top: 60%; left: 50%; transform: translate(-50%, -50%);">Generando Reporte...</h5>
+                            </div>
+                            <br />
                         <asp:Label ID="TituloReporte" runat="server" CssClass="h4 text-center" Text="¡Su reporte esta listo! 🎉" Visible="false" />
                             <br />
                             <br />
@@ -205,5 +189,14 @@
         }
     });
 
+</script>
 
+<script type="text/javascript">
+    function mostrarIndicadorDeCarga() {
+        document.getElementById('loadingDiv').style.display = 'block';
+    }
+
+    function ocultarIndicadorDeCarga() {
+        document.getElementById('loadingDiv').style.display = 'none';
+    }
 </script>

@@ -791,18 +791,6 @@ C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.Sha
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\log4net.dll
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\log4net.xml
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.ReportSource.dll
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialEjecucion.pdf
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialControl.pdf
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorControl.pdf
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorEjecucion.pdf
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialControl.rpt
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialEjecucion.rpt
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorControl.rpt
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorEjecucion.rpt
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialControl.cs
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialEjecucion1.cs
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorControl.cs
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorEjecucion.cs
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\log4net.dll
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\log4net.xml
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.Web.dll
@@ -825,3 +813,4 @@ C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\CrystalDecisions.Shared.dll
 C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\CrystalDecisions.Web.dll
 C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\log4net.dll
 C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\log4net.xml
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\CrystalDecisions.Web.dll

@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CustomExhorto.ascx.cs" Inherits="SIPOH.Views.CustomExhorto" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" EnableViewState="true" CodeBehind="CustomExhorto.ascx.cs" Inherits="SIPOH.Views.CustomExhorto" %>
 
 <style type="text/css">
     .mayusculas {
@@ -26,233 +26,206 @@
         };
     </script>
 
-<div class="container col-12">
-    <div style="text-align: center; padding: 3%">
-        <div class="col-md-10 ml-auto col-xl-11 mr-auto">
-            <h3 style="text-align: center" id="titulo">Elija la opción que desee
-            </h3>
-        </div>
-    </div>
-</div>
-
 <asp:UpdatePanel ID="updPanel" runat="server" EnableViewState="true" UpdateMode="Conditional">
     <ContentTemplate>
 
-        <div class="row ">
-            <div class="col-md-3 col-sm-3 col-xs-3">
-                <h6 class="help-block text-muted small-font">Acción a elegir: </h6>
-                <asp:DropDownList ID="OpExhorto" CssClass="form-select mayusculas" runat="server" AutoPostBack="True" OnSelectedIndexChanged="OpExhorto_SelectedIndexChanged">
-                    <asp:ListItem Value="SO">Selecciona una opción</asp:ListItem>
-                    <asp:ListItem Value="E">Exhorto</asp:ListItem>
-                    <asp:ListItem Value="D">Despacho</asp:ListItem>
-                    <asp:ListItem Value="R">Requisitoria</asp:ListItem>
-                </asp:DropDownList> 
+        <div class="container col-12">
+            <div style="text-align: center; padding: 3%">
+                <div class="col-md-10 ml-auto col-xl-11 mr-auto">
+                    <h3 runat="server" visible="true" style="text-align: center" id="titulo">Elija la opción que desee</h3>
+                    <h3 runat="server" visible="false" style="text-align: center" id="lblExhorto">Registro de Exhorto</h3>
+                    <h3 runat="server" visible="false" style="text-align: center" id="lblDespacho">Registro de Despacho</h3>
+                    <h3 runat="server" visible="false" style="text-align: center" id="lblRequisitoria">Registro de Requisitoria</h3>
+                </div>
             </div>
         </div>
 
-        <br />
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <label class="form-label text-secondary">Acción a elegir: </label>
+                    <asp:DropDownList ID="OpExhorto" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="True" OnSelectedIndexChanged="OpExhorto_SelectedIndexChanged">
+                        <asp:ListItem Value="SO">Selecciona una opción</asp:ListItem>
+                        <asp:ListItem Value="E">Exhorto</asp:ListItem>
+                        <asp:ListItem Value="D">Despacho</asp:ListItem>
+                        <asp:ListItem Value="R">Requisitoria</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+            </div>
+        </div>
+
+        <br>
 
 
         <asp:Panel ID="Panel1" runat="server" Visible="False">
             <!-- Contenido del formulario para Exhorto -->
-            <h3 style="text-align: center" id="lblExhorto">Registro de Exhorto</h3>
-            <br />
-            <br />
-
-            <div class="row ">
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Número de Documento: </h6>
-                    <asp:TextBox runat="server" CssClass="form-control mayusculas" placeholder="Número de Documento" ID="numdoc1"></asp:TextBox>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Procedente de: </h6>
-                    <asp:TextBox runat="server" ID="procede1" CssClass="form-control mayusculas" placeholder="Procedencia"></asp:TextBox>
-                </div>
-
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Fecha de Recepción: </h6>
-                    <asp:TextBox ID="fecha1" runat="server" CssClass="form-control mayusculas" placeholder="Fecha" TextMode="Date"></asp:TextBox>
-                </div>
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Número de Fojas: </h6>
-                    <div class="form-outline">
-                        <asp:TextBox runat="server" ID="fojas1" CssClass="form-control mayusculas" Text="0" Type="Number"></asp:TextBox>
+            <%-- Formularios de texto Exhorto --%>
+            <div class="row pt-5">
+                    <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                        <label for="numdoc1" class="form-label text-secondary">Número de Documento:</label>
+                        <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Número de Documento" ID="numdoc1"></asp:TextBox>
                     </div>
-                </div>
-            </div>
+                    <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                        <label for="Procedencia" class="form-label text-secondary">Procedente de:</label>
+                        <asp:TextBox runat="server" ID="procede1" CssClass="form-control form-control-sm mayusculas" placeholder="Procedencia"></asp:TextBox>
+                    </div>
+                    <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                        <label for="fecha1" class="form-label text-secondary">Fecha de Recepción: </label>
+                        <asp:TextBox runat="server" ID="fecha1" CssClass="form-control form-control-sm mayusculas" placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                    </div>
+                    <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                        <label for="fojas1" class="form-label text-secondary">Número de Fojas: </label>
+                        <asp:TextBox runat="server" ID="fojas1" CssClass="form-control form-control-sm mayusculas" Text="0" Type="Number"></asp:TextBox>
+                    </div>
+                    <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                        <label class="form-label text-secondary">Prioridad: </label>
+                        <div class=" d-flex align-items-center">
+                            <asp:RadioButtonList ID="prioridad" runat="server" CssClass="mayusculas form-check">
+                                <asp:ListItem Text="Alta" Value="A" Selected="False" />
+                                <asp:ListItem Text="Normal" Value="N" Selected="False" />
+                            </asp:RadioButtonList>
+                        </div>
+                    </div>
+                    <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                        <label for="Diligencia1" class="form-label text-secondary">Diligecia Solicitada: </label>
+                        <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Ingrese Diligencia" ID="Diligencia1"></asp:TextBox>
+                    </div>
+                    <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                        <label for="observa1" class="form-label text-secondary">Observaciones: </label>
+                        <asp:TextBox ID="observa1" runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Observaciones"></asp:TextBox>
+                    </div>
 
-            <br />
 
-            <div class="row ">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h6 class="help-block text-muted small-font">Parte a Notificar: </h6>
-                </div>
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="row ">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <h6 class="help-block text-muted small-font">Delitos: </h6>
-                            <asp:DropDownList ID="ddlDelitos1" CssClass="form-select mayusculas" runat="server">
-                            <asp:ListItem runat="server" Value="Seleccionar" Text="Seleccione un delito:"></asp:ListItem>
+                    <!-- Tabla Partes Exhorto -->
+                    <div class="col-12 col-lg-6 mb-4">
+                        <div class="text-left">
+                            <div class="mb-2">
+                                <br />
+                                <span class="text-success fw-bold m-2"><i class="bi bi-emoji-laughing"></i>Parte(s) a notificar: </span>
+                                <asp:Button ID="Button11" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="+" OnClick="btnAbrirModal" />
+                            </div>
+                            <div class="table-responsive">
+                                <asp:GridView ID="gvPartes" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover table-sm" OnRowCommand="gvPartes_RowCommand" OnRowDataBound="gvPartes_RowDataBound" ClientIDMode="Static" ShowHeaderWhenEmpty="True" >
+                                    <Columns>
+                                        <asp:BoundField DataField="Nombre" HeaderText="Nombre">
+                                            <HeaderStyle CssClass="bg-success text-white" />
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="Genero" HeaderText="Género">
+                                            <HeaderStyle CssClass="bg-success text-white" />
+                                        </asp:BoundField>
+                                        <asp:BoundField DataField="Parte" HeaderText="Parte">
+                                            <HeaderStyle CssClass="bg-success text-white" />
+                                        </asp:BoundField>
+                                        <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
+                                            <ItemTemplate>
+                                                <asp:Button ID="btnEliminar" runat="server" Text="✖️" CssClass="btn btn-sm m-0 p-0" CommandName="EliminarParte" CommandArgument='<%# Container.DisplayIndex %>' />
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
+                            </div>
+                        </div>
+                    </div>
+
+                            <%-- Tabla Delitos Exhorto --%>
+                            <div class="col-12 col-lg-6 text-left">
+                                <div class="mb-0 row">
+                                    <div class="col-md-5">
+                                        <span class="text-success fw-bold m-2"><i class="fa-solid fa-people-robbery"></i>Delitos: </span>
+                                        <asp:DropDownList ID="ddlDelitos1" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
+                                            <asp:ListItem runat="server" Value="Seleccionar" Text="Seleccione un delito:"></asp:ListItem>
+                                        </asp:DropDownList>
+                                    </div>
+                                    <div class="col-1 d-flex align-items-end ">
+                                        <asp:Button ID="btnAgregarDelito" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="+" OnClick="btnAgregarDelito_Click" />
+                                    </div>
+                                </div>
+                                <div class="table-responsive mt-2">
+                                    <asp:GridView ID="gvDelitos" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="gvDelitos_RowCommand" ClientIDMode="Static" ShowHeaderWhenEmpty="True" >
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Id Delito" SortExpression="NombreDelito" Visible="false">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblIdDelito" CssClass="text-center" runat="server" Text='<%# Bind("IdDelito") %>'></asp:Label>
+                                                </ItemTemplate>
+                                                <HeaderStyle CssClass="bg-success text-white text-center" />
+                                            </asp:TemplateField>
+
+                                            <asp:TemplateField HeaderText="Delito" SortExpression="NombreDelito">
+                                                <ItemTemplate>
+                                                    <asp:Label ID="lblNombreDelito" runat="server" Text='<%# Bind("NombreDelito") %>'></asp:Label>
+                                                </ItemTemplate>
+                                                <HeaderStyle CssClass="bg-success text-white text-center font-weight-bold" />
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
+                                                <ItemTemplate>
+                                                    <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" CommandName="EliminarDelito" CommandArgument='<%# Container.DisplayIndex %>' />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </div>
+                            </div>
+
+
+                <%-- Tabla Anexos Exhorto --%>
+                <div class="col-12 col-lg-6 text-left">
+                    <div class="mb-0 row">
+                        <div class="col-md-5">
+                            <br />
+                            <label for="ddlAnexos" class="form-label text-secondary align-self-center">Anexos: </label>
+                            <asp:DropDownList ID="ddlAnexos" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
+                                <asp:ListItem runat="server" Text="Seleccione el anexo a agregar:"></asp:ListItem>
                             </asp:DropDownList>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="noAnexos" class="form-label text-secondary align-self-center">Cantidad de Anexos: </label>
+                            <asp:TextBox runat="server" ID="noAnexos" CssClass="form-control form-control-sm" Text="0" Type="Number"></asp:TextBox>
+                        </div>
+                        <div class="col-1 d-flex align-items-end">
+                            <asp:Button ID="addAnexo" runat="server" CssClass="btn btn-success mayusculas" Text="+" OnClick="btnAgregarAnexo_Click" />
+                        </div>
+
+                        <div class="table-responsive mt-2">
+                            <asp:GridView ID="gvAnexos" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="gvAnexos_RowCommand" ClientIDMode="Static" ShowHeaderWhenEmpty="True">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Anexo" SortExpression="NombreDelito">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblAnexo" runat="server" CssClass="mayusculas" Text='<%# Bind("descripcion") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:TemplateField>
+
+                                    <asp:TemplateField HeaderText="Cantidad" SortExpression="NombreDelito">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblCantAnexos" runat="server" Text='<%# Bind("Cantidad") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
+                                        <ItemTemplate>
+                                            <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" CommandName="EliminarAnexo" CommandArgument='<%# Container.DisplayIndex %>' />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="nav-item d-flex justify-content-end p-3">
-                        <asp:Button ID="modalParte" runat="server" CssClass="btn btn-success mayusculas" Text="Agregar Parte" OnClick="btnAbrirModal" />
-                    </div>
-                    <div class="col-md-6 mx-auto" style="max-width: 600px;">
-                        <asp:GridView ID="gvPartes" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvPartes_RowCommand" OnRowDataBound="gvPartes_RowDataBound" ClientIDMode="Static">
-                            <Columns>
-                                <asp:BoundField DataField="Nombre" HeaderText="Nombre">
-                                    <HeaderStyle CssClass="bg-success text-white"/>
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Genero" HeaderText="Género">
-                                    <HeaderStyle CssClass="bg-success text-white" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Parte" HeaderText="Parte">
-                                    <HeaderStyle CssClass="bg-success text-white" />
-                                </asp:BoundField>
-                                <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
-                                    <ItemTemplate>
-                                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarParte" CommandArgument='<%# Container.DisplayIndex %>' />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            </Columns>
-                        </asp:GridView>
-                    </div>
                 </div>
-
-
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="nav-item d-flex justify-content-end p-3">
-                        <asp:Button ID="btnAgregarDelito" runat="server" CssClass="btn btn-success mayusculas" Text="Agregar Delito" OnClick="btnAgregarDelito_Click" />
-                    </div>
-                    <asp:GridView ID="gvDelitos" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvDelitos_RowCommand" ClientIDMode="Static">
-                        <Columns>
-                            <asp:TemplateField HeaderText="Id Delito" SortExpression="NombreDelito" Visible="false">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblIdDelito" runat="server" Text='<%# Bind("IdDelito") %>'></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:TemplateField>
-
-                            <asp:TemplateField HeaderText="Nombre del Delito" SortExpression="NombreDelito">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblNombreDelito" runat="server" Text='<%# Bind("NombreDelito") %>'></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:TemplateField>
-
-
-                            <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
-                                <ItemTemplate>
-                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarDelito" CommandArgument='<%# Container.DisplayIndex %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="form-group">
-                        <h6 class="help-block text-muted small-font">Prioridad: </h6>
-                        <asp:RadioButtonList ID="prioridad" runat="server" CssClass="mayusculas form-check">
-                            <asp:ListItem Text=" Alta" Value="A" />
-                            <asp:ListItem Text=" Normal" Value="N" />
-                        </asp:RadioButtonList>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h6 class="help-block text-muted small-font">Diligencia Solicitada: </h6>
-                    <asp:TextBox runat="server" CssClass="form-control mayusculas" placeholder="Ingrese Diligencia" ID="Diligencia1"></asp:TextBox>
-                </div>
-
-            </div>
-
-            <div class="row ">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h6 class="help-block text-muted small-font">Anexos: </h6>
-                    <div class="form-outline">
-                        <asp:DropDownList ID="ddlAnexos" CssClass="form-select mayusculas" runat="server">
-                            <asp:ListItem runat="server" Text="Seleccione el anexo a agregar:"></asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h6 class="help-block text-muted small-font">Cantidad de Anexos: </h6>
-                    <div class="form-outline">
-                        <asp:TextBox runat="server" ID="noAnexos" CssClass="form-control" Text="0" Type="Number"></asp:TextBox>
-                    </div>
-                </div>
-
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="nav-item d-flex justify-content-end p-3">
-                            <center>
-                            <asp:Button ID="addAnexo" runat="server" CssClass="btn btn-success mayusculas" Text="Agregar Anexos" OnClick="btnAgregarAnexo_Click" />
-                             </center>
-                    </div>
-                    <asp:GridView ID="gvAnexos" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvAnexos_RowCommand" ClientIDMode="Static">
-                        <Columns>
-                            <asp:TemplateField HeaderText="Anexo" SortExpression="NombreDelito">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblAnexo" runat="server" CssClass="mayusculas" Text='<%# Bind("descripcion") %>'></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:TemplateField>
-
-                            <asp:TemplateField HeaderText="Cantidad" SortExpression="NombreDelito">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblCantAnexos" runat="server" Text='<%# Bind("Cantidad") %>'></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:TemplateField>
-
-
-                            <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
-                                <ItemTemplate>
-                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarAnexo" CommandArgument='<%# Container.DisplayIndex %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-
-                </div>
-            </div>
-    </div>
-</div>
-
-
-
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <h6 class="help-block text-muted small-font">Observaciones: </h6>
-                    <asp:TextBox ID="observa1" runat="server" CssClass="form-control mayusculas" TextMode="MultiLine" Rows="4" placeholder="Observaciones"></asp:TextBox>
-                </div>
-            </div>
 
             <br />
-
-                </div>
-
-            <center>
-            <asp:Button ID="ObDatos" runat="server" CssClass="btn btn-success mayusculas" Text="📄 Registrar Exhorto" OnClick="ObtenerDatosYMostrarModal"  />
-            </center>
-
             <br />
 
-            </center>
+                <div class="col-12 col-lg-12 text-left">
+                    <div class="mb-0 row">
+                        <center>
+                            <asp:Button ID="ObDatos" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="💾 ENVIAR" OnClick="ObtenerDatosYMostrarModal" />
+                        </center>
+                    </div>
+                </div>
 
-            </div>
+            <br />
+            <br />
 
              <!-- Modal Agregar Partes -->
  <div class="modal fade" id="ModalPartes">
@@ -321,8 +294,8 @@
 
              </div>
              <div class="modal-footer">
-                 <button id="btnCerrar" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                 <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-success" Text="Agregar" OnClick="btnAgregarParte_Click" />
+                 <button id="btnCerrar" class="btn btn-secondary btn-sm mayusculas" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Cerrar</button>
+                 <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="Agregar" OnClick="btnAgregarParte_Click" />
              </div>
          </div>
      </div>
@@ -343,8 +316,8 @@
              <div class="modal-body mayusculas">
              </div>
              <div class="modal-footer">
-                 <button type="button" class="btn btn-danger mayusculas" data-bs-dismiss="modal">Cerrar</button>
-                 <asp:Button ID="btnGuardarCambios" runat="server" Text="Guardar cambios" CssClass="btn btn-success mayusculas" OnClick="btnGuardarDatosJudiciales_Click"  />
+                 <button type="button" class="btn btn-secondary btn-sm mayusculas" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i> Cerrar</button>
+                 <asp:Button ID="btnGuardarCambios" runat="server" Text="Guardar cambios" CssClass="btn btn-success btn-sm mayusculas" OnClick="btnGuardarDatosJudiciales_Click"  />
                  
              </div>
          </div>
@@ -356,71 +329,106 @@
 
         <asp:Panel ID="Panel2" runat="server" Visible="False">
             <!-- Contenido del formulario para Despacho -->
-            <h3 style="text-align: center" id="lblDespacho">Registro de Despacho</h3>
-            <br />
-            <br />
-
-            <div class="row ">
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Número de Documento: </h6>
-                    <asp:TextBox runat="server" CssClass="form-control mayusculas" placeholder="Número de Despacho" ID="numdesp"></asp:TextBox>
+            <%-- Formularios de texto Despacho --%>
+            <div class="row pt-5">
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label for="numdesp" class="form-label text-secondary">Número de Despacho:</label>
+                    <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Número de Despacho" ID="numdesp"></asp:TextBox>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Quejoso: </h6>
-                    <asp:TextBox runat="server" ID="quejoso" CssClass="form-control mayusculas" placeholder="Quejoso"></asp:TextBox>
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label for="quejoso" class="form-label text-secondary">Quejoso:</label>
+                    <asp:TextBox runat="server" ID="quejoso" CssClass="form-control form-control-sm mayusculas" placeholder="Quejoso"></asp:TextBox>
                 </div>
-
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Fecha de Recepción: </h6>
-                    <asp:TextBox ID="fecha2" runat="server" CssClass="form-control mayusculas" placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label for="fecha2" class="form-label text-secondary">Fecha de Recepción: </label>
+                    <asp:TextBox runat="server" ID="fecha2" CssClass="form-control form-control-sm mayusculas" placeholder="Fecha" TextMode="Date"></asp:TextBox>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Número de Envio: </h6>
-                    <div class="form-outline">
-                        <asp:TextBox runat="server" ID="fojas2" CssClass="form-control mayusculas" Text="0" Type="Number"></asp:TextBox>
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label for="fojas2" class="form-label text-secondary">NNúmero de Envio: </label>
+                    <asp:TextBox runat="server" ID="fojas2" CssClass="form-control form-control-sm mayusculas" Text="0" Type="Number"></asp:TextBox>
+                </div>
+                <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label class="form-label text-secondary">Prioridad: </label>
+                    <div class=" d-flex align-items-center">
+                        <asp:RadioButtonList ID="prioridad2" runat="server" CssClass="mayusculas form-check">
+                            <asp:ListItem Text="Alta" Value="A" Selected="False" />
+                            <asp:ListItem Text="Normal" Value="N" Selected="False" />
+                        </asp:RadioButtonList>
                     </div>
                 </div>
-            </div>
-
-            <br />
-
-            <div class="row ">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h6 class="help-block text-muted small-font">Parte a Notificar: </h6>
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label for="Diligencia1" class="form-label text-secondary">Diligecia Solicitada: </label>
+                    <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Ingrese Diligencia" ID="Diligencia2"></asp:TextBox>
                 </div>
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="row ">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <h6 class="help-block text-muted small-font">Delitos: </h6>
-                            <asp:DropDownList ID="ddlDelitos2" CssClass="form-select mayusculas" runat="server">
-                                <asp:ListItem runat="server" Value="Seleccionar" Text="Seleccione un delito:"></asp:ListItem>
-                            </asp:DropDownList>
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label for="observa1" class="form-label text-secondary">Observaciones: </label>
+                    <asp:TextBox ID="observa2" runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Observaciones"></asp:TextBox>
+                </div>
+
+
+                <!-- Tabla Partes Despacho -->
+                <div class="col-12 col-lg-6 mb-4">
+                    <div class="text-left">
+                        <div class="mb-2">
+                            <br />
+                            <span class="text-success fw-bold m-2"><i class="bi bi-emoji-laughing"></i>Parte(s) a notificar: </span>
+                            <asp:Button ID="Button1" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="+" OnClick="btnAbrirModal2" />
+                        </div>
+                        <div class="table-responsive">
+                            <asp:GridView ID="gvPartes2" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover table-sm" OnRowCommand="gvPartes_RowCommand2" OnRowDataBound="GridView1_RowDataBound2" ClientIDMode="Static" ShowHeaderWhenEmpty="True">
+                                <Columns>
+                                    <asp:BoundField DataField="Nombre" HeaderText="Nombre">
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="Genero" HeaderText="Género">
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="Parte" HeaderText="Parte">
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:BoundField>
+                                    <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
+                                        <ItemTemplate>
+                                            <asp:Button ID="btnEliminar" runat="server" Text="✖️" CssClass="btn btn-sm m-0 p-0" CommandName="EliminarParte" CommandArgument='<%# Container.DisplayIndex %>' />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
                         </div>
                     </div>
                 </div>
-            </div>
 
-
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="nav-item d-flex justify-content-end p-3">
-                        <asp:Button ID="Button1" runat="server" CssClass="btn btn-success mayusculas" Text="Agregar Parte" OnClick="btnAbrirModal2" />
+                <%-- Tabla Delitos Despacho --%>
+                <div class="col-12 col-lg-6 text-left">
+                    <div class="mb-0 row">
+                        <div class="col-md-5">
+                            <span class="text-success fw-bold m-2"><i class="fa-solid fa-people-robbery"></i>Delitos: </span>
+                            <asp:DropDownList ID="ddlDelitos2" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
+                                <asp:ListItem runat="server" Value="Seleccionar" Text="Seleccione un delito:"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div class="col-1 d-flex align-items-end ">
+                            <asp:Button ID="Button2" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="+" OnClick="btnAgregarDelito_Click2" />
+                        </div>
                     </div>
-                    <div class="col-md-6 mx-auto" style="max-width: 600px;">
-                        <asp:GridView ID="gvPartes2" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvPartes_RowCommand2" OnRowDataBound="GridView1_RowDataBound2">
+                    <div class="table-responsive mt-2">
+                        <asp:GridView ID="gvDelitos2" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="gvDelitos_RowCommand2" ClientIDMode="Static" ShowHeaderWhenEmpty="True">
                             <Columns>
-                                <asp:BoundField DataField="Nombre" HeaderText="Nombre">
-                                    <HeaderStyle CssClass="bg-success text-white" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Genero" HeaderText="Género">
-                                    <HeaderStyle CssClass="bg-success text-white" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Parte" HeaderText="Parte">
-                                    <HeaderStyle CssClass="bg-success text-white" />
-                                </asp:BoundField>
+                                <asp:TemplateField HeaderText="Id Delito" SortExpression="NombreDelito" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblIdDelito2" CssClass="text-center" runat="server" Text='<%# Bind("IdDelito2") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <HeaderStyle CssClass="bg-success text-white text-center" />
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Delito" SortExpression="NombreDelito">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblNombreDelito2" runat="server" Text='<%# Bind("NombreDelito2") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <HeaderStyle CssClass="bg-success text-white text-center font-weight-bold" />
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
                                     <ItemTemplate>
-                                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarParte" CommandArgument='<%# Container.DisplayIndex %>' />
+                                        <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" CommandName="EliminarDelito2" CommandArgument='<%# Container.DisplayIndex %>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -429,124 +437,70 @@
                 </div>
 
 
+                <%-- Tabla Anexos Despacho --%>
+                <div class="col-12 col-lg-6 text-left">
+                    <div class="mb-0 row">
+                        <div class="col-md-5">
+                            <br />
+                            <label for="ddlAnexos2" class="form-label text-secondary align-self-center">Anexos: </label>
+                            <asp:DropDownList ID="ddlAnexos2" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
+                                <asp:ListItem runat="server" Text="Seleccione el anexo a agregar:"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="noAnexos2" class="form-label text-secondary align-self-center">Cantidad de Anexos: </label>
+                            <asp:TextBox runat="server" ID="noAnexos2" CssClass="form-control form-control-sm" Text="0" Type="Number"></asp:TextBox>
+                        </div>
+                        <div class="col-1 d-flex align-items-end">
+                            <asp:Button ID="addAnexos2" runat="server" CssClass="btn btn-success mayusculas" Text="+" OnClick="btnAgregarAnexo_Click2" />
+                        </div>
 
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="nav-item d-flex justify-content-end p-3">
-                        <asp:Button ID="Button2" runat="server" CssClass="btn btn-success mayusculas" Text="Agregar Delito" OnClick="btnAgregarDelito_Click2" />
-                    </div>
-                    <asp:GridView ID="gvDelitos2" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvDelitos_RowCommand2">
-                        <Columns>
-                            <asp:TemplateField HeaderText="Id Delito" SortExpression="NombreDelito" Visible="false">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblIdDelito2" runat="server" Text='<%# Bind("IdDelito2") %>'></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:TemplateField>
+                        <div class="table-responsive mt-2">
+                            <asp:GridView ID="gvAnexos2" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="gvAnexos_RowCommand2" ClientIDMode="Static" ShowHeaderWhenEmpty="True">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Anexo" SortExpression="NombreDelito">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblAnexo2" runat="server" CssClass="mayusculas" Text='<%# Bind("descripcion2") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:TemplateField>
 
-                            <asp:TemplateField HeaderText="Nombre del Delito" SortExpression="NombreDelito">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblNombreDelito2" runat="server" Text='<%# Bind("NombreDelito2") %>'></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:TemplateField>
-
-                            <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
-                                <ItemTemplate>
-                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarDelito2" CommandArgument='<%# Container.DisplayIndex %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="form-group">
-                        <h6 class="help-block text-muted small-font">Prioridad: </h6>
-                        <asp:RadioButtonList ID="prioridad2" runat="server" CssClass="form-check mayusculas">
-                            <asp:ListItem Text="Alta" Value="A" />
-                            <asp:ListItem Text="Normal" Value="N" />
-                        </asp:RadioButtonList>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h6 class="help-block text-muted small-font">Diligencia Solicitada: </h6>
-                    <asp:TextBox runat="server" CssClass="form-control mayusculas" placeholder="Ingrese Diligencia" ID="Diligencia2"></asp:TextBox>
-                </div>
-            </div>
+                                    <asp:TemplateField HeaderText="Cantidad" SortExpression="NombreDelito">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblCantAnexos2" runat="server" Text='<%# Bind("Cantidad2") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:TemplateField>
 
 
-                        <div class="row ">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h6 class="help-block text-muted small-font">Anexos: </h6>
-                    <div class="form-outline">
-                        <asp:DropDownList ID="ddlAnexos2" CssClass="form-select mayusculas" runat="server">
-                            <asp:ListItem runat="server" Text="Seleccione el anexo a agregar:"></asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h6 class="help-block text-muted small-font">Cantidad de Anexos: </h6>
-                    <div class="form-outline">
-                        <asp:TextBox runat="server" ID="noAnexos2" CssClass="form-control" Text="0" Type="Number"></asp:TextBox>
-                    </div>
-                </div>
-
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="nav-item d-flex justify-content-end p-3">
-                        <div style="display: flex; justify-content: center;">
-                            <asp:Button ID="addAnexos2" runat="server" CssClass="btn btn-success mayusculas" Text="Agregar Anexos" OnClick="btnAgregarAnexo_Click2" />
+                                    <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
+                                        <ItemTemplate>
+                                            <asp:Button ID="btnEliminar2" runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" CommandName="EliminarAnexo2" CommandArgument='<%# Container.DisplayIndex %>' />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
                         </div>
                     </div>
-                    <asp:GridView ID="gvAnexos2" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvAnexos_RowCommand2" ClientIDMode="Static">
-                        <Columns>
-                            <asp:TemplateField HeaderText="Anexo" SortExpression="NombreDelito">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblAnexo2" runat="server" Text='<%# Bind("descripcion2") %>' CssClass="mayusculas"></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:TemplateField>
-
-                            <asp:TemplateField HeaderText="Cantidad" SortExpression="NombreDelito">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblCantAnexos2" runat="server" Text='<%# Bind("Cantidad2") %>'></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:TemplateField>
-
-
-                            <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
-                                <ItemTemplate>
-                                    <asp:Button ID="btnEliminar2" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarAnexo2" CommandArgument='<%# Container.DisplayIndex %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <h6 class="help-block text-muted small-font">Observaciones: </h6>
-                    <asp:TextBox ID="observa2" runat="server" CssClass="form-control mayusculas" TextMode="MultiLine" Rows="4" placeholder="Observaciones"></asp:TextBox>
                 </div>
             </div>
 
             <br />
-
-            <center>
-            <asp:Button ID="Button3" runat="server" CssClass="btn btn-success mayusculas" Text="📄 Registrar Exhorto" OnClick="ObtenerDatosYMostrarModal2" OnClientClick="return ValidarCampos();" />
-            </center>
             <br />
-            </center>
 
+            <div class="col-12 col-lg-12 text-left">
+                <div class="mb-0 row">
+                    <center>
+                        <asp:Button ID="Button15" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="💾 ENVIAR" OnClick="ObtenerDatosYMostrarModal2" />
+                    </center>
+                </div>
             </div>
+
+            <br />
+            <br />
+
+
+            
 
              <!-- Modal Agregar Partes -->
  <div class="modal fade" id="ModalPartes2">
@@ -647,75 +601,110 @@
 
 
         </asp:Panel>
-        
-        
+
+
         <asp:Panel ID="Panel3" runat="server" Visible="False">
-            <!-- Contenido del formulario para Requesitoria -->
-                        <h3 style="text-align: center" id="lblRequisitoria">Registro de Requisitoria</h3>
-            <br />
-            <br />
-
-            <div class="row ">
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Número de Toca: </h6>
-                    <asp:TextBox runat="server" CssClass="form-control mayusculas" placeholder="Número de Toca" ID="numtoca" onchange="formatoNumeroToca(this)"></asp:TextBox>
+            <!-- Contenido del formulario para Requisitoria -->
+            <%-- Formularios de texto Requisitoria --%>
+            <div class="row pt-5">
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label for="numdesp" class="form-label text-secondary">Número de toca:</label>
+                    <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Número de toca" ID="numtoca" onchange="formatoNumeroToca(this)"></asp:TextBox>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Sala de procedencia: </h6>
-                    <asp:TextBox runat="server" ID="salaproc" CssClass="form-control mayusculas" placeholder="Sala de Procedencia"></asp:TextBox>
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label for="quejoso" class="form-label text-secondary">Sala de Procedencia:</label>
+                    <asp:TextBox runat="server" ID="salaproc" CssClass="form-control form-control-sm mayusculas" placeholder="Sala"></asp:TextBox>
                 </div>
-
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Fecha de Recepción: </h6>
-                    <asp:TextBox ID="fecha3" runat="server" CssClass="form-control mayusculas" placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label for="fecha2" class="form-label text-secondary">Fecha de Recepción: </label>
+                    <asp:TextBox runat="server" ID="fecha3" CssClass="form-control form-control-sm mayusculas" placeholder="Fecha" TextMode="Date"></asp:TextBox>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <h6 class="help-block text-muted small-font">Número de Fojas: </h6>
-                    <div class="form-outline">
-                        <asp:TextBox runat="server" ID="fojas3" CssClass="form-control mayusculas" Text="0" Type="Number"></asp:TextBox>
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label for="fojas2" class="form-label text-secondary">Numero de Fojas: </label>
+                    <asp:TextBox runat="server" ID="fojas3" CssClass="form-control form-control-sm mayusculas" Text="0" Type="Number"></asp:TextBox>
+                </div>
+                <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label class="form-label text-secondary">Prioridad: </label>
+                    <div class=" d-flex align-items-center">
+                        <asp:RadioButtonList ID="prioridad3" runat="server" CssClass="mayusculas form-check">
+                            <asp:ListItem Text="Alta" Value="A" Selected="False" />
+                            <asp:ListItem Text="Normal" Value="N" Selected="False" />
+                        </asp:RadioButtonList>
                     </div>
                 </div>
-            </div>
-
-            <br />
-
-            <div class="row ">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h6 class="help-block text-muted small-font">Parte a Notificar: </h6>
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label for="Diligencia1" class="form-label text-secondary">Diligecia Solicitada: </label>
+                    <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Ingrese Diligencia" ID="Diligencia3"></asp:TextBox>
                 </div>
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="row ">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <h6 class="help-block text-muted small-font">Delitos: </h6>
-                            <asp:DropDownList ID="ddlDelitos3" CssClass="form-select mayusculas" runat="server">
-                            <asp:ListItem runat="server" Value="Seleccionar" Text="Seleccione un delito:"></asp:ListItem>
-                                </asp:DropDownList>
+                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <label for="observa1" class="form-label text-secondary">Observaciones: </label>
+                    <asp:TextBox ID="observa3" runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Observaciones"></asp:TextBox>
+                </div>
+
+
+                <!-- Tabla Partes Requisitoria -->
+                <div class="col-12 col-lg-6 mb-4">
+                    <div class="text-left">
+                        <div class="mb-2">
+                            <br />
+                            <span class="text-success fw-bold m-2"><i class="bi bi-emoji-laughing"></i>Parte(s) a notificar: </span>
+                            <asp:Button ID="Button3" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="+" OnClick="btnAbrirModal3" />
+                        </div>
+                        <div class="table-responsive">
+                            <asp:GridView ID="gvPartes3" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover table-sm" OnRowCommand="gvPartes_RowCommand3" OnRowDataBound="GridView1_RowDataBound3" ClientIDMode="Static" ShowHeaderWhenEmpty="True">
+                                <Columns>
+                                    <asp:BoundField DataField="Nombre" HeaderText="Nombre">
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="Genero" HeaderText="Género">
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="Parte" HeaderText="Parte">
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:BoundField>
+                                    <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
+                                        <ItemTemplate>
+                                            <asp:Button ID="btnEliminar" runat="server" Text="✖️" CssClass="btn btn-sm m-0 p-0" CommandName="EliminarParte" CommandArgument='<%# Container.DisplayIndex %>' />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
                         </div>
                     </div>
                 </div>
-            </div>
 
-
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="nav-item d-flex justify-content-end p-3">
-                        <asp:Button ID="Button5" runat="server" CssClass="btn btn-success mayusculas" Text="Agregar Parte" OnClick="btnAbrirModal3" />
+                <%-- Tabla Delitos Requisitoria --%>
+                <div class="col-12 col-lg-6 text-left">
+                    <div class="mb-0 row">
+                        <div class="col-md-5">
+                            <span class="text-success fw-bold m-2"><i class="fa-solid fa-people-robbery"></i>Delitos: </span>
+                            <asp:DropDownList ID="ddlDelitos3" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
+                                <asp:ListItem runat="server" Value="Seleccionar" Text="Seleccione un delito:"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div class="col-1 d-flex align-items-end ">
+                            <asp:Button ID="Button12" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="+" OnClick="btnAgregarDelito_Click3" />
+                        </div>
                     </div>
-                    <div class="col-md-6 mx-auto" style="max-width: 600px;">
-                        <asp:GridView ID="gvPartes3" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvPartes_RowCommand3" OnRowDataBound="GridView1_RowDataBound3">
+                    <div class="table-responsive mt-2">
+                        <asp:GridView ID="gvDelitos3" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="gvDelitos_RowCommand3" ClientIDMode="Static" ShowHeaderWhenEmpty="True">
                             <Columns>
-                                <asp:BoundField DataField="Nombre" HeaderText="Nombre">
-                                    <HeaderStyle CssClass="bg-success text-white" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Genero" HeaderText="Género">
-                                    <HeaderStyle CssClass="bg-success text-white" />
-                                </asp:BoundField>
-                                <asp:BoundField DataField="Parte" HeaderText="Parte">
-                                    <HeaderStyle CssClass="bg-success text-white" />
-                                </asp:BoundField>
+                                <asp:TemplateField HeaderText="Id Delito" SortExpression="NombreDelito" Visible="false">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblIdDelito3" CssClass="text-center" runat="server" Text='<%# Bind("IdDelito3") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <HeaderStyle CssClass="bg-success text-white text-center" />
+                                </asp:TemplateField>
+
+                                <asp:TemplateField HeaderText="Delito" SortExpression="NombreDelito">
+                                    <ItemTemplate>
+                                        <asp:Label ID="lblNombreDelito3" runat="server" Text='<%# Bind("NombreDelito3") %>'></asp:Label>
+                                    </ItemTemplate>
+                                    <HeaderStyle CssClass="bg-success text-white text-center font-weight-bold" />
+                                </asp:TemplateField>
                                 <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
                                     <ItemTemplate>
-                                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarParte" CommandArgument='<%# Container.DisplayIndex %>' />
+                                        <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" CommandName="EliminarDelito3" CommandArgument='<%# Container.DisplayIndex %>' />
                                     </ItemTemplate>
                                 </asp:TemplateField>
                             </Columns>
@@ -724,126 +713,67 @@
                 </div>
 
 
+                <%-- Tabla Anexos Requisitoria --%>
+                <div class="col-12 col-lg-6 text-left">
+                    <div class="mb-0 row">
+                        <div class="col-md-5">
+                            <br />
+                            <label for="ddlAnexos3" class="form-label text-secondary align-self-center">Anexos: </label>
+                            <asp:DropDownList ID="ddlAnexos3" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
+                                <asp:ListItem runat="server" Text="Seleccione el anexo a agregar:"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="noAnexos3" class="form-label text-secondary align-self-center">Cantidad de Anexos: </label>
+                            <asp:TextBox runat="server" ID="noAnexos3" CssClass="form-control form-control-sm" Text="0" Type="Number"></asp:TextBox>
+                        </div>
+                        <div class="col-1 d-flex align-items-end">
+                            <asp:Button ID="Button13" runat="server" CssClass="btn btn-success mayusculas" Text="+" OnClick="btnAgregarAnexo_Click3" />
+                        </div>
 
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <div class="nav-item d-flex justify-content-end p-3">
-                        <asp:Button ID="Button6" runat="server" CssClass="btn btn-success mayusculas" Text="Agregar Delito" OnClick="btnAgregarDelito_Click3" />
-                    </div>
-                    <asp:GridView ID="gvDelitos3" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvDelitos_RowCommand3">
-                        <Columns>
-                            <asp:TemplateField HeaderText="Id Delito" SortExpression="NombreDelito" Visible="false">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblIdDelito3" runat="server" Text='<%# Bind("IdDelito3") %>'></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Nombre del Delito" SortExpression="NombreDelito">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblNombreDelito3" runat="server" Text='<%# Bind("NombreDelito3") %>'></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
-                                <ItemTemplate>
-                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarDelito3" CommandArgument='<%# Container.DisplayIndex %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
+                        <div class="table-responsive mt-2">
+                            <asp:GridView ID="gvAnexos3" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="gvAnexos_RowCommand3" ClientIDMode="Static" ShowHeaderWhenEmpty="True">
+                                <Columns>
+                                    <asp:TemplateField HeaderText="Anexo" SortExpression="NombreDelito">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblAnexo3" runat="server" CssClass="mayusculas" Text='<%# Bind("descripcion3") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:TemplateField>
 
-                </div>
-            </div>
+                                    <asp:TemplateField HeaderText="Cantidad" SortExpression="NombreDelito">
+                                        <ItemTemplate>
+                                            <asp:Label ID="lblCantAnexos3" runat="server" Text='<%# Bind("Cantidad3") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:TemplateField>
 
 
-
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-
-                    <div class="form-group">
-                        <h6 class="help-block text-muted small-font">Prioridad: </h6>
-                        <asp:RadioButtonList ID="prioridad3" runat="server" CssClass="form-check mayusculas">
-                            <asp:ListItem Text="Alta" Value="A" />
-                            <asp:ListItem Text="Normal" Value="N" />
-                        </asp:RadioButtonList>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h6 class="help-block text-muted small-font">Diligencia Solicitada: </h6>
-                    <asp:TextBox runat="server" CssClass="form-control mayusculas" placeholder="Ingrese Diligencia" ID="Diligencia3"></asp:TextBox>
-                </div>
-
-            </div>
-
-            <div class="row ">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h6 class="help-block text-muted small-font">Anexos: </h6>
-                    <div class="form-outline">
-                        <asp:DropDownList ID="ddlAnexos3" CssClass="form-select mayusculas" runat="server">
-                            <asp:ListItem runat="server" Text="Seleccione el anexo a agregar:"></asp:ListItem>
-                        </asp:DropDownList>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h6 class="help-block text-muted small-font">Cantidad de Anexos: </h6>
-                    <div class="form-outline">
-                        <asp:TextBox runat="server" ID="noAnexos3" CssClass="form-control" Text="0" Type="Number"></asp:TextBox>
-                    </div>
-                </div>
-
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="nav-item d-flex justify-content-end p-3">
-                        <div style="display: flex; justify-content: center;">
-                            <asp:Button ID="addAnexos3" runat="server" CssClass="btn btn-success mayusculas" Text="Agregar Anexos" OnClick="btnAgregarAnexo_Click3" />
+                                    <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
+                                        <ItemTemplate>
+                                            <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" CommandName="EliminarAnexo3" CommandArgument='<%# Container.DisplayIndex %>' />
+                                        </ItemTemplate>
+                                    </asp:TemplateField>
+                                </Columns>
+                            </asp:GridView>
                         </div>
                     </div>
-                    <asp:GridView ID="gvAnexos3" runat="server" AutoGenerateColumns="False" CssClass="table" OnRowCommand="gvAnexos_RowCommand3" ClientIDMode="Static">
-                        <Columns>
-                            <asp:TemplateField HeaderText="Anexo" SortExpression="NombreDelito">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblAnexo3" runat="server" Text='<%# Bind("descripcion3") %>' CssClass="mayusculas"></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:TemplateField>
-
-                            <asp:TemplateField HeaderText="Cantidad" SortExpression="NombreDelito">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblCantAnexos3" runat="server" Text='<%# Bind("Cantidad3") %>'></asp:Label>
-                                </ItemTemplate>
-                                <HeaderStyle CssClass="bg-success text-white" />
-                            </asp:TemplateField>
-
-                            <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
-                                <ItemTemplate>
-                                    <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CssClass="btn btn-danger" CommandName="EliminarAnexo3" CommandArgument='<%# Container.DisplayIndex %>' />
-                                </ItemTemplate>
-                            </asp:TemplateField>
-                        </Columns>
-                    </asp:GridView>
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <h6 class="help-block text-muted small-font">Observaciones: </h6>
-                    <asp:TextBox ID="observa3" runat="server" CssClass="form-control mayusculas" TextMode="MultiLine" Rows="4" placeholder="Observaciones"></asp:TextBox>
                 </div>
             </div>
 
             <br />
-
-            <center>
-            <asp:Button ID="Button7" runat="server" CssClass="btn btn-success mayusculas" Text="📄 Registrar Exhorto" OnClick="ObtenerDatosYMostrarModal3" OnClientClick="return ValidarCampos();" />
-            </center>
             <br />
 
-
-
-            </center>
-
+            <div class="col-12 col-lg-12 text-left">
+                <div class="mb-0 row">
+                    <center>
+                        <asp:Button ID="Button14" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="💾 ENVIAR" OnClick="ObtenerDatosYMostrarModal3" />
+                    </center>
+                </div>
             </div>
+
+            <br />
+            <br />
 
              <!-- Modal Agregar Partes -->
  <div class="modal fade" id="ModalPartes3">
@@ -1587,43 +1517,6 @@ function habilitarTextBoxSelecSexo3() {
         toastr.error('El anexo seleccionado no es valido, seleccione uno diferente')
     }
 
-    //function ValidacionFormularioAgregarPartes() {
-    //    var parte = $("#parte").val();
-    //    var nom2 = $("#nom2").val();
-    //    var ap2 = $("#ap2").val();
-    //    var am2 = $("#am2").val();
-    //    var sexo = $("#sexo").val();
-
-    //    // Verificar si los campos del formulario están vacíos
-    //    if (parte === "Seleccionar") {
-    //        toastr.warning('Por favor, selecciona una parte.');
-    //        return false;
-    //    }
-    //    if (!nom2) {
-    //        toastr.warning('Por favor, ingresa un nombre.');
-    //        return false;
-    //    }
-    //    if (!ap2) {
-    //        toastr.warning('Por favor, ingresa un apellido paterno.');
-    //        return false;
-    //    }
-    //    if (!am2) {
-    //        toastr.warning('Por favor, ingresa un apellido materno.');
-    //        return false;
-    //    }
-    //    if (sexo === "Seleccionar") {
-    //        toastr.warning('Por favor, selecciona un sexo.');
-    //        return false;
-    //    }
-    //    else { 
-    //    // Si todos los campos están llenos, proceder con la lógica para agregar a la tabla
-    //        toastr.success('La parte se agregó con éxito.');
-    //    }
-    //}
-
-
-
-
     // Default Configuration
     $(document).ready(function () {
         toastr.options = {
@@ -1691,25 +1584,13 @@ function habilitarTextBoxSelecSexo3() {
     function limpiarFormularioAnexos3() {
         // Obtenemos los elementos del formulario
         var ddlAnexos = document.getElementById('<%= ddlAnexos3.ClientID %>');
-            var noAnexos = document.getElementById('<%= noAnexos3.ClientID %>');
+        var noAnexos = document.getElementById('<%= noAnexos3.ClientID %>');
 
         // Restablecemos los valores
         ddlAnexos.selectedIndex = 0;
         noAnexos.value = 0;
     }
 
-
-
-    $(document).ready(function () {
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            sessionStorage.setItem('activeTab', $(e.target).attr('href'));
-        });
-
-        var activeTab = sessionStorage.getItem('activeTab');
-        if (activeTab) {
-            $('#myTab a[href="' + activeTab + '"]').tab('show');
-        }
-    });
 </script>
 
 <script type="text/javascript">

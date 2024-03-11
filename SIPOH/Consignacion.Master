@@ -61,6 +61,21 @@
                         <i class="fas fa-fw fa-chart-bar"></i>
                         <span>Estadística</span>
                     </a>
+
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+                        aria-expanded="true" aria-controls="collapseOne">
+                        <i class="fas fa-fw fa-print"></i>
+                        <span>Digitalización</span>
+                    </a>
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Opciones de Digitalización:</h6>
+                            <a class="collapse-item" href="DigitalizarIniciales.aspx">Iniciales</a>
+                            <a class="collapse-item" href="DigitalizarPosteriores.aspx">Posteriores</a>
+                            <a class="collapse-item" href="PortadasDigitalizacion.aspx">Portadas</a>
+                        </div>
+                    </div>
                 </asp:Panel>
                 <!-- Divider -->
                 <hr class="sidebar-divider">
@@ -387,8 +402,8 @@
                             </asp:ContentPlaceHolder>
                              <asp:ContentPlaceHolder ID="ContentPermisos" runat="server">
                              </asp:ContentPlaceHolder>
-                            <asp:ContentPlaceHolder ID="ContentError" runat="server">
-                             </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentDigitInici" runat="server">
+                            </asp:ContentPlaceHolder>
                             <!-- Estilos de admin lte agregue para el calendario by brayan -->
                             <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                 aria-hidden="true">

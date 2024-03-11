@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using System;
 using System.Data;
-using System.IO;
-using System.Linq;
+using System.Data.SqlClient;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
-using SIPOH.Reportes;
-using System.Configuration.Provider;
-using CrystalDecisions.ReportAppServer;
-using System.Globalization;
-using System.Configuration;
+using System.Xml.Linq;
 
 
 namespace SIPOH.Views
@@ -82,7 +74,6 @@ namespace SIPOH.Views
         {
             try
             {
-
                 // Inicializar fDesde y fHasta con un valor por defecto
                 DateTime fDesde = DateTime.MinValue;
                 DateTime fHasta = DateTime.MaxValue;
@@ -139,6 +130,14 @@ namespace SIPOH.Views
                     {
                         fDesde = DateTime.Parse(calFechaDesde.Text);
                         fHasta = DateTime.Parse(calFechaHasta.Text);
+
+                        // Verificar que la FechaFinal no sea menor que la FechaInicial
+                        if (fHasta < fDesde)
+                        {
+                            Toastr("La Fecha Final no puede ser menor que la Fecha Inicial", "error");
+                            return;
+                        }
+
                         fechas.Visible = true;
                     }
                     else
@@ -206,7 +205,6 @@ namespace SIPOH.Views
                                 var valorDelito = dt.Rows[0]["Delitos"].ToString();
                                 var valorTAnexos = dt.Rows[0]["Total"].ToString();
                             }
-
                             // Configura la ruta del informe Crystal Reports (.rpt)
                             string rutaInforme = ddlFormatoReporte.SelectedValue == "P" ? Server.MapPath("~/Reportes/PosteriorControl.rpt") : Server.MapPath("~/Reportes/InicialControl.rpt");
 
@@ -237,7 +235,6 @@ namespace SIPOH.Views
                             GenerarOtro.Visible = true;
                             TituloReporte.Visible = true;
                             btnMostrarInforme.Enabled = false;
-                            // No hay datos para mostrar, mostrar mensaje Toastr
                             Toastr("Reporte generado con exito", "success");
                         }
                         else
@@ -257,11 +254,6 @@ namespace SIPOH.Views
 
         private void Toastr(string mensaje, string tipo)
         {
-            // Agregar referencia a Toastr en tu página ASPX o MasterPage
-            // Ejemplo: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
-            //          <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-            // Mostrar mensaje Toastr
             ScriptManager.RegisterStartupScript(this.updPanel, this.updPanel.GetType(), "toastr", $"toastr.{tipo}('{mensaje}');", true);
         }
 

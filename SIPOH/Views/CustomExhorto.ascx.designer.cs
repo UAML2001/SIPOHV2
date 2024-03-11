@@ -24,6 +24,42 @@ namespace SIPOH.Views
         protected global::System.Web.UI.UpdatePanel updPanel;
 
         /// <summary>
+        /// Control titulo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl titulo;
+
+        /// <summary>
+        /// Control lblExhorto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblExhorto;
+
+        /// <summary>
+        /// Control lblDespacho.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblDespacho;
+
+        /// <summary>
+        /// Control lblRequisitoria.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblRequisitoria;
+
+        /// <summary>
         /// Control OpExhorto.
         /// </summary>
         /// <remarks>
@@ -78,22 +114,40 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.TextBox fojas1;
 
         /// <summary>
-        /// Control ddlDelitos1.
+        /// Control prioridad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDelitos1;
+        protected global::System.Web.UI.WebControls.RadioButtonList prioridad;
 
         /// <summary>
-        /// Control modalParte.
+        /// Control Diligencia1.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button modalParte;
+        protected global::System.Web.UI.WebControls.TextBox Diligencia1;
+
+        /// <summary>
+        /// Control observa1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox observa1;
+
+        /// <summary>
+        /// Control Button11.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button11;
 
         /// <summary>
         /// Control gvPartes.
@@ -103,6 +157,15 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvPartes;
+
+        /// <summary>
+        /// Control ddlDelitos1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDelitos1;
 
         /// <summary>
         /// Control btnAgregarDelito.
@@ -121,24 +184,6 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvDelitos;
-
-        /// <summary>
-        /// Control prioridad.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList prioridad;
-
-        /// <summary>
-        /// Control Diligencia1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Diligencia1;
 
         /// <summary>
         /// Control ddlAnexos.
@@ -175,15 +220,6 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvAnexos;
-
-        /// <summary>
-        /// Control observa1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox observa1;
 
         /// <summary>
         /// Control ObDatos.
@@ -321,13 +357,31 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.TextBox fojas2;
 
         /// <summary>
-        /// Control ddlDelitos2.
+        /// Control prioridad2.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDelitos2;
+        protected global::System.Web.UI.WebControls.RadioButtonList prioridad2;
+
+        /// <summary>
+        /// Control Diligencia2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Diligencia2;
+
+        /// <summary>
+        /// Control observa2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox observa2;
 
         /// <summary>
         /// Control Button1.
@@ -348,6 +402,15 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.GridView gvPartes2;
 
         /// <summary>
+        /// Control ddlDelitos2.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDelitos2;
+
+        /// <summary>
         /// Control Button2.
         /// </summary>
         /// <remarks>
@@ -364,24 +427,6 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvDelitos2;
-
-        /// <summary>
-        /// Control prioridad2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList prioridad2;
-
-        /// <summary>
-        /// Control Diligencia2.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Diligencia2;
 
         /// <summary>
         /// Control ddlAnexos2.
@@ -420,22 +465,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.GridView gvAnexos2;
 
         /// <summary>
-        /// Control observa2.
+        /// Control Button15.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox observa2;
-
-        /// <summary>
-        /// Control Button3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
+        protected global::System.Web.UI.WebControls.Button Button15;
 
         /// <summary>
         /// Control parte2.
@@ -564,51 +600,6 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.TextBox fojas3;
 
         /// <summary>
-        /// Control ddlDelitos3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDelitos3;
-
-        /// <summary>
-        /// Control Button5.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button5;
-
-        /// <summary>
-        /// Control gvPartes3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvPartes3;
-
-        /// <summary>
-        /// Control Button6.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button6;
-
-        /// <summary>
-        /// Control gvDelitos3.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvDelitos3;
-
-        /// <summary>
         /// Control prioridad3.
         /// </summary>
         /// <remarks>
@@ -625,6 +616,60 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox Diligencia3;
+
+        /// <summary>
+        /// Control observa3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox observa3;
+
+        /// <summary>
+        /// Control Button3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button3;
+
+        /// <summary>
+        /// Control gvPartes3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvPartes3;
+
+        /// <summary>
+        /// Control ddlDelitos3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlDelitos3;
+
+        /// <summary>
+        /// Control Button12.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button12;
+
+        /// <summary>
+        /// Control gvDelitos3.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvDelitos3;
 
         /// <summary>
         /// Control ddlAnexos3.
@@ -645,13 +690,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.TextBox noAnexos3;
 
         /// <summary>
-        /// Control addAnexos3.
+        /// Control Button13.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button addAnexos3;
+        protected global::System.Web.UI.WebControls.Button Button13;
 
         /// <summary>
         /// Control gvAnexos3.
@@ -663,22 +708,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.GridView gvAnexos3;
 
         /// <summary>
-        /// Control observa3.
+        /// Control Button14.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox observa3;
-
-        /// <summary>
-        /// Control Button7.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button7;
+        protected global::System.Web.UI.WebControls.Button Button14;
 
         /// <summary>
         /// Control parte3.
