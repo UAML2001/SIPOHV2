@@ -70,7 +70,7 @@
                         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
                         crossorigin="anonymous"></script>
                     <script src="Scripts/consignaciones/Consignaciones.js"></script>
-                    <script src="Scripts/Ejecucion/formatoInput.js"></script>
+                    <script src="Scripts/Ejecucion/formatoInput.js" charset="utf-8"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
                     <script>
                         toastr.options = {

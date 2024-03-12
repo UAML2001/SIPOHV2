@@ -5,20 +5,31 @@ function padLeadingZeros(num) {
     var partes = valor.split("/");
     if (partes.length === 1) {
         while (valor.length < 8) valor = "0" + valor;
-        valor = valor.substring(0, 4) + "/" + valor.substring(4);
+        valor = valor.substring(0, 4) + "/" + valor.substring(4, 8);
     } else {
         for (var i = 0; i < partes.length; i++) {
             while (partes[i].length < 4) partes[i] = "0" + partes[i];
         }
         valor = partes.join("/");
-        
     }
-    if (valor.length > 9) {
-        valor = valor.substring(0, 9);
+    if (valor.length > 9) valor = valor.substring(0, 9);
+
+    // Verificar año
+    const anioActual = new Date().getFullYear();
+    const anioIngresado = parseInt(valor.split('/')[1]);
+    if (anioIngresado > anioActual) {
+        toastError('La fecha ingresada no puede ser mayor a la fecha anual actual.');
+        return; // Evitar que se establezca un valor inválido
+    } else if (anioIngresado < 1800) {
+        toastError('La fecha ingresada no puede ser anterior de la fecha 1799.');
+        return; // Evitar que se establezca un valor inválido
+    } else {
+        num.value = valor;
     }
-    num.value = valor;
     return valor;
 }
+
+
 function verificarNumeros(input) {
     // Obtener el valor del input
     var valor = input.value;
