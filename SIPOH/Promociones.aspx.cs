@@ -130,7 +130,7 @@ namespace SIPOH
                 GridViewPromociones.DataSource = dt;
                 GridViewPromociones.DataBind();
                 tituloDetallesCausa.Visible = false;
-                insertarPromoventeAnexos.Style.Add("display", "none");
+                insertarPromoventeAnexos.Style.Add("display", "block");
                 string mensajeExito = "Se encontraron resultados de tu consulta de promociones.";
                 ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastExito", $"mostrarToast('{mensajeExito}');", true);
             }
@@ -615,11 +615,12 @@ namespace SIPOH
             bool tieneDatos = dt.Rows.Count > 0;
             tituloTablaPromociones.Visible = dt.Rows.Count > 0;
             tituloDetallesCausa.Visible = dt.Rows.Count > 0;
-            insertarPromoventeAnexos.Style.Add("display", dt.Rows.Count > 0 ? "block" : "none");
+            insertarPromoventeAnexos.Style.Add("display", dt.Rows.Count > 0 ? "block" : "block");
             lblMensajeSinDatos.Visible = !tieneDatos;
             if (!tieneDatos)
             {
                 lblMensajeSinDatos.Text = "No se encontraron datos.";
+
             }
         }
         //CODIGO PARA BORRAR RELACION DE CAUSAS A EJEUCION EN EL SEGUNDO GRID

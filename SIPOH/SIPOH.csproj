@@ -2197,6 +2197,7 @@
     <Content Include="Global.asax" />
     <Content Include="HistoricosCtrl.aspx" />
     <Content Include="Iniciales.aspx" />
+    <Content Include="libroindice.aspx" />
     <Content Include="Permisos.aspx" />
     <Content Include="PortadasDigitalizacion.aspx" />
     <Content Include="Promociones.aspx" />
@@ -2733,6 +2734,13 @@
     </Compile>
     <Compile Include="Iniciales.aspx.designer.cs">
       <DependentUpon>Iniciales.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="libroindice.aspx.cs">
+      <DependentUpon>libroindice.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="libroindice.aspx.designer.cs">
+      <DependentUpon>libroindice.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\ArchivosFTP.cs" />
     <Compile Include="Models\BandejaBuzonSolicitud.cs" />

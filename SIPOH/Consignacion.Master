@@ -404,6 +404,8 @@
                              </asp:ContentPlaceHolder>
                             <asp:ContentPlaceHolder ID="ContentDigitInici" runat="server">
                             </asp:ContentPlaceHolder>
+                             <asp:ContentPlaceHolder ID="Contentlibroindice" runat="server">
+                            </asp:ContentPlaceHolder>
                             <!-- Estilos de admin lte agregue para el calendario by brayan -->
                             <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                 aria-hidden="true">
