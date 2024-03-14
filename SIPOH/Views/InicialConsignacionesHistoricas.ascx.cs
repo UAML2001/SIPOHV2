@@ -868,7 +868,9 @@ namespace SIPOH.Views
         //FUNCION MOSTRAR DATOS EN MODAL
         public void RecolectarDatosParaModal()
         {
-            string fechaEjecucion = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string fechaInput = inFecha.Value;
+            string horaInput = inHora.Value;
+            string fechaEjecucion = $"{fechaInput}  {horaInput}";
             string nombreBeneficiario = InputNombreBusqueda.Text;
             string apellidoPaternoBeneficiario = InputApPaternoBusqueda.Text;
             string apellidoMaternoBeneficiario = inputApMaterno.Text;

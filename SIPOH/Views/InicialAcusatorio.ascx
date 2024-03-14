@@ -189,7 +189,7 @@
             <div style="display: flex; align-items: center; justify-content: center;">
                 <p style="margin-right: 10px; margin-top: 10px;">¿Consultar Sentenciado / Beneficiario? </p>
                 <div class="form-check" style="margin-right: 10px;">
-                    <asp:RadioButton ID="CheckSi" runat="server" GroupName="respuesta" AutoPostBack="True" OnCheckedChanged="RadioButton2_CheckedChanged" />
+                    <asp:RadioButton ID="CheckSi" runat="server" GroupName="respuesta" AutoPostBack="True"  CssClass="radio-custom" OnCheckedChanged="RadioButton2_CheckedChanged" />
                     <label class="form-check-label" for="CheckSi">
                         Si
                     </label>
@@ -259,21 +259,25 @@
     </div>
     <div id="ContinuarRegistro" runat="server">
 
-        <div class="col-12 col-sm-6 col-md-4 col-lg-6" style="display: flex; align-items: center;">
-            <p style="margin-right: 10px; margin-top: 10px;">¿Sentenciado Interno? (</p>
-            <div class="form-check" style="margin-right: 10px;">
-                <input class="form-check-input" type="radio" value="S" id="siInterno" runat="server">
-                <label class="form-check-label">
-                    Si
-                </label>
+        
+            <div class="col-12 col-sm-6 col-md-4 col-lg-6" style="display: flex; align-items: center;">
+                <p style="margin-right: 10px; margin-top: 10px;">¿Sentenciado Interno? (</p>
+                <div class="form-check" style="margin-right: 10px;">
+                    <input class="form-check-input radioSI" type="radio" value="S" id="siInterno" runat="server">
+                    <label class="form-check-label">
+                        Si
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input radioNO" type="radio" value="N" id="noInterno" runat="server">
+                    <label class="form-check-label">
+                        No )
+                    </label>
+                </div>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" value="N" id="noInterno" runat="server">
-                <label class="form-check-label">
-                    No )
-                </label>
-            </div>
-        </div>
+    
+
+
         <div class="row">
             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                 <label class="form-label-sm text-secondary">Solicitante</label>

@@ -524,6 +524,8 @@
                 function recargarPagina() {
                     window.location.href = window.location.href;
                 }
+
+
             </script>
         </div>
     </asp:Content>

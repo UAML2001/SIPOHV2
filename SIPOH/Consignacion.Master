@@ -102,6 +102,7 @@
                             <a class="collapse-item" href="PromocionesCtrl.aspx">Promociones</a>
                             <a class="collapse-item" href="ReportesCtrl.aspx">Reportes</a>
                             <a class="collapse-item" href="SolicitudCDs.aspx">Solicitud de CDs</a>
+                            <a class="collapse-item" href="libro.aspx">Libro Índice</a>
                         </div>
                     </div>
                 </asp:Panel>
@@ -124,6 +125,7 @@
                             <a class="collapse-item" href="PromocionesCtrl.aspx">Promociones</a>
                             <a class="collapse-item" href="ReportesCtrl.aspx">Reportes</a>
                             <a class="collapse-item" href="SolicitudCDs.aspx">Solicitud de CDs</a>
+                            <a class="collapse-item" href="libro.aspx">Libro Índice</a>
                         </div>
                     </div>
                       <li ID="Panel1" runat="server" CssClass="nav-item">

@@ -2197,7 +2197,7 @@
     <Content Include="Global.asax" />
     <Content Include="HistoricosCtrl.aspx" />
     <Content Include="Iniciales.aspx" />
-    <Content Include="libroindice.aspx" />
+    <Content Include="libro.aspx" />
     <Content Include="Permisos.aspx" />
     <Content Include="PortadasDigitalizacion.aspx" />
     <Content Include="Promociones.aspx" />
@@ -2587,6 +2587,7 @@
     <Compile Include="Consulta.aspx.designer.cs">
       <DependentUpon>Consulta.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AC_CatalogosCompartidos\AC_ConsultaLibroIndiceController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatAnexosController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatEjecucion_CatAnexosController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatEjecucion_CatSolicitanteController.cs" />
@@ -2735,12 +2736,12 @@
     <Compile Include="Iniciales.aspx.designer.cs">
       <DependentUpon>Iniciales.aspx</DependentUpon>
     </Compile>
-    <Compile Include="libroindice.aspx.cs">
-      <DependentUpon>libroindice.aspx</DependentUpon>
+    <Compile Include="libro.aspx.cs">
+      <DependentUpon>libro.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="libroindice.aspx.designer.cs">
-      <DependentUpon>libroindice.aspx</DependentUpon>
+    <Compile Include="libro.aspx.designer.cs">
+      <DependentUpon>libro.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\ArchivosFTP.cs" />
     <Compile Include="Models\BandejaBuzonSolicitud.cs" />

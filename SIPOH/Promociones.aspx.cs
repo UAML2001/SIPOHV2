@@ -53,7 +53,7 @@ namespace SIPOH
                 lbltituloRelacionCausa.Visible = false;
                 TablasAnexos.Visible = false;
                 insertarPromoventeAnexos.Style.Add("display", "none");
-                BotonGuardarDiv.Style.Add("display", "none");
+                BotonGuardarDiv.Style.Add("display", "true");
                 tituloSello.Style.Add("display", "none");
                 divrelacionar.Style.Add("display", "none");
                 CargarJuzgados();
@@ -620,7 +620,6 @@ namespace SIPOH
             if (!tieneDatos)
             {
                 lblMensajeSinDatos.Text = "No se encontraron datos.";
-
             }
         }
         //CODIGO PARA BORRAR RELACION DE CAUSAS A EJEUCION EN EL SEGUNDO GRID
@@ -758,7 +757,7 @@ namespace SIPOH
             {
                 // Si no tiene elementos, oculta la tabla y el botón de guardar
                 TablasAnexos.Visible = false;
-                BotonGuardarDiv.Style.Add("display", "none");
+                BotonGuardarDiv.Style.Add("display", "block");
             }
         }
         //ROWDATABOUND CAMBIAR EL COLOR A GRIS OBSCURO DE MI GRID TABLA DATOS
@@ -1111,7 +1110,7 @@ namespace SIPOH
             ticket.AppendLine("-----------------------------------");
             ticket.AppendLine($"Numero de Ejecucion: {datos.NumeroEjecucion}");
             ticket.AppendLine($"Folio: {datos.Folio}");
-            ticket.AppendLine($"Fecha: {datos.Fecha.ToString("dd/MM/yyyy")}");
+            ticket.AppendLine($"Fecha: {datos.Fecha.ToString("dd/MM/yyyy HH:mm:ss")}");
             foreach (AnexoPromocion anexo in datos.AnexosDetalles)
             {
                 ticket.AppendLine($"{anexo.Descripcion}: {anexo.Cantidad}");

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Consignacion.Master" AutoEventWireup="true" CodeBehind="libroindice.aspx.cs" Inherits="SIPOH.libroindice" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Consignacion.Master" AutoEventWireup="true" CodeBehind="libro.aspx.cs" Inherits="SIPOH.libroindice" %>
 
 <asp:Content ID="ContentLibroIndice12" ContentPlaceHolderID="Contentlibroindice" runat="server">
     <%--  --%>
@@ -21,29 +21,51 @@
             <div class="card-body">
                 <asp:UpdatePanel ID="UpdatePanelPromociones" runat="server">
                     <ContentTemplate>
-                        <h2>Libro Índice</h2>
-                        <hr />
 
-                       <div class="row">
-                        <div class="col-sm-6 col-md-4">
-                            <label for="inputNombre" class="form-label text-secondary">Nombre(s)</label>
-                            <input type="text" class="form-control form-control-sm mayusculas" id="inputNombre" maxlength="250" runat="server" />
+                        <div class="row">
+                            <div class="col-sm-6 col-md-4">
+                                <label for="inputNombre" class="form-label text-secondary">Nombre(s)</label>
+                                <input type="text" class="form-control form-control-sm mayusculas" id="inputNombre" maxlength="250" runat="server" />
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <label for="inputApellidoPaterno" class="form-label text-secondary">Apellido Paterno (Razón social)</label>
+                                <input type="text" class="form-control form-control-sm mayusculas" maxlength="100" id="inputApellidoPaterno" runat="server" />
+                            </div>
+                            <div class="col-sm-6 col-md-3">
+                                <label for="inputApellidoMaterno" class="form-label text-secondary">Apellido Materno</label>
+                                <input type="text" class="form-control form-control-sm mayusculas" maxlength="100" id="inputApellidoMaterno" runat="server" />
+                            </div>
+                            <div class="col-sm-6 col-md-2 d-flex align-items-end justify-content-center">
+                                <asp:Button ID="btnBuscarPCausa" runat="server" OnClick="btnBuscarLibroIndice_Click" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" />
+                                <asp:Button ID="btnLimpiar" runat="server" OnClick="btnLimpiar_Click" Text="Limpiar" CssClass="btn btn-outline-danger btn-sm ml-2" />
+                            </div>
                         </div>
-                        <div class="col-sm-6 col-md-3">
-                            <label for="inputApellidoPaterno" class="form-label text-secondary">Apellido Paterno (Razón social)</label>
-                            <input type="text" class="form-control form-control-sm mayusculas" maxlength="100" id="inputApellidoPaterno" runat="server" />
-                        </div>
-                        <div class="col-sm-6 col-md-3">
-                            <label for="inputApellidoMaterno" class="form-label text-secondary">Apellido Materno</label>
-                            <input type="text" class="form-control form-control-sm mayusculas" maxlength="100" id="inputApellidoMaterno" runat="server" />
-                        </div>
-                        <div class="col-sm-6 col-md-2 d-flex align-items-end justify-content-center">
-                            <asp:Button ID="btnBuscarPCausa" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" />
-                            <button id="btnLimpiar" runat="server" type="button" class="btn btn-outline-danger btn-sm ml-2">Limpiar</button>
+                        <p></p>
+                        <div class="row">
+                            <asp:GridView ID="gridViewResultados" runat="server" CssClass="table table-sm table-striped table-hover" AutoGenerateColumns="False">
+                                <Columns>
+                                    <asp:BoundField DataField="Asunto" HeaderText="Asunto">
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="Numero" HeaderText="Número">
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="Victimas" HeaderText="Víctimas">
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="Inculpados" HeaderText="Inculpados">
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="Delitos" HeaderText="Delitos">
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:BoundField>
+                                    <asp:BoundField DataField="RelacionadoJO" HeaderText="Relacionado JO">
+                                        <HeaderStyle CssClass="bg-success text-white" />
+                                    </asp:BoundField>
+                                </Columns>
+                            </asp:GridView>
 
                         </div>
-                    </div>
-
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
