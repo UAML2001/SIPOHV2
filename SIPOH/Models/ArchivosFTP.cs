@@ -15,11 +15,11 @@ namespace SIPOH.Models
             try
             {
                 //create the directory
-                string UrlCompleta = ConexionFTP.ObtenerRutaFTPServer() + Carpeta;
+                string UrlCompleta = ConexionFTP.ObtenerRutaFTP() + Carpeta;
                 FtpWebRequest requestDir = (FtpWebRequest)FtpWebRequest.Create(new Uri(UrlCompleta));
                 requestDir.Method = WebRequestMethods.Ftp.MakeDirectory;
                 //requestDir.Credentials = new NetworkCredential(Usuario, Clave);
-                requestDir.Credentials = new NetworkCredential(ConexionFTP.ObtenerUsuarioFTPServer(), ConexionFTP.ObtenerClaveFTPServer());
+                requestDir.Credentials = new NetworkCredential(ConexionFTP.ObtenerUsuarioFTP(), ConexionFTP.ObtenerClaveFTP());
                 requestDir.UsePassive = true;
                 requestDir.UseBinary = true;
                 requestDir.KeepAlive = false;
@@ -51,10 +51,10 @@ namespace SIPOH.Models
         {
             try
             {
-                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ConexionFTP.ObtenerRutaFTPServer() + NombreCarpeta);
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ConexionFTP.ObtenerRutaFTP() + NombreCarpeta);
                 request.Method = WebRequestMethods.Ftp.ListDirectory;
                 //request.Credentials = new NetworkCredential(Usuario, Clave);
-                request.Credentials = new NetworkCredential(ConexionFTP.ObtenerUsuarioFTPServer(), ConexionFTP.ObtenerClaveFTPServer());
+                request.Credentials = new NetworkCredential(ConexionFTP.ObtenerUsuarioFTP(), ConexionFTP.ObtenerClaveFTP());
                 request.KeepAlive = false;
                 FtpWebResponse response = (FtpWebResponse)request.GetResponse();
                 response.Close();
@@ -70,9 +70,9 @@ namespace SIPOH.Models
 
         public static bool VerificarArchivoFTP(string fileName)
         {
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ConexionFTP.ObtenerRutaFTPServer() + fileName);
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ConexionFTP.ObtenerRutaFTP() + fileName);
             //request.Credentials = new NetworkCredential(Usuario, Clave);
-            request.Credentials = new NetworkCredential(ConexionFTP.ObtenerUsuarioFTPServer(), ConexionFTP.ObtenerClaveFTPServer());
+            request.Credentials = new NetworkCredential(ConexionFTP.ObtenerUsuarioFTP(), ConexionFTP.ObtenerClaveFTP());
             request.Method = WebRequestMethods.Ftp.GetFileSize;
             request.KeepAlive = false;
 
@@ -98,11 +98,11 @@ namespace SIPOH.Models
             try
             {
                 Byte[] ArchivoBA = ToByteArray(responseStream);
-                string FileName = ConexionFTP.ObtenerRutaFTPServer() + NombreArchivo;
+                string FileName = ConexionFTP.ObtenerRutaFTP() + NombreArchivo;
 
                 FtpWebRequest request = (FtpWebRequest)WebRequest.Create(FileName);
                 //request.Credentials = new NetworkCredential(Usuario, Clave);
-                request.Credentials = new NetworkCredential(ConexionFTP.ObtenerUsuarioFTPServer(), ConexionFTP.ObtenerClaveFTPServer());
+                request.Credentials = new NetworkCredential(ConexionFTP.ObtenerUsuarioFTP(), ConexionFTP.ObtenerClaveFTP());
                 request.Method = WebRequestMethods.Ftp.UploadFile;
                 request.KeepAlive = false;
 
@@ -124,10 +124,10 @@ namespace SIPOH.Models
 
         public static bool EliminarArchivo(string DirCarpetaNExpe, string NombreArchivo)
         {
-            string RutaArchivo = ConexionFTP.ObtenerRutaFTPServer() + DirCarpetaNExpe + NombreArchivo;
+            string RutaArchivo = ConexionFTP.ObtenerRutaFTP() + DirCarpetaNExpe + NombreArchivo;
             FtpWebRequest request = (FtpWebRequest)WebRequest.Create(RutaArchivo);
             //request.Credentials = new NetworkCredential(Usuario, Clave);
-            request.Credentials = new NetworkCredential(ConexionFTP.ObtenerUsuarioFTPServer(), ConexionFTP.ObtenerClaveFTPServer());
+            request.Credentials = new NetworkCredential(ConexionFTP.ObtenerUsuarioFTP(), ConexionFTP.ObtenerClaveFTP());
             request.Method = WebRequestMethods.Ftp.DeleteFile;
             request.KeepAlive = false;
 
@@ -151,9 +151,9 @@ namespace SIPOH.Models
         {
             Byte[] ArchivoArray = new byte[4096];
 
-            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ConexionFTP.ObtenerRutaFTPServer() + fileName);
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ConexionFTP.ObtenerRutaFTP() + fileName);
             //request.Credentials = new NetworkCredential(Usuario, Clave);
-            request.Credentials = new NetworkCredential(ConexionFTP.ObtenerUsuarioFTPServer(), ConexionFTP.ObtenerClaveFTPServer());
+            request.Credentials = new NetworkCredential(ConexionFTP.ObtenerUsuarioFTP(), ConexionFTP.ObtenerClaveFTP());
             request.Method = WebRequestMethods.Ftp.DownloadFile;
             request.KeepAlive = false;
 

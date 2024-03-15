@@ -1,0 +1,167 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\uriel\\onedrive\\documentos\\github\\sipohv2\\sipoh\\models\\archivosftp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\models\\archivosftp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\uriel\\onedrive\\documentos\\github\\sipohv2\\sipoh\\controllers\\ac_digitalizacion\\archivosftp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\controllers\\ac_digitalizacion\\archivosftp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\uriel\\onedrive\\documentos\\github\\sipohv2\\sipoh\\controllers\\ac_digitalizacion\\conexionftp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\controllers\\ac_digitalizacion\\conexionftp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\sipoh\\scripts\\ejecucion\\formatoinput.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\scripts\\ejecucion\\formatoinput.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\sipoh\\digitalizarposteriores.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\digitalizarposteriores.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\sipoh\\digitalizarposteriores.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\digitalizarposteriores.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\sipoh\\digitalizariniciales.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\digitalizariniciales.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\sipoh\\digitalizariniciales.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\digitalizariniciales.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ArchivosFTP.cs",
+              "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\Models\\ArchivosFTP.cs",
+              "RelativeDocumentMoniker": "SIPOH\\Models\\ArchivosFTP.cs",
+              "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\Models\\ArchivosFTP.cs",
+              "RelativeToolTip": "SIPOH\\Models\\ArchivosFTP.cs",
+              "ViewState": "AQIAAKUAAAAAAAAAAAAMwJsAAAB0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-15T22:25:04.404Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ArchivosFTP.cs",
+              "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\Controllers\\AC_Digitalizacion\\ArchivosFTP.cs",
+              "RelativeDocumentMoniker": "SIPOH\\Controllers\\AC_Digitalizacion\\ArchivosFTP.cs",
+              "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\Controllers\\AC_Digitalizacion\\ArchivosFTP.cs",
+              "RelativeToolTip": "SIPOH\\Controllers\\AC_Digitalizacion\\ArchivosFTP.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAALsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-15T22:23:57.507Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "formatoInput.js",
+              "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\Scripts\\Ejecucion\\formatoInput.js",
+              "RelativeDocumentMoniker": "SIPOH\\Scripts\\Ejecucion\\formatoInput.js",
+              "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\Scripts\\Ejecucion\\formatoInput.js",
+              "RelativeToolTip": "SIPOH\\Scripts\\Ejecucion\\formatoInput.js",
+              "ViewState": "AQIAABoAAAAAAAAAAAAuwEAAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-03-15T22:20:49.341Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ConexionFTP.cs",
+              "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\Controllers\\AC_Digitalizacion\\ConexionFTP.cs",
+              "RelativeDocumentMoniker": "SIPOH\\Controllers\\AC_Digitalizacion\\ConexionFTP.cs",
+              "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\Controllers\\AC_Digitalizacion\\ConexionFTP.cs",
+              "RelativeToolTip": "SIPOH\\Controllers\\AC_Digitalizacion\\ConexionFTP.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-15T22:20:31.096Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DigitalizarPosteriores.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\DigitalizarPosteriores.aspx.cs",
+              "RelativeDocumentMoniker": "SIPOH\\DigitalizarPosteriores.aspx.cs",
+              "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\DigitalizarPosteriores.aspx.cs",
+              "RelativeToolTip": "SIPOH\\DigitalizarPosteriores.aspx.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEQAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-15T22:19:42.559Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DigitalizarPosteriores.aspx",
+              "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\DigitalizarPosteriores.aspx",
+              "RelativeDocumentMoniker": "SIPOH\\DigitalizarPosteriores.aspx",
+              "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\DigitalizarPosteriores.aspx",
+              "RelativeToolTip": "SIPOH\\DigitalizarPosteriores.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2024-03-15T22:19:16.919Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DigitalizarIniciales.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\DigitalizarIniciales.aspx.cs",
+              "RelativeDocumentMoniker": "SIPOH\\DigitalizarIniciales.aspx.cs",
+              "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\DigitalizarIniciales.aspx.cs",
+              "RelativeToolTip": "SIPOH\\DigitalizarIniciales.aspx.cs",
+              "ViewState": "AQIAAC4AAAAAAAAAAAA2wEgAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-15T22:18:54.391Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "DigitalizarIniciales.aspx",
+              "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\DigitalizarIniciales.aspx",
+              "RelativeDocumentMoniker": "SIPOH\\DigitalizarIniciales.aspx",
+              "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\DigitalizarIniciales.aspx",
+              "RelativeToolTip": "SIPOH\\DigitalizarIniciales.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2024-03-15T22:18:22.271Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

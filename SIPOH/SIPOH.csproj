@@ -2390,6 +2390,7 @@
     <Content Include="Externo\MasterExterno.Master" />
     <Content Include="Scripts\Ejecucion\HistoricosCausa.js" />
     <Content Include="Scripts\Firma\Controlador.ashx" />
+    <Content Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\consignaciones\Consignaciones.js" />
     <Content Include="Scripts\consignaciones\RegistroIniciales.js" />
@@ -2605,11 +2606,26 @@
     <Compile Include="Controllers\AC_Digitalizacion\ConexionFTP.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\ConsultaCargaInicial.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\ConsultaCargaPosterior.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\DigitalizarInicial.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\DigitalizarPosterior.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\ElegirInicial.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\ElegirPosterior.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\GenerarIdJuzgadoPorSesion.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\ObtenerIdCircuito.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\PaginacionInicial.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\PaginacionPosterior.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Content Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PortadaDigitalizacion.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Compile Include="Controllers\AC_Digitalizacion\UpdateDigitalizado.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\UpdateDigitalizadoPosterior.cs" />
     <Compile Include="Controllers\AC_RegistroInicialJuicioOral\InicialJuicioOralController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatDelitosController.cs" />
     <Compile Include="Controllers\EJ_Storages\Ejecucion_ConsultarCausaController.cs" />
@@ -3063,6 +3079,11 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PortadaDigitalizacion1.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\InicialControl.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>InicialControl.cs</LastGenOutput>

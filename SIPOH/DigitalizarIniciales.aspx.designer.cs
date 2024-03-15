@@ -132,6 +132,24 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.Label lblinfo;
 
         /// <summary>
+        /// Control PortadaInicial.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label PortadaInicial;
+
+        /// <summary>
+        /// Control VPPortada.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlIframe VPPortada;
+
+        /// <summary>
         /// Control lblAdjuntar.
         /// </summary>
         /// <remarks>

@@ -565,7 +565,6 @@ C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\es\System.Web.Webpag
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\es\System.Web.Webpages.Razor.resources.dll
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\es\System.Web.Helpers.resources.dll
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\es\System.Web.Mvc.resources.dll
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.CopyComplete
 C:\Users\SistemasTSJEH\Documents\GitHub\SIPOHV2\SIPOH\bin\SIPOH.dll.config
 C:\Users\SistemasTSJEH\Documents\GitHub\SIPOHV2\SIPOH\bin\SIPOH.dll
 C:\Users\SistemasTSJEH\Documents\GitHub\SIPOHV2\SIPOH\bin\SIPOH.pdb
@@ -790,3 +789,6 @@ C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.C
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.CopyComplete
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.dll
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.pdb
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\PortadaDigitalizacion1.cs
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\PortadaDigitalizacion.rpt
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.Up2Date

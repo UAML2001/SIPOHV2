@@ -1,17 +1,13 @@
-﻿using System;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
+using System.Data.SqlClient;
 using System.Web;
-using System.Web.UI.WebControls;
-using System.Web.Razor.Parser.SyntaxTree;
-using static System.Web.Razor.Parser.SyntaxConstants;
-using System.Web.UI.WebControls.WebParts;
-using System.Web.Services.Description;
 using System.Web.UI;
-using System.IO;
-using System.Diagnostics;
+using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 
 namespace SIPOH.Controllers.AC_Digitalizacion
 {
@@ -32,7 +28,9 @@ namespace SIPOH.Controllers.AC_Digitalizacion
             Label lblinfo,
             Label lblAdjuntar,
             System.Web.UI.WebControls.FileUpload UploadFileDigit,
-            Button btnDigitalizar
+            Button btnDigitalizar,
+            Label PortadaInicial,
+            HtmlIframe VPPortada
            )
         {
             // Obtén el CheckBox que disparó el evento
@@ -69,9 +67,6 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                     cmd.Parameters.Add("@IdJuzgado", SqlDbType.Int).Value = IdJuzgado;
 
                     conn.Open();
-
-
-
                     if (((CheckBox)sender).Checked)
                     {
                         foreach (GridViewRow row in PDigitalizar.Rows)
@@ -159,6 +154,30 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                         lblAdjuntar.Visible = true;
                         UploadFileDigit.Visible = true;
                         btnDigitalizar.Visible = true;
+                        PortadaInicial.Visible = true;
+
+
+                        // Configura la ruta del informe Crystal Reports (.rpt)
+                        string rutaInforme = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.rpt");
+
+                        // Crea el informe
+                        ReportDocument reporte = new ReportDocument();
+                        reporte.Load(rutaInforme);
+
+                        // Configurar el formato de salida como PDF
+                        reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
+                        reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
+                        string rutaArchivoPDF = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf");
+                        reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
+
+                        // Exportar el informe a PDF
+                        reporte.Export();
+
+                        // Mostrar el archivo PDF en el Panel            
+                        VPPortada.Src = "~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf";
+                        VPPortada.Visible = true;
+
+
                     }
                     else
                     {
@@ -186,7 +205,10 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                         lblAdjuntar.Visible = false;
                         UploadFileDigit.Visible = false;
                         btnDigitalizar.Visible = false;
+                        PortadaInicial.Visible = false;
                     }
+
+
                 }
             }
         }
