@@ -2388,6 +2388,7 @@
     <Content Include="Reportes\PosteriorEjecucion.pdf" />
     <None Include="Connected Services\Firma\WebService.wsdl" />
     <Content Include="Externo\MasterExterno.Master" />
+    <Content Include="Scripts\Ejecucion\HistoricosCausa.js" />
     <Content Include="Scripts\Firma\Controlador.ashx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\consignaciones\Consignaciones.js" />

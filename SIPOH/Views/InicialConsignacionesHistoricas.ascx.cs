@@ -56,6 +56,7 @@ namespace SIPOH.Views
         {
             // Asegúrate de que este evento esté correctamente vinculado en tu aspx con AutoPostBack="true"
             Session["Tipo"] = CausaNucCHA.SelectedValue;
+            Session["TipoDocumentoHistorico"] = null;
         }
         //fin de variables de sesion
         private void visibleAcusatorioTradicional()
@@ -192,6 +193,15 @@ namespace SIPOH.Views
         //FUNCION BUSCAR CAUSA DESDE ACUSATORIO
         protected void btnBuscarAcusatorio_Click(object sender, EventArgs e)
         {
+            //values
+            string tipoSitema = ddlSistemasAT.SelectedValue;
+            //tradiccional             
+            string numeroDocumentoTradicional = InputCausaTradicional.Text;
+            //Acusatorio
+            string idjuzgadoSeleccionadoAcusatorio = JuzgadoProcedenciaCHA.SelectedValue;
+            int tipoDocumento = int.Parse(CausaNucCHA.SelectedValue);
+            string numeroDocumentoAcusatorio = causaNucAcusatorio.Text;
+
             string idjuzgadoSeleccionado = JuzgadoProcedenciaCHA.SelectedValue;
             ObtenerNombreJuzgadoPorIDController obtenerNombreJuzgado = new ObtenerNombreJuzgadoPorIDController();
             var juzgado = obtenerNombreJuzgado.ObtenerJuzgadoPorID(idjuzgadoSeleccionado);
@@ -232,7 +242,34 @@ namespace SIPOH.Views
                 MostrarMensaje(mensajeExito, true);
             }
             else
-            {
+            {                
+                Session["TipoSistema"] = tipoSitema;
+                switch (tipoSitema)
+                {
+                    case "acusatorio":
+                        if (string.IsNullOrWhiteSpace(tipoDocumento.ToString()) ||
+                            string.IsNullOrWhiteSpace(idjuzgadoSeleccionadoAcusatorio) ||
+                            string.IsNullOrWhiteSpace(numeroDocumentoAcusatorio))
+                        {
+                            string mensajeError = "Si deseas agregar un historico, los datos de acusatorio son necesarios";
+                            MensajeError(mensajeError, true);
+                            return;
+                        }
+                        else
+                        {
+                            Session["TipoDocumentoHistorico"] = tipoDocumento;
+                            Session["IdJuzgadoHistorico"] = idjuzgadoSeleccionadoAcusatorio;
+                            Session["NumeroDocumentoHistorico"] = numeroDocumentoAcusatorio;
+
+                        }
+
+                        break;
+                    default:
+                        string MensajeErrorN = "Selecciona tipo de historico";
+                        MensajeError(MensajeErrorN, true);
+                        return;
+                        break;
+                }
                 string mensajeErrorModal = "No se encontró la CAUSA | NUC en el JUZGADO elegido, ¿Deseas registrar una nueva causa histórica?.";
                 divOcultarSinCausa.Style["display"] = "none";
                 MostrarMensaje(mensajeErrorModal, false);
@@ -251,6 +288,12 @@ namespace SIPOH.Views
         //FUNCION BUSCAR CAUSA DESDE TRADICIONAL
         protected void btnBuscarTradicional_Click(object sender, EventArgs e)
         {
+
+            string tipoSitema = ddlSistemasAT.SelectedValue;
+            //tradiccional 
+            string idjuzgadoSeleccionado = ddlJuzgadoProcedencia.SelectedValue;
+            string numeroDocumentoTradicional = InputCausaTradicional.Text;
+
             string idjuzgadoT = ddlJuzgadoProcedencia.SelectedValue;
             ObtenerNombreJuzgadoPorIDController obtenerNombreJuzgado = new ObtenerNombreJuzgadoPorIDController();
             var juzgadoT = obtenerNombreJuzgado.ObtenerJuzgadoPorID(idjuzgadoT);
@@ -285,6 +328,31 @@ namespace SIPOH.Views
             }
             else
             {
+                Session["TipoSistema"] = tipoSitema;
+                switch (tipoSitema)
+                {
+
+                    case "tradicional":
+                        if (string.IsNullOrWhiteSpace(idjuzgadoSeleccionado) ||
+                            string.IsNullOrWhiteSpace(numeroDocumentoTradicional))
+                        {
+                            string mensajeError = "Si deseas agregar un historico, los datos de tradicional son necesarios";
+                            MensajeError(mensajeError, true);
+                            return;
+                        }
+                        else
+                        {
+                            Session["TipoDocumentoHistorico"] = 1;
+                            Session["IdJuzgadoHistorico"] = idjuzgadoSeleccionado;
+                            Session["NumeroDocumentoHistorico"] = numeroDocumentoTradicional;
+                        }
+                        break;
+                    default:
+                        string MensajeErrorN = "Selecciona tipo de historico";
+                        MensajeError(MensajeErrorN, true);
+                        return;
+                        break;
+                }
                 string mensajeErrorModal = "No se encontró la CAUSA | NUC en el JUZGADO elegido, ¿Deseas registrar una nueva causa histórica?.";
                 divOcultarSinCausa.Style["display"] = "none";
                 MostrarMensaje(mensajeErrorModal, false);
