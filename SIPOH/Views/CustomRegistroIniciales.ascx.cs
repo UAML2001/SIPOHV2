@@ -138,12 +138,20 @@ namespace SIPOH.Views
                 BusquedaIniciales.Visible = true;
                 grdTblGetPromociones.DataSource = resultados;
                 grdTblGetPromociones.DataBind();
-                errorConsulta.Text = "Resultados encontrados";
+                //errorConsulta.Text = "Resultados encontrados";
+               
+                string mensaje = "Resultados fueron encontrados.";
+                string script = $"toastInfo('{mensaje}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+
             }
             else
             {
                 BusquedaIniciales.Visible = false;
-                errorConsulta.Text = "No se encontraron resultados";
+                //errorConsulta.Text = "No se encontraron resultados";
+                string mensaje = "No se encontraron resultados en tu busqueda.";
+                MostrarMensajeError(mensaje);
+                
             }
             ddlTipoFiltrado.SelectedIndex = 0;
             inputBuscarInicial.Text = "";
