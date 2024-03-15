@@ -231,6 +231,15 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.TextBox txtAliasImputado;
 
         /// <summary>
+        /// Control UpdatePanelModal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelModal;
+
+        /// <summary>
         /// Control ddlPersonaVictima.
         /// </summary>
         /// <remarks>
@@ -238,6 +247,33 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlPersonaVictima;
+
+        /// <summary>
+        /// Control containerRazonSocialVictima.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl containerRazonSocialVictima;
+
+        /// <summary>
+        /// Control txtRazonSocialVictima.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRazonSocialVictima;
+
+        /// <summary>
+        /// Control containerApellidoPVictima.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl containerApellidoPVictima;
 
         /// <summary>
         /// Control lblAP.
@@ -258,13 +294,13 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.TextBox txtAPVictima;
 
         /// <summary>
-        /// Control txtRazonSocialVictima.
+        /// Control containerApellidoMVictima.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtRazonSocialVictima;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl containerApellidoMVictima;
 
         /// <summary>
         /// Control lblAM.
@@ -285,6 +321,15 @@ namespace SIPOH.Views
         protected global::System.Web.UI.WebControls.TextBox txtAMVictima;
 
         /// <summary>
+        /// Control containerNombreVictima.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl containerNombreVictima;
+
+        /// <summary>
         /// Control lblNombre.
         /// </summary>
         /// <remarks>
@@ -301,6 +346,15 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNombreVictima;
+
+        /// <summary>
+        /// Control containerGeneroVictima.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl containerGeneroVictima;
 
         /// <summary>
         /// Control lblSexo.
@@ -382,14 +436,5 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox copyObservaciones;
-
-        /// <summary>
-        /// Control UpdatePanel1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
     }
 }

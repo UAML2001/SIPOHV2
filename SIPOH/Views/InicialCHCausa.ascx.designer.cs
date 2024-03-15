@@ -15,49 +15,22 @@ namespace SIPOH.Views
     {
 
         /// <summary>
-        /// Control UpdateChCausa.
+        /// Control HistoricoCausaJuicioOral.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdateChCausa;
+        protected global::System.Web.UI.UpdatePanel HistoricoCausaJuicioOral;
 
         /// <summary>
-        /// Control lblTipoSistema.
+        /// Control buttonContainer.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTipoSistema;
-
-        /// <summary>
-        /// Control lblJuzgadoSeleccionado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblJuzgadoSeleccionado;
-
-        /// <summary>
-        /// Control lblTipo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTipo;
-
-        /// <summary>
-        /// Control lblNumeroCausaNucJuicio.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNumeroCausaNucJuicio;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl buttonContainer;
 
         /// <summary>
         /// Control btnActualizar.
@@ -67,5 +40,23 @@ namespace SIPOH.Views
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnActualizar;
+
+        /// <summary>
+        /// Control CausaCustom.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder CausaCustom;
+
+        /// <summary>
+        /// Control JuicioOralCustom.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder JuicioOralCustom;
     }
 }

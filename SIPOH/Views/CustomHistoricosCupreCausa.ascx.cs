@@ -16,6 +16,29 @@ namespace SIPOH.Views
 {
     public partial class CustomHistoricosCupreCausa : System.Web.UI.UserControl
     {
+
+        
+
+       public int TipoArchivo { get; set; }
+       public int JuzgadoHistorico { get; set; }
+        public string NumeroArchivo { get; set; }
+        public string TipoSistema { get; set; }
+
+        protected void Page_PreRender(object sender, EventArgs e)
+        {
+            // Actualizar propiedades con los valores de las sesiones
+            TipoArchivo = Session["TipoDocumentoHistorico"] != null ? Convert.ToInt32(Session["TipoDocumentoHistorico"]): 0;
+            JuzgadoHistorico = Session["IdJuzgadoHistorico"] != null ? Convert.ToInt32(Session["IdJuzgadoHistorico"]) : 0;
+            TipoSistema = Session["TipoSistema"] as string;
+            NumeroArchivo = Session["NumeroDocumentoHistorico"] as string;
+            
+            if (TipoArchivo == 1 && (TipoSistema == "acusatorio" || TipoSistema == "tradicional"))
+            {
+                inputNumeroArchivo.Text = NumeroArchivo;
+                inputNumeroArchivo.ReadOnly = true;
+
+            }
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -27,11 +50,58 @@ namespace SIPOH.Views
                 limpiarCamposDatosInculpado();
                 limpiarCamposDatosVictima();
                 inputDelitos.SelectedIndex = 0;
+                Session.Remove("TipoDocumentoHistorico");
+                Session.Remove("TipoSistema");
+                Session.Remove("IdJuzgadoHistorico");
+                Session.Remove("NumeroDocumentoHistorico");
 
+
+
+                
             }
             
 
         }
+        protected void ddlPersonaVictima_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Aquí puedes agregar lógica basada en la selección del DropDownList
+            if (ddlPersonaVictima.SelectedValue == "F")
+            {
+            
+                containerGeneroVictima.Style["display"] = "block";
+                containerNombreVictima.Style["display"] = "block";
+                containerApellidoMVictima.Style["display"] = "block";
+                containerApellidoPVictima.Style["display"] = "block";
+                containerRazonSocialVictima.Style["display"] = "none";
+                
+            
+            }
+            else if (ddlPersonaVictima.SelectedValue == "M")
+            {            
+                
+                // Lógica cuando se selecciona 'Moral'
+                containerGeneroVictima.Style["display"] = "none";
+                containerNombreVictima.Style["display"] = "none";
+                containerApellidoMVictima.Style["display"] = "none";
+                containerApellidoPVictima.Style["display"] = "none";
+                containerRazonSocialVictima.Style["display"] = "block";
+            }else{            
+                
+                containerRazonSocialVictima.Style["display"] = "none";
+                containerGeneroVictima.Style["display"] = "none";
+                containerNombreVictima.Style["display"] = "none";
+                containerApellidoMVictima.Style["display"] = "none";
+                containerApellidoPVictima.Style["display"] = "none";
+            
+
+            }
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "mostrarModal", "$('#modalAgregarVictimas').modal('show');", true);
+            
+            //ScriptManager.RegisterStartupScript(this ,this.GetType(), "CerrarModalScript", "CerrarModal();", true);
+
+            UpdatePanelModal.Update();
+        }
+
         private bool CamposFaltantes(out string[] camposFaltantes)
         {
             string NumeroCausa = inputNumeroArchivo.Text;
@@ -62,7 +132,20 @@ namespace SIPOH.Views
             string TipoRadicacion = inpuTipoRadicacion.SelectedValue;
             string ObservacionesHistorico = inputObservaciones.Text;
             int IdUsuario = int.Parse(Session["IdUsuario"] as string);
-            int IdJuzgado = int.Parse(Session["IDJuzgado"] as string);
+            int IdJuzgado;
+            string TipoAsuntoH;
+            if (TipoSistema == "acusatorio" || TipoSistema == "tradicional")
+            {
+                IdJuzgado = JuzgadoHistorico;
+                
+            }
+            else
+            {
+                IdJuzgado = int.Parse(Session["IDJuzgado"] as string);
+
+            }
+            TipoAsuntoH = (TipoSistema == "acusatorico") ? "C" : (TipoSistema == "tradicional") ? "T" : "C";
+
             int IdPefilA = int.Parse(Session["IdPerfil"] as string);
 
 
@@ -71,6 +154,7 @@ namespace SIPOH.Views
                 NumeroDocumento = NumeroCausa,
                 IdJuzgado = IdJuzgado,
                 FeIngreso = FechaRecepcion,
+                TipoAsunto = TipoAsuntoH,
                 Digitalizado = "S",
                 IdUsuario = IdUsuario,
                 IdAudiencia = TipoSolicitud,
@@ -167,8 +251,10 @@ namespace SIPOH.Views
         {
 
         }
+
         protected void btnAgregarVictima_Click(object sender, EventArgs a)
         {
+            
             string nombreVictima = txtNombreVictima.Text;
             string apellidoPaterno = txtAPVictima.Text;
             string razonSocial = txtRazonSocialVictima.Text;
@@ -184,6 +270,7 @@ namespace SIPOH.Views
                 // Mostrar mensaje de error o lanzar una excepción según tus necesidades
                 limpiarCamposDatosVictima();
                 HistoricosCausaPanel.Update();
+                ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModal", "CerrarModal();", true);
                 string mensaje = "Esta víctima ya existe en la lista.";
                 MensajeError(mensaje);
                 return;
@@ -198,6 +285,14 @@ namespace SIPOH.Views
                     string.IsNullOrWhiteSpace(genero))
                 {
                     MensajeError("Todos los campos para registrar una víctima son obligatorios.");
+                    
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModal", "CerrarModal();", true);
+                    containerRazonSocialVictima.Style["display"] = "none";
+                    containerGeneroVictima.Style["display"] = "none";
+                    containerNombreVictima.Style["display"] = "none";
+                    containerApellidoMVictima.Style["display"] = "none";
+                    containerApellidoPVictima.Style["display"] = "none";
+                    
                     limpiarCamposDatosVictima();
                     HistoricosCausaPanel.Update();
                     return;
@@ -214,6 +309,12 @@ namespace SIPOH.Views
                 Session["VictimasHistorico"] = listaVictimas;
                 RepeaterVictimas.DataSource = listaVictimas;
                 RepeaterVictimas.DataBind();
+                containerRazonSocialVictima.Style["display"] = "none";
+                containerGeneroVictima.Style["display"] = "none";
+                containerNombreVictima.Style["display"] = "none";
+                containerApellidoMVictima.Style["display"] = "none";
+                containerApellidoPVictima.Style["display"] = "none";
+                ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModal", "CerrarModal();", true);
                 limpiarCamposDatosVictima();
                 HistoricosCausaPanel.Update();
             }else if(ddlPersonaVictima.SelectedValue == "M")
@@ -227,6 +328,12 @@ namespace SIPOH.Views
 
                     string mensaje = "Esta víctima ya existe en la lista.";
                     MensajeError(mensaje);
+                    containerRazonSocialVictima.Style["display"] = "none";
+                    containerGeneroVictima.Style["display"] = "none";
+                    containerNombreVictima.Style["display"] = "none";
+                    containerApellidoMVictima.Style["display"] = "none";
+                    containerApellidoPVictima.Style["display"] = "none";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModal", "CerrarModal();", true);
                     return;
                 }
                 limpiarCamposDatosVictima();
@@ -235,8 +342,15 @@ namespace SIPOH.Views
                 {
 
                     limpiarCamposDatosVictima();
+                    
                     HistoricosCausaPanel.Update();
+                    containerRazonSocialVictima.Style["display"] = "none";
+                    containerGeneroVictima.Style["display"] = "none";
+                    containerNombreVictima.Style["display"] = "none";
+                    containerApellidoMVictima.Style["display"] = "none";
+                    containerApellidoPVictima.Style["display"] = "none";
                     MensajeError("El campo de razón social debe estar lleno");
+                    ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModal", "CerrarModal();", true);
                     return;
                 }
                 DataInsertHistoricoVictimas nuevaVictima = new DataInsertHistoricoVictimas
@@ -251,14 +365,30 @@ namespace SIPOH.Views
                 RepeaterVictimas.DataSource = listaVictimas;
                 RepeaterVictimas.DataBind();
                 limpiarCamposDatosVictima();
-                HistoricosCausaPanel.Update();
+            
+            
+                    //ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModal", "CerrarModal();", true);
+                containerRazonSocialVictima.Style["display"] = "none";
+                containerGeneroVictima.Style["display"] = "none";
+                containerNombreVictima.Style["display"] = "none";
+                containerApellidoMVictima.Style["display"] = "none";
+                containerApellidoPVictima.Style["display"] = "none";
+                //HistoricosCausaPanel.Update();
 
             }
             else
             {
+                containerRazonSocialVictima.Style["display"] = "none";
+                containerGeneroVictima.Style["display"] = "none";
+                containerNombreVictima.Style["display"] = "none";
+                containerApellidoMVictima.Style["display"] = "none";
+                containerApellidoPVictima.Style["display"] = "none";
+                //HistoricosCausaPanel.Update();
                 limpiarCamposDatosVictima();
                 MensajeError("Selecciona un tipo de parte");
             }
+            ScriptManager.RegisterStartupScript(this, GetType(), "CerrarModal", "CerrarModal();", true);
+            //ScriptManager.RegisterStartupScript(this, GetType(), "ActivarScroll", "ActivarScroll();", true);
         }
         protected void btnEliminarVictimaList(object sender, EventArgs e)
         {
@@ -342,6 +472,14 @@ namespace SIPOH.Views
 
         protected void btnAgregarDelito_Click(object sender, EventArgs e)
         {
+            copyNumeroArchivo.Text = inputNumeroArchivo.Text;
+            copyTextBoxNUC.Text = inputNUCHistorico.Text;
+            copyDropDownTipoAsunto.Text = inputTipoSolicitudHistorico.SelectedItem.Text.ToUpper();
+            copyFechaRecepcionC.Text = inputFechaRecepcionC.Text.ToUpper();
+            copyNumeroFojasCHistorico.Text = inputNumeroFojasCHistorico.Text;
+            copyTipoRadicacion.Text = inpuTipoRadicacion.SelectedItem.Text.ToUpper();
+            copyObservaciones.Text = inputObservaciones.Text.ToUpper();
+
             if (string.IsNullOrEmpty(inputDelitos.SelectedValue))
             {
                 MensajeError("Por favor, selecciona un delito.");

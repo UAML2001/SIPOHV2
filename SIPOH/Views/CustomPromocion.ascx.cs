@@ -413,6 +413,13 @@ namespace SIPOH.Views
         {
             string inputTipoAnexo = txtAnexosTipo.SelectedValue;
             string inputCantidadAnexo = txtCantidadAnexos.Text;
+            if (txtCantidadAnexos.Text == "0")
+            {
+
+                string script = $"toastError('{"Por favor, selecciona una cantidad válida."}');";
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+                return;
+            }
             if (inputTipoAnexo == "Otro")
             {
                 string inputDescripcionAnexos = txtDescripcionAnexos.Text;
@@ -512,13 +519,15 @@ namespace SIPOH.Views
                 // Eliminar el elemento en la posición indicada por el índice
                 //item.Visible = false;
                 listaAnexos.RemoveAt(indice);
-                //RepeaterAnexos.Controls.RemoveAt(indice);
-                //Session["Anexos"] = listaAnexos;
+                
 
                 RepeaterAnexos.DataSource = listaAnexos;
                 RepeaterAnexos.DataBind();
+                RepeaterAnexosPrev.DataSource = listaAnexos;
+                RepeaterAnexosPrev.DataBind();
             }
             // Verificar si la lista no es nula y tiene elementos
+
             promocionPanel.Update();
 
         }

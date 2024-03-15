@@ -17,27 +17,64 @@ namespace SIPOH.Views
 {
     public partial class CustomHistoricosJuicioOral : System.Web.UI.UserControl
     {
+
+
+        public int TipoArchivo { get; set; }
+        public int JuzgadoHistorico { get; set; }
+        public string TipoSistema { get; set; }
+        public string NumeroArchivo { get; set; }
+        protected void Page_PreRender(object sender, EventArgs e)
+        {
+            // Actualizar propiedades con los valores de las sesiones
+            TipoArchivo = Session["TipoDocumentoHistorico"] != null ? Convert.ToInt32(Session["TipoDocumentoHistorico"]) : 0;
+            JuzgadoHistorico = Session["IdJuzgadoHistorico"] != null ? Convert.ToInt32(Session["IdJuzgadoHistorico"]) : 0;
+            TipoSistema = Session["TipoSistema"] as string;
+            NumeroArchivo = Session["NumeroDocumentoHistorico"] as string;            
+            if (TipoArchivo == 3 &&  TipoSistema == "acusatorio")
+            {
+                inputNumeroArchivo.Text = NumeroArchivo;
+                inputNumeroArchivo.ReadOnly = true;
+            }
+
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
-            {
+            {                
+                
                 CatAudienciasHistoricoJO();
                 lblIdSeleccionado.Visible = false;
                 limpiarRegistroDatosPrimeraParte();
                 limpiarRegistroDatosSegundaParte();
                 limpiarRegistroDatosTerceraParte();
                 limpiarTablaRelaciones();
+                Session.Remove("TipoDocumentoHistorico");
+                Session.Remove("TipoSistema");
+                Session.Remove("IdJuzgadoHistorico");
+                Session.Remove("NumeroDocumentoHistorico");
             }
         }
         protected void btnConsultaHistoricoCausa(object sender, EventArgs e)
         {
+            
             try
             {
                 limpiarRegistroDatosTerceraParte();
                 limpiarTablaRelaciones();
                 limpiarRegistroDatosSegundaParte();
                 string numeroArchivo = inputNumero.Text;
-                int IdJuzgado = int.Parse(Session["IDJuzgado"] as string);
+                int IdJuzgado;
+                if (TipoSistema == "acusatorio")
+                {
+                    IdJuzgado = JuzgadoHistorico;
+                }
+                else
+                {
+                    IdJuzgado = int.Parse(Session["IDJuzgado"] as string);
+
+                }
+                
                 List<DataGetCausaImputadoJuicioOralHistorico> infoCausa = GetCausaHistorico(numeroArchivo, IdJuzgado);
                 if(infoCausa != null && infoCausa.Any())
                 {
@@ -196,6 +233,12 @@ namespace SIPOH.Views
         }
         protected void btnGenerarRelacion_Click(object sender, EventArgs e)
         {
+            copyInputNumero.Text = inputNumero.Text;
+            copyInputNumeroArchivo.Text = inputNumeroArchivo.Text;
+            copyInputTipoAudiencia.Text = inputTipoAudiencia.SelectedItem.Text.ToUpper();
+            copyFechaRecepcion.Text = fechaRecepcion.Text.ToUpper();
+            copyNumeroFojas.Text = numeroFojas.Text;
+            copyObservacionesInicial.Text = observacionesIncial.Text.ToUpper();
             DataTable relacionesVI;
             if (Session["RelacionesHistoricoVI"] == null)
             {
@@ -334,7 +377,18 @@ namespace SIPOH.Views
                     else if (string.IsNullOrEmpty(fechaIngreso))
                         throw new Exception("Fecha Ingreso");
                 }
-                int idJuzgado = int.Parse(Session["IDJuzgado"] as string);
+                
+                int IdJuzgado;                
+                if (TipoSistema == "acusatorio")
+                {
+                    IdJuzgado = JuzgadoHistorico;
+                    
+                }
+                else
+                {
+                    IdJuzgado = int.Parse(Session["IDJuzgado"] as string);
+                    
+                }
                 int idCircuitos = int.Parse(Session["IdCircuito"] as string);
                 int idUsuario = int.Parse(Session["IdUsuario"] as string);
                 
@@ -346,7 +400,7 @@ namespace SIPOH.Views
 
                     NumeroArchivo = numeroArchivo,
                     IdCircuitoFolio = idCircuitos,
-                    dIdJuzgado = idJuzgado,
+                    dIdJuzgado = IdJuzgado,
                     dFeIngreso = fechaIngreso,
                     dTipoAsunto = "JO",
                     dDigitalizado = "S",
@@ -475,5 +529,6 @@ namespace SIPOH.Views
             ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", $"toastInfo('{Mensaje}');", true);
 
         }
+        
     }
 }

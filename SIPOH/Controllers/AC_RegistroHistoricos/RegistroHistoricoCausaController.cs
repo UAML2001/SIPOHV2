@@ -88,7 +88,7 @@ namespace SIPOH.Controllers.AC_RegistroHistoricos
                                 commandInsertInicial.CommandType = CommandType.StoredProcedure;
                                 commandInsertInicial.Parameters.Add("@numeroJuicioOral", SqlDbType.VarChar).Value = Historico.NumeroDocumento.ToUpper();
                                 commandInsertInicial.Parameters.Add("@idJuzgado", SqlDbType.Int).Value = Historico.IdJuzgado;
-                                commandInsertInicial.Parameters.Add("@TipoAsunto", SqlDbType.VarChar).Value = "C";
+                                commandInsertInicial.Parameters.Add("@TipoAsunto", SqlDbType.VarChar).Value = Historico.TipoAsunto.ToUpper();
                                 commandInsertInicial.Parameters.Add("@digitalizado", SqlDbType.VarChar).Value = Historico.Digitalizado.ToUpper();
                                 commandInsertInicial.Parameters.Add("@IdUsuario", SqlDbType.Int).Value = Historico.IdUsuario;
                                 commandInsertInicial.Parameters.Add("@IdAudiencia", SqlDbType.Int).Value = Historico.IdAudiencia;

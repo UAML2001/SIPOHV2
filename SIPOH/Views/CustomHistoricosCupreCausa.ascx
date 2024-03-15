@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CustomHistoricosCupreCausa.ascx.cs" Inherits="SIPOH.Views.CustomHistoricosCupreCausa" %>
 <asp:UpdatePanel runat="server" ID="HistoricosCausaPanel" ChildrenAsTriggers="false" UpdateMode="Conditional">
     <ContentTemplate>
-        
+          
 
         <%--registro de datos--%>
         <div class="row pt-0">
@@ -30,7 +30,8 @@
                 </div>
                 <div class=" mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inputFechaRecepcion" class="form-label text-secondary">Fecha de recepción</label>
-                    <asp:TextBox runat="server" ID="inputFechaRecepcionC" CssClass="form-control form-control-sm" TextMode="DateTimeLocal" onblur="validarFechaC()"></asp:TextBox>
+                    
+                    <asp:TextBox runat="server" ID="inputFechaRecepcionC" CssClass="form-control form-control-sm" TextMode="DateTimeLocal" oninput="validarFechaC(this)"></asp:TextBox>
                 </div>
 
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
@@ -66,12 +67,8 @@
                     <div class="col-12 col-lg-6 text-left ">
 
                         <span class="text-success fw-bold m-2"><i class="bi bi-emoji-laughing"></i>Víctima</span>
-                        <i class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalAgregarVictimas">+</i>
-
+                        <i class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalAgregarVictimas">+</i>                        
                         <div class="table-responsive mt-2 ">
-
-
-
                             <table class="table table-striped table-hover mb-0 table-sm">
                                 <thead class="text-center">
                                     <tr>
@@ -89,7 +86,7 @@
                                                 <th class="text-secondary text-uppercase"><%# Eval("apellidoPaterno") %> <%# Eval("apellidoMaterno") %></th>
                                                 <td class="text-secondary text-uppercase"><%# Eval("genero").ToString().Equals("F") ? "FEMENINO" : (Eval("Genero").ToString().Equals("M") ? "MASCULINO" : "OTRO") %></td>
                                                 <td>
-                                                    <asp:Button runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" OnClick="btnEliminarVictimaList" /></i></td>
+                                                <asp:Button runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" OnClick="btnEliminarVictimaList" /></i></td>
                                             </tr>
                                         </ItemTemplate>
                                     </asp:Repeater>
@@ -257,75 +254,7 @@
                 </div>
             </div>
         </div>
-
-        <!-- Modal Partes victima -->
-        <div class="modal fade" id="modalAgregarVictimas" tabindex="-1" aria-labelledby="modalAgregarVictimas" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <!-- Contenido del segundo modal -->
-                    <div class="modal-header">
-                        <div class="row d-flex align-items-center justify-content-center text-center col-12">
-                            <i class="bi bi-emoji-smile text-success pr-2" style="font-size: 56px;"></i>
-                            <h4 class="modal-title text-secondary ">Agregar partes</h4>
-                        </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body d-flex flex-wrap justify-content-start">
-
-
-                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                            <label for="inputvictimapersona" class="form-label text-secondary">Persona:</label>
-
-                            <asp:DropDownList ID="ddlPersonaVictima" runat="server" CssClass="form-select form-select-sm text-secondary" AutoPostBack="true" onchange="cambiarTipoPersona()">
-                                <asp:ListItem Text="Selecciona una opción" Value="" />
-                                <asp:ListItem Text="Física" Value="F" />
-                                <asp:ListItem Text="Moral" Value="M" />
-                            </asp:DropDownList>
-                        </div>
-
-                        <%--//Apellido paterno es utizado para el registro de RAZON SOCIAL--%>
-                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                            <asp:Label ID="lblAP" runat="server" class="form-label text-secondary" Style="display: none;"></asp:Label>
-                            <asp:TextBox ID="txtAPVictima" runat="server" CssClass="form-control form-control-sm" Style="display: none;" MaxLength="40" />
-                            <asp:TextBox ID="txtRazonSocialVictima" runat="server" CssClass="form-control form-control-sm" Style="display: none;" MaxLength="40" />
-                        </div>
-                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                            <asp:Label ID="lblAM" runat="server" class="form-label text-secondary" Style="display: none;">Apellido materno:</asp:Label>
-                            <asp:TextBox ID="txtAMVictima" runat="server" CssClass="form-control form-control-sm" Style="display: none;" MaxLength="40" />
-                        </div>
-                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                            <asp:Label ID="lblNombre" runat="server" CssClass="form-label text-secondary" Style="display: none;">Nombre(s):</asp:Label>
-                            <asp:TextBox ID="txtNombreVictima" runat="server" CssClass="form-control form-control-sm" Style="display: none;" MaxLength="40" />
-                        </div>
-
-
-                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                            <asp:Label ID="lblSexo" runat="server" class="form-label text-secondary" Style="display: none;">Sexo:</asp:Label>
-                            <asp:DropDownList ID="ddlSexoVictima" runat="server" CssClass="form-select form-select-sm text-secondary" Style="display: none;">
-                                <asp:ListItem Text="Selecciona una opción" Value="" />
-                                <asp:ListItem Text="Femenino" Value="F" />
-                                <asp:ListItem Text="Masculino" Value="M" />
-                                <asp:ListItem Text="Otro" Value="O" />
-                            </asp:DropDownList>
-                        </div>
-
-
-
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i>Cerrar</button>
-                        <asp:Button runat="server" Text="Guardar" CssClass="btn btn-success btn-sm" OnClick="btnAgregarVictima_Click" OnClientClick="ocultarElementos();" data-bs-dismiss="modal" />
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
+       
 
         <!-- Agrega esto en tu HTML donde tengas tus otros elementos -->
         <div id="errorModal" class="modal fade" role="dialog">
@@ -345,6 +274,84 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- Modal Partes victima -->
+    <div class="modal fade" id="modalAgregarVictimas" tabindex="-1" aria-labelledby="modalAgregarVictimas" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            
+               
+            <div class="modal-content">
+                <!-- Contenido del segundo modal -->
+                <div class="modal-header">
+                    <div class="row d-flex align-items-center justify-content-center text-center col-12">
+                        <i class="bi bi-emoji-smile text-success pr-2" style="font-size: 56px;"></i>
+                        <h4 class="modal-title text-secondary ">Agregar partes</h4>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="CerrarModal()"></button>
+                </div>
+
+                <asp:UpdatePanel ID="UpdatePanelModal" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <div class="modal-body d-flex flex-wrap justify-content-start">
+
+
+                            <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                                <label for="inputvictimapersona" class="form-label text-secondary">Persona:</label>
+
+                                <asp:DropDownList ID="ddlPersonaVictima" runat="server" CssClass="form-select form-select-sm text-secondary" AutoPostBack="true" OnSelectedIndexChanged="ddlPersonaVictima_SelectedIndexChanged">
+                                    <asp:ListItem Text="Selecciona una opción" Value="" />
+                                    <asp:ListItem Text="Física" Value="F" />
+                                    <asp:ListItem Text="Moral" Value="M" />
+                                </asp:DropDownList>
+                            </div>
+
+                            <%--//Apellido paterno es utizado para el registro de RAZON SOCIAL--%>
+                            <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3" id="containerRazonSocialVictima" runat="server" style="display: none;">
+                                <asp:Label runat="server" class="form-label text-secondary">Razón social:</asp:Label>
+                                <asp:TextBox ID="txtRazonSocialVictima" runat="server" CssClass="form-control form-control-sm" MaxLength="40" />
+                            </div>
+                            <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3" id="containerApellidoPVictima" runat="server" style="display: none;">
+                                <asp:Label ID="lblAP" runat="server" class="form-label text-secondary">Apellido paterno:</asp:Label>
+                                <asp:TextBox ID="txtAPVictima" runat="server" CssClass="form-control form-control-sm" MaxLength="40" />
+                            </div>
+                            <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3" id="containerApellidoMVictima" runat="server" style="display: none;">
+                                <asp:Label ID="lblAM" runat="server" class="form-label text-secondary">Apellido materno:</asp:Label>
+                                <asp:TextBox ID="txtAMVictima" runat="server" CssClass="form-control form-control-sm" MaxLength="40" />
+                            </div>
+                            <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3" id="containerNombreVictima" runat="server" style="display: none;">
+                                <asp:Label ID="lblNombre" runat="server" CssClass="form-label text-secondary">Nombre(s):</asp:Label>
+                                <asp:TextBox ID="txtNombreVictima" runat="server" CssClass="form-control form-control-sm" MaxLength="40" />
+                            </div>
+
+
+                            <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3" id="containerGeneroVictima" runat="server" style="display: none;">
+                                <asp:Label ID="lblSexo" runat="server" class="form-label text-secondary">Sexo:</asp:Label>
+                                <asp:DropDownList ID="ddlSexoVictima" runat="server" CssClass="form-select form-select-sm text-secondary">
+                                    <asp:ListItem Text="Selecciona una opción" Value="" />
+                                    <asp:ListItem Text="Femenino" Value="F" />
+                                    <asp:ListItem Text="Masculino" Value="M" />
+                                    <asp:ListItem Text="Otro" Value="O" />
+                                </asp:DropDownList>
+                            </div>
+
+                        </div>
+
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal" onclick="CerrarModal()"><i class="bi bi-x-lg"></i>Cerrar</button>
+                    <%--<asp:Button runat="server" Text="Guardar" CssClass="btn btn-success btn-sm" OnClick="btnAgregarVictima_Click" OnClientClick="" data-bs-dismiss="modal" />--%>
+                    <asp:Button runat="server" Text="Guardar" CssClass="btn btn-success btn-sm" OnClick="btnAgregarVictima_Click" OnClientClick="" data-bs-dismiss="modal" />
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
         <!-- MOdal Save Changes -->
         <div class="modal fade" id="modalGuardarHistoricosCupreCausa" tabindex="1" aria-labelledby="modalGuardarHistoricosCupreCausa" aria-hidden="true">
@@ -396,132 +403,72 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i>Cerrar</button>
-                        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-                            <ContentTemplate>
+                        <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                            <ContentTemplate>--%>
 
                                 <asp:Button runat="server" CssClass="btn btn-success btn-sm" Text="Guardar" OnClick="btnGuardarInicial_Click" OnClientClick="return validarNumero();" data-bs-dismiss="modal" postback="true" />
 
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
+                            <%--</ContentTemplate>
+                        </asp:UpdatePanel>--%>
 
                     </div>
                 </div>
             </div>
         </div>
+                              
+        <script type="text/javascript">
+            //function ActivarScroll() {
+            //    $('body').css('overflow', 'auto !important');
+            //}
+            
+            
+            function valoresFinalesHistoricoCausa() {
+                copyNumeroDocumento();
+                copyNUC();
+                copyTipoSolicitud();
+                copyNumeroFojasCHistorico();
+                copyFechaRecepcionC();
+                copyTipoRadicacion();
+                copyObservaciones();
+
+            }
+            function copyNumeroDocumento() {
+                var inputNumeroDocumento = $("#<%= inputNumeroArchivo.ClientID %>");
+                  var copyInputNumeroDocumento = $("#<%= copyNumeroArchivo.ClientID %>");
+                  copyInputNumeroDocumento.val(inputNumeroDocumento.val());
+                  }
+              function copyTipoSolicitud() {
+                var inputTipoSolicitudHistorico = $("#<%= inputTipoSolicitudHistorico.ClientID %>");
+                var copyInputTipoSolicitudHistorico = $("#<%= copyDropDownTipoAsunto.ClientID %>");
+                copyInputTipoSolicitudHistorico.val(inputTipoSolicitudHistorico.val() === '27' ? 'INNOMINADA' : (inputTipoSolicitudHistorico.val() === '26' ? 'INICIAL': ''));
+               }
+               function copyNUC() {
+                    var inputNUCHistorico = $("#<%= inputNUCHistorico.ClientID %>");
+                    var copyTextBoxNUC = $("#<%= copyTextBoxNUC.ClientID %>");
+                    copyTextBoxNUC.val(inputNUCHistorico.val());
+               }
+               function copyFechaRecepcionC() {
+                    var inputFechaRecepcion = $("#<%= inputFechaRecepcionC.ClientID %>");
+                    var copyFechaRecepcion = $("#<%= copyFechaRecepcionC.ClientID %>");
+                    copyFechaRecepcion.val(inputFechaRecepcion.val());
+               }
+               function copyNumeroFojasCHistorico() {
+                    var inputNumeroFojas = $(" #<%= inputNumeroFojasCHistorico.ClientID %>");
+                    var copyNumeroFojas = $(" #<%= copyNumeroFojasCHistorico.ClientID %>");
+                    copyNumeroFojas.val(inputNumeroFojas.val());
+               }
+               function copyTipoRadicacion( ) {
+                    var inputTipoRadicaion = $(" #<%= inpuTipoRadicacion.ClientID %>");
+                    var copyTipoRadicacion = $("#<%= copyTipoRadicacion.ClientID %>");
+                    copyTipoRadicacion.val(inputTipoRadicaion.val() === 'C' ? 'C/DETENIDO' : (inpuTipoRadicacion.val() === 'S' ? 'S/DETENIDO' : ''));
+               }
+               function copyObservaciones()  {
+                    var inputObservaciones = $(" #<%= inputObservaciones.ClientID %>");
+                    var copyInputObservaciones = $("#<%= copyObservaciones.ClientID %>");
+                copyInputObservaciones.val(inputObservaciones.val());
+               }
+
+             </script>
     </ContentTemplate>
 </asp:UpdatePanel>
-<script type="text/javascript">
-     function cambiarTipoPersona() {
-         var valueDropDownList = $("#<%= ddlPersonaVictima.ClientID %>");
-         var txtValue = $("#<%= lblAP.ClientID %>");
-         var lblRazonSocialVictima = $("#<%= txtRazonSocialVictima.ClientID %>");
-         var lblApellidoPaternoVictima = $("#<%= txtAPVictima.ClientID %>");
-         var lblNombreVictima = $("#<%= txtNombreVictima.ClientID %>");
-         var lblApellidoMaternoVictima = $("#<%= txtAMVictima.ClientID %>");
-        var lblApellidoMaternoVictima = $("#<%= txtAMVictima.ClientID %>");
-        var ddlGeneroVictima = $("#<%= ddlSexoVictima.ClientID %>");
-
-        var txtApellidoMaternoVictima = $("#<%= lblAM.ClientID %>");
-        var txtNombreVictima = $("#<%= lblNombre.ClientID %>");
-
-         var txtGeneroVictima = $("#<%= lblSexo.ClientID %>");
-
-
-
-
-
-
-         if (valueDropDownList.val() === "F") {
-             txtValue.html("Apellido paterno: ");
-             txtValue.fadeIn();
-             txtNombreVictima.fadeIn();
-             txtApellidoMaternoVictima.fadeIn();
-             lblApellidoPaternoVictima.fadeIn();
-             lblApellidoMaternoVictima.fadeIn();
-             txtGeneroVictima.fadeIn();
-             lblNombreVictima.fadeIn();
-             ddlGeneroVictima.fadeIn();
-             lblRazonSocialVictima.fadeOut();
-
-         } else if (valueDropDownList.val() === "M") {
-             txtValue.html("Persona moral:");
-             txtValue.fadeIn();
-             txtNombreVictima.fadeOut();
-             txtApellidoMaternoVictima.fadeOut();
-             lblApellidoPaternoVictima.fadeOut();
-             lblApellidoMaternoVictima.fadeOut();
-             txtGeneroVictima.fadeOut();
-             lblNombreVictima.fadeOut();
-             lblRazonSocialVictima.fadeIn();
-             ddlGeneroVictima.fadeOut();
-         } else if (valueDropDownList.val() === "") {
-             var mensaje = "Selecciona un tipo de persona";
-             txtValue.fadeOut();
-             toastError(mensaje);
-             txtGeneroVictima.fadeOut();
-             txtNombreVictima.fadeOut();
-             txtApellidoMaternoVictima.fadeOut();
-             lblApellidoPaternoVictima.fadeOut();
-             lblApellidoMaternoVictima.fadeOut();
-             lblRazonSocialVictima.fadeOut();
-             ddlGeneroVictima.fadeOut();
-         }
-     }
-    function validarFechaC  () {
-         var inputFechaRecepcion = document.getElementById('<%= inputFechaRecepcionC.ClientID %>');
-         var fechaSeleccionada = new Date(inputFechaRecepcion.value);
-         var fechaActual = new Date();
-         fechaActual.setHours(0, 0, 0, 0);
-
-         if (fechaSeleccionada > fechaActual) {
-             //toastError("!Estas loco!, o ¿Vives en el futuro?");
-             toastError("No se puede seleccionar una fecha posterior a hoy.");
-             inputFechaRecepcion.value = "";
-         }
-     }
-     function valoresFinalesHistoricoCausa() {
-         copyNumeroDocumento();
-         copyNUC();
-         copyTipoSolicitud(); 
-         copyNumeroFojasCHistorico();
-         copyFechaRecepcionC();
-         copyTipoRadicacion();
-         copyObservaciones();
-
-     }
-     function copyNumeroDocumento() {
-         var inputNumeroDocumento = $("#<%= inputNumeroArchivo.ClientID %>");
-         var copyInputNumeroDocumento = $("#<%= copyNumeroArchivo.ClientID %>");
-         copyInputNumeroDocumento.val(inputNumeroDocumento.val());
-     }
-     function copyTipoSolicitud() {
-         var inputTipoSolicitudHistorico = $("#<%= inputTipoSolicitudHistorico.ClientID %>");
-         var copyInputTipoSolicitudHistorico = $("#<%= copyDropDownTipoAsunto.ClientID %>");
-         copyInputTipoSolicitudHistorico.val(inputTipoSolicitudHistorico.val() === '27' ? 'INNOMINADA' : (inputTipoSolicitudHistorico.val() === '26' ? 'INICIAL': ''));
-     }
-     function copyNUC() {
-         var inputNUCHistorico = $("#<%= inputNUCHistorico.ClientID %>");
-         var copyTextBoxNUC = $("#<%= copyTextBoxNUC.ClientID %>");
-         copyTextBoxNUC.val(inputNUCHistorico.val());
-     }
-     function copyFechaRecepcionC() {
-         var inputFechaRecepcion = $("#<%= inputFechaRecepcionC.ClientID %>");
-         var copyFechaRecepcion = $("#<%= copyFechaRecepcionC.ClientID %>");
-         copyFechaRecepcion.val(inputFechaRecepcion.val());
-    }
-    function copyNumeroFojasCHistorico() {
-         var inputNumeroFojas = $(" #<%= inputNumeroFojasCHistorico.ClientID %>");
-        var copyNumeroFojas = $(" #<%= copyNumeroFojasCHistorico.ClientID %>");
-        copyNumeroFojas.val(inputNumeroFojas.val());
-    }
-    function copyTipoRadicacion( ) {
-        var inputTipoRadicaion = $(" #<%= inpuTipoRadicacion.ClientID %>");
-         var copyTipoRadicacion = $("#<%= copyTipoRadicacion.ClientID %>");
-        copyTipoRadicacion.val(inputTipoRadicaion.val() === 'C' ? 'C/DETENIDO' : (inpuTipoRadicacion.val() === 'S' ? 'S/DETENIDO' : ''));
-    }
-    function copyObservaciones()  {
-        var inputObservaciones = $(" #<%= inputObservaciones.ClientID %>");
-         var copyInputObservaciones = $("#<%= copyObservaciones.ClientID %>");
-        copyInputObservaciones.val(inputObservaciones.val());
-    }
-</script>
+ 
