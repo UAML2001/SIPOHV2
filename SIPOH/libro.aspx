@@ -1,7 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Consignacion.Master" AutoEventWireup="true" CodeBehind="libro.aspx.cs" Inherits="SIPOH.libroindice" %>
 
 <asp:Content ID="ContentLibroIndice12" ContentPlaceHolderID="Contentlibroindice" runat="server">
-    <%--  --%>
     <style type="text/css">
         .mayusculas {
             text-transform: uppercase;
@@ -42,7 +41,7 @@
                         </div>
                         <p></p>
                         <div class="row">
-                            <asp:GridView ID="gridViewResultados" runat="server" CssClass="table table-sm table-striped table-hover" AutoGenerateColumns="False">
+                            <asp:GridView ID="gridViewResultados" runat="server" CssClass="table table-sm table-striped table-hover" AutoGenerateColumns="False" AllowPaging="True" PageSize="15" OnPageIndexChanging="gridViewResultados_PageIndexChanging">
                                 <Columns>
                                     <asp:BoundField DataField="Asunto" HeaderText="Asunto">
                                         <HeaderStyle CssClass="bg-success text-white" />
@@ -125,6 +124,5 @@
         </script>
 
     </div>
-    <%--  --%>
 </asp:Content>
 

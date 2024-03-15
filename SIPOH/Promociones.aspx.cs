@@ -315,8 +315,6 @@ namespace SIPOH
 
             return existe;
         }
-
-
         //----------------------------------------- ACUSATORIO -------------------------------------------------------------
         //CODIGO PARA MOSTRAR EN EL SELECT DE RELACION CAUSAS ACUSATORIO
         private void CargarJuzgadosAcusatorio()
@@ -394,7 +392,6 @@ namespace SIPOH
                 MostrarMensajeError("Ocurrió un error: " + ex.Message);
             }
         }
-
         //CODIGO PARA INSERTAR EN P_EJECUCIONASUNTO POR STORAGE RELACIONARCAUSAPROMOCION
         //----------------------------------------- TRADICIONAL -------------------------------------------------------------
         //CHANGE JUXGADOS TRADICIONALES 
@@ -503,7 +500,6 @@ namespace SIPOH
                 MostrarMensajeError("Ocurrió un error: " + ex.Message);
             }
         }
-
         //------------------------------------------ JUICIO ORAL -----------------------------------------------------------
         private void CargarJuzgadosJuicioOral()
         {
@@ -586,9 +582,6 @@ namespace SIPOH
                 MostrarMensajeError("Ocurrió un error: " + ex.Message);
             }
         }
-
-
-
         //------------------------------------ SEGUNDO GRID DE DETALLES -----------------------------------------------------
         //CODIGO DE VER DETALLES DE LA CAUSA CONSUMIENDO Ejecucion_MostrarCausasRelacionadas
         protected void VerDetalles(int idEjecucion)
@@ -1031,7 +1024,6 @@ namespace SIPOH
             public string Descripcion { get; set; }
             public int Cantidad { get; set; }
         }
-
         private List<AnexoPromocion> ObtenerAnexosDesdeViewState()
         {
             List<ListaAnexos> salas = ViewState["anexos"] as List<ListaAnexos>;
@@ -1045,7 +1037,6 @@ namespace SIPOH
             }
             return new List<AnexoPromocion>();
         }
-
         //CODIGO NUEVO DE OBTENER DATOS DEL SELLO
         public class DatosSello
         {
@@ -1061,7 +1052,6 @@ namespace SIPOH
             }
             public int TotalAnexos { get; set; }
         }
-
         //fin de nueva obtencion de datos sello
         private List<string> DividirTextoEnLineas(string texto, int maxCaracteresPorLinea)
         {
@@ -1119,7 +1109,6 @@ namespace SIPOH
             ticket.AppendLine($"Total Anexos: {datos.TotalAnexos}");
             return ticket.ToString();
         }
-
         // fin 
     }
 }
