@@ -792,3 +792,5 @@ C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.pdb
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\PortadaDigitalizacion1.cs
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\PortadaDigitalizacion.rpt
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.Up2Date
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\PortadaDigitalizacion1.cs
+C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\PortadaDigitalizacion.rpt

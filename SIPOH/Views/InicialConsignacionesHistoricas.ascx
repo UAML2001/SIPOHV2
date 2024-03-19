@@ -122,9 +122,9 @@
                 </asp:DropDownList>
             </div>
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
-                <label for="inputNuc" class="form-label text-secondary">Numero de Causa</label>
+                <label for="inputNuc" class="form-label text-secondary">Número de Causa</label>
                 <div class="input-group">
-                    <asp:TextBox ID="causaNucAcusatorio" CssClass="form-control form-control-sm mayusculas" runat="server" MaxLength="16" ClientIDMode="Static" onblur="aplicarFormatoSegunSeleccion2(this)"></asp:TextBox>
+                    <asp:TextBox ID="causaNucAcusatorio" CssClass="form-control form-control-sm mayusculas" runat="server" MaxLength="16" ClientIDMode="Static" onblur="aplicarFormatoSegunSeleccion2(this, 'CausaNucCHA')"></asp:TextBox>
                     <div class="input-group-append">
                         <asp:Button ID="btnBuscarAcusatorio" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnBuscarAcusatorio_Click" />
                     </div>
@@ -141,7 +141,7 @@
                 <asp:DropDownList ID="ddlJuzgadoProcedencia" runat="server" CssClass="form-select form-select-sm mayusculas" OnSelectedIndexChanged="ddlJuzgadoProcedencia_SelectedIndexChanged"></asp:DropDownList>
             </div>
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
-                <label for="inputcausa" class="form-label text-secondary">Numero de Causa</label>
+                <label for="inputcausa" class="form-label text-secondary">Número de Causa</label>
                 <div class="input-group">
                     <asp:TextBox ID="InputCausaTradicional" CssClass="form-control form-control-sm mayusculas" runat="server" MaxLength="16" onblur="padLeadingZeros(this)"></asp:TextBox>
                     <div class="input-group-append">
