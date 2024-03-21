@@ -58,6 +58,7 @@ namespace SIPOH.Controllers.AC_Digitalizacion
             int IdJuzgado = new GenerarIdJuzgadoPorSesion().ObtenerIdJuzgadoDesdeSesion();
             int IdAsunto = int.Parse(((Label)((GridViewRow)((CheckBox)sender).NamingContainer).FindControl("lblIdAsunto")).Text);
 
+
             using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("ConsultaAlSeleccionar", conn))
@@ -157,28 +158,67 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                         PortadaInicial.Visible = true;
 
 
-                        // Configura la ruta del informe Crystal Reports (.rpt)
-                        string rutaInforme = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.rpt");
+                        //// Configura la ruta del informe Crystal Reports (.rpt)
+                        //string rutaInforme = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.rpt");
 
-                        // Crea el informe
-                        ReportDocument reporte = new ReportDocument();
-                        reporte.Load(rutaInforme);
+                        //// Crea el informe
+                        //ReportDocument reporte = new ReportDocument();
+                        //reporte.Load(rutaInforme);
 
-                        // Configurar el formato de salida como PDF
-                        reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
-                        reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
-                        string rutaArchivoPDF = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf");
-                        reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
+                        //// Configurar el formato de salida como PDF
+                        //reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
+                        //reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
+                        //string rutaArchivoPDF = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf");
+                        //reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
 
-                        // Exportar el informe a PDF
-                        reporte.Export();
+                        //// Exportar el informe a PDF
+                        //reporte.Export();
 
-                        // Mostrar el archivo PDF en el Panel            
-                        VPPortada.Src = "~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf";
-                        VPPortada.Visible = true;
+                        //// Mostrar el archivo PDF en el Panel            
+                        //VPPortada.Src = "~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf";
+                        //VPPortada.Visible = true;
+
+                            // Crear un DataTable para almacenar los resultados
+                            DataTable dt = new DataTable();
+
+                            // Recoger los resultados
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                // Llenar el DataTable con los resultados
+                                dt.Load(reader);
+                            }
+
+                            // Validar que el DataTable no esté vacío
+                            if (dt.Rows.Count == 0)
+                            {
+                                return;
+                            }
+
+                            // Configura la ruta del informe Crystal Reports (.rpt)
+                            string rutaInforme = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/ConsultaPortada.rpt");
+
+                            // Crea el informe
+                            ReportDocument reporte = new ReportDocument();
+                            reporte.Load(rutaInforme);
+
+                            // Asignar el DataTable como fuente de datos del informe
+                            reporte.SetDataSource(dt);
+
+                            // Configura el formato de salida como PDF
+                            reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
+                            reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
+                            string rutaArchivoPDF = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/ConsultaPortada.pdf");
+                            reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
+
+                            // Exporta el informe a PDF
+                            reporte.Export();
+
+                            // Muestra el archivo PDF en el Panel            
+                            VPPortada.Src = "~/Controllers/AC_Digitalizacion/ConsultaPortada.pdf";
+                            VPPortada.Visible = true;
 
 
-                    }
+                        }                    
                     else
                     {
                         descripNum.Text = "";
