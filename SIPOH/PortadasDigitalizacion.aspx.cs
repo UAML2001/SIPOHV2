@@ -78,55 +78,7 @@ namespace SIPOH
             }
         }
 
-        private void OcultarControles()
-        {
-            lblInicialInfo.Visible = false;
-            descripNum.Visible = false;
-            lblAsunto.Visible = false;
-            delitos.Visible = false;
-            lblDeli.Visible = false;
-            lblPartes.Visible = false;
-            lblVictima.Visible = false;
-            infoVictima.Visible = false;
-            lblImputado.Visible = false;
-            infoImputado.Visible = false;
-            ImpPortada.Visible = false;
-            VPPortada.Visible = false;
-        }
 
-        private void MostrarControles()
-        {
-            lblInicialInfo.Visible = true;
-            descripNum.Visible = true;
-            lblAsunto.Visible = true;
-            delitos.Visible = true;
-            lblDeli.Visible = true;
-            lblPartes.Visible = true;
-            lblVictima.Visible = true;
-            infoVictima.Visible = true;
-            lblImputado.Visible = true;
-            infoImputado.Visible = true;
-            ImpPortada.Visible = true;
-        }
-
-        private DataTable ConvertListToDataTable(List<string> list, string columnName)
-        {
-            DataTable dataTable = new DataTable();
-            dataTable.Columns.Add(columnName, typeof(string));
-            foreach (string item in list)
-            {
-                DataRow row = dataTable.NewRow();
-                row[columnName] = item;
-                dataTable.Rows.Add(row);
-            }
-            return dataTable;
-        }
-
-        private void MostrarMensajeToastr(string mensaje, string tipo)
-        {
-            string script = $"toastr.{tipo}('{mensaje}');";
-            ScriptManager.RegisterStartupScript(this, GetType(), "toastrMessage", script, true);
-        }
 
         protected void ImpPortada_Click(object sender, EventArgs e)
         {
@@ -202,6 +154,57 @@ namespace SIPOH
                     ScriptManager.RegisterStartupScript(this, GetType(), "Toastr", "toastr.success('La portada se generó correctamente.');", true);
                 }
             }
+        }
+
+
+        private void OcultarControles()
+        {
+            lblInicialInfo.Visible = false;
+            descripNum.Visible = false;
+            lblAsunto.Visible = false;
+            delitos.Visible = false;
+            lblDeli.Visible = false;
+            lblPartes.Visible = false;
+            lblVictima.Visible = false;
+            infoVictima.Visible = false;
+            lblImputado.Visible = false;
+            infoImputado.Visible = false;
+            ImpPortada.Visible = false;
+            VPPortada.Visible = false;
+        }
+
+        private void MostrarControles()
+        {
+            lblInicialInfo.Visible = true;
+            descripNum.Visible = true;
+            lblAsunto.Visible = true;
+            delitos.Visible = true;
+            lblDeli.Visible = true;
+            lblPartes.Visible = true;
+            lblVictima.Visible = true;
+            infoVictima.Visible = true;
+            lblImputado.Visible = true;
+            infoImputado.Visible = true;
+            ImpPortada.Visible = true;
+        }
+
+        private DataTable ConvertListToDataTable(List<string> list, string columnName)
+        {
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add(columnName, typeof(string));
+            foreach (string item in list)
+            {
+                DataRow row = dataTable.NewRow();
+                row[columnName] = item;
+                dataTable.Rows.Add(row);
+            }
+            return dataTable;
+        }
+
+        private void MostrarMensajeToastr(string mensaje, string tipo)
+        {
+            string script = $"toastr.{tipo}('{mensaje}');";
+            ScriptManager.RegisterStartupScript(this, GetType(), "toastrMessage", script, true);
         }
 
 

@@ -214,7 +214,7 @@
                                         <div class="row">
                                             <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px;">
                                                 <%--<asp:Button ID="btnImpresionPort" Visible="true" runat="server" Text="🖨️ Imprimir Portada" CssClass="btn btn-success btn-sm mayusculas" />--%>
-                                                <asp:Button ID="btnDigitalizar" Visible="false" runat="server" Text="🧑‍💻 Digitalizar" CssClass="btn btn-success btn-sm mayusculas" OnClick="btnDigitalizar_Click" />
+                                                <asp:Button ID="btnDigitalizar" Visible="false" runat="server" Text="💻 Digitalizar" CssClass="btn btn-success btn-sm mayusculas" OnClick="btnDigitalizar_Click" />
                                             </div>
                                         </div>
                                     </center>

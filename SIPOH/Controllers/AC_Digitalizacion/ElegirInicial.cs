@@ -158,44 +158,35 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                         PortadaInicial.Visible = true;
 
 
-                        //// Configura la ruta del informe Crystal Reports (.rpt)
-                        //string rutaInforme = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.rpt");
+                        // Crea el comando para ejecutar el procedimiento almacenado
+                        using (SqlCommand comando = new SqlCommand("PortadaDigitalizacion", conn))
+                        {
+                            comando.CommandType = CommandType.StoredProcedure;
 
-                        //// Crea el informe
-                        //ReportDocument reporte = new ReportDocument();
-                        //reporte.Load(rutaInforme);
-
-                        //// Configurar el formato de salida como PDF
-                        //reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
-                        //reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
-                        //string rutaArchivoPDF = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf");
-                        //reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
-
-                        //// Exportar el informe a PDF
-                        //reporte.Export();
-
-                        //// Mostrar el archivo PDF en el Panel            
-                        //VPPortada.Src = "~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf";
-                        //VPPortada.Visible = true;
+                            // Configura los parámetros del procedimiento almacenado
+                            comando.Parameters.Add("@IdAsunto", SqlDbType.VarChar).Value = IdAsunto;
+                            comando.Parameters.Add("@IdJuzgado", SqlDbType.Int).Value = IdJuzgado;
 
                             // Crear un DataTable para almacenar los resultados
                             DataTable dt = new DataTable();
 
                             // Recoger los resultados
-                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            using (SqlDataReader reader = comando.ExecuteReader())
                             {
                                 // Llenar el DataTable con los resultados
                                 dt.Load(reader);
                             }
 
-                            // Validar que el DataTable no esté vacío
-                            if (dt.Rows.Count == 0)
-                            {
-                                return;
-                            }
+                            // Asegúrate de que los nombres de los campos coincidan con los de tu procedimiento almacenado
+                            var valorAsunto = dt.Rows[0]["Asunto"].ToString();
+                            var valorNoAsunto = dt.Rows[0]["Numero"].ToString();
+                            var valorDelitos = dt.Rows[0]["Delitos"].ToString();
+                            var valorImputados = dt.Rows[0]["Imputados"].ToString();
+                            var valorVictimas = dt.Rows[0]["Victimas"].ToString();
+                            var valorFojas = dt.Rows[0]["NumeroFojas"].ToString();
 
                             // Configura la ruta del informe Crystal Reports (.rpt)
-                            string rutaInforme = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/ConsultaPortada.rpt");
+                            string rutaInforme = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.rpt");
 
                             // Crea el informe
                             ReportDocument reporte = new ReportDocument();
@@ -207,18 +198,18 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                             // Configura el formato de salida como PDF
                             reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
                             reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
-                            string rutaArchivoPDF = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/ConsultaPortada.pdf");
+                            string rutaArchivoPDF = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf");
                             reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
 
                             // Exporta el informe a PDF
                             reporte.Export();
 
                             // Muestra el archivo PDF en el Panel            
-                            VPPortada.Src = "~/Controllers/AC_Digitalizacion/ConsultaPortada.pdf";
+                            VPPortada.Src = "~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf";
                             VPPortada.Visible = true;
 
-
-                        }                    
+                        }
+                    }
                     else
                     {
                         descripNum.Text = "";

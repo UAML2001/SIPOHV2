@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SIPOHUT")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0f04cd7ceef9f774ecd60ff8a0108724b90f3120")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9452ef62ac79fc33043fcb05a0b686b586bf4ed9")]
 [assembly: System.Reflection.AssemblyProductAttribute("SIPOHUT")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SIPOHUT")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

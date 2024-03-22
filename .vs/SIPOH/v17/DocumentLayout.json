@@ -3,22 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|SIPOH||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\sipoh\\digitalizariniciales.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\digitalizariniciales.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\uriel\\onedrive\\documentos\\github\\sipohv2\\sipoh\\portadasdigitalizacion.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\portadasdigitalizacion.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\uriel\\onedrive\\documentos\\github\\sipohv2\\sipoh\\portadasdigitalizacion.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\sipoh\\portadasdigitalizacion.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
       "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\portadasdigitalizacion.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\uriel\\onedrive\\documentos\\github\\sipohv2\\sipoh\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|909d16b3-c8e8-43d1-a2b8-26ea0d4b6b57"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,44 +23,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "SIPOH",
-              "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\SIPOH.csproj",
-              "RelativeDocumentMoniker": "SIPOH\\SIPOH.csproj",
-              "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\SIPOH.csproj*",
-              "RelativeToolTip": "SIPOH\\SIPOH.csproj*",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-03-21T22:13:18.624Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "DigitalizarIniciales.aspx",
-              "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\DigitalizarIniciales.aspx",
-              "RelativeDocumentMoniker": "SIPOH\\DigitalizarIniciales.aspx",
-              "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\DigitalizarIniciales.aspx",
-              "RelativeToolTip": "SIPOH\\DigitalizarIniciales.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-03-15T22:18:22.271Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "PortadasDigitalizacion.aspx.cs",
               "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\PortadasDigitalizacion.aspx.cs",
               "RelativeDocumentMoniker": "SIPOH\\PortadasDigitalizacion.aspx.cs",
               "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\PortadasDigitalizacion.aspx.cs",
               "RelativeToolTip": "SIPOH\\PortadasDigitalizacion.aspx.cs",
-              "ViewState": "AQIAALoAAAAAAAAAAAAAANEAAAAAAAAA",
+              "ViewState": "AQIAAIUAAAAAAAAAAAAiwNMAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-21T22:12:04.64Z",
+              "WhenOpened": "2024-03-22T21:44:50.292Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "PortadasDigitalizacion.aspx",
               "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\PortadasDigitalizacion.aspx",
               "RelativeDocumentMoniker": "SIPOH\\PortadasDigitalizacion.aspx",
@@ -78,8 +43,7 @@
               "RelativeToolTip": "SIPOH\\PortadasDigitalizacion.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-03-21T22:11:38.091Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-03-21T22:11:38.091Z"
             }
           ]
         }

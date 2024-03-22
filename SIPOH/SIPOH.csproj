@@ -2390,18 +2390,8 @@
     <Content Include="Externo\MasterExterno.Master" />
     <Content Include="Scripts\Ejecucion\HistoricosCausa.js" />
     <Content Include="Scripts\Firma\Controlador.ashx" />
-    <Content Include="Controllers\AC_Digitalizacion\ConsultaPortada.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Controllers\AC_Digitalizacion\ConsultaPortada.rpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.rpt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Controllers\AC_Digitalizacion\ConsultaPortada.pdf" />
+    <Content Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\consignaciones\Consignaciones.js" />
     <Content Include="Scripts\consignaciones\RegistroIniciales.js" />
@@ -3081,6 +3071,12 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controllers\AC_Digitalizacion\ConsultaPortada.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\InicialControl.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>InicialControl.cs</LastGenOutput>
