@@ -43,6 +43,23 @@
 #gridRelacionarCausas .boton-borrar {
     color: red !important;
 }
-
+.radioSI:checked {
+    border: 2px solid #1cc88a !important;
+    padding: 5px !important;
+    border-radius: 5px !important;
+}
+.radioSI {
+    border: 2px solid #1cc88a !important;
+    border-radius: 5px !important;
+}
+.radioNO:checked {
+    border: 2px solid #e74a3b !important;
+    padding: 5px !important;
+    border-radius: 5px !important;
+}
+.radioNO {
+    border: 2px solid #e74a3b !important;
+    border-radius: 5px !important;
+}
 
 

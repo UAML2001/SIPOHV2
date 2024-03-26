@@ -569,8 +569,8 @@
 
              </div>
              <div class="modal-footer">
-                 <button id="btnCerrar2" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                 <asp:Button ID="Button4" runat="server" CssClass="btn btn-success" Text="Agregar" OnClick="btnAgregarParte_Click2" />
+                 <button id="btnCerrar" class="btn btn-secondary btn-sm mayusculas" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i>Cerrar</button>
+                 <asp:Button ID="Button4" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="Agregar" OnClick="btnAgregarParte_Click2" />
              </div>
          </div>
      </div>
@@ -591,8 +591,8 @@
              <div class="modal-body mayusculas">
              </div>
              <div class="modal-footer">
-                 <button type="button" class="btn btn-danger mayusculas" data-bs-dismiss="modal">Cerrar</button>
-                 <asp:Button ID="Button9" runat="server" Text="Guardar cambios" CssClass="btn btn-success mayusculas" OnClick="btnGuardarDatosJudiciales_Click2"  />
+                 <button type="button" class="btn btn-secondary btn-sm mayusculas" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i>Cerrar</button>
+                 <asp:Button ID="Button6" runat="server" Text="Guardar cambios" CssClass="btn btn-success btn-sm mayusculas" OnClick="btnGuardarDatosJudiciales_Click2" />
              </div>
          </div>
      </div>
@@ -842,8 +842,8 @@
 
              </div>
              <div class="modal-footer">
-                 <button id="btnCerrar3" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                 <asp:Button ID="Button8" runat="server" CssClass="btn btn-success" Text="Agregar" OnClick="btnAgregarParte_Click3" />
+                 <button id="btnCerrar" class="btn btn-secondary btn-sm mayusculas" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i>Cerrar</button>
+                 <asp:Button ID="Button5" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="Agregar" OnClick="btnAgregarParte_Click3" />
              </div>
          </div>
      </div>
@@ -864,8 +864,8 @@
              <div class="modal-body">
              </div>
              <div class="modal-footer">
-                 <button type="button" class="btn btn-danger mayusculas" data-bs-dismiss="modal">Cerrar</button>
-                 <asp:Button ID="Button10" runat="server" Text="Guardar cambios" CssClass="btn btn-success mayusculas" OnClick="btnGuardarDatosJudiciales_Click3" />
+                 <button type="button" class="btn btn-secondary btn-sm mayusculas" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i>Cerrar</button>
+                 <asp:Button ID="Button7" runat="server" Text="Guardar cambios" CssClass="btn btn-success btn-sm mayusculas" OnClick="btnGuardarDatosJudiciales_Click3" />
              </div>
          </div>
      </div>

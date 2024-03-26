@@ -122,9 +122,9 @@
                 </asp:DropDownList>
             </div>
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
-                <label for="inputNuc" class="form-label text-secondary">Numero de Causa</label>
+                <label for="inputNuc" class="form-label text-secondary">Número de Causa</label>
                 <div class="input-group">
-                    <asp:TextBox ID="causaNucAcusatorio" CssClass="form-control form-control-sm mayusculas" runat="server" MaxLength="16" ClientIDMode="Static" onblur="aplicarFormatoSegunSeleccion2(this)"></asp:TextBox>
+                    <asp:TextBox ID="causaNucAcusatorio" CssClass="form-control form-control-sm mayusculas" runat="server" MaxLength="16" ClientIDMode="Static" onblur="aplicarFormatoSegunSeleccion2(this, 'CausaNucCHA')"></asp:TextBox>
                     <div class="input-group-append">
                         <asp:Button ID="btnBuscarAcusatorio" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary btn-sm" OnClick="btnBuscarAcusatorio_Click" />
                     </div>
@@ -141,7 +141,7 @@
                 <asp:DropDownList ID="ddlJuzgadoProcedencia" runat="server" CssClass="form-select form-select-sm mayusculas" OnSelectedIndexChanged="ddlJuzgadoProcedencia_SelectedIndexChanged"></asp:DropDownList>
             </div>
             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
-                <label for="inputcausa" class="form-label text-secondary">Numero de Causa</label>
+                <label for="inputcausa" class="form-label text-secondary">Número de Causa</label>
                 <div class="input-group">
                     <asp:TextBox ID="InputCausaTradicional" CssClass="form-control form-control-sm mayusculas" runat="server" MaxLength="16" onblur="padLeadingZeros(this)"></asp:TextBox>
                     <div class="input-group-append">
@@ -314,13 +314,13 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-6" style="display: flex; align-items: center;">
                 <p style="margin-right: 10px; margin-top: 10px;">¿Sentenciado Interno? (</p>
                 <div class="form-check" style="margin-right: 10px;">
-                    <input class="form-check-input" type="radio" value="S" id="siInterno" runat="server">
+                    <input class="form-check-input radioSI" type="radio" value="S" id="siInterno" runat="server">
                     <label class="form-check-label">
                         Si
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" value="N" id="noInterno" runat="server">
+                    <input class="form-check-input radioNO" type="radio" value="N" id="noInterno" runat="server">
                     <label class="form-check-label">
                         No )
                     </label>
@@ -441,5 +441,6 @@
         $('body').removeClass('modal-open').css('overflow', '');
         $('.modal-backdrop').remove();
     }
-
 </script>
+
+

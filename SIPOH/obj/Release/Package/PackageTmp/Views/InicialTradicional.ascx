@@ -265,13 +265,13 @@
                 <div class="col-12 col-sm-6 col-md-4 col-lg-6" style="display: flex; align-items: center;">
                     <p style="margin-right: 10px; margin-top: 10px;">¿Sentenciado Interno? (</p>
                     <div class="form-check" style="margin-right: 10px;">
-                        <input class="form-check-input" type="radio" value="S" id="siInterno" runat="server">
+                        <input class="form-check-input radioSI" type="radio" value="S" id="siInterno" runat="server">
                         <label class="form-check-label">
                             Si
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" value="N" id="noInterno" runat="server">
+                        <input class="form-check-input radioNO" type="radio" value="N" id="noInterno" runat="server">
                         <label class="form-check-label">
                             No )
                         </label>

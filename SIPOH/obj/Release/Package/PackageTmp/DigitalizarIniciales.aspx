@@ -3,7 +3,7 @@
 <asp:Content ID="ContentDigitInici" ContentPlaceHolderID="ContentDigitInici" runat="server">
 
     <div>
-        <h1 class="h5"><i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold">Digitalización de Iniciales</span> </h1>
+        <h1 class="h5"><i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold"> Digitalización de Iniciales</span> </h1>
     </div>
 
     <link href="Content/css/Consignaciones.css" rel="stylesheet" />
@@ -19,6 +19,35 @@
         }
     </style>
 
+    <!-- Include Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <!-- Include jQuery (Toastr depends on it) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Include Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <!-- Toastr initialization -->
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    </script>
 
     <div class="m-0">
         <div class="row">
@@ -34,7 +63,7 @@
                                 <h6 class="help-block text-muted small-font"><b>Pendientes de digitalizar (Seleccione la inicial a digitalizar): </b></h6>
                                 <br />
                                 <div class="scrollable">
-                                    <asp:GridView ID="PDigitalizar" CssClass="table" runat="server" AutoGenerateColumns="False" AllowPaging="True" PageSize="3" OnPageIndexChanging="PDigitalizar_PageIndexChanging">
+                                    <asp:GridView ID="PDigitalizar" CssClass="table table-striped text-center table-hover table-sm" runat="server" AutoGenerateColumns="False" AllowPaging="True" PageSize="3" OnPageIndexChanging="PDigitalizar_PageIndexChanging">
                                         <Columns>
                                             <asp:TemplateField HeaderStyle-CssClass="bg-success text-white">
                                                 <ItemTemplate>
@@ -53,10 +82,10 @@
                                             <asp:BoundField DataField="Digitalizado" HeaderText="Digitalizado" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
                                         </Columns>
                                         <PagerTemplate>
-                                            <asp:Button ID="btnFirst" CssClass="btn btn-primary" runat="server" CommandName="Page" CommandArgument="First" Text=" Primero" />
-                                            <asp:Button ID="btnPrev" CssClass="btn btn-success" runat="server" CommandName="Page" CommandArgument="Prev" Text="⏮️ Anterior" />
-                                            <asp:Button ID="btnNext" CssClass="btn btn-success" runat="server" CommandName="Page" CommandArgument="Next" Text="⏭️ Siguiente" />
-                                            <asp:Button ID="btnLast" CssClass="btn btn-primary" runat="server" CommandName="Page" CommandArgument="Last" Text=" Ultimo" />
+                                            <asp:Button ID="btnFirst" CssClass="btn btn-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="First" Text=" Primero" />
+                                            <asp:Button ID="btnPrev" CssClass="btn btn-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Prev" Text="⏮️ Anterior" />
+                                            <asp:Button ID="btnNext" CssClass="btn btn-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Next" Text="⏭️ Siguiente" />
+                                            <asp:Button ID="btnLast" CssClass="btn btn-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Last" Text=" Ultimo" />
                                         </PagerTemplate>
                                     </asp:GridView>
                                 </div>
@@ -126,11 +155,11 @@
                                 <br />
 
                                 <div class="row ">
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <div class="col-md-16 col-sm-12 col-xs-12">
                                         <asp:Label ID="lblDocsNoDigit" runat="server" CssClass="help-block text-muted small-font" Visible="false"><b>*Documentos no digitalizados:</b></asp:Label>
                                         <br />
                                         <br />
-                                        <asp:GridView ID="noDigit" CssClass="table" runat="server" AutoGenerateColumns="False">
+                                        <asp:GridView ID="noDigit" CssClass="table table-striped text-center table-hover table-sm" runat="server" AutoGenerateColumns="False">
                                             <Columns>
                                                 <asp:TemplateField HeaderStyle-CssClass="bg-success text-white">
                                                     <ItemTemplate>
@@ -143,28 +172,52 @@
                                         </asp:GridView>
 
                                         <asp:Label ID="lblinfo" runat="server" CssClass="help-block text-muted small-font" Style="text-align: justify" Visible="false"><b>(*) Los elementos seleccionados estan en estatus "NO DIGITALIZADOS", quite la seleccion si el anexo ya esta digitalizado.</b></asp:Label>
+                                        <br />
+                                        <br />
+                                        <br />
                                     </div>
 
+                                    
                                     <br />
-                                    <br />
-
 
                                     <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <asp:Label ID="lblAdjuntar" runat="server" CssClass="help-block text-muted small-font" Visible="false"><b>Adjuntar documentos:</b></asp:Label>
-                                                <asp:FileUpload ID="UploadFileDigit" Visible="false" AutoPostBack="False" runat="server" CssClass="form-control" accept=".pdf" />
-                                                <asp:Label ID="VP" runat="server" CssClass="help-block text-muted small-font" Style="display: none">
-<b>Vista previa del documento adjunto:</b>
-                                                </asp:Label>
-                                                <br />
-                                                <asp:Panel runat="server" ID="preview" Style="margin: auto; max-height: 50%; overflow-y: auto;"></asp:Panel>
-                                                <br />
-                                                <div class="text-center">
-                                                    <div class="col-md-3 col-sm-3 col-xs-3" style="padding: 10px;">
-                                                        <asp:Button ID="btnDigitalizar" AutoPostBack="False" runat="server" Text="Digitalizar" CssClass="btn btn-success btn-sm mayusculas" OnClick="btnDigitalizar_Click" />
-                                                    </div>
-                                                </div>
+                                        <asp:Label ID="PortadaInicial" runat="server" CssClass="help-block text-muted small-font" Visible="false"><b>Portada de la inical:</b>
+                                        </asp:Label>
+                                        <br />
+                                        <br />
+
+                                        <div>
+                                            <iframe id="VPPortada" runat="server" width="100%" height="500px" visible="false" frameborder="0"></iframe>
+                                            <br />
+                                        </div>
                                     </div>
 
+                                    <div class="col-md-6 col-sm-6 col-xs-6">
+                                        <asp:Label ID="lblAdjuntar" runat="server" CssClass="help-block text-muted small-font" Visible="false"><b>Adjuntar documentos:</b>
+                                        </asp:Label>
+                                        <br />
+                                        <br />
+
+                                        <div style="margin-bottom: 10px;">
+                                            <asp:FileUpload ID="UploadFileDigit" Visible="false" runat="server" CssClass="form-control" accept=".pdf" />
+                                        </div>
+                                        <div>
+                                            <asp:Label ID="VP" runat="server" CssClass="help-block text-muted small-font" Style="display: none"><b>Vista previa del documento adjunto:</b>
+                                            </asp:Label>
+                                            <br />
+                                            <asp:Panel runat="server" ID="preview"></asp:Panel>
+                                            <br />
+                                        </div>
+                                    </div>
+
+                                    <center>
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px;">
+                                                <%--<asp:Button ID="btnImpresionPort" Visible="true" runat="server" Text="🖨️ Imprimir Portada" CssClass="btn btn-success btn-sm mayusculas" />--%>
+                                                <asp:Button ID="btnDigitalizar" Visible="false" runat="server" Text="💻 Digitalizar" CssClass="btn btn-success btn-sm mayusculas" OnClick="btnDigitalizar_Click" />
+                                            </div>
+                                        </div>
+                                    </center>
 
                                 </div>
                             </div>
@@ -174,6 +227,7 @@
             </div>
         </div>
     </div>
+
 
 
     <script>
@@ -198,13 +252,13 @@
                 var previewDiv = document.getElementById('<%= preview.ClientID %>'); // Obtiene el div de vista previa
                 previewDiv.innerHTML = ''; // Limpia el div de vista previa
 
-                var embed = document.createElement('embed'); // Crea un nuevo elemento embed
-                embed.src = reader.result; // Establece el src al resultado del FileReader
-                embed.type = "application/pdf"; // Establece el tipo de contenido a PDF
-                embed.style.width = '500px'; // Establece el ancho del visor
-                embed.style.height = '500px'; // Establece la altura del visor
+                var iframe = document.createElement('iframe'); // Crea un nuevo elemento embed
+                iframe.src = reader.result; // Establece el src al resultado del FileReader
+                iframe.type = "application/pdf"; // Establece el tipo de contenido a PDF
+                iframe.style.width = '100%'; // Establece el ancho del visor
+                iframe.style.height = '500px'; // Establece la altura del visor
 
-                previewDiv.appendChild(embed); // Añade el elemento embed al div de vista previa
+                previewDiv.appendChild(iframe); // Añade el elemento embed al div de vista previa
                 // Muestra el elemento al final del script
                 document.getElementById('VP').style.display = 'block';
             }
@@ -215,9 +269,4 @@
         }
         document.getElementById('<%= UploadFileDigit.ClientID %>').addEventListener('change', PreviewPDF); // Añade un evento de cambio al input para llamar a la función PreviewPDF
     </script>
-
-    
-
-
-
 </asp:Content>

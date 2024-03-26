@@ -2382,16 +2382,28 @@
     <Content Include="Content\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Content\vendor\jquery\jquery.min.map" />
     <Content Include="Content\vendor\jquery\jquery.slim.min.map" />
-    <Content Include="Reportes\InicialControl.pdf" />
-    <Content Include="Reportes\InicialEjecucion.pdf" />
-    <Content Include="Reportes\PosteriorControl.pdf" />
-    <Content Include="Reportes\PosteriorEjecucion.pdf" />
     <None Include="Connected Services\Firma\WebService.wsdl" />
     <Content Include="Externo\MasterExterno.Master" />
     <Content Include="Scripts\Ejecucion\HistoricosCausa.js" />
     <Content Include="Scripts\Firma\Controlador.ashx" />
-    <Content Include="Controllers\AC_Digitalizacion\ConsultaPortada.pdf" />
-    <Content Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.pdf" />
+    <Content Include="Reportes\InicialControl.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reportes\InicialEjecucion.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reportes\PosteriorControl.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reportes\PosteriorEjecucion.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Controllers\AC_Digitalizacion\ConsultaPortada.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\consignaciones\Consignaciones.js" />
     <Content Include="Scripts\consignaciones\RegistroIniciales.js" />
@@ -2607,6 +2619,13 @@
     <Compile Include="Controllers\AC_Digitalizacion\ConexionFTP.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\ConsultaCargaInicial.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\ConsultaCargaPosterior.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\ConsultaPortada1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConsultaPortada.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Controllers\AC_Digitalizacion\DigitalizarInicial.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\DigitalizarPosterior.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\ElegirInicial.cs" />
@@ -2615,6 +2634,13 @@
     <Compile Include="Controllers\AC_Digitalizacion\ObtenerIdCircuito.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\PaginacionInicial.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\PaginacionPosterior.cs" />
+    <Compile Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PortadaDigitalizacion.rpt</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Controllers\AC_Digitalizacion\TipoAsunto.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\UpdateDigitalizado.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\UpdateDigitalizadoPosterior.cs" />
@@ -2816,24 +2842,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InicialControl.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reportes\InicialEjecucion.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>InicialEjecucion.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reportes\PosteriorControl.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PosteriorControl.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reportes\PosteriorEjecucion.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>PosteriorEjecucion.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -3071,34 +3101,44 @@
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controllers\AC_Digitalizacion\ConsultaPortada.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\InicialControl.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>InicialControl.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\InicialEjecucion.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>InicialEjecucion.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\PosteriorControl.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>PosteriorControl.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\PosteriorEjecucion.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>PosteriorEjecucion.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\Firma\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reportes\InicialControl.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InicialControl.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reportes\InicialEjecucion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>InicialEjecucion.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reportes\PosteriorControl.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PosteriorControl.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reportes\PosteriorEjecucion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PosteriorEjecucion.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controllers\AC_Digitalizacion\ConsultaPortada.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ConsultaPortada1.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PortadaDigitalizacion.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

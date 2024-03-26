@@ -34,7 +34,7 @@
             </div>
             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                 <label  class="form-label text-secondary">Fecha recepción: </label>
-                <asp:TextBox runat="server" CssClass="form-control form-control-sm text-secondary" ID="fechaRecepcion" TextMode="DateTimeLocal" onblur="validarFecha()"   MaxLength="6"/>
+                <asp:TextBox runat="server" CssClass="form-control form-control-sm text-secondary" ID="fechaRecepcion" TextMode="DateTimeLocal" oninput="validarFechaC(this)"   MaxLength="6"/>
             </div>
             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                 <label class="help-block text-muted small-font">Número fojas: </label>
@@ -163,7 +163,7 @@
         </div>
         <%--<div class=" d-flex justify-content-center my-5" id="ocultarAGuardar" runat="server">--%>
         <div class=" d-flex justify-content-center my-5" id="ocultarAGuardar" runat="server" style="display:none !important;">
-            <a class="btn btn-success btn-sm" data-bs-toggle="modal" onclick="valoresFinales();" data-bs-target="#envioRelaciones"><i class="bi bi-floppy-fill mr-1"></i>Guardar</a>
+            <a class="btn btn-success btn-sm" data-bs-toggle="modal" onclick="valoresFinalesJuicioOral();" data-bs-target="#envioRelaciones"><i class="bi bi-floppy-fill mr-1"></i>Guardar</a>
         </div>
             <div class="container d-flex flex-row-reverse justify-content-center align-content-center w-100vw m-0 " Id="tituloSelloJOIniciales" style="display: none !important ;" runat="server">
                 <div class="col-auto flex-column-reverse btn btn-info d-flex btn-sm" onclick="imprimirTicketJOIniciales()" style="cursor: pointer; ">
@@ -208,7 +208,7 @@
                     <div class="modal-body">
                          <div class="col-12 pb-2">
                             <span class="text-secondary">Número de causa:</span>
-                            <asp:TextBox runat="server" ID="copyInputNumero" CssClass="form-control form-control-sm text-center text-success" ReadOnly="true" />
+                            <asp:TextBox runat="server" ID="copyInputNumero" CssClass="form-control form-control-sm text-center text-success" ReadOnly="true"/>
                         </div>
                         <div class="col-12 pb-2">
                             <span class="text-secondary">Número de juicio oral histórico:</span>
@@ -240,78 +240,49 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <script type="text/javascript">    
-                
+        </div>  
+        <script type="text/javascript">                                           
             
-            
-
-            function validarNumero(input) {
-                // Obtener el valor del campo
-                var valor = input.value;
-
-                // Verificar si el valor es un número
-                if (isNaN(valor)) {
-                    // Si no es un número, mostrar un mensaje de error y limpiar el campo
-                    var mensaje = "Este  campo solo acepta numeros";
-                    //alert("Este  campo solo acepta numeros");
-                    toastError(mensaje);
-
-
-                    input.value = "";
-                }
-            }
-            function valoresFinales() {
-                copyInputNumero();
-                copyInputNumeroArchivo();
+            function valoresFinalesJuicioOral() {
+                copyInputNumeroJuicioOral();
+                copyInputNumeroArchivoJuicioOral();
                 //copyInputTipoAudiencia();
-                copyFechaRecepcion();
-                copyNumeroFojas();
-                copyObservacionesInicial();
+                copyFechaRecepcionJuicioOral();
+                copyNumeroFojasJuicioOral();
+                copyObservacionesInicialJuicioOral();
             }
-            function copyInputNumero() {
+            function copyInputNumeroJuicioOral() {
                 var inputNumero = $("#<%= inputNumero.ClientID %>");
                 var copyInputNumero = $("#<%= copyInputNumero.ClientID %>");
                 copyInputNumero.val(inputNumero.val());
             }
-            function copyInputNumeroArchivo() {
+            function copyInputNumeroArchivoJuicioOral() {
                 var inputNumeroArchivo = $("#<%= inputNumeroArchivo.ClientID %>");
                 var copyInputNumeroArchivo = $("#<%= copyInputNumeroArchivo.ClientID %>");
                 copyInputNumeroArchivo.val(inputNumeroArchivo.val());
             }
             
-            function copyFechaRecepcion() {
+            function copyFechaRecepcionJuicioOral() {
                 var FechaRecepcion = $("#<%= fechaRecepcion.ClientID %>");
                 var copyFechaRecepcion = $("#<%= copyFechaRecepcion.ClientID %>");
                 copyFechaRecepcion.val(FechaRecepcion.val());
             }
 
-            function copyNumeroFojas() {
+            function copyNumeroFojasJuicioOral() {
                 var numeroFojas = $("#<%= numeroFojas.ClientID %>");
                 var copyNumeroFojas = $("#<%= copyNumeroFojas.ClientID %>");
                 copyNumeroFojas.val(numeroFojas.val());
             }
             
-            function copyObservacionesInicial() {
+            function copyObservacionesInicialJuicioOral() {
                 var observacionesIncial = $("#<%= observacionesIncial.ClientID %>");
                 var copyObservaciones = $("#<%= copyObservacionesInicial.ClientID %>");
                 copyObservaciones.val(observacionesIncial.val());
             }
             
-            function validarFecha() {
-                var inputFechaRecepcion = document.getElementById('<%= fechaRecepcion.ClientID %>');
-                var fechaSeleccionada = new Date(inputFechaRecepcion.value);
-                var fechaActual = new Date();
-                fechaActual.setHours(0, 0, 0, 0);
 
-                if (fechaSeleccionada > fechaActual) {
-                    //toastError("!Estas loco!, o ¿Vives en el futuro?");
-                    toastError("No se puede seleccionar una fecha posterior a hoy.");
-                    inputFechaRecepcion.value = "";
-                }
-            }
 
         </script>
-        <script src="../Scripts/consignaciones/JuicioOral.js"></script>
+        
     </ContentTemplate>
 </asp:UpdatePanel>

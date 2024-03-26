@@ -67,7 +67,7 @@
                 <div class="nav-item mt-4 mb-5">
                 <div class="row text-center">
                     <div class="col-12" >
-                        <asp:Label CssClass="text-break text-capitalize font-weight-bold" ID="txtnombre" runat="server" Text="Faustino Tapia Moya" ></asp:Label>
+                        <asp:Label CssClass="text-break text-capitalize font-weight-bold" ID="txtnombre" runat="server" Text="" ></asp:Label>
                         <br />
                     </div>
                 </div>
