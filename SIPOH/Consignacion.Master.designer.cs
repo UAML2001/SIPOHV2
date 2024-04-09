@@ -213,6 +213,15 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.ContentPlaceHolder Contentlibroindice;
 
         /// <summary>
+        /// Control ContentBuzonControl.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentBuzonControl;
+
+        /// <summary>
         /// Control CerrarSesion.
         /// </summary>
         /// <remarks>

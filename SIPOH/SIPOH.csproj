@@ -201,6 +201,7 @@
   <ItemGroup>
     <Content Include="Agenda.aspx" />
     <Content Include="Busqueda.aspx" />
+    <Content Include="BuzonControl.aspx" />
     <Content Include="Connected Services\Firma\SIPOH.Firma.AgregarPfxResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -2569,6 +2570,13 @@
     <Compile Include="Busqueda.aspx.designer.cs">
       <DependentUpon>Busqueda.aspx</DependentUpon>
     </Compile>
+    <Compile Include="BuzonControl.aspx.cs">
+      <DependentUpon>BuzonControl.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="BuzonControl.aspx.designer.cs">
+      <DependentUpon>BuzonControl.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\Firma\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2602,7 +2610,11 @@
     <Compile Include="Consulta.aspx.designer.cs">
       <DependentUpon>Consulta.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AC_CatalogosCompartidos\AC_BandejaBuzonControlController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\AC_ConsultaLibroIndiceController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\AC_Folio_BandejaBuzonControlController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\AC_Nuc_BandejaBuzonControlController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\AC_Tipo_BandejaBuzonControlController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatAnexosController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatEjecucion_CatAnexosController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatEjecucion_CatSolicitanteController.cs" />

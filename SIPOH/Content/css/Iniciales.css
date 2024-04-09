@@ -61,5 +61,10 @@
     border: 2px solid #e74a3b !important;
     border-radius: 5px !important;
 }
+.form-control:disabled {
+    background-color: #fff; /* Fondo blanco */
+    color: #212529; /* Texto en color por defecto */
+    cursor: not-allowed; /* Cambia el cursor para indicar que el elemento está deshabilitado */
+}
 
 
