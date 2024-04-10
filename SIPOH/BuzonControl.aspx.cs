@@ -162,6 +162,26 @@ namespace SIPOH
                 }
             }
             //
+            else if (e.CommandName == "Guardar")
+            {
+                int rowIndex = Convert.ToInt32(e.CommandArgument);
+                long idSolicitudBuzon = Convert.ToInt64(gridBuzonControl.DataKeys[rowIndex].Values["IdSolicitudBuzon"]);
+                string tipoAsunto = gridBuzonControl.Rows[rowIndex].Cells[3].Text; // Asegúrate de reemplazar IndiceDeTuColumnaTipoAsunto por el índice real de tu columna TipoAsunto
+                Session["IdSolicitudBuzon"] = idSolicitudBuzon;
+                if (tipoAsunto == "INICIAL")
+                {
+                    Response.Redirect("Consignaciones.aspx");
+                }
+                else if (tipoAsunto == "POSTERIOR")
+                {
+                    Response.Redirect("PromocionesCtrl.aspx");
+                }
+                else
+                {
+                    // Aquí podrías manejar cualquier otro caso o mostrar un mensaje de error si es necesario
+                }
+            }
+            //
         }
         protected void btnBuscarBuzon_Click(object sender, EventArgs e)
         {

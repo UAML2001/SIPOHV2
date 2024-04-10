@@ -90,17 +90,20 @@
                                                             <HeaderStyle CssClass="bg-success text-white" />
                                                             <ItemStyle CssClass="p-2 text-center" />
                                                         </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="Guardar">
+                                                         <asp:TemplateField HeaderText="Guardar">
                                                             <ItemTemplate>
-                                                                <asp:Button ID="btnGuardarBuzon" runat="server" Text="💾" CssClass="btn btn-success" />
+                                                                <asp:Button ID="btnGuardarBuzon" runat="server" Text="💾" CssClass="btn btn-success"
+                                                                    CommandName="Guardar" CommandArgument="<%# Container.DataItemIndex %>" />
                                                             </ItemTemplate>
                                                             <HeaderStyle CssClass="bg-success text-white" />
                                                             <ItemStyle CssClass="p-2 text-center" />
                                                         </asp:TemplateField>
+
                                                         <asp:TemplateField HeaderText="Rechazar">
                                                             <ItemTemplate>
                                                                 <asp:Button ID="btnCancelarBuzon" runat="server" CommandName="Rechazar"
-                                                                    Text="✖️" CssClass="btn btn-danger" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" />
+                                                                    Text="✖️" CssClass="btn btn-danger" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" 
+                                                                    OnClientClick="return confirmarRechazo();"/>
                                                             </ItemTemplate>
                                                             <HeaderStyle CssClass="bg-success text-white" />
                                                             <ItemStyle CssClass="p-2 text-center" />
@@ -196,4 +199,10 @@
             }
         }
     </script>
+    <script type="text/javascript">
+        function confirmarRechazo() {
+            return confirm('¿Estás seguro de que deseas rechazar este elemento?');
+        }
+    </script>
+
 </asp:Content>
