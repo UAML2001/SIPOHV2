@@ -46,7 +46,9 @@
                                             <div class="col-12 col-lg-12 mt-2 table-responsive">
                                                 <asp:GridView ID="gridBuzonControl" runat="server" DataKeyNames="IdSolicitudBuzon, RutaDoc"
                                                     OnRowCommand="gridBuzonControl_RowCommand" AutoGenerateColumns="false"
-                                                    CssClass="table table-sm table-striped table-hover table-bordered" Width="100%">
+                                                    CssClass="table table-sm table-striped table-hover table-bordered" Width="100%" AllowPaging="true" PageSize="10" OnPageIndexChanging="gridBuzonControl_PageIndexChanging">
+                                                    <PagerSettings Mode="NumericFirstLast" FirstPageText="Primera" LastPageText="Última" />
+                                                    <PagerStyle CssClass="pager" HorizontalAlign="Right" />
                                                     <Columns>
                                                         <asp:BoundField DataField="IdSolicitudBuzon" HeaderText="Folio">
                                                             <HeaderStyle CssClass="bg-success text-white" />
@@ -90,7 +92,7 @@
                                                             <HeaderStyle CssClass="bg-success text-white" />
                                                             <ItemStyle CssClass="p-2 text-center" />
                                                         </asp:TemplateField>
-                                                         <asp:TemplateField HeaderText="Guardar">
+                                                        <asp:TemplateField HeaderText="Guardar">
                                                             <ItemTemplate>
                                                                 <asp:Button ID="btnGuardarBuzon" runat="server" Text="💾" CssClass="btn btn-success"
                                                                     CommandName="Guardar" CommandArgument="<%# Container.DataItemIndex %>" />
@@ -102,8 +104,8 @@
                                                         <asp:TemplateField HeaderText="Rechazar">
                                                             <ItemTemplate>
                                                                 <asp:Button ID="btnCancelarBuzon" runat="server" CommandName="Rechazar"
-                                                                    Text="✖️" CssClass="btn btn-danger" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>" 
-                                                                    OnClientClick="return confirmarRechazo();"/>
+                                                                    Text="✖️" CssClass="btn btn-danger" CommandArgument="<%# ((GridViewRow) Container).RowIndex %>"
+                                                                    OnClientClick="return confirmarRechazo();" />
                                                             </ItemTemplate>
                                                             <HeaderStyle CssClass="bg-success text-white" />
                                                             <ItemStyle CssClass="p-2 text-center" />

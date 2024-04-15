@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using static SIPOH.Controllers.AC_CatalogosCompartidos.AC_BandejaBuzonControlController;
+using static SIPOH.Controllers.AC_CatalogosCompartidos.CatEjecucion_Cat_JuzgadosController;
 
 namespace SIPOH.Controllers.AC_CatalogosCompartidos
 {
@@ -14,7 +15,7 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
     {
         private string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
 
-        public List<BandejaBuzonControlModel> ObtenerBandejaSeguimientoPorFolio(long idSolicitudBuzon)
+        public List<BandejaBuzonControlModel> ObtenerBandejaSeguimientoPorFolio(long idSolicitudBuzon, int  idJuzgado)
         {
             List<BandejaBuzonControlModel> bandeja = new List<BandejaBuzonControlModel>();
 
@@ -24,6 +25,7 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@IdSolicitudBuzon", idSolicitudBuzon);
+                    cmd.Parameters.Add(new SqlParameter("@IdJuzgado", idJuzgado));
 
                     con.Open();
                     using (SqlDataReader dr = cmd.ExecuteReader())

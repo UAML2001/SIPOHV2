@@ -46,8 +46,9 @@ namespace SIPOH
                 if (Session["IdJuzgado"] != null)
                 {
                     LlenarDDL();
-                    CargarDatosIniciales();
+                    //CargarDatosIniciales();
                 }
+                CargarDatosIniciales();
             }
         }
         //conn
@@ -55,12 +56,22 @@ namespace SIPOH
         //cargar datos en grid view al cargar la pagina con parametro idjuzgado
         private void CargarDatosIniciales()
         {
-            if (Session["IdJuzgado"] != null && int.TryParse(Session["IdJuzgado"].ToString(), out int idJuzgado))
+            int idJuzgado = Convert.ToInt32(Session["IdJuzgado"]);
+            if (idJuzgado > 0)
             {
-                AC_BandejaBuzonControlController controller = new AC_BandejaBuzonControlController();
-                var bandejaSeguimiento = controller.ObtenerBandejaSeguimientoBuzon(idJuzgado);
-                gridBuzonControl.DataSource = bandejaSeguimiento;
-                gridBuzonControl.DataBind();
+                string tipoBusqueda = Session["BusquedaTipo"] as string;
+                string inputUsuario = Session["BusquedaInput"] as string;
+                if (!string.IsNullOrEmpty(tipoBusqueda) && !string.IsNullOrEmpty(inputUsuario))
+                {
+                    CargarDatosGridView(tipoBusqueda, inputUsuario);
+                }
+                else
+                {
+                    AC_BandejaBuzonControlController controller = new AC_BandejaBuzonControlController();
+                    var bandejaSeguimiento = controller.ObtenerBandejaSeguimientoBuzon(idJuzgado);
+                    gridBuzonControl.DataSource = bandejaSeguimiento;
+                    gridBuzonControl.DataBind();
+                }
             }
             else
             {
@@ -107,6 +118,23 @@ namespace SIPOH
             ddlTipoBusqueda.Items.Add(new ListItem("FOLIO", "F"));
             ddlTipoBusqueda.Items.Add(new ListItem("TODOS", "TO"));
         }
+        //PAGINACION TABLA
+        protected void gridBuzonControl_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gridBuzonControl.PageIndex = e.NewPageIndex;
+            string tipoBusqueda = Session["BusquedaTipo"] as string;
+            string inputUsuario = Session["BusquedaInput"] as string;
+            if (!string.IsNullOrEmpty(tipoBusqueda) && !string.IsNullOrEmpty(inputUsuario))
+            {
+                CargarDatosGridView(tipoBusqueda, inputUsuario);
+            }
+            else
+            {
+                CargarDatosIniciales();
+            }
+        }
+
+
         //FUNCION VER EL DOCUMENTO POR RUTA
         protected void gridBuzonControl_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -197,14 +225,14 @@ namespace SIPOH
             gridBuzonControl.DataSource = null;
             gridBuzonControl.DataBind();
             bool hayResultados = true;
-            switch (seleccion)
+            if (Session["IdJuzgado"] != null && int.TryParse(Session["IdJuzgado"].ToString(), out int idJuzgado))
             {
-                case "TO":
-                    if (Session["IdJuzgado"] != null && int.TryParse(Session["IdJuzgado"].ToString(), out int idJuzgado))
-                    {
+                switch (seleccion)
+                {
+                    case "TO":
                         AC_BandejaBuzonControlController controllerTodos = new AC_BandejaBuzonControlController();
                         var resultadosTodos = controllerTodos.ObtenerBandejaSeguimientoBuzon(idJuzgado);
-                        if (resultadosTodos == null || !resultadosTodos.Any()) // Asegúrate de que resultadosTodos es una colección enumerable
+                        if (resultadosTodos == null || !resultadosTodos.Any())
                         {
                             MensajeError("No se encontraron resultados.", true);
                         }
@@ -213,74 +241,76 @@ namespace SIPOH
                             gridBuzonControl.DataSource = resultadosTodos;
                             gridBuzonControl.DataBind();
                         }
-                    }
-                    else
-                    {
-                        MensajeError("IdJuzgado no está disponible en la sesión.", true);
-                    }
-                    break;
-                case "F":
-                    if (long.TryParse(inputUsuario, out long folio))
-                    {
-                        AC_Folio_BandejaBuzonControlController folioController = new AC_Folio_BandejaBuzonControlController();
-                        var resultadosFolio = folioController.ObtenerBandejaSeguimientoPorFolio(folio);
-                        if (resultadosFolio == null || !resultadosFolio.Any()) // Verifica si hay resultados
+                        break;
+                    case "F":
+                        if (long.TryParse(inputUsuario, out long folio))
                         {
-                            MensajeError("No se encontraron resultados con el folio proporcionado.", true);
+                            AC_Folio_BandejaBuzonControlController folioController = new AC_Folio_BandejaBuzonControlController();
+                            var resultadosFolio = folioController.ObtenerBandejaSeguimientoPorFolio(folio, idJuzgado);
+                            if (resultadosFolio == null || !resultadosFolio.Any())
+                            {
+                                MensajeError("No se encontraron resultados con el folio proporcionado.", true);
+                            }
+                            else
+                            {
+                                gridBuzonControl.DataSource = resultadosFolio;
+                                gridBuzonControl.DataBind();
+                            }
                         }
                         else
                         {
-                            gridBuzonControl.DataSource = resultadosFolio;
+                            MensajeError("Error al convertir el folio a número.", true);
+                        }
+                        break;
+                    case "N":
+                        AC_Nuc_BandejaBuzonControlController nucController = new AC_Nuc_BandejaBuzonControlController();
+                        var resultadosNUC = nucController.ObtenerBandejaSeguimientoPorNUC(inputUsuario, idJuzgado);
+                        if (resultadosNUC == null || !resultadosNUC.Any())
+                        {
+                            MensajeError("No se encontraron resultados para el NUC proporcionado.", true);
+                            hayResultados = false;
+                        }
+                        else
+                        {
+                            gridBuzonControl.DataSource = resultadosNUC;
                             gridBuzonControl.DataBind();
                         }
-                    }
-                    else
-                    {
-                        MensajeError("Error al convertir el folio a número.", true);
-                    }
-                    break;
-                case "N":
-                    AC_Nuc_BandejaBuzonControlController nucController = new AC_Nuc_BandejaBuzonControlController();
-                    var resultadosNUC = nucController.ObtenerBandejaSeguimientoPorNUC(inputUsuario);
-                    if (resultadosNUC == null || !resultadosNUC.Any()) // Verifica si hay resultados
-                    {
-                        MensajeError("No se encontraron resultados para el NUC proporcionado.", true);
+                        break;
+                    case "C":
+                    case "CP":
+                    case "E":
+                    case "JO":
+                    case "T":
+                        AC_Tipo_BandejaBuzonControlController tipoController = new AC_Tipo_BandejaBuzonControlController();
+                        var resultadosTipo = tipoController.ObtenerBandejaSeguimientoPorTipoYNumero(seleccion, inputUsuario, idJuzgado);
+                        if (resultadosTipo == null || !resultadosTipo.Any())
+                        {
+                            MensajeError($"No se encontraron resultados para el tipo seleccionado con el número proporcionado, verificalo.", true);
+                            hayResultados = false;
+                        }
+                        else
+                        {
+                            gridBuzonControl.DataSource = resultadosTipo;
+                            gridBuzonControl.DataBind();
+                        }
+                        break;
+                    default:
+                        MensajeError("Selección de búsqueda no válida.", true);
                         hayResultados = false;
-                    }
-                    else
-                    {
-                        gridBuzonControl.DataSource = resultadosNUC;
-                        gridBuzonControl.DataBind();
-                    }
-                    break;
-                case "C":
-                case "CP":
-                case "E":
-                case "JO":
-                case "T":
-                    AC_Tipo_BandejaBuzonControlController tipoController = new AC_Tipo_BandejaBuzonControlController();
-                    var resultadosTipo = tipoController.ObtenerBandejaSeguimientoPorTipoYNumero(seleccion, inputUsuario);
-                    if (resultadosTipo == null || !resultadosTipo.Any()) // Verifica si hay resultados
-                    {
-                        MensajeError($"No se encontraron resultados para el tipo seleccionado con el número proporcionado, verificalo.", true);
-                        hayResultados = false;
-                    }
-                    else
-                    {
-                        gridBuzonControl.DataSource = resultadosTipo;
-                        gridBuzonControl.DataBind();
-                    }
-                    break;
-                default:
-                    MensajeError("Selección de búsqueda no válida.", true);
-                    hayResultados = false;
-                    break;
+                        break;
+                }
+            }
+            else
+            {
+                MensajeError("IdJuzgado no está disponible en la sesión.", true);
+                hayResultados = false;
             }
             if (hayResultados)
             {
                 txtNumeroAsunto.Text = string.Empty;
             }
         }
+
         //FUNCION DESHABILITAR TEXTBOX AL ELEGIR OPCION TODOS
         protected void ddlTipoBusqueda_SelectedIndexChanged(object sender, EventArgs e)
         {
