@@ -11,331 +11,286 @@ namespace SIPOH
 {
 
 
-    public partial class Consignacion
+    public partial class RegistroUsuario
     {
 
         /// <summary>
-        /// Control head.
+        /// Control UpdatePanelPersonal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.UpdatePanel UpdatePanelPersonal;
 
         /// <summary>
-        /// Control NombreJuzgado.
+        /// Control ScriptManagerRegistroPersonal.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label NombreJuzgado;
+        protected global::System.Web.UI.ScriptManager ScriptManagerRegistroPersonal;
 
         /// <summary>
-        /// Control tipoCircuito.
+        /// Control lblNombreUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label tipoCircuito;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblNombreUsuario;
 
         /// <summary>
-        /// Control OpcionesConjunto.
+        /// Control inputBuscarusuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel OpcionesConjunto;
+        protected global::System.Web.UI.WebControls.TextBox inputBuscarusuario;
 
         /// <summary>
-        /// Control OpcionesControl.
+        /// Control btnSearchUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel OpcionesControl;
+        protected global::System.Web.UI.WebControls.Button btnSearchUsuario;
 
         /// <summary>
-        /// Control OpcionesControlCircuito.
+        /// Control btnSearchNuevoUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel OpcionesControlCircuito;
+        protected global::System.Web.UI.WebControls.Button btnSearchNuevoUsuario;
 
         /// <summary>
-        /// Control Panel1.
+        /// Control UpdatePanelBusquedaUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Panel1;
+        protected global::System.Web.UI.UpdatePanel UpdatePanelBusquedaUsuario;
 
         /// <summary>
-        /// Control ConfiguracionConjuntos.
+        /// Control grdVwBusquedaUsuarios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel ConfiguracionConjuntos;
+        protected global::System.Web.UI.WebControls.GridView grdVwBusquedaUsuarios;
 
         /// <summary>
-        /// Control OpcionesEjecucion.
+        /// Control formRegistroUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel OpcionesEjecucion;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl formRegistroUsuario;
 
         /// <summary>
-        /// Control userName.
+        /// Control inputPerfil.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label userName;
+        protected global::System.Web.UI.WebControls.DropDownList inputPerfil;
 
         /// <summary>
-        /// Control form1.
+        /// Control contenedorDrplstJuzgados.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl contenedorDrplstJuzgados;
 
         /// <summary>
-        /// Control RegistroUsuario.
+        /// Control inputJuzgado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder RegistroUsuario;
+        protected global::System.Web.UI.WebControls.DropDownList inputJuzgado;
 
         /// <summary>
-        /// Control ContentError.
+        /// Control inputNombre.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentError;
+        protected global::System.Web.UI.WebControls.TextBox inputNombre;
 
         /// <summary>
-        /// Control ContentCausa.
+        /// Control inputApellidoPaterno.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentCausa;
+        protected global::System.Web.UI.WebControls.TextBox inputApellidoPaterno;
 
         /// <summary>
-        /// Control ContentCupre.
+        /// Control inputApellidoMaterno.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentCupre;
+        protected global::System.Web.UI.WebControls.TextBox inputApellidoMaterno;
 
         /// <summary>
-        /// Control ContentEstadistica.
+        /// Control inputUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentEstadistica;
+        protected global::System.Web.UI.WebControls.TextBox inputUsuario;
 
         /// <summary>
-        /// Control ContentAgenda.
+        /// Control inputContraseña.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentAgenda;
+        protected global::System.Web.UI.WebControls.TextBox inputContraseña;
 
         /// <summary>
-        /// Control ContentEIniciales.
+        /// Control inputTelefono.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentEIniciales;
+        protected global::System.Web.UI.WebControls.TextBox inputTelefono;
 
         /// <summary>
-        /// Control ContentEPromociones.
+        /// Control inputDomicilio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentEPromociones;
+        protected global::System.Web.UI.WebControls.TextBox inputDomicilio;
 
         /// <summary>
-        /// Control ContentEPReportes.
+        /// Control inputEmail.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentEPReportes;
+        protected global::System.Web.UI.WebControls.TextBox inputEmail;
 
         /// <summary>
-        /// Control ContentECHistorica.
+        /// Control btnModalGuardar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentECHistorica;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnModalGuardar;
 
         /// <summary>
-        /// Control ContentBusquedas11.
+        /// Control copyPerfil.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentBusquedas11;
+        protected global::System.Web.UI.WebControls.TextBox copyPerfil;
 
         /// <summary>
-        /// Control ContentPermisos.
+        /// Control copyJuzgado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPermisos;
+        protected global::System.Web.UI.WebControls.TextBox copyJuzgado;
 
         /// <summary>
-        /// Control ContentDigitInici.
+        /// Control copyNombre.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentDigitInici;
+        protected global::System.Web.UI.WebControls.TextBox copyNombre;
 
         /// <summary>
-        /// Control Contentlibroindice.
+        /// Control copyAPaterno.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder Contentlibroindice;
+        protected global::System.Web.UI.WebControls.TextBox copyAPaterno;
 
         /// <summary>
-        /// Control CerrarSesion.
+        /// Control copyAMaterno.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::SIPOH.Views.ConsignacionElements.CerrarSesion CerrarSesion;
+        protected global::System.Web.UI.WebControls.TextBox copyAMaterno;
 
         /// <summary>
-        /// Control LabelProfile.
+        /// Control copyUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelProfile;
+        protected global::System.Web.UI.WebControls.TextBox copyUsuario;
 
         /// <summary>
-        /// Control LabelAddress.
+        /// Control copyPass.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelAddress;
+        protected global::System.Web.UI.WebControls.TextBox copyPass;
 
         /// <summary>
-        /// Control LabelPhoneNum.
+        /// Control copyDomicilio.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelPhoneNum;
+        protected global::System.Web.UI.WebControls.TextBox copyDomicilio;
 
         /// <summary>
-        /// Control LabelTCircuito.
+        /// Control copyTelefono.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelTCircuito;
+        protected global::System.Web.UI.WebControls.TextBox copyTelefono;
 
         /// <summary>
-        /// Control LabelUserName.
+        /// Control copyEmail.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelUserName;
-
-        /// <summary>
-        /// Control LabelName.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelName;
-
-        /// <summary>
-        /// Control LabelFistName.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelFistName;
-
-        /// <summary>
-        /// Control LabelLastName.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelLastName;
-
-        /// <summary>
-        /// Control LabelJuzgado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelJuzgado;
-
-        /// <summary>
-        /// Control LabelEmail.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LabelEmail;
+        protected global::System.Web.UI.WebControls.TextBox copyEmail;
     }
 }

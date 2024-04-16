@@ -1,5 +1,8 @@
-﻿using System;
+﻿using DatabaseConnection;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -13,7 +16,7 @@ namespace SIPOH
     public partial class _Default : Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {            
+        {
             if (!IsPostBack)
             {
                 // Verifica si el usuario ya está autenticado y redirige si es necesario
@@ -22,25 +25,36 @@ namespace SIPOH
                     Response.Redirect("Inicio.aspx");
                 }
             }
+            MensajeErrorLabel.Visible = false;
         }
         protected void BotonLogin_Click(object sender, EventArgs e)
         {
             string Usuario = txtUsuario.Text;
             string Password = txtPass.Text;
-            //auth login
-            if (Autenticacion.AutenticarUsuario(Usuario, Password))
-            {
-                string perfil = HttpContext.Current.Session["Perfil"] as string;
-                FormsAuthentication.RedirectFromLoginPage(Usuario, true);                
-                MensajeSuccessLabel.Text = "Bienvenid@" + Usuario ;
-                Debug.WriteLine("El valor de la variable es este: " + perfil);
-                Response.Redirect("Inicio.aspx");
-            }
+            //Encryting
+            string contraseñaCifrada = CryptographyController.EncryptString(Password);
+            
+                if (AutenticacionController.AutenticarUsuarioSeguridad(Usuario, contraseñaCifrada))
+                {
+                    string perfil = HttpContext.Current.Session["Perfil"] as string;
+                    FormsAuthentication.RedirectFromLoginPage(Usuario, true);
+                    //MensajeSuccessLabel.Text = "Bienvenid@" + Usuario ;
+
+                    MensajeErrorLabel.Visible = false;
+                    Debug.WriteLine("El valor de la variable es este: " + perfil);
+                    Response.Redirect("Inicio.aspx");
+                    // Usuario autenticado correctamente
+                }
+            
             else
             {
-                MensajeErrorLabel.Text = "¡Credenciales incorrectas!, Intenta nuevamente";                 
+                // Usuario no autenticado
+                MensajeErrorLabel.Text = "¡Credenciales incorrectas!, Intenta nuevamente";
+                MensajeErrorLabel.Visible = true;
             }
             
+            
+
         }
 
     }

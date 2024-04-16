@@ -7,7 +7,7 @@
 
     <head runat="server">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>SIPOH PJEH - Ingreso</title>
+        <title>SIPOH</title>
         <link rel="shortcut icon" href="https://www.aseh.gob.mx/Shared/img/anticorrupcion/3.png" />
         <link href="Content/css/Default.css" rel="stylesheet" />
         <link rel="stylesheet"
@@ -20,131 +20,74 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"
             integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
             crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    </head>
-
-    <body style="background-image: url('<%= ResolveUrl("content/img/Login.jpeg") %>');">
-        <header>
-            <nav class="navbar bg-transparent">
-                <div class="container">
-                    
-                </div>
-            </nav>
-        </header>
-        <form id="form1" runat="server" class="background-form pt-5 ">
-            <div class="px-6">
-                <div class="row d-flex justify-content-center align-content-center">
-                    <div class="col-10 col-sm-5 col-md-5 col-lg-4 col-xl-4 col-xxl-6 my-5 mx-3">
-                        <div class="text-center">
-                            <img src="https://www.aseh.gob.mx/Shared/img/anticorrupcion/3.png" alt="logo PJEH"
-                                class="img-fluid col-8 col-xxl-4 col-xl-6 col-lg-8 col-md-7 col-sm-9" height="225" />
-                            <h1 class="display-4 text-md" style="color: white"><b>SIPOH</b></h1>
-                            <h5 style=" color: white;" class="text-md">¡Bienvenido(a) al Sistema
-                                Penal Digital del PJEGH!</h5>
-                            <br />
-                        </div>
-                        <br />
-                    </div>
-                    <div class=""></div>
-                    <div class=" col-10 col-sm-6 col-md-5 col-lg-4 col-xl-3 col-xxl-4  ">
-                        <div align="center" class=" bg-white boxshadow p-4 rounded"
-                            style="width: auto; height:auto">
-                            <div class="card-header-pills text-dark">
-                                <%--<i class="bi bi-lock-fill text-danger" style="font-size:35px;"></i>--%>
-                                <img src="https://img.icons8.com/3d-fluency/100/user-credentials.png" width="60px"
-                                    height="60px" id="login-cerrar" />
-                                <h2 style="font-size:27px"><b>Ingrese sus credenciales</b></h2>
-                            </div>
-                            <div class="form-group mt-3" style="width: 100%">
-
-                                <div class="form-group d-flex flex-column">
-                                    <label class="text-secondary align-self-lg-start"><b>Nombre de Usuario:</b></label>
-                                    <asp:TextBox ID="txtUsuario" runat="server" CssClass="form-control form-control-sm"
-                                        Width="100%" BorderColor="Gray" required></asp:TextBox>
-                                </div>
-                                <div class="form-group d-flex flex-column">
-                                    <label class="text-secondary align-self-start"
-                                        for="passLabel"><b>Contraseña:</b></label>
-                                    <div class="input-group mb-2">
-                                        <asp:TextBox ID="txtPass" runat="server" CssClass="form-control form-control-sm"
-                                            TextMode="Password" Width="100%" BorderColor="Gray" required></asp:TextBox>
-                                        <button class="btn btn-transparent" type="button" id="btnMostrarClave"><span
-                                                class="fa fa-eye-slash fa-lg icon text-success"
-                                                style="color:black"></span></button>
-                                    </div>
-                                    <asp:HyperLink ID="hyperlink1" NavigateUrl="https://localhost:44335/Default"
-                                        Text="¿Olvidaste tu Contraseña?" Target="_new" runat="server" />
-                                </div>
-                            </div>
-                            <asp:Button ID="BotonLogin" OnClick="BotonLogin_Click"
-                                Style="color:white; font-weight: bold" runat="server" Text="Ingresar"
-                                CssClass="button-56" />
-                            <asp:Label ID="MensajeErrorLabel" runat="server" Text="" ForeColor="Red" />
-                            <asp:Label ID="MensajeSuccessLabel" runat="server" Text="" ForeColor="Green" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br />
-
-        </form>
-        <footer class="footer text-muted pb-3">
-            <div class="container">
-                <b style="color: white; font-size:18px;">Copyright &copy; 2023
-                    <asp:HyperLink Style="color:white" id="hyperlink2" NavigateUrl="http://www.pjhidalgo.gob.mx/"
-                        Text="Poder Judicial del Estado de Hidalgo" Target="_new" runat="server" /> - SIPOH PJEH
-                </b>
-            </div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body  class="fade-in container-fluid custom-bg door-wrapper">            
+    <div class="door"></div>
+    <div class="vw-100 vh-100 d-flex justify-content-center align-content-center contenido">
+    <div class="d-flex flex-column-reverse align-items-center justify-content-center align-self-start col-lg-3 col-md-4 col-sm-6 col-8 bg-light py-4 px-3 shadow p-3 mb-5 bg-body rounded bg-white fade-in">
+      <form id="form1" runat="server" class="card py-4 px-3 bg-light border-1 border-light col-auto" style="width: 18rem;">
+        <div class="mb-3 fade-in">
+          <label for="" class="form-label">Usuario:</label>
+          <asp:TextBox ID="txtUsuario" runat="server" CssClass="form-control form-control-sm text-secondary bg-light btn-rebote" required placeholder="Ingrese su usuario"></asp:TextBox>
+        </div>
+        <div class="mb-3 fade-in">
+          <label for="" class="form-label"><span class="fw-normal">Contraseña:</span></label>
+          <div class="input-group mb-2">
+            <asp:TextBox ID="txtPass" runat="server" CssClass="form-control form-control-sm text-secondary bg-light btn-rebote" TextMode="Password" required placeholder="Ingrese su contraseña"></asp:TextBox>
+            <button class="btn form-control-sm fa fa-eye-slash fa-lg icon text-success btn-rebote" type="button" id="btnMostrarClave"></button>
+          </div>
+        </div>
+        <asp:Button ID="BotonLogin" OnClick="BotonLogin_Click" Style="background-color: #3F5259; font-weight: bold; color: #ffffff;" runat="server" Text="SIPOH" CssClass="btn fade-in btn-rebote" />
+        <asp:Label ID="MensajeErrorLabel" runat="server" Text="" ForeColor="Red" class="fade-in" />
+      </form>
+      <div class="col-auto pb-3 fade-in">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Sello_del_Poder_Judicial_de_Hidalgo.svg/1080px-Sello_del_Poder_Judicial_de_Hidalgo.svg.png" alt="logo PJEH" style="height: 120px;" class="desvanecer img-fluid" />
+      </div>
+    </div>
+  </div>
+</body>
+    <script>
+        $(document).ready(function () {
+            $('#show_password').hover(function show() {
+                //Cambiar el atributo a texto
+                $('#txtPassword').attr('type', 'text');
+                $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+            },
+                function () {
+                    //Cambiar el atributo a contraseña
+                    $('#txtPassword').attr('type', 'password');
+                    $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+                });
+        });
 
 
+        $(document).ready(function () {
+            $("input#txtPass").focus(function () {
+                $(this).val('');
+                $(this).get(0).type = 'password';
+            });
+            $("input#txtPass").click(function () {
+                $(this).val('');
+                $(this).get(0).type = 'password';
+            });
+            $('#btnMostrarClave').click(function () {
+                var tipo = document.getElementById("txtPass");
 
-        </footer>
-
-        <script>
-            $(document).ready(function () {
-                $('#show_password').hover(function show() {
-                    //Cambiar el atributo a texto
-                    $('#txtPassword').attr('type', 'text');
+                if (tipo.type == "password") {
+                    var input = $('#txtPass').attr('type');
+                    // alert (input);
+                    $('#txtPass').attr('type', 'text');
                     $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
-                },
-                    function () {
-                        //Cambiar el atributo a contraseña
-                        $('#txtPassword').attr('type', 'password');
-                        $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
-                    });
+                } else {
+                    var input = $('#txtPass').attr('type');
+                    // alert (input);
+                    $('#txtPass').attr('type', 'password');
+                    $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+                }
             });
-
-
-            $(document).ready(function () {
-                $("input#txtPass").focus(function () {
-                    $(this).val('');
-                    $(this).get(0).type = 'password';
-                });
-                $("input#txtPass").click(function () {
-                    $(this).val('');
-                    $(this).get(0).type = 'password';
-                });
-                $('#btnMostrarClave').click(function () {
-                    var tipo = document.getElementById("txtPass");
-
-                    if (tipo.type == "password") {
-                        var input = $('#txtPass').attr('type');
-                        // alert (input);
-                        $('#txtPass').attr('type', 'text');
-                        $('.icon').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
-                    } else {
-                        var input = $('#txtPass').attr('type');
-                        // alert (input);
-                        $('#txtPass').attr('type', 'password');
-                        $('.icon').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
-                    }
-                });
-            });
-        </script>
-
-
-        </asp:Content>
+        });
+        </script>        
         <script src="Scripts/default/default.js"></script>
-    </body>
 
     </html>

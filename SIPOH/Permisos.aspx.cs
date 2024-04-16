@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Principal;
@@ -7,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static RegistroPerfilController;
+
 
 namespace SIPOH
 {
@@ -14,7 +17,7 @@ namespace SIPOH
     {
         //Registro de session con procedimientos almacenados
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {            
             int sessionTimeout = 1 * 60; // 20 minutos
             Session.Timeout = sessionTimeout;
             
@@ -45,7 +48,49 @@ namespace SIPOH
                 Visible = false;
                 Response.Redirect("~/Views/ContenidoDisponible/contenido-denegado");
             }
+            CatPermisosEjecucion();
+            CatPermisosControl();
+            CatPermisosCompartido();
+            CatTipoCircuito();
+
         }       
+
+        protected void CatalogoTipoCircuito(object sender, EventArgs e)
+        {
+            
+        }
+        private void CatPermisosEjecucion()
+        {
+            DataTable dt = ObtenerCatPermisos("E");
+            // Enlazar el Repeater con los datos obtenidos
+            CatSubpermisosEjecucion.DataSource = dt;
+            CatSubpermisosEjecucion.DataBind();
+        }
+        private void CatPermisosControl()
+        {
+            DataTable dt = ObtenerCatPermisos("C");
+            CatSubpermisosControl.DataSource = dt;
+            CatSubpermisosControl.DataBind();
+        }
+        private void CatPermisosCompartido()
+        {
+            DataTable dt = ObtenerCatPermisos("CO");
+            CatSubpermisosCompartidos.DataSource = dt;
+            CatSubpermisosCompartidos.DataBind();
+        }
+        private void CatTipoCircuito()
+        {
+            
+            List<TipoCircuito> info = ObtenerTipoCircuito();
+            inputTipoCircuito.DataSource = info;
+            inputTipoCircuito.DataTextField = "Circuito";
+            inputTipoCircuito.DataValueField = "Circuito";
+            inputTipoCircuito.DataBind();
+        }
+        protected void btnEnviarPerfil(object sender, EventArgs e)
+        {
+            btnEnviarPerfil();
+        }
     }
 
 }

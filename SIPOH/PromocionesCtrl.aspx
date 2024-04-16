@@ -12,7 +12,7 @@
         <span  class="text-sm" >Control <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-success fw-bold "> Promociones</span> </span>
         <b>Registro</b>
 	</div>
-    <div class="col-md-10 ml-auto col-xl-11 mr-auto">
+    <div class="col-md-10  col-xl-12 m-0">
                 <!-- Nav tabs -->
                 <div class="card py-5">
                     <div class="card-header">

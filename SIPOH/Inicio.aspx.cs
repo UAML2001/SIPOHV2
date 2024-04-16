@@ -44,7 +44,8 @@ namespace SIPOH
                 Response.Redirect("Default.aspx");
             }
 
-
+            ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "toastr.success('Mensaje de éxito', 'Título del Toast');", true);
+            lblMensajeBienvenida.Text = Session["Name"].ToString();
         }
     }
 }
