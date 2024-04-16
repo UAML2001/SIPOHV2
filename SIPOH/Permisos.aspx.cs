@@ -89,7 +89,7 @@ namespace SIPOH
         }
         protected void btnEnviarPerfil(object sender, EventArgs e)
         {
-            btnEnviarPerfil();
+            //btnEnviarPerfil();
         }
     }
 

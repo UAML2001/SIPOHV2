@@ -106,6 +106,7 @@
                             <a class="collapse-item" href="ReportesCtrl.aspx">Reportes</a>
                             <a class="collapse-item" href="SolicitudCDs.aspx">Solicitud de CDs</a>
                             <a class="collapse-item" href="libro.aspx">Libro Índice</a>
+                            <a class="collapse-item" href="BuzonControl.aspx">Buzón Digital</a>
                         </div>
                     </div>
                 </asp:Panel>
@@ -129,6 +130,7 @@
                             <a class="collapse-item" href="ReportesCtrl.aspx">Reportes</a>
                             <a class="collapse-item" href="SolicitudCDs.aspx">Solicitud de CDs</a>
                             <a class="collapse-item" href="libro.aspx">Libro Índice</a>
+                            <a class="collapse-item" href="BuzonControl.aspx">Buzón Digital</a>
                         </div>
                     </div>
                       <li ID="Panel1" runat="server" CssClass="nav-item">
@@ -436,6 +438,9 @@
                             </asp:ContentPlaceHolder>
                              <asp:ContentPlaceHolder ID="Contentlibroindice" runat="server">
                             </asp:ContentPlaceHolder>
+                              <asp:ContentPlaceHolder ID="ContentBuzonControl" runat="server">
+                             </asp:ContentPlaceHolder>
+
                             <!-- Estilos de admin lte agregue para el calendario by brayan -->
                             <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                 aria-hidden="true">

@@ -585,7 +585,7 @@
                 </div>
                 <div class="modal-footer">
                     <a class="btn btn-secondary" data-bs-target="#modalCrearPerfil" data-bs-toggle="modal">Cancelar</a>
-                    <Asp:Button class="btn btn-success" runat="server"  data-bs-toggle="modal" OnClick="btnEnviarPerfil">Guardar</Asp:Button>
+                    <%--<Asp:Button class="btn btn-success" runat="server"  data-bs-toggle="modal" OnClick="btnEnviarPerfil">Guardar</Asp:Button>--%>
                 </div>
             </div>
         </div>

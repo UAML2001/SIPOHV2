@@ -32,7 +32,7 @@ namespace SIPOH
             string Usuario = txtUsuario.Text;
             string Password = txtPass.Text;
             //Encryting
-            string contraseñaCifrada = CryptographyController.EncryptString(Password);
+            string contraseñaCifrada = CryptographyController.EncryptString(Password);            
             
                 if (AutenticacionController.AutenticarUsuarioSeguridad(Usuario, contraseñaCifrada))
                 {
