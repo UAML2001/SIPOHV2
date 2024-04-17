@@ -500,6 +500,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\css\Default.css" />
     <Content Include="Content\css\Iniciales.css" />
+    <Content Include="Content\css\loginexterno.css" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\Permiso.css" />
     <Content Include="Content\css\sb-admin-2.css" />
