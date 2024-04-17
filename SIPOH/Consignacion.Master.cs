@@ -34,6 +34,12 @@ namespace SIPOH
             MostrarOpcionesPorRol(circuito, OpcionesEjecucion, "e");
             MostrarOpcionesPorRol(circuito, OpcionesControl, "d");
             MostrarOpcionesCircuito(circuito, OpcionesControlCircuito, "c");
+            ConfiguracioConjuntos(circuito, ConfiguracionConjuntos, "a","d");
+            
+        }
+        private void ConfiguracioConjuntos(string circuito, Panel panelOpciones, string rolObjetivo, string rolObjetivo2)
+        {
+            panelOpciones.Visible = (circuito == rolObjetivo ) || (circuito == rolObjetivo2);            
             
         }
         private void MostrarOpcionesPorRol(string circuito, Panel panelOpciones, string rolObjetivo)

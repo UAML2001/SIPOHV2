@@ -2203,6 +2203,7 @@
     <Content Include="PortadasDigitalizacion.aspx" />
     <Content Include="Promociones.aspx" />
     <Content Include="PromocionesCtrl.aspx" />
+    <Content Include="RegistroUsuario.aspx" />
     <Content Include="ReportesCtrl.aspx" />
     <Content Include="ReportesEjec.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -2557,9 +2558,10 @@
       <DependentUpon>Agenda.aspx</DependentUpon>
     </Compile>
     <Content Include="App_Code\RegistroIniciales.cs" />
-    <Compile Include="App_Start\Autenticacion.cs" />
+    <Compile Include="App_Start\AutenticacionController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\Consultas.cs" />
+    <Compile Include="App_Start\CryptographyController.cs" />
     <Compile Include="App_Start\RegistroPromociones.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Seguridad.cs" />
@@ -2656,8 +2658,10 @@
     <Compile Include="Controllers\AC_Digitalizacion\TipoAsunto.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\UpdateDigitalizado.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\UpdateDigitalizadoPosterior.cs" />
+    <Compile Include="Controllers\AC_PersonalUsuarios\PersonalUsuariosController.cs" />
     <Compile Include="Controllers\AC_RegistroInicialJuicioOral\InicialJuicioOralController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatDelitosController.cs" />
+    <Compile Include="Controllers\AC_RegistroPerfil\RegistroPerfilController.cs" />
     <Compile Include="Controllers\EJ_Storages\Ejecucion_ConsultarCausaController.cs" />
     <Compile Include="Controllers\EJ_Storages\ObtenerNombreJuzgadoPorIDController.cs" />
     <Compile Include="Controllers\AC_RegistroHistoricos\RegistroHistoricoCausaController.cs" />
@@ -2835,6 +2839,13 @@
       <DependentUpon>PromocionesCtrl.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegistroUsuario.aspx.cs">
+      <DependentUpon>RegistroUsuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegistroUsuario.aspx.designer.cs">
+      <DependentUpon>RegistroUsuario.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ReportesCtrl.aspx.cs">
       <DependentUpon>ReportesCtrl.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

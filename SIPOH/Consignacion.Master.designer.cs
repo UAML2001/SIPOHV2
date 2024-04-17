@@ -78,6 +78,15 @@ namespace SIPOH
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Panel1;
 
         /// <summary>
+        /// Control ConfiguracionConjuntos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel ConfiguracionConjuntos;
+
+        /// <summary>
         /// Control OpcionesEjecucion.
         /// </summary>
         /// <remarks>
@@ -103,6 +112,24 @@ namespace SIPOH
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+
+        /// <summary>
+        /// Control RegistroUsuario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder RegistroUsuario;
+
+        /// <summary>
+        /// Control ContentError.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentError;
 
         /// <summary>
         /// Control ContentCausa.

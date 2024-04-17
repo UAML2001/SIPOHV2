@@ -15,6 +15,7 @@
      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://rawgit.com/RobinHerbots/Inputmask/5.x/dist/jquery.inputmask.js"></script>
 
+
     <!-- Estilos de admin lte agregue para el calendario by brayan -->
     <link href="Content/css/main.css" rel="stylesheet" />
     <link href="Content/css/all.min.css" rel="stylesheet" />
@@ -42,15 +43,15 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <li class="nav-item">
-                <a class="nav-link" href="Error.aspx">
-                <div class="row text-center">
-                    <div class="col-12" >
-                        <asp:Label CssClass="text-break text-capitalize fs-9" ID="NombreJuzgado" runat="server"></asp:Label>
-                        <br />
-                        
-                        <asp:Label CssClass="text-break text-capitalize text-success fs-7 fw-bolder" ID="tipoCircuito" runat="server"></asp:Label>
-                    </div>
-                </div>
+                    <a class="nav-link" href="/Error.aspx">
+                        <div class="row text-center">
+                            <div class="col-12">
+                                <asp:Label CssClass="text-break text-capitalize fs-9" ID="NombreJuzgado" runat="server"></asp:Label>
+                                <br />
+
+                                <asp:Label CssClass="text-break text-capitalize text-success fs-7 fw-bolder" ID="tipoCircuito" runat="server"></asp:Label>
+                            </div>
+                        </div>
                     </a>
                 </li>
                 <!-- Divider -->
@@ -83,6 +84,8 @@
                 <div class="sidebar-heading text-success">
                     MODULOS
                 </div>
+               
+               
                 <!-- Nav Item - Pages Collapse Menu Control Distrito-->
                  <asp:Panel ID="OpcionesControl" runat="server" CssClass="nav-item">
                 
@@ -149,6 +152,22 @@
                     </div>
                 </li>
                 </asp:Panel>
+                  <asp:Panel ID="ConfiguracionConjuntos" runat="server" CssClass="nav-item">
+                
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                        aria-expanded="true" aria-controls="collapseThree">
+                        <i class="bi bi-gear-fill "></i>
+                        <span>Configuracion</span>
+                    </a>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingTwo"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Permisos:</h6>                            
+                             <a class="collapse-item" href="RegistroUsuario.aspx"> Registro de personal SIPOH</a>   
+                             <a class="collapse-item" href="Permisos.aspx"> Registro de perfil</a>                               
+                        </div>
+                    </div>
+                </asp:Panel>
                 <!-- FIN Nav Item - Pages Collapse Menu Control Circuito-->
 
                 <!-- Nav Item - Utilities Collapse Menu -->
@@ -170,11 +189,15 @@
                         </div>
                     </div>
                 </asp:Panel>
+                
+
                 <hr class="sidebar-divider">
+                
             <!-- Heading -->
             <div class="sidebar-heading text-success">
                 SOPORTE TÉCNICO
             </div>
+               
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link" href="Error.aspx">
@@ -386,6 +409,11 @@
                     <%--Main--%>
                     <form id="form1" runat="server" class="main  section">
                         <div>
+                            
+                            <asp:ContentPlaceHolder ID="RegistroUsuario" runat="server">
+                            </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentError" runat="server">
+                            </asp:ContentPlaceHolder>
                             <asp:ContentPlaceHolder ID="ContentCausa" runat="server">
                             </asp:ContentPlaceHolder>
                             <asp:ContentPlaceHolder ID="ContentCupre" runat="server">
@@ -411,7 +439,8 @@
                              <asp:ContentPlaceHolder ID="Contentlibroindice" runat="server">
                             </asp:ContentPlaceHolder>
                               <asp:ContentPlaceHolder ID="ContentBuzonControl" runat="server">
-                            </asp:ContentPlaceHolder>
+                             </asp:ContentPlaceHolder>
+
                             <!-- Estilos de admin lte agregue para el calendario by brayan -->
                             <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                 aria-hidden="true">
