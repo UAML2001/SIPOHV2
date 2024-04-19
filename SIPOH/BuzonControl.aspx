@@ -92,9 +92,9 @@
                                                             <HeaderStyle CssClass="bg-success text-white" />
                                                             <ItemStyle CssClass="p-2 text-center" />
                                                         </asp:TemplateField>
-                                                        <asp:TemplateField HeaderText="Guardar">
+                                                        <asp:TemplateField HeaderText="Registrar">
                                                             <ItemTemplate>
-                                                                <asp:Button ID="btnGuardarBuzon" runat="server" Text="💾" CssClass="btn btn-success"
+                                                                <asp:Button ID="btnGuardarBuzon" runat="server" Text="📄" CssClass="btn btn-success"
                                                                     CommandName="Guardar" CommandArgument="<%# Container.DataItemIndex %>" />
                                                             </ItemTemplate>
                                                             <HeaderStyle CssClass="bg-success text-white" />

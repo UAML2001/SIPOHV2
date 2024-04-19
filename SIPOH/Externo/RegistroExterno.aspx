@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>SIPOH PJEH - Ingreso</title>
     <link rel="shortcut icon" href="https://www.aseh.gob.mx/Shared/img/anticorrupcion/3.png" />
-    <link href="~/Content/css/Default.css" rel="stylesheet" />
+    <link href="../Content/css/loginexterno.css" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
