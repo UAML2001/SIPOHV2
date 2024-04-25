@@ -202,6 +202,7 @@
     <Content Include="Agenda.aspx" />
     <Content Include="Busqueda.aspx" />
     <Content Include="BuzonControl.aspx" />
+    <Content Include="ClasiDelito.aspx" />
     <Content Include="Connected Services\Firma\SIPOH.Firma.AgregarPfxResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
@@ -2387,6 +2388,7 @@
     <Content Include="Content\vendor\jquery\jquery.slim.min.map" />
     <None Include="Connected Services\Firma\WebService.wsdl" />
     <Content Include="Externo\MasterExterno.Master" />
+    <Content Include="Scripts\consignaciones\toast.js" />
     <Content Include="Scripts\Ejecucion\HistoricosCausa.js" />
     <Content Include="Scripts\Firma\Controlador.ashx" />
     <Content Include="Reportes\InicialControl.pdf">
@@ -2579,6 +2581,13 @@
     </Compile>
     <Compile Include="BuzonControl.aspx.designer.cs">
       <DependentUpon>BuzonControl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ClasiDelito.aspx.cs">
+      <DependentUpon>ClasiDelito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ClasiDelito.aspx.designer.cs">
+      <DependentUpon>ClasiDelito.aspx</DependentUpon>
     </Compile>
     <Compile Include="Connected Services\Firma\Reference.cs">
       <AutoGen>True</AutoGen>

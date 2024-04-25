@@ -88,6 +88,7 @@
                                                             <ItemTemplate>
                                                                 <asp:Button ID="btnVerDocumento" runat="server" CommandName="Ver" Text="👁️"
                                                                     CssClass="btn btn-primary" CommandArgument="<%# Container.DataItemIndex %>" />
+
                                                             </ItemTemplate>
                                                             <HeaderStyle CssClass="bg-success text-white" />
                                                             <ItemStyle CssClass="p-2 text-center" />
