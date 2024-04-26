@@ -89,7 +89,31 @@ namespace SIPOH
                     return true;
             }
         }
-        
+        public static bool UpdateBuzonSalidaPromocion(int IdSolicitudBuzon, DateTime CapturaActual, string Estatus)
+        {
+            using (SqlConnection connection = new ConexionBD().Connection)
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand("UPDATE P_BuzonSolicitud SET  FeAceptacion =  @FeAceptacion , Estatus = @Estatus WHERE IdSolicitudBuzon = @IdSolicitudBuzon", connection))
+                    {
+                        command.Parameters.AddWithValue("@IdSolicitudBuzon", IdSolicitudBuzon);
+                        command.Parameters.AddWithValue("@FeAceptacion", CapturaActual);
+                        command.Parameters.AddWithValue("@Estatus", Estatus);                        
+                        command.ExecuteNonQuery();
+
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Surgio un problema en actualizar BuzonSalida: " + ex.Message);
+                }
+
+            }
+            return true;
+        }
+
         public static bool SendRegistroPromocion( List<DataPromocion> InfoPromocion, List<AnexosPromocion> AnexosP)
         {
             using(SqlConnection connection = new ConexionBD().Connection)
@@ -111,7 +135,7 @@ namespace SIPOH
                         command.Parameters.AddWithValue("@Promovente", InfoPromocion.Select(b => b.Promovente).FirstOrDefault().ToUpper());
                         command.Parameters.AddWithValue("@Digitalizado", InfoPromocion.Select(b => b.Digitalizado).FirstOrDefault().ToUpper());
                         command.Parameters.AddWithValue("@IdUsuario", Session["IdUsuario"]);
-
+                        command.Parameters.AddWithValue("@FechaIngreso", InfoPromocion.Select(b => b.FechaIngreso).FirstOrDefault());
                         command.Parameters.AddWithValue("@TipoPromocion", InfoPromocion.Select(b => b.TipoPromocion).FirstOrDefault().ToUpper());
                         command.Parameters.AddWithValue("@FechaRecepcion", InfoPromocion.Select(b => b.FechaRecepcion).FirstOrDefault());
                         command.Parameters.AddWithValue("@Tipo",InfoPromocion.Select(b => b.Tipo).FirstOrDefault().ToUpper());

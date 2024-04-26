@@ -534,7 +534,7 @@ namespace SIPOH
                     else if (string.IsNullOrEmpty(Telefono))
                         throw new Exception("Teléfono");
                     else if (string.IsNullOrEmpty(Domicilio))
-                        throw new Exception("Domicilio");
+                        throw new Exception("Dirección");
                     else if (string.IsNullOrEmpty(Email))
                         throw new Exception("Correo electrónico");
                     else if (string.IsNullOrEmpty(inputPerfil.SelectedValue))

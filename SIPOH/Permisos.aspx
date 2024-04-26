@@ -1,130 +1,90 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Consignacion.Master" AutoEventWireup="true" CodeBehind="Permisos.aspx.cs" Inherits="SIPOH.Permisos" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Consignacion.Master" AutoEventWireup="true" CodeBehind="Permisos.aspx.cs" Inherits="SIPOH.Permisos"%>
 
 <asp:Content ID="Content10" ContentPlaceHolderID="ContentPermisos" runat="server">
     <link href="Content/css/Permiso.css" rel="stylesheet" />
     <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
-       
+       <asp:UpdatePanel runat="server" ID="UpdateTablaPermisos" ChildrenAsTriggers="false" UpdateMode="Conditional">
+           <ContentTemplate>               
     <div class="d-flex justify-content-between">
         <h1 style="margin-left: 5%" class="h5">Permisos <i class="fas fa-angle-right"></i><span class="text-success fw-bold">ADMINISTRADOR</span> <i class="bi bi-person-fill-lock text-secondary"></i></h1>
         <button type="button" class="btn btn-success fw-bold btn-sm mr-5 mb-1" data-bs-toggle="modal" data-bs-target="#modalCrearPerfil">Crear perfil <i class="bi bi-person-vcard-fill"></i></button>
+        
     </div>
     <div class="m-0">
         <div class="row">
-            <div class="col-md-11 col-md-11 ml-auto col-xl-11 mr-auto">
+            <div class="col-md-12 col-md-12 ml-auto col-xl-12 mr-auto">
                 <!-- Nav tabs -->
                 <div class="card ">
                     <div class="card-header bg-white">
                         <div class="d-flex justify-content-between">
 
-                            <div class="row g-3 ">
-                                <div class="col-auto">
-                                    <label for="inputMostrar" class="col-form-label">Mostrar</label>
+                                <div class="row g-3 ">
+                                    <div class="col-auto">
+                                        <label for="inputMostrar" class="col-form-label">Mostrar</label>
+                                    </div>
+                                    <div class="col-auto">
+                                        <select class="form-select form-select-sm" aria-label="Small select " id="cantidadFiltro">
+                                            <option value="5">5</option>
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                            <option value="20">20</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-auto">
+                                        <span id="spanHelpInline" class="form-text">Registros
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="col-auto">
-                                    <select class="form-select form-select-sm" aria-label="Small select " id="cantidadFiltro">
-                                        <option value="5">5</option>
-                                        <option value="10">10</option>
-                                        <option value="15">15</option>
-                                        <option value="20">20</option>
-                                    </select>
-                                </div>
-                                <div class="col-auto">
-                                    <span id="spanHelpInline" class="form-text">Registros
-                                    </span>
-                                </div>
-                            </div>
                             <div class="row g-3">
                                 <div class="col-sm-auto col-12">
                                     <label for="inputBuscar" class="col-form-label text-secondary">Nombre de perfil</label>
                                 </div>
-                                <div class="col-sm-auto col-12 pr-0 mr-0">
-                                    <input class="form-control form-control-sm" type="text" aria-label=".form-control-sm">
+                                <div class="col-sm-auto col-12 pr-0 mr-0">                                    
+                                    <asp:TextBox runat="server" ID="txtbxBusquedaPerfil" CssClass="form-control form-control-sm" MaxLength="30"/>
                                 </div>
-
+                                <div class="col-sm-auto col-12">                                   
+                                    <Asp:Button class="btn btn-outline-success fw-bold btn-sm mr-5 mb-1" runat="server"  OnClick="btnBuscarPerfil" Text="Buscar"/>
+                                </div>
                             </div>
                         </div>
                         <div class="table-responsive">
                             <table class="table" id="tablaPermisos">
                                 <thead class="">
                                     <tr>
-                                        <th scope="col" class="d-flex justify-content-between"># <i class="bi bi-sort-down-alt text-secondary"></i></th>
-                                        <th scope="col">Nombre / Area</th>
-                                        <th scope="col">Icono</th>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Nombre / Area</th>                                        
                                         <th scope="col">Enlaces / Permisos</th>
                                         <th scope="col">Sub-Permisos</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th class="text-secondary">1011</th>
-                                        <td class="fw-bold">Tecnico Multimedia</td>
-                                        <td class="text-success form-label"><span class="text-secondary">bi-bar-chart-line-fill</span> <i class="bi bi-bar-chart-line-fill"></i></td>
-                                        <td class="text-secondary d-flex">
+                                     
 
-                                            <details>
-                                                <summary >Enlaces asignados</summary>
-                                                <ul>
-                                                    <li>/Consignaciones</li>
-                                                    <li>/Agenda</li>
-                                                    <li>/Promociones</li>
-                                                </ul>
-                                            </details>
+                                        
+                                     <asp:Repeater ID="busquedaPerfilAsociado" runat="server"  OnItemDataBound="RepeaterPermisoAsociado_ItemDataBound">
+                                        <ItemTemplate>
+                                             <tr>
+                                                <th class="text-secondary text-capitalize"><%# Eval("IdPerfil") %> </th>
 
-                                        </td>
-                                        <td class="text-right"><i class="bi bi-eye-fill btn btn-outline-info"></i><i class="bi bi-pen-fill btn btn-warning rounded-0" data-bs-toggle="modal" data-bs-target="#modalGuardarSubPermiso"></i><i class="bi bi-trash3-fill btn btn-danger"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-secondary">2001</th>
-                                        <td class="fw-bold">Jefe Unidad</td>
-                                        <td class="text-success form-label"><span class="text-secondary">bi bi-journal-text</span> <i class="bi bi-journal-text"></i></td>
-                                        <td class="text-secondary">
-                                            <details>
-                                                <summary >Enlaces asignados</summary>
-                                                <ul>
-                                                    <li>/Agenda</li>
-                                                    <li>/Busquedas</li>
-                                                    <li>/PromocionesCtrl</li>
-                                                </ul>
-                                            </details>
-                                        </td>
-                                        <td class="text-right"><i class="bi bi-eye-fill btn btn-outline-info"></i><i class="bi bi-pen-fill btn btn-warning rounded-0" data-bs-toggle="modal" data-bs-target="#modalGuardarSubPermiso"></i><i class="bi bi-trash3-fill btn btn-danger"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-secondary">2011</th>
-                                        <td class="fw-bold">Encargado de Causa</td>
-                                        <td class="text-success form-label"><span class="text-secondary">bi bi-body-text</span> <i class="bi bi-body-text"></i></td>
-                                        <td class="text-secondary">
-                                            <details>
-                                                <summary >Enlaces asignados</summary>
-                                                <ul>
-                                                    <li>/Agenda</li>
-                                                    <li>/Reportes</li>
-                                                    <li>/PromocionesCtrl</li>
-                                                    <li>/Consultas</li>
-                                                </ul>
-                                            </details>
-                                        </td>
-                                        <td class="text-right"><i class="bi bi-eye-fill btn btn-outline-info"></i><i class="bi bi-pen-fill btn btn-warning rounded-0" data-bs-toggle="modal" data-bs-target="#modalGuardarSubPermiso"></i><i class="bi bi-trash3-fill btn btn-danger"></i></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <th class="text-secondary">1011</th>
-                                        <td class="fw-bold">Tecnico Multimedia</td>
-                                        <td class="text-success form-label"><span class="text-secondary">bi-bar-chart-line-fill</span> <i class="bi bi-bar-chart-line-fill"></i></td>
-                                        <td class="text-secondary d-flex">
+                                                <td class="fw-bold"> <%# Eval("Perfil") %></td>                                                
+                                               <td class="text-secondary d-flex">
+                                                    <details>
+                                                        <summary class="text-secondary link-underline link-success ">Enlaces asignados</summary>
+                                                        <ul>
+                                                            <%# GenerarListaEnlaces(Eval("Enlaces").ToString()) %>
+                                                        </ul>
+                                                    </details>
+                                                   
+                                                </td>
 
-                                            <details>
-                                                <summary >Enlaces asignados</summary>
-                                                <ul>
-                                                    <li>/Consignaciones</li>
-                                                    <li>/Agenda</li>
-                                                    <li>/Promociones</li>
-                                                </ul>
-                                            </details>
-
-                                        </td>
-                                        <td class="text-right"><i class="bi bi-eye-fill btn btn-outline-info"></i><i class="bi bi-pen-fill btn btn-warning rounded-0" data-bs-toggle="modal" data-bs-target="#modalGuardarSubPermiso"></i><i class="bi bi-trash3-fill btn btn-danger"></i></td>
-                                    </tr>
+                                                <td class="text-center">
+                                                    <i class="bi bi-link btn btn-outline-info rounded btn-sm m-1"></i>                                                   
+                                                    <asp:Button ID="btnGuardarSubPermiso"  runat="server" CssClass="btn btn-outline-warning rounded btn-sm m-1" Text=' ⚙️ ' OnClick="btnGuardarSubPermiso_Click" CommandArgument='<%# Eval("IdPerfil")%>'  OnClientClick="$('#modalEditarSubPermiso').modal('show');"  />                                                                                                       
+                                                    <i class="bi bi-trash3-fill btn btn-outline-success rounded btn-sm m-1"></i></td>                                                                                                                                         
+                                           </tr> 
+                                        </ItemTemplate>
+                                    </asp:Repeater>
+                                   
                                     <tr>
                                         <th class="text-secondary"></th>
                                         <td class="fw-bold"></td>
@@ -135,6 +95,9 @@
                                 </tbody>
                             </table>
                         </div>
+                        <asp:HiddenField ID="HiddenIdPermisoAsociado" runat="server" />
+
+                        <asp:Label ID="lblIdSeleccionado" runat="server" Text=""></asp:Label>
                         <div class="row g-3 d-flex justify-content-end">
                             <div class="col-auto btn-group-sm pr-0">
                                 <a class="btn btn-outline-secondary rounded-pill">Anterior</a>
@@ -151,271 +114,228 @@
             </div>
         </div>
     </div>
-
-
+    </ContentTemplate>
+</asp:UpdatePanel>
+     <asp:UpdatePanel runat="server" ID="PanelPermisosAsociados" ChildrenAsTriggers="false" UpdateMode="Conditional">
+           <ContentTemplate>
     
     <!-- Modal Partes -->
-    <div class="modal fade" id="modalGuardarSubPermiso" tabindex="1" aria-labelledby="modalGuardarSubPermisoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+    <div class="modal fade " id="modalGuardarSubPermiso" tabindex="1" aria-labelledby="modalGuardarSubPermisoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content bg-white">
                 <!-- Contenido del segundo modal -->
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <i class="bi bi-boxes text-warning subPermisosIcono pr-2 text-center"></i>
-                <h5 class="modal-title fs-4 text-center">Sub-Permisos</h5>
+                <i class="bi bi-person-gear text-warning subPermisosIcono pr-2 text-center"></i>
+                <h5 class="modal-title fs-4 text-center border-1 border-bottom pb-1">Subpermisos asociados</h5>
                 <div class="modal-body">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Mostrar Modulo
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Consignaciones</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Agenda</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Promociones</a></li>
-
-                        </ul>
-                    </div>
-                    <h5 class="text-success pt-4 pr-5 fw-bold text-right">Consignaciones <i class="fas fa-fw fa-landmark "></i></h5>
+                    
+                    <h5 class="text-success pt-4 pr-5 fw-bold text-right">Compartidos<i class="fas fa-fw fa-landmark "></i></h5>
                     <%--tabla permiso consignaciones--%>
                     <div class="table-responsive">
                         <table class="table">
                             <thead class="">
                                 <tr>
                                     <th scope="col"># </th>
-                                    <th scope="col" class="d-flex justify-content-between">Modulo <i class="bi bi-sort-down-alt text-secondary"></i></th>
+                                    <th scope="col" class="d-flex justify-content-between">Enlace <i class="bi bi-sort-down-alt text-secondary"></i></th>
                                     <th scope="col">Ver</th>
-                                    <th scope="col">Crear</th>
-                                    <th scope="col">Actualizar</th>
+                                    <th scope="col">Editar</th>
                                     <th scope="col">Eliminar</th>
+                                    <th scope="col">SuperUsuario</th>
+                                    <th scope="col">Administrador</th>
+                                    <th scope="col">Usuario</th>
 
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th class="text-secondary">1</th>
-                                    <td class="fw-bold">Amparo</td>
-                                    <td class="text-success">
+                                <asp:Repeater ID="RepeaterGetSubpermisoAsociadoCompartidos" runat="server" >
+                                    <ItemTemplate>
+                                       
+                                        <tr>
+                                    <th class="text-secondary"><%# Eval("IdSubpermiso") %></th>
+                                    <td class="fw-bold"><%# Eval("linkEnlace") %> </td>
+                                    <td class="">                                       
+                                        <div class="form-check form-switch">
+                                                                                     
+                                            <label class='<%# Convert.ToBoolean(Eval("Ver")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckCrear"> <%# Eval("Ver") %></label>
+                                        </div>
+                                    </td>
+                                    <td class="">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVer" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckVer">ON</label>
+                                            <label class='<%# Convert.ToBoolean(Eval("Editar")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckVer"> <%# Eval("Editar") %></label>
                                         </div>
                                     </td>
-                                    <td class="text-secondary">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckCrear">
-                                            <label class="form-check-label" for="flexSwitchCheckCrear">OFF</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-secondary">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckActualizar">
-                                            <label class="form-check-label" for="flexSwitchCheckActualizar">OFF</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-secondary">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEliminar">
-                                            <label class="form-check-label" for="flexSwitchCheckEliminar">OFF</label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-secondary">2</th>
-                                    <td class="fw-bold">Causa</td>
-                                    <td class="text-secondary">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVer">
-                                            <label class="form-check-label" for="flexSwitchCheckVer">OFF</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-success">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckCrear" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckCrear">ON</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-secondary">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckActualizar">
-                                            <label class="form-check-label" for="flexSwitchCheckActualizar">OFF</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-secondary">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEliminar">
-                                            <label class="form-check-label" for="flexSwitchCheckEliminar">OFF</label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-secondary">3</th>
-                                    <td class="fw-bold">Cupre</td>
-                                    <td class="text-secondary">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVer">
-                                            <label class="form-check-label" for="flexSwitchCheckVer">OFF</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-secondary">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckCrear">
-                                            <label class="form-check-label" for="flexSwitchCheckCrear">OFF</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-success">
+                                    <td class="">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckActualizar" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckActualizar">ON</label>
+                                            <label class='<%# Convert.ToBoolean(Eval("Eliminar")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckActualizar"><%# Eval("Eliminar") %></label>
                                         </div>
                                     </td>
-                                    <td class="text-secondary">
+                                    <td class="">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEliminar">
-                                            <label class="form-check-label" for="flexSwitchCheckEliminar">OFF</label>
+                                            <label class='<%# Convert.ToBoolean(Eval("SuperUser")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckEliminar"> <%# Eval("SuperUser") %></label>
                                         </div>
                                     </td>
-                                </tr>
-                                <tr>
-                                    <th class="text-secondary">4</th>
-                                    <td class="fw-bold">Exhorto</td>
-                                    <td class="text-success">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVer" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckVer">ON</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-secondary">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckCrear">
-                                            <label class="form-check-label" for="flexSwitchCheckCrear">OFF</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-success">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckActualizar" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckActualizar">ON</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-secondary">
+                                    <td class="">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEliminar">
-                                            <label class="form-check-label" for="flexSwitchCheckEliminar">OFF</label>
+                                            <label class='<%# Convert.ToBoolean(Eval("Administrador")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckEliminar"> <%# Eval("Administrador") %></label>
                                         </div>
                                     </td>
+                                    <td class="">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEliminar">
+                                            <label class='<%# Convert.ToBoolean(Eval("Usuario")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckEliminar"> <%# Eval("Usuario") %></label>
+                                        </div>
+                                    </td>
+                                            
+                                       
                                 </tr>
-                                <tr>
-                                    <th class="text-secondary">5</th>
-                                    <td class="fw-bold">Juicio Oral</td>
-                                    <td class="text-secondary">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVer">
-                                            <label class="form-check-label" for="flexSwitchCheckVer">OFF</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-secondary">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckCrear">
-                                            <label class="form-check-label" for="flexSwitchCheckCrear">OFF</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-secondary">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckActualizar">
-                                            <label class="form-check-label" for="flexSwitchCheckActualizar">OFF</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-success">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEliminar" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckEliminar">ON</label>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
+                                    </ItemTemplate>
+                                        
+                                </asp:Repeater>
+                            </tbody>                                                                  
                         </table>
+                            <span class="text-success form-label text-center d-flex justify-content-center  ">No hay mas contenido por mostrar.</span>                                                                           
                     </div>
 
                     <%--tabla permisos agenda--%>
-                    <h5 class="text-success pt-4 pr-5 fw-bold text-right">Agenda <i class="bi bi-calendar-day-fill"></i></h5>
+                    <h5 class="text-success pt-4 pr-5 fw-bold text-right">Control <i class="bi bi-calendar-day-fill"></i></h5>
                     <div class="table-responsive">
                         <table class="table">
                             <thead class="">
                                 <tr>
-                                    <th scope="col" class="d-flex justify-content-between"># <i class="bi bi-sort-down-alt text-secondary"></i></th>
-                                    <th scope="col">Modulo</th>
+                                    <th scope="col"># </th>
+                                    <th scope="col" class="d-flex justify-content-between">Enlace <i class="bi bi-sort-down-alt text-secondary"></i></th>
                                     <th scope="col">Ver</th>
-                                    <th scope="col">Crear</th>
-                                    <th scope="col">Actualizar</th>
+                                    <th scope="col">Editar</th>
                                     <th scope="col">Eliminar</th>
+                                    <th scope="col">SuperUsuario</th>
+                                    <th scope="col">Administrador</th>
+                                    <th scope="col">Usuario</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th class="text-secondary">1</th>
-                                    <td class="fw-bold">Eventos</td>
-                                    <td class="text-success">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVer" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckVer">ON</label>
-                                        </div>
-                                    </td>
-                                    <td class="text-secondary">
+                                
+                                <asp:Repeater ID="RepeaterGetSubpermisoAsociadoControl" runat="server" >
+                                    <ItemTemplate>
+                                       
+                                        <tr>
+                                    <th class="text-secondary"><%# Eval("IdSubpermiso") %></th>
+                                    <td class="fw-bold"><%# Eval("linkEnlace") %> </td>
+                                   <td class="">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckCrear">
-                                            <label class="form-check-label" for="flexSwitchCheckCrear">OFF</label>
+                                            <label class='<%# Convert.ToBoolean(Eval("Ver")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckCrear"> <%# Eval("Ver") %></label>
                                         </div>
                                     </td>
-                                    <td class="text-success">
+                                    <td class="">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVer" checked>
+                                            <label class='<%# Convert.ToBoolean(Eval("Editar")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckVer"> <%# Eval("Editar") %></label>
+                                        </div>
+                                    </td>
+                                    <td class="">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckActualizar" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckActualizar">ON</label>
+                                            <label class='<%# Convert.ToBoolean(Eval("Eliminar")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckActualizar"><%# Eval("Eliminar") %></label>
                                         </div>
                                     </td>
-                                    <td class="text-secondary">
+                                    <td class="">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEliminar">
-                                            <label class="form-check-label" for="flexSwitchCheckEliminar">OFF</label>
+                                            <label class='<%# Convert.ToBoolean(Eval("SuperUser")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckEliminar"> <%# Eval("SuperUser") %></label>
+                                        </div>
+                                    </td>
+                                    <td class="">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEliminar">
+                                            <label class='<%# Convert.ToBoolean(Eval("Administrador")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckEliminar"> <%# Eval("Administrador") %></label>
+                                        </div>
+                                    </td>
+                                    <td class="">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEliminar">
+                                            <label class='<%# Convert.ToBoolean(Eval("Usuario")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckEliminar"> <%# Eval("Usuario") %></label>
                                         </div>
                                     </td>
                                 </tr>
+                                    </ItemTemplate>
+                                </asp:Repeater>
+                                
                             </tbody>
                         </table>
+                            <span class="text-success form-label text-center d-flex justify-content-center  ">No hay mas contenido por mostrar.</span>                                                                           
                     </div>
                     <%--tabla permisos Promociones--%>
-                    <h5 class="text-success pt-4 pr-5 fw-bold text-right">Promociones <i class="bi bi-calendar-day-fill"></i></h5>
+                    <h5 class="text-success pt-4 pr-5 fw-bold text-right">Ejecucion <i class="bi bi-calendar-day-fill"></i></h5>
                     <div class="table-responsive">
                         <table class="table">
+                            
                             <thead class="">
                                 <tr>
-                                    <th scope="col" class="d-flex justify-content-between"># <i class="bi bi-sort-down-alt text-secondary"></i></th>
-                                    <th scope="col">Modulo</th>
+                                    <th scope="col"># </th>
+                                    <th scope="col" class="d-flex justify-content-between">Enlace <i class="bi bi-sort-down-alt text-secondary"></i></th>
                                     <th scope="col">Ver</th>
-
-
-
+                                    <th scope="col">Editar</th>
+                                    <th scope="col">Eliminar</th>
+                                    <th scope="col">SuperUsuario</th>
+                                    <th scope="col">Administrador</th>
+                                    <th scope="col">Usuario</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th class="text-secondary">1</th>
-                                    <td class="fw-bold">Consulta</td>
-                                    <td class="text-success">
+                               <asp:Repeater ID="RepeaterGetSubpermisoAsociadoEjecucion" runat="server" >
+                                    <ItemTemplate>
+                                       
+                                        <tr>
+                                    <th class="text-secondary"><%# Eval("IdSubpermiso") %></th>
+                                    <td class="fw-bold"><%# Eval("linkEnlace") %> </td>
+                                    <td class="">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVer" checked>
-                                            <label class="form-check-label" for="flexSwitchCheckVer">ON</label>
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckCrear">
+                                            <label class='<%# Convert.ToBoolean(Eval("Ver")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckCrear"> <%# Eval("Ver") %></label>
                                         </div>
                                     </td>
-
+                                    <td class="">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckVer" checked>
+                                            <label class='<%# Convert.ToBoolean(Eval("Editar")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckVer"> <%# Eval("Editar") %></label>
+                                        </div>
+                                    </td>
+                                    <td class="">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckActualizar" checked>
+                                            <label class='<%# Convert.ToBoolean(Eval("Eliminar")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckActualizar"><%# Eval("Eliminar") %></label>
+                                        </div>
+                                    </td>
+                                    <td class="">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEliminar">
+                                            <label class='<%# Convert.ToBoolean(Eval("SuperUser")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckEliminar"> <%# Eval("SuperUser") %></label>
+                                        </div>
+                                    </td>
+                                    <td class="">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEliminar">
+                                            <label class='<%# Convert.ToBoolean(Eval("Administrador")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckEliminar"> <%# Eval("Administrador") %></label>
+                                        </div>
+                                    </td>
+                                    <td class="">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckEliminar">
+                                            <label class='<%# Convert.ToBoolean(Eval("Usuario")) ? "form-check-label text-success" : "form-check-label text-secondary" %>' for="flexSwitchCheckEliminar"> <%# Eval("Usuario") %></label>
+                                        </div>
+                                    </td>
                                 </tr>
+                                    </ItemTemplate>
+                                </asp:Repeater>
                             </tbody>
                         </table>
+                            <span class="text-success form-label text-center d-flex justify-content-center  ">No hay mas contenido por mostrar.</span>                                                                           
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -425,7 +345,28 @@
             </div>
         </div>
     </div>
+</ContentTemplate>
+         </asp:UpdatePanel>
 
+    <%--editar subpermiso modal--%>
+    <div class="modal fade" id="modalEditarSubPermiso" aria-hidden="true" aria-labelledby="ModalPermisosAsociadosToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <i class="bi bi-exclamation-diamond-fill superpermisoGuardarCambios text-warning text-center"></i>
+                <h1 class="modal-title fs-5 text-center" id="ModalPermisosAsociadosToggleLabel">¿Seguro que quiere editar este perfil?</h1>
+                <div class="modal-body">
+                    <span>Recuerda que estas añadiendo permisos para cada pantalla del sistema SIPOH.</span>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning" data-bs-target="#modalGuardarSubPermiso" data-bs-toggle="modal">No</button>
+                    <i class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalGuardarSubPermiso">Si</i>
+                </div>
+            </div>
+        </div>
+    </div>
     <%--guardar cambios--%>
     <div class="modal fade" id="modalEnviarCambiosPermisos" aria-hidden="true" aria-labelledby="exampleModalEnviarCambiosPermisosToggleLabel" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
@@ -460,7 +401,7 @@
                     <div class="row align-content-center justify-content-end">
                         <div class="col-12 col-md-4 col-xl-3 col-sm-12">
                             <label for="inputNombrePerfil" class="col-form-label">Nombre de perfil:</label>
-                            <asp:TextBox runat="server" ID="inputNombrePerfil" CssClass="form-control form-control-sm" MaxLength="30"/>
+                            <asp:TextBox runat="server" ID="inputNombrePerfil" CssClass="form-control form-control-sm" MaxLength="30"/>                            
                         </div>
                         <div class="col-12 col-md-5 col-xl-4 col-sm-12">
                             <label for="inputTipoCircuito" class="col-form-label">Tipo de circuito:</label>
@@ -480,7 +421,7 @@
                         <hr class="border border-success border-1 opacity-90">
                         <div class="CatSubpermisosControl row mb-3 justify-content-center align-content-center">
                             <%--items--%>
-                            <asp:Repeater ID="CatSubpermisosCompartidos" runat="server">
+                            <asp:Repeater ID="CatSubpermisosCompartidos" runat="server" >
                             <ItemTemplate>
                                 <div class=" item1 col-12 col-md-6 col-lg-4 rounded border border-success bg-light my-1 mx-1" >
                                     <div class=" row d-flex justify-content-between ">
@@ -493,15 +434,16 @@
                                         </div>
                                      
                                         <div class="col-auto rounded-end d-flex text-center  ">
-                                            <asp:CheckBox ID="chkIdPermiso" runat="server" CssClass="form-check-input  align-self-center" data-IdPermiso ='<%# Eval("IdPermiso") %>'/>
+                                            <asp:CheckBox ID="chkIdPermiso" runat="server" CssClass="form-check-input  align-self-center" AutoPostBack="true" data-IdPermiso ='<%# Eval("IdPermiso") %>'/>
+                                            
                                         </div>                                     
-                                            <%--<%# Eval("IdPermiso") %>--%>
+                                            
                                    </div>
                                </div>
                             </ItemTemplate>
                         </asp:Repeater>
                     </div>                                                                                     
-
+                       
                     <div class="col-auto mt-4 ">
 
                         <div class="row  pt-4">
@@ -523,9 +465,9 @@
                                             <span class="text-secondary ml-1 "><%# Eval("Nombre") %> </span>
                                         </div>
                                          <div class="col-auto rounded-end d-flex text-center  ">                                            
-                                             <asp:CheckBox ID="chkIdPermisoControl" runat="server" CssClass="form-check-input  align-self-center"   AutoPostBack="true" data-IdPermiso='<%# Eval("IdPermiso") %>' />
+                                             <asp:CheckBox ID="chkIdPermisoControl" runat="server" CssClass="form-check-input  align-self-center"   AutoPostBack="true" data-IdPermisoControl='<%# Eval("IdPermiso") %>' />
                                         </div>                                     
-                                            <%--<%# Eval("IdPermiso") %>--%>                                                                            
+                                                                                                                  
                                     </div>
                                </div>
                             </ItemTemplate>
@@ -552,9 +494,9 @@
                                             <span class="text-secondary ml-1 "><%# Eval("Nombre") %> </span>
                                         </div>
                                          <div class="col-auto rounded-end d-flex text-center  ">                                            
-                                             <asp:CheckBox ID="chkIdPermisoEjecucion" runat="server" CssClass="form-check-input  align-self-center" />
+                                             <asp:CheckBox ID="chkIdPermisoEjecucion" runat="server" CssClass="form-check-input  align-self-center" data-IdPermisoEjecucion='<%# Eval("IdPermiso") %>'/>
                                         </div>                                     
-                                            <%--<%# Eval("IdPermiso") %>--%>                                                                            
+                                                                                                                     
                                     </div>
                                </div>
                             </ItemTemplate>
@@ -585,7 +527,7 @@
                 </div>
                 <div class="modal-footer">
                     <a class="btn btn-secondary" data-bs-target="#modalCrearPerfil" data-bs-toggle="modal">Cancelar</a>
-                    <%--<Asp:Button class="btn btn-success" runat="server"  data-bs-toggle="modal" OnClick="btnEnviarPerfil">Guardar</Asp:Button>--%>
+                    <Asp:Button class="btn btn-success" runat="server"  data-bs-toggle="modal" OnClick="btnEnviarPerfil" Text="Guardar"/>
                 </div>
             </div>
         </div>
@@ -593,10 +535,54 @@
         </ContentTemplate>
         </asp:UpdatePanel>
      
+     <!-- Include Toastr CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+    <!-- Include jQuery (Toastr depends on it) -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Include Toastr JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     
-
-
+    <script>
+       
+        
+        
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+        function mostrarToast() {
+            toastr.toastSuccess(mensaje, "Exito");
+        }
+        function toastError(mensaje) {
+            toastr.error(mensaje, "Error");
+        }
+        function toastInfo(mensaje) {
+            toastr.info(mensaje, "Informacion");
+        }
+    </script>
+   
     <script src="Scripts/Permisos/Permisos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+
+    
+    
+
+    
 </asp:Content>
 

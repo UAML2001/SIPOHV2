@@ -11,6 +11,7 @@ using Microsoft.Ajax.Utilities;
 using System.Data;
 using static SIPOH.Views.CustomRegistroIniciales;
 using System.Web.UI;
+using Antlr.Runtime.Tree;
 
 namespace SIPOH
 {
@@ -223,11 +224,35 @@ namespace SIPOH
             };
         }
 
-        
+
 
         
+        public static bool UpdateBuzonSalida(int IdSolicitudBuzon, DateTime CapturaActual, string Estatus)
+        {
+            using(SqlConnection connection = new ConexionBD().Connection)
+            {
+                try
+                {
+                    connection.Open();
+                    using(SqlCommand command = new SqlCommand("UPDATE P_BuzonSolicitud SET IdAsunto = @IdAsunto, FeAceptacion =  @FeAceptacion , Estatus = @Estatus WHERE IdSolicitudBuzon = @IdSolicitudBuzon", connection))
+                    {
+                        command.Parameters.AddWithValue("@IdSolicitudBuzon", IdSolicitudBuzon);
+                        command.Parameters.AddWithValue("@FeAceptacion", CapturaActual);
+                        command.Parameters.AddWithValue("@Estatus", Estatus);
+                        command.Parameters.AddWithValue("@IdAsunto", Session["UserId"]);
+                        command.ExecuteNonQuery();
 
-        public static bool SendRegistroIniciales(string FeIngresoAsunto, string TipoAsunto, string IdAudiencia, string Observaciones, string QuienIngresa, string MP, string Prioridad, string Fojas, string TipoRadicacion, string NUC, List<CatDelito> listaIdDelito, List<Victima> usuarios, List<Imputado> culpados, List<Anexos> Anexos)
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Surgio un problema en actualizar BuzonSalida: " + ex.Message);
+                }
+
+            }
+            return true;
+        }
+        public static bool SendRegistroIniciales(DateTime FeCaptura, int Actividad,string FeIngresoAsunto, string TipoAsunto, string Digitalizado ,string IdAudiencia, string Observaciones, string QuienIngresa, string MP, string Prioridad, string Fojas, string TipoRadicacion, string NUC, List<CatDelito> listaIdDelito, List<Victima> usuarios, List<Imputado> culpados, List<Anexos> Anexos)
         {
             using (SqlConnection connection = new ConexionBD().Connection)
             {
@@ -260,7 +285,7 @@ namespace SIPOH
                                 string NumeroAsignado = folio.ToString("D4") + "/" + añoActual;
                                 HttpContext.Current.Session["FolioNuevoInicial"] = NumeroAsignado;
                                 
-                                Debug.WriteLine("Numero Asignado" + Session["FolioNuevoInicial"] + "IDFOLIO: "+ Session["IdFolioInicial"] + "FOLIO NUEVO:" + Session["FolioNuevoPInicial"]);
+                                
                                 
 
 
@@ -325,13 +350,13 @@ namespace SIPOH
                         command.Connection = connection;
                         command.Transaction = transaction;
                         // Paso 1: Inserción en P_Asunto
-                        command.CommandText = "INSERT INTO P_Asunto(Numero, IdJuzgado, FeIngreso, TipoAsunto, Digitalizado, FeCaptura, IdUsuario, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas) OUTPUT INSERTED.IdAsunto VALUES (@NumeroDocumento, @IdJuzgado, @FeIngreso, @TipoAsunto, 'N', GETDATE(), @IdUsuario, @IdAudiencia, @Observaciones, @QuienIngresa, @MP, @Prioridad, @Fojas)";
+                        command.CommandText = "INSERT INTO P_Asunto(Numero, IdJuzgado, FeIngreso, TipoAsunto, Digitalizado, FeCaptura, IdUsuario, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas) OUTPUT INSERTED.IdAsunto VALUES (@NumeroDocumento, @IdJuzgado, @FeIngreso, @TipoAsunto, @Digitalizado, @FechaCaptura, @IdUsuario, @IdAudiencia, @Observaciones, @QuienIngresa, @MP, @Prioridad, @Fojas)";
                         command.Parameters.AddWithValue("@NumeroDocumento", Session["FolioNuevoInicial"]);
                         command.Parameters.AddWithValue("@IdJuzgado", Session["IDJuzgado"]);
                         command.Parameters.AddWithValue("@FeIngreso", FeIngresoAsunto);
                         command.Parameters.AddWithValue("@TipoAsunto", TipoAsunto.ToUpper());
-                        //command.Parameters.AddWithValue("@Digitalizado", Digitalizado);
-                        //command.Parameters.AddWithValue("@FeCaptura", FeCaptura);
+                        command.Parameters.AddWithValue("@Digitalizado", Digitalizado);
+                        command.Parameters.AddWithValue("@FechaCaptura", FeCaptura);
                         command.Parameters.AddWithValue("@IdUsuario", Session["IdUsuario"]);
                         command.Parameters.AddWithValue("@IdAudiencia", IdAudiencia);
                         command.Parameters.AddWithValue("@Observaciones", Observaciones.ToUpper());
@@ -341,7 +366,8 @@ namespace SIPOH
                         command.Parameters.AddWithValue("@Fojas", Fojas);
                         object insertedId = command.ExecuteScalar();
                         Session["UserId"] = insertedId;
-
+                        
+                        
                         Debug.WriteLine("Tarea 1 completada ✔️");
 
                         //// Paso 2: Inserción en P_Causa
@@ -407,7 +433,7 @@ namespace SIPOH
 
 
                         // Paso 5: Inserción en P_Anexos
-                        command.CommandText = "INSERT INTO P_Anexos(IdAsunto, Descripcion, Cantidad) VALUES (@IdAsunto, @Descripcion, @Cantidad)";
+                        command.CommandText = "INSERT INTO P_Anexos(IdAsunto, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @Descripcion, @Cantidad, @Digitalizado)";
                         foreach (var anexo in Anexos)
                         {
                             command.Parameters.Clear();
@@ -415,18 +441,20 @@ namespace SIPOH
                             command.Parameters.AddWithValue("@Descripcion", anexo.DescripcionAnexo.ToUpper());
                             command.Parameters.AddWithValue("@Cantidad", anexo.CantidadAnexo);
                             command.Parameters.AddWithValue("@FolioNuevo", 0);
+                            command.Parameters.AddWithValue("@Digitalizado", anexo.Digitalizado);
                             //command.Parameters.AddWithValue("@Tipo", anexo.Tipo);
                             command.ExecuteNonQuery();
                         }
                         Debug.WriteLine("Tarea 7 completado ✔️");
                         // Paso 5: Inserción en P_Posterior
 
-                        command.CommandText = "INSERT INTO P_Trayecto(IdAsunto, IdActividad, IdPerfil,IdUsuario, FeAsunto, Tipo, FeRecepcion, IdatividadProvienede, IdUsuarioProvienede,IdPerfilProvienede,Estado) VALUES (@IdAsunto,1, @IdPerfil,@IdUsuario,@FeAsunto, 'I', GETDATE(), NULL, NULL,NULL, 'A' )";
+                        command.CommandText = "INSERT INTO P_Trayecto(IdAsunto, IdActividad, IdPerfil,IdUsuario, FeAsunto, Tipo, FeRecepcion, IdatividadProvienede, IdUsuarioProvienede,IdPerfilProvienede,Estado) VALUES (@IdAsunto,@Actividad, @IdPerfil,@IdUsuario,@FeAsunto, 'I', GETDATE(), NULL, NULL,NULL, 'A' )";
 
 
                         command.Parameters.AddWithValue("@IdPerfil", Session["IdPerfil"]);
                         command.Parameters.AddWithValue("@IdUsuario", Session["IdUsuario"]);
                         command.Parameters.AddWithValue("@FeAsunto", FeIngresoAsunto);
+                        command.Parameters.AddWithValue("@Actividad", Actividad);
 
                         command.ExecuteNonQuery();
                         Debug.WriteLine("Tarea 8 completado ✔️" + Session["FolioNuevoPInicial"] + " "+ Session["IdFolioInicial"]);

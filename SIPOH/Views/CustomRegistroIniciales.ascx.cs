@@ -59,6 +59,7 @@ namespace SIPOH.Views
         {
             public string DescripcionAnexo { get; set; }
             public string CantidadAnexo { get; set; }
+            public string Digitalizado { get; set;}
         }
         public class CatDelito
         {
@@ -83,15 +84,14 @@ namespace SIPOH.Views
                 //Session["NombresDelitos"] = new List<string>();
                 Session["Anexos"] = new List<Anexos>();
 
-
+                
 
                 CleanEtiquetaFormImputado();
                 CleanEtiquetaFormAnexo();
                 CleanEtiquetaFormDelito();
                 CleanEtiquetaFormVictima();
                 CleanEtiquetasForm();
-
-
+                
             }
 
 
@@ -501,9 +501,19 @@ namespace SIPOH.Views
 
         protected void btnGuardarAnexos_Click(object sender, EventArgs e)
         {
+            //probar anexos digitalizados dependiendo del valor de session 
             string inputTipoAnexo = txtAnexosTipo.SelectedValue;
             string inputCantidadAnexo = txtCantidadAnexos.Text;
-            if (txtCantidadAnexos.Text == "0")
+                string  Digitalizado;
+            if (Session["IdSolicitudBuzon"] != null)
+            {
+                Digitalizado = "S";
+            }
+            else
+            {
+                Digitalizado = "N";
+            }
+                if (txtCantidadAnexos.Text == "0")
             {
 
                 string script = $"toastError('{"Por favor, selecciona una cantidad válida."}');";
@@ -514,12 +524,12 @@ namespace SIPOH.Views
             {
                 string inputDescripcionAnexo = txtDescripcionAnexos.Text;
 
-
                 Anexos anexo = new Anexos
                 {
                     //TipoAnexo = inputTipoAnexo,
                     DescripcionAnexo = inputDescripcionAnexo.ToUpper(),
-                    CantidadAnexo = inputCantidadAnexo
+                    CantidadAnexo = inputCantidadAnexo,
+                    Digitalizado = Digitalizado
 
                 };
                 List<Anexos> listaDeAnexos = Session["Anexos"] as List<Anexos> ?? new List<Anexos>();
@@ -560,7 +570,8 @@ namespace SIPOH.Views
                 {
                     //TipoAnexo = inputTipoAnexo,
                     DescripcionAnexo = inputTipoAnexo,
-                    CantidadAnexo = inputCantidadAnexo
+                    CantidadAnexo = inputCantidadAnexo,
+                    Digitalizado= Digitalizado
 
                 };
                 List<Anexos> listaDeAnexos = Session["Anexos"] as List<Anexos> ?? new List<Anexos>();
@@ -651,83 +662,80 @@ namespace SIPOH.Views
             ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
 
         }
-
         private void ProcesarDatos()
         {
-            string TipoAsunto = inputTipoAsunto.SelectedValue;
-            string TipoRadicacion = inpuTipoRadicacion.SelectedValue;
-            string Observaciones = inputObservaciones.Text;
-            string QuienIngresa = inputQuienIngresa.SelectedValue;
-            string MP = inputNombreParticular.Text;
-            string Prioridad = inputPrioridad.SelectedValue;
-
-
-            //Prioridad 
-            string Fojas = inputNumeroFojas.Text;
-            string IdAudiencia = inputRadicacion.SelectedValue;
-            string FeIngreso = inputFechaRecepcion.Text;
-            string NUC = inputNUC.Text;
-            // Lógica de procesamiento de datos
-            List<Victima> listaDeUsuarios = ObtenerListaDeUsuarios();
-            List<Imputado> listaDeImputados = ObtenerListaDeImputados();
-            List<CatDelito> listaDeDelitos = ObtenerIdDelitos();
-            List<Anexos> listaDeAnexos = ObtenerListaDeAnexos();
-
-            if (listaDeUsuarios.Count == 0 || listaDeImputados.Count == 0 || listaDeDelitos.Count == 0)
-            {
-                var mensajeListas = "La tabla de víctima, imputado y delitos no pueden estar vacías.";
-                string script = $"toastError('{mensajeListas}');";
-                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
-                throw new InvalidOperationException("Las listas no pueden estar vacías.");
-            }
-            string mensaje = "El llenado de tus datos fue correcto";
-            string scriptToast = $"toastInfo('{mensaje}');";
-            ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
             try
             {
-                bool transaccionExitosa = RegistroIniciales.SendRegistroIniciales(FeIngreso, TipoAsunto, IdAudiencia, Observaciones, QuienIngresa, MP, Prioridad, Fojas, TipoRadicacion, NUC, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
+                string tipoAsunto = inputTipoAsunto.SelectedValue;
+                string tipoRadicacion = inpuTipoRadicacion.SelectedValue;
+                string observaciones = inputObservaciones.Text;
+                string quienIngresa = inputQuienIngresa.SelectedValue;
+                string mp = inputNombreParticular.Text;
+                string prioridad = inputPrioridad.SelectedValue;
+                DateTime fechaActual = DateTime.Now;
 
+                List<Victima> listaDeUsuarios = ObtenerListaDeUsuarios();
+                List<Imputado> listaDeImputados = ObtenerListaDeImputados();
+                List<CatDelito> listaDeDelitos = ObtenerIdDelitos();
+                List<Anexos> listaDeAnexos = ObtenerListaDeAnexos();
+
+                if (listaDeUsuarios.Count == 0 || listaDeImputados.Count == 0 || listaDeDelitos.Count == 0)
+                {
+                    MostrarMensajeError("La tabla de víctima, imputado y delitos no pueden estar vacías.");
+                    return;
+                }
+
+                bool transaccionExitosa;
+                int actividad;
+                string mensaje;
+                string scriptToast;
+                string Digitalizado;
+                if (Session["IdSolicitudBuzon"] != null)
+                {
+                    string estatus = "A";
+                    actividad = 5;
+                    Digitalizado = "S";
+                    int idSolicitudBuzon = int.Parse(Session["IdSolicitudBuzon"].ToString());
+                    transaccionExitosa = RegistroIniciales.SendRegistroIniciales(fechaActual, actividad, inputFechaRecepcion.Text, tipoAsunto, Digitalizado, inputRadicacion.SelectedValue, observaciones, quienIngresa, mp, prioridad, inputNumeroFojas.Text, tipoRadicacion, inputNUC.Text, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
+                    bool result = RegistroIniciales.UpdateBuzonSalida(idSolicitudBuzon, fechaActual, estatus);
+
+                    mensaje = result ? "Se actualizó correctamente la solicitud de buzón." : "Problemas al actualizar el buzón de salida.";
+                    scriptToast = result ? $"toastInfo('{mensaje}');" : $"toastError('{mensaje}');";
+                }
+                else
+                {
+                    actividad = 1;
+                    Digitalizado = "N";
+                    transaccionExitosa = RegistroIniciales.SendRegistroIniciales(fechaActual, actividad, inputFechaRecepcion.Text, tipoAsunto, Digitalizado, inputRadicacion.SelectedValue, observaciones, quienIngresa, mp, prioridad, inputNumeroFojas.Text, tipoRadicacion, inputNUC.Text, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
+                    mensaje = transaccionExitosa ? "Envío exitoso. Tu registro se ha hecho correctamente." : "¡Ocurrió un error en la transacción! El folio ha sido asignado, consulta a soporte.";
+                    scriptToast = transaccionExitosa ? $"toastInfo('{mensaje}');" : $"toastError('{mensaje}');";
+                }
+
+                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastScript", scriptToast, true);
 
                 if (transaccionExitosa)
                 {
-                    // Lógica si la transacción fue exitosa
-                    string mensajeTransaccion = "Envío exitoso. Tu registro se ha hecho correctamente.";
-                    string scriptToastTransaccion = $"toastInfo('{mensajeTransaccion}');";
-                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToastTransaccion, true);
-                    // CODIGOTICKET
                     string ticket = CrearTicketSELLO();
                     TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
                     ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicketIniciales();", true);
                     tituloSelloIniciales.Style["display"] = "block";
                     ScriptManager.RegisterStartupScript(this, GetType(), "mostrarTituloSello", "mostrarTituloSello();", true);
-                }
-                else
-                {
-                    // Lógica si la transacción falló
-                    string mensajeError = "¡Ocurrio un error en la transacción!, Folio ha sido asignado consulte a soporte gracias! ";
-                    MostrarMensajeError(mensajeError);
+
+                    Session.Remove("IdSolicitudBuzon");
                 }
             }
             catch (Exception ex)
             {
-                // Manejo de la excepción en tu archivo ASPX
                 Debug.WriteLine("Error en la página ASPX: " + ex.Message);
-                // Puedes mostrar un mensaje al usuario o realizar otras acciones necesarias
+                MostrarMensajeError("Ocurrió un error inesperado. Por favor, inténtalo de nuevo.");
             }
-
-
-
-
-            listaDeDelitos.Clear();
-            listaDeUsuarios.Clear();
-            listaDeImputados.Clear();
-            listaDeAnexos.Clear();
-            // método para realizar las inserciones
-
-
-
-            LimpiarDatosDespuesDeProcesar();
+            finally
+            {
+                LimpiarDatosDespuesDeProcesar();
+            }
         }
+
+       
 
         // Definir funciones para obtener datos
         private List<Victima> ObtenerListaDeUsuarios()

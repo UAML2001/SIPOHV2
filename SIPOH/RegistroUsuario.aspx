@@ -115,20 +115,17 @@
                                     <asp:TextBox ID="txttelefono" runat="server" Text='<%# Bind("telefono") %>' CssClass="form-control"></asp:TextBox>
                                 </EditItemTemplate>
                             </asp:TemplateField>                           
-                             <asp:CommandField ShowEditButton="True" EditText="✏️" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="bg-light border-0 rounded" CausesValidation="false" />                                                       
-                                 <asp:TemplateField HeaderStyle-CssClass="bg-success text-white text-center">
+                             <asp:CommandField ShowEditButton="True" EditText="✏️" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="bg-light border-0 rounded text-center" HeaderText="Actions" CausesValidation="false"   />                                                       
+                                 <asp:TemplateField HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="text-secondary text-center d-flex justify-content-center align-content-center"  >
                                     <ItemTemplate>
-                                        <asp:Button ID="btnAlta" runat="server" Text="🔓" OnClick="btnCustom_AltaUsuario" CssClass="bg-light border-0 rounded" CommandArgument='<%# Eval("IdUsuario") %>' />
+                                        <asp:Button ID="btnAlta" runat="server" Text="🔓" OnClick="btnCustom_AltaUsuario"  CssClass="bg-light border-0 rounded" CommandArgument='<%# Eval("IdUsuario") %>' data-bs-toggle="tooltip" data-bs-placement="button" title="Dar de ALTA a un usuario" />                                       
+                                        <asp:Button ID="btnBaja" runat="server" Text="🔒" OnClick="btnCustom_BajaUsuario"  CssClass="bg-light border-0 rounded text-center" CommandArgument='<%# Eval("IdUsuario") %>'  data-bs-toggle="tooltip" data-bs-placement="left" title="Dar de BAJA a un usuario"  />
                                     </ItemTemplate>
-                                </asp:TemplateField>                            
-                                 <asp:TemplateField HeaderStyle-CssClass="bg-success text-white text-center">
-                                    <ItemTemplate>
-                                        <asp:Button ID="btnBaja" runat="server" Text="🔒" OnClick="btnCustom_BajaUsuario"  CssClass="bg-light border-0 rounded" CommandArgument='<%# Eval("IdUsuario") %>'  />
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                            <asp:TemplateField HeaderStyle-CssClass="bg-success text-white text-center">
+                                </asp:TemplateField>                                                      
+                                 
+                            <asp:TemplateField HeaderStyle-CssClass="bg-success text-white text-center"  ItemStyle-CssClass="text-secondary text-center"   >
                                     <ItemTemplate>                                        
-                                        <asp:Button ID="btnIpUsuario" runat="server" Text=" 🔐 " OnClick="btnCustom_DesbloquearIpUsuario" CssClass="bg-light border-0 rounded" CommandArgument='<%# Eval("Nombre") %>'  />
+                                        <asp:Button ID="btnIpUsuario" runat="server" Text=" 🔐 " OnClick="btnCustom_DesbloquearIpUsuario" CssClass="bg-light border-0 rounded" CommandArgument='<%# Eval("Nombre") %>' data-bs-toggle="tooltip" data-bs-placement="left" title="Desbloquear IP de usuario." />
                                     </ItemTemplate>
                                 </asp:TemplateField>                            
                         </Columns>
@@ -174,7 +171,7 @@
                             </div>
                             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                 <label for="inpuTelefono" class="form-label text-secondary">Teléfono: </label>
-                                <asp:TextBox runat="server" ID="inputTelefono" CssClass="form-control form-control-sm " onblur="validarNumero(this)" MaxLength="15"/>
+                                <asp:TextBox runat="server" ID="inputTelefono" CssClass="form-control form-control-sm " onblur="validarNumero(this)" MaxLength="10"/>
                             </div>
                             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                 <label for="inpuTipoDireccion" class="form-label text-secondary">Dirección: </label>
@@ -310,7 +307,7 @@
             toastr.error(mensaje, "Error");
         }
         function toastInfo(mensaje) {
-            toastr.info(mensaje, "Informacion");
+            toastr.info(mensaje, "Información");
         }
         function valoresUsuarioRegistro() {
             copytxtNombre();

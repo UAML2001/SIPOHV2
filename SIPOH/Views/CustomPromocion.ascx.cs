@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Web;
 using System.Web.UI;
@@ -22,7 +23,7 @@ namespace SIPOH.Views
         public string TipoPromocion { get; set; }
         public string FechaRecepcion { get; set; }
         public string Tipo { get; set; }
-
+        public DateTime FechaIngreso { get; set; }
         //MORE
         public int IdActividad { get; set; }
         
@@ -99,7 +100,7 @@ namespace SIPOH.Views
             {
                 string promovente = inputPromovente.Text;
                 string fechaCaptura = inputFechaRecepcion.Text;
-
+                string Digitalizado;
 
                 if (Session["IdAsuntoPromocion"] == null || string.IsNullOrEmpty(Session["IdAsuntoPromocion"].ToString()))
                 {
@@ -127,15 +128,47 @@ namespace SIPOH.Views
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastError", script, true);
                     return;
                 }
+                DateTime fechaActual = DateTime.Now;
+                
+
+                int Actividad;
+                if (Session["IdSolicitudBuzon"] != null)
+                {
+                    string Estatus = "A";
+                    Actividad = 5;
+                    Digitalizado = "S";
+                    int IdSolicitudBuzon = int.Parse(Session["IdSolicitudBuzon"].ToString());
+                    bool Result = RegistroPromociones.UpdateBuzonSalidaPromocion(IdSolicitudBuzon, fechaActual, Estatus);
+                    if (Result)
+                    {
+                        string mensajeTransaccion = "Se actualizo correctamente solicitud de buzon.";
+                        string scriptToastTransaccion = $"toastInfo('{mensajeTransaccion}');";
+                        ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToastTransaccion, true);
+                    }
+                    else
+                    {
+                        string mensaje = "Problemas con actualizar buzon salida";
+                        string script = $"toastError('{mensaje}');";
+                        ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
+                        return;
+                        
+                    }
+                }
+                else
+                {
+                    Actividad = 1;
+                    Digitalizado = "N";
+                }
 
                 DataPromocion registro = new DataPromocion
                 {
                     Promovente = promovente,
-                    Digitalizado = "N",
+                    Digitalizado = Digitalizado,
                     TipoPromocion = "P",
+                    FechaIngreso = fechaActual,
                     FechaRecepcion = fechaCaptura,
                     Tipo = "P",
-                    IdActividad = 1,
+                    IdActividad = Actividad,
                     FeAsunto = fechaCaptura,
                     EstadoPromocion = "A"
                 };
@@ -157,6 +190,7 @@ namespace SIPOH.Views
                 ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
                 tituloSello.Style["display"] = "block";
                 ScriptManager.RegisterStartupScript(this, GetType(), "mostrarTituloSello", "mostrarTituloSello();", true);
+                Session.Remove("IdSolicitudBuzon");
             }
             catch (Exception ex)
             {
@@ -413,6 +447,15 @@ namespace SIPOH.Views
         {
             string inputTipoAnexo = txtAnexosTipo.SelectedValue;
             string inputCantidadAnexo = txtCantidadAnexos.Text;
+            string digitalizado;
+            if (Session["IdSolicitudBuzon"] != null)
+            {
+                digitalizado = "S";
+            }
+            else
+            {
+                digitalizado = "N";
+            }
             if (txtCantidadAnexos.Text == "0")
             {
 
@@ -424,15 +467,14 @@ namespace SIPOH.Views
             {
                 string inputDescripcionAnexos = txtDescripcionAnexos.Text;
 
-
-                AnexosPromocion anexo = new AnexosPromocion
+                    AnexosPromocion anexo = new AnexosPromocion
                 {
                     //TipoAnexo = inputTipoAnexo,
                     DescripcionAnexo = inputDescripcionAnexos,
                     CantidadAnexo = inputCantidadAnexo,
-                    DigitalizadoAnexo = "N"
+                    DigitalizadoAnexo = digitalizado
 
-                };
+                    };
                 List<AnexosPromocion> listaAnexos = Session["Anexos"] as List<AnexosPromocion> ?? new List<AnexosPromocion>();
 
                 if (listaAnexos.Any(v => v.DescripcionAnexo == inputDescripcionAnexos))
@@ -472,7 +514,7 @@ namespace SIPOH.Views
                     //TipoAnexo = inputTipoAnexo,
                     DescripcionAnexo = inputTipoAnexo,
                     CantidadAnexo = inputCantidadAnexo,
-                    DigitalizadoAnexo = "N"
+                    DigitalizadoAnexo = digitalizado
 
                 };
                 List<AnexosPromocion> listaAnexos = Session["Anexos"] as List<AnexosPromocion> ?? new List<AnexosPromocion>();
