@@ -2668,6 +2668,15 @@
     <Compile Include="Controllers\AC_Digitalizacion\TipoAsunto.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\UpdateDigitalizado.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\UpdateDigitalizadoPosterior.cs" />
+    <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatCalificacionController.cs" />
+    <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatClasificacionController.cs" />
+    <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatConcursoController.cs" />
+    <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatElementosComisionController.cs" />
+    <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatFormaAccionController.cs" />
+    <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatFormaComisionController.cs" />
+    <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatGradoConsumacionController.cs" />
+    <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatModalidadController.cs" />
+    <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatMunicipiosController.cs" />
     <Compile Include="Controllers\AC_PersonalUsuarios\PersonalUsuariosController.cs" />
     <Compile Include="Controllers\AC_RegistroInicialJuicioOral\InicialJuicioOralController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatDelitosController.cs" />

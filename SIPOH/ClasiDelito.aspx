@@ -86,74 +86,69 @@
                                         </div>
                                         <div class="row justify-content-center">
                                             <div style="display: flex; align-items: center; justify-content: center;">
-                                                <p style="margin-right: 10px; margin-top: 10px;">Reclasificacion del delito </p>
+                                                <p style="margin-right: 10px; margin-top: 10px;">Reclasificacion del delito</p>
                                                 <div class="form-check" style="margin-right: 10px;">
-                                                    <asp:RadioButton ID="CheckSi" runat="server" CssClass="radio-custom" />
-                                                    <label class="form-check-label" for="CheckSi">
-                                                        Si
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <asp:RadioButton ID="CheckNo" runat="server" />
-                                                    <label class="form-check-label" for="CheckNo">
-                                                        No
+                                                    <input type="checkbox" id="reclasificacionSi" class="checkbox-custom" onclick="toggleVisibility(this.checked);" />
+                                                    <label class="form-check-label" for="reclasificacionSi">
+                                                        Sí
                                                     </label>
                                                 </div>
                                             </div>
                                         </div>
+
+
+                                        <div class="row" id="divFechaReclasificacion" style="display: none;">
+                                            <div class="col-md-12">
+                                                <label class="form-label text-secondary" for="FechaReclasificacion">Fecha de reclasificación</label>
+                                                <asp:TextBox ID="FechaReclasificacion" runat="server" CssClass="form-control form-control-sm" TextMode="Date" />
+                                            </div>
+                                        </div>
                                         <p></p>
                                         <div class="row">
-                                            <div class="col-7 col-sm-12 col-md-7 col-lg-7 col-xl-7">
-                                                <div class="form-group">
-                                                    <label class="form-label text-secondary">Tipo de persecución del delito</label>
-                                                    <div class="row">
-                                                        <!-- Añade una fila para contener las columnas -->
-                                                        <!-- Primera columna -->
-                                                        <div class="col-6">
-                                                            <div class="form-check">
-                                                                <asp:RadioButton ID="RadioButton3" runat="server" GroupName="PersecucionDelito" Text="" CssClass="" />
-                                                                <label class="form-check-label" for="RadioButton3">
-                                                                    Querella
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <asp:RadioButton ID="RadioButton1" runat="server" GroupName="PersecucionDelito" Text="" CssClass="" />
-                                                                <label class="form-check-label" for="RadioButton1">
-                                                                    Denuncia
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check">
-                                                                <asp:RadioButton ID="RadioButton2" runat="server" GroupName="PersecucionDelito" Text="" CssClass="" />
-                                                                <label class="form-check-label" for="RadioButton2">
-                                                                    No Identificado
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                            <label class="form-label text-secondary">Tipo de persecución del delito</label>
+                                            <div class="col-4">
+                                                <div class="form-check">
+                                                    <asp:RadioButton ID="RadioButton3" runat="server" GroupName="PersecucionDelito" Text="" CssClass="" />
+                                                    <label class="form-check-label" for="RadioButton3">
+                                                        Querella
+                                                    </label>
                                                 </div>
                                             </div>
-
-                                            <div class="col-5 col-sm-12 col-md-5 col-lg-5 col-xl-5">
-                                                <label class="form-label text-secondary">Fecha en que ocurrio el delito</label>
+                                            <div class="col-4">
                                                 <div class="form-check">
-                                                    <asp:RadioButton ID="RadioButton4" runat="server" GroupName="PersecucionDelito" Text="" CssClass="" />
-                                                    <label class="form-check-label" for="RadioButton4">
+                                                    <asp:RadioButton ID="RadioButton1" runat="server" GroupName="PersecucionDelito" Text="" CssClass="" />
+                                                    <label class="form-check-label" for="RadioButton1">
+                                                        Denuncia
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="form-check">
+                                                    <asp:RadioButton ID="RadioButton2" runat="server" GroupName="PersecucionDelito" Text="" CssClass="" />
+                                                    <label class="form-check-label" for="RadioButton2">
                                                         No Identificado
                                                     </label>
                                                 </div>
                                             </div>
 
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label class="form-label text-secondary" for="FechaReclasificacion">Fecha de reclasificación</label>
-                                                <asp:TextBox ID="FechaReclasificacion" runat="server" CssClass="form-control form-control-sm" TextMode="Date" />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <label class="form-label text-secondary" for="FechaDelito">Fecha Ocurrió el delito</label>
-                                                <asp:TextBox ID="FechaDelito" runat="server" CssClass="form-control form-control-sm" TextMode="Date" />
-                                            </div>
+                                        <hr />
+                                        <p></p>
+                                   <div class="row">
+                                        <div class="col-12 col-md-12">
+                                            <label class="form-label text-secondary">Fecha en que ocurrió el delito</label>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <input type="checkbox" id="checkNoIdentificado" class="" onclick="setDefaultDate(this.checked);" />
+                                            <label class="form-check-label" for="checkNoIdentificado">No Identificado</label>
                                         </div>
+                                        <div class="col-12 col-md-12">
+                                            <input type="date" id="FechaDelito" class="form-control form-control-sm" />
+                                        </div>
+                                    </div>
+
+
+
+
                                         <div class="row">
                                             <div class="col-12">
                                                 <label class="form-label text-secondary">Delito:</label>
@@ -185,54 +180,15 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
+                                            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
                                                 <label for="lbltipoasunto" class="form-label text-secondary">Lugar de ocurrencia:</label>
-                                                <asp:DropDownList runat="server" ID="DropDownList9" CssClass="form-select form-select-sm" AutoPostBack="true">
-                                                    <asp:ListItem>P_CatMunicipios</asp:ListItem>
+                                                <asp:DropDownList runat="server" ID="ddlCatMunicipios" CssClass="form-select form-select-sm mayusculas" AutoPostBack="true">
                                                 </asp:DropDownList>
                                             </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
+                                            <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
                                                 <label class="form-label text-secondary">*Localidad:</label>
                                                 <div class="input-group">
                                                     <asp:TextBox runat="server" type="text" ID="TextBox1" class="form-control form-control-sm mayusculas" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
-                                                <label class="form-label text-secondary">*Calle:</label>
-                                                <div class="input-group">
-                                                    <asp:TextBox runat="server" type="text" ID="TextBox2" class="form-control form-control-sm mayusculas" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
-                                                <label class="form-label text-secondary">*Número:</label>
-                                                <div class="input-group">
-                                                    <asp:TextBox runat="server" type="text" ID="TextBox3" class="form-control form-control-sm mayusculas" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
-                                                <label class="form-label text-secondary">*Manzana:</label>
-                                                <div class="input-group">
-                                                    <asp:TextBox runat="server" type="text" ID="TextBox4" class="form-control form-control-sm mayusculas" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
-                                                <label class="form-label text-secondary">*Barrio:</label>
-                                                <div class="input-group">
-                                                    <asp:TextBox runat="server" type="text" ID="TextBox5" class="form-control form-control-sm mayusculas" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
-                                                <label class="form-label text-secondary">*Colonia:</label>
-                                                <div class="input-group">
-                                                    <asp:TextBox runat="server" type="text" ID="TextBox6" class="form-control form-control-sm mayusculas" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
-                                                <label class="form-label text-secondary">*Lote:</label>
-                                                <div class="input-group">
-                                                    <asp:TextBox runat="server" type="text" ID="TextBox7" class="form-control form-control-sm mayusculas" />
                                                 </div>
                                             </div>
                                         </div>
@@ -241,52 +197,44 @@
                                             <b>clasificacion del delito</b>
                                             <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
                                                 <label for="lbltipoasunto" class="form-label text-secondary">Grado de consumación:</label>
-                                                <asp:DropDownList runat="server" ID="DropDownList1" CssClass="form-select form-select-sm" AutoPostBack="true">
-                                                    <asp:ListItem>P_CatGradoConsumacion</asp:ListItem>
-                                                </asp:DropDownList>
+                                                <asp:DropDownList ID="ddlGradoConsumacion" runat="server" CssClass="form-select form-select-sm mayusculas" AutoPostBack="True"></asp:DropDownList>
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
                                                 <label for="lbltipoasunto" class="form-label text-secondary">Tipo de concurso:</label>
-                                                <asp:DropDownList runat="server" ID="DropDownList2" CssClass="form-select form-select-sm" AutoPostBack="true">
-                                                    <asp:ListItem>P_CatConcurso</asp:ListItem>
+                                                <asp:DropDownList runat="server" ID="ddlConcurso" CssClass="form-select form-select-sm mayusculas" AutoPostBack="true">
                                                 </asp:DropDownList>
+
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
                                                 <label for="lbltipoasunto" class="form-label text-secondary">Forma de acción:</label>
-                                                <asp:DropDownList runat="server" ID="DropDownList3" CssClass="form-select form-select-sm" AutoPostBack="true">
-                                                    <asp:ListItem>P_CatFormaAccion</asp:ListItem>
+                                                <asp:DropDownList runat="server" ID="ddlFormaAccion" CssClass="form-select form-select-sm mayusculas" AutoPostBack="true">
                                                 </asp:DropDownList>
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
                                                 <label for="lbltipoasunto" class="form-label text-secondary">Calificación:</label>
-                                                <asp:DropDownList runat="server" ID="DropDownList4" CssClass="form-select form-select-sm" AutoPostBack="true">
-                                                    <asp:ListItem>P_CatCalificacion</asp:ListItem>
+                                                <asp:DropDownList runat="server" ID="ddlCalificacion" CssClass="form-select form-select-sm mayusculas" AutoPostBack="true">
                                                 </asp:DropDownList>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
                                                 <label for="lbltipoasunto" class="form-label text-secondary">Orden de resultado:</label>
-                                                <asp:DropDownList runat="server" ID="DropDownList5" CssClass="form-select form-select-sm" AutoPostBack="true">
-                                                    <asp:ListItem>P_CatClasificacion</asp:ListItem>
+                                                <asp:DropDownList runat="server" ID="ddlOrdenResultado" CssClass="form-select form-select-sm mayusculas" AutoPostBack="true">
                                                 </asp:DropDownList>
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
                                                 <label for="lbltipoasunto" class="form-label text-secondary">Elementos para su comisión:</label>
-                                                <asp:DropDownList runat="server" ID="DropDownList6" CssClass="form-select form-select-sm" AutoPostBack="true">
-                                                    <asp:ListItem>P_CatElementosComision</asp:ListItem>
+                                                <asp:DropDownList runat="server" ID="ddlComision" CssClass="form-select form-select-sm mayusculas" AutoPostBack="true">
                                                 </asp:DropDownList>
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
                                                 <label for="lbltipoasunto" class="form-label text-secondary">Forma de comisión:</label>
-                                                <asp:DropDownList runat="server" ID="DropDownList7" CssClass="form-select form-select-sm" AutoPostBack="true">
-                                                    <asp:ListItem>P_CatFormaComision</asp:ListItem>
+                                                <asp:DropDownList runat="server" ID="ddlFormaComision" CssClass="form-select form-select-sm mayusculas" AutoPostBack="true">
                                                 </asp:DropDownList>
                                             </div>
                                             <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
                                                 <label for="lbltipoasunto" class="form-label text-secondary">Modalidad:</label>
-                                                <asp:DropDownList runat="server" ID="DropDownList8" CssClass="form-select form-select-sm" AutoPostBack="true">
-                                                    <asp:ListItem>P_CatModalidad</asp:ListItem>
+                                                <asp:DropDownList runat="server" ID="ddlModalidad" CssClass="form-select form-select-sm mayusculas" AutoPostBack="true">
                                                 </asp:DropDownList>
                                             </div>
                                         </div>
@@ -326,4 +274,20 @@
     <script src="Scripts/consignaciones/Consignaciones.js"></script>
     <script src="Scripts/Ejecucion/formatoInput.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script type="text/javascript">
+        function toggleVisibility(isChecked) {
+            var div = document.getElementById('divFechaReclasificacion');
+            div.style.display = isChecked ? 'block' : 'none';
+        }
+ 
+        function setDefaultDate(isChecked) {
+            var fechaDelito = document.getElementById('FechaDelito');
+            if (isChecked) {
+                fechaDelito.value = '1899-09-09';
+            } else {
+                fechaDelito.value = '';
+            }
+        }
+    </script>
+
 </asp:Content>
