@@ -2185,6 +2185,7 @@
     <Content Include="DigitalizarIniciales.aspx" />
     <Content Include="DigitalizarPosteriores.aspx" />
     <Content Include="Error.aspx" />
+    <Content Include="ExpeDigital.aspx" />
     <Content Include="Externo\BandejaSeguimiento.aspx" />
     <Content Include="Externo\FirmaDocumentos.aspx" />
     <Content Include="Externo\InicialesDigitales.aspx" />
@@ -2409,6 +2410,8 @@
     <Content Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="ExpedienteDigital\Imputados\CedulaImputado.pdf" />
+    <Content Include="ExpedienteDigital\Victimas\CedulaVictimas.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\consignaciones\Consignaciones.js" />
     <Content Include="Scripts\consignaciones\RegistroIniciales.js" />
@@ -2627,6 +2630,7 @@
     <Compile Include="Controllers\AC_CatalogosCompartidos\AC_Folio_BandejaBuzonControlController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\AC_Nuc_BandejaBuzonControlController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\AC_Tipo_BandejaBuzonControlController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\CatalogosVictimas.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatAnexosController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatEjecucion_CatAnexosController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatEjecucion_CatSolicitanteController.cs" />
@@ -2705,6 +2709,27 @@
     </Compile>
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ExpedienteDigital\Imputados\CedulaImputados.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CedulaImputados.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ExpedienteDigital\Victimas\CedulaVictimas.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CedulaVictimas.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ExpedienteDigital\Victimas\CSVictimas\AgregarDiscapacidad.cs" />
+    <Compile Include="ExpedienteDigital\Victimas\CSVictimas\BusquedaVictimas.cs" />
+    <Compile Include="ExpeDigital.aspx.cs">
+      <DependentUpon>ExpeDigital.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ExpeDigital.aspx.designer.cs">
+      <DependentUpon>ExpeDigital.aspx</DependentUpon>
     </Compile>
     <Compile Include="Externo\BandejaSeguimiento.aspx.cs">
       <DependentUpon>BandejaSeguimiento.aspx</DependentUpon>
@@ -3181,6 +3206,16 @@
       <LastGenOutput>PortadaDigitalizacion.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ExpedienteDigital\Imputados\CedulaImputados.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CedulaImputados.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExpedienteDigital\Victimas\CedulaVictimas.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CedulaVictimas.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -3,7 +3,7 @@
 <asp:Content ID="ContentDigitInici" ContentPlaceHolderID="ContentDigitInici" runat="server">
 
     <div>
-        <h1 class="h5"><i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold"> Digitalización de Iniciales</span> </h1>
+        <h1 class="h5"><i class="fas fa-angle-right"></i><span id="dataSplash" class="text-success fw-bold"> Digitalización de Iniciales</span> </h1>
     </div>
 
     <link href="Content/css/Consignaciones.css" rel="stylesheet" />
@@ -159,7 +159,7 @@
                                         <asp:Label ID="lblDocsNoDigit" runat="server" CssClass="help-block text-muted small-font" Visible="false"><b>*Documentos no digitalizados:</b></asp:Label>
                                         <br />
                                         <br />
-                                        <asp:GridView ID="noDigit" CssClass="table table-striped text-center table-hover table-sm" runat="server" AutoGenerateColumns="False">
+                                        <asp:GridView ID="noDigit" CssClass="table table-striped text-center table-hover table-sm mayusculas" runat="server" AutoGenerateColumns="False">
                                             <Columns>
                                                 <asp:TemplateField HeaderStyle-CssClass="bg-success text-white">
                                                     <ItemTemplate>

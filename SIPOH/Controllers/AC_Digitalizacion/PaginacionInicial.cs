@@ -27,6 +27,26 @@ namespace SIPOH.Controllers.AC_Digitalizacion
             PDigitalizar.DataSource = datos;
             PDigitalizar.DataBind();
         }
+
+        public void CambioIndicePaginaVicti(object sender, GridViewPageEventArgs e, GridView gvVictimas)
+        {
+            int newPageIndex = e.NewPageIndex;
+            GenerarIdJuzgadoPorSesion idJuzgado = new GenerarIdJuzgadoPorSesion();
+            int id = idJuzgado.ObtenerIdJuzgadoDesdeSesion();
+
+            ConsultaCargaInicial consultaCarga = new ConsultaCargaInicial();
+            DataTable datos = consultaCarga.ConsultaCargaDigitalizacion(id.ToString());
+
+            // Verifica si el nuevo índice de página está dentro del rango de páginas disponibles
+            if (newPageIndex >= 0 && newPageIndex < gvVictimas.PageCount)
+            {
+                gvVictimas.PageIndex = newPageIndex;
+            }
+
+            gvVictimas.DataSource = datos;
+            gvVictimas.DataBind();
+        }
     }
+}
 
 }

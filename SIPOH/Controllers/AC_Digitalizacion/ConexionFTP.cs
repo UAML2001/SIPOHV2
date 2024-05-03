@@ -9,15 +9,15 @@ namespace SIPOH.Models
     {
         internal static string ObtenerRutaFTP()
         {
-            return "ftp://192.168.73.7:24/DocsDigitalizados/"; 
+            return "ftp://192.168.73.7:22/"; 
         }
         internal static string ObtenerUsuarioFTP()
         {
-            return "FTPDigitaSIPOH"; //"";
+            return "FTP_Sipoh24"; //"";
         }
         internal static string ObtenerClaveFTP()
         {
-            return "Electro24"; //"";
+            return "Acu24"; //"";
         }
     }
 }

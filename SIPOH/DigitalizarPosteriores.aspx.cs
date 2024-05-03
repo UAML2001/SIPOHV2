@@ -21,7 +21,8 @@ namespace SIPOH
                 // Supongamos que el método ConsultarAsuntosNoDigitalizados() de la clase ConsultaCarga devuelve los datos que quieres mostrar en la tabla.
                 DataTable datos = consultaCarga.ConsultaCargaDigitalizacion(id.ToString()); // Reemplaza idJuzgado con el valor real
 
-                PDigitalizar.DataSource = datos;
+                PDigitalizar.EmptyDataText = "No se encontraron posteriores para digitalizar.";
+                PDigitalizar.DataSource = datos.Rows.Count > 0 ? datos : null;
                 PDigitalizar.DataBind();
 
                 if (Session["ToastrMessage"] != null && Session["ToastrType"] != null)

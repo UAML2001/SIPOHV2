@@ -98,8 +98,9 @@ namespace SIPOH.Models
                     success = false;
                
 
-                DirCarpetaJuzgado = buzon.IdJuzgado + "/";
-                DirCarpetaExpe = buzon.IdJuzgado + "/" + IdSolicitudBuzon + "/";
+
+                DirCarpetaJuzgado = "Solicitudes/" + buzon.IdJuzgado + "/";
+                DirCarpetaExpe = DirCarpetaJuzgado  + IdSolicitudBuzon + "/";
                 NombreArchivo = $"S_{IdSolicitudBuzon.ToString()}_O.pdf";
 
 

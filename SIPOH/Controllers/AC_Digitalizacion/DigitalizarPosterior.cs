@@ -45,8 +45,8 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                     string folio = HttpContext.Current.Session["Folio"]?.ToString();
 
                     // Crear las carpetas
-                    string[] carpetas = { "Posteriores", noDistrito, idJuzgado, tipoAsunto, idAsunto };
-                    string rutaDestino = "";
+                    string[] carpetas = { "DocsDigitalizados", noDistrito, idJuzgado, tipoAsunto, idAsunto };
+                string rutaDestino = "";
 
                     foreach (string carpeta in carpetas)
                     {

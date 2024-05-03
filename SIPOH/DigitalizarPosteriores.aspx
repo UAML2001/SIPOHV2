@@ -1,9 +1,11 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Consignacion.Master" CodeBehind="DigitalizarPosteriores.aspx.cs" Inherits="SIPOH.DigitalizarPosteriores" %>
 
+<%@ Register Assembly="CrystalDecisions.Web, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" Namespace="CrystalDecisions.Web" TagPrefix="CR" %>
+
 <asp:Content ID="ContentDigitInici" ContentPlaceHolderID="ContentDigitInici" runat="server">
 
 <div>
-    <h1 style="margin-left: 5%" class="h5"><i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold"> Digitalización de Posteriores</span> </h1>
+    <h1 style="margin-left: 5%" class="h5"><i class="fas fa-angle-right"></i><span id="dataSplash" class="text-success fw-bold"> Digitalización de Posteriores</span> </h1>
 </div>
 
     <link href="Content/css/Consignaciones.css" rel="stylesheet" />
@@ -202,7 +204,7 @@
                                         <div class="row">
                                             <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px;">
                                                 <%--<asp:Button ID="btnImpresionPort" Visible="true" runat="server" Text="🖨️ Imprimir Portada" CssClass="btn btn-success btn-sm mayusculas" />--%>
-                                                <asp:Button ID="btnDigitalizar" Visible="false" runat="server" Text="🧑‍💻 Digitalizar" CssClass="btn btn-success btn-sm mayusculas" OnClick="btnDigitalizar_Click" />
+                                                <asp:Button ID="btnDigitalizar" Visible="false" runat="server" Text="💻 Digitalizar" CssClass="btn btn-success btn-sm mayusculas" OnClick="btnDigitalizar_Click" />
                                             </div>
                                         </div>
                                     </center>
@@ -257,4 +259,6 @@
        }
        document.getElementById('<%= UploadFileDigit.ClientID %>').addEventListener('change', PreviewPDF); // Añade un evento de cambio al input para llamar a la función PreviewPDF
    </script>
+
+
     </asp:Content>

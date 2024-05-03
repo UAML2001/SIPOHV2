@@ -1756,26 +1756,32 @@ namespace SIPOH.Views
                     // Convierte la descripción a mayúsculas antes de insertarla en la base de datos
                     string descripcionMayusculas = descripcion.Text.ToUpper();
 
-                    // Realizar la inserción en P_PartesAsunto
-                    string query = "INSERT INTO P_Anexos (IdAsunto, IdPosterior, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @IdPosterior, @Descripcion, @Cantidad, @Digitalizado);";
-
-                    using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                    // Verifica si la descripción y la cantidad están vacías antes de intentar insertarlas
+                    if (!string.IsNullOrEmpty(descripcionMayusculas) && !string.IsNullOrEmpty(cantidad.Text))
                     {
-                        cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
-                        cmd.Parameters.AddWithValue("@IdPosterior", idPost);
-                        cmd.Parameters.AddWithValue("@Descripcion", descripcionMayusculas); // Aquí está la corrección
-                        cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(cantidad.Text)); // Asegúrate de que este es el tipo correcto
-                        cmd.Parameters.AddWithValue("@Digitalizado", digital);
+                        // Realizar la inserción en P_PartesAsunto
+                        string query = "INSERT INTO P_Anexos (IdAsunto, IdPosterior, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @IdPosterior, @Descripcion, @Cantidad, @Digitalizado);";
 
-                        ProcesarDatosDeInsercion2(descripcion, cantidad);
+                        using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                            cmd.Parameters.AddWithValue("@IdPosterior", idPost);
+                            cmd.Parameters.AddWithValue("@Descripcion", descripcionMayusculas); // Aquí está la corrección
+                            cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(cantidad.Text)); // Asegúrate de que este es el tipo correcto
+                            cmd.Parameters.AddWithValue("@Digitalizado", digital);
 
-                        // Resto de los parámetros...
+                            ProcesarDatosDeInsercion2(descripcion, cantidad);
 
-                        cmd.ExecuteNonQuery();
+                            // Resto de los parámetros...
+
+                            cmd.ExecuteNonQuery();
+                        }
                     }
                 }
             }
         }
+
+
 
 
         private int ObtenerIdUsuarioDesdeSesion()
@@ -1902,14 +1908,19 @@ namespace SIPOH.Views
                     string descripcionEnMayusculas = descripcion.Text.ToUpper();
                     string cantidadEnMayusculas = cantidad.Text.ToUpper();
 
-                    ticket.AppendLine(AlinearTexto3(descripcionEnMayusculas, cantidadEnMayusculas, anchoLinea));
-                    total += Convert.ToInt32(cantidad.Text);
-
+                    // Verifica si la descripción y la cantidad están vacías antes de intentar agregarlas al ticket
+                    if (!string.IsNullOrEmpty(descripcionEnMayusculas) && !string.IsNullOrEmpty(cantidadEnMayusculas))
+                    {
+                        ticket.AppendLine(AlinearTexto3(descripcionEnMayusculas, cantidadEnMayusculas, anchoLinea));
+                        total += Convert.ToInt32(cantidad.Text);
+                    }
                 }
             }
             ticket.AppendLine(AlinearTexto("TOTAL", total.ToString(), anchoLinea));
             return ticket.ToString();
         }
+
+
 
         // Función para centrar texto
         private string CentrarTexto(string texto, int anchoLinea)
@@ -2320,7 +2331,6 @@ namespace SIPOH.Views
             }
         }
 
-
         private void InsertarEnPAnexos2(SqlConnection conn, SqlTransaction transaction, int idAsunto)
         {
             int idPost = 0;
@@ -2337,22 +2347,26 @@ namespace SIPOH.Views
                     // Convierte la descripción a mayúsculas antes de insertarla en la base de datos
                     string descripcionMayusculas = descripcion.Text.ToUpper();
 
-                    // Realizar la inserción en P_PartesAsunto
-                    string query = "INSERT INTO P_Anexos (IdAsunto, IdPosterior, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @IdPosterior, @Descripcion, @Cantidad, @Digitalizado);";
-
-                    using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                    // Verifica si la descripción y la cantidad están vacías antes de intentar insertarlas
+                    if (!string.IsNullOrEmpty(descripcionMayusculas) && !string.IsNullOrEmpty(cantidad.Text))
                     {
-                        cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
-                        cmd.Parameters.AddWithValue("@IdPosterior", idPost);
-                        cmd.Parameters.AddWithValue("@Descripcion", descripcionMayusculas); // Aquí está la corrección
-                        cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(cantidad.Text)); // Asegúrate de que este es el tipo correcto
-                        cmd.Parameters.AddWithValue("@Digitalizado", digital);
+                        // Realizar la inserción en P_PartesAsunto
+                        string query = "INSERT INTO P_Anexos (IdAsunto, IdPosterior, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @IdPosterior, @Descripcion, @Cantidad, @Digitalizado);";
 
-                        ProcesarDatosDeInsercion4(descripcion, cantidad);
+                        using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                            cmd.Parameters.AddWithValue("@IdPosterior", idPost);
+                            cmd.Parameters.AddWithValue("@Descripcion", descripcionMayusculas); // Aquí está la corrección
+                            cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(cantidad.Text)); // Asegúrate de que este es el tipo correcto
+                            cmd.Parameters.AddWithValue("@Digitalizado", digital);
 
-                        // Resto de los parámetros...
+                            ProcesarDatosDeInsercion4(descripcion, cantidad);
 
-                        cmd.ExecuteNonQuery();
+                            // Resto de los parámetros...
+
+                            cmd.ExecuteNonQuery();
+                        }
                     }
                 }
             }
@@ -2483,8 +2497,12 @@ namespace SIPOH.Views
                     string descripcionEnMayusculas = descripcion.Text.ToUpper();
                     string cantidadEnMayusculas = cantidad.Text.ToUpper();
 
-                    ticket.AppendLine(AlinearTexto2(descripcionEnMayusculas, cantidadEnMayusculas, anchoLinea));
-                    total += Convert.ToInt32(cantidad.Text);
+                    // Verifica si la descripción y la cantidad están vacías antes de intentar agregarlas al ticket
+                    if (!string.IsNullOrEmpty(descripcionEnMayusculas) && !string.IsNullOrEmpty(cantidadEnMayusculas))
+                    {
+                        ticket.AppendLine(AlinearTexto2(descripcionEnMayusculas, cantidadEnMayusculas, anchoLinea));
+                        total += Convert.ToInt32(cantidad.Text);
+                    }
 
                 }
             }
@@ -2924,22 +2942,26 @@ namespace SIPOH.Views
                     // Convierte la descripción a mayúsculas antes de insertarla en la base de datos
                     string descripcionMayusculas = descripcion.Text.ToUpper();
 
-                    // Realizar la inserción en P_PartesAsunto
-                    string query = "INSERT INTO P_Anexos (IdAsunto, IdPosterior, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @IdPosterior, @Descripcion, @Cantidad, @Digitalizado);";
-
-                    using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                    // Verifica si la descripción y la cantidad están vacías antes de intentar insertarlas
+                    if (!string.IsNullOrEmpty(descripcionMayusculas) && !string.IsNullOrEmpty(cantidad.Text))
                     {
-                        cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
-                        cmd.Parameters.AddWithValue("@IdPosterior", idPost);
-                        cmd.Parameters.AddWithValue("@Descripcion", descripcionMayusculas); // Aquí está la corrección
-                        cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(cantidad.Text)); // Asegúrate de que este es el tipo correcto
-                        cmd.Parameters.AddWithValue("@Digitalizado", digital);
+                        // Realizar la inserción en P_PartesAsunto
+                        string query = "INSERT INTO P_Anexos (IdAsunto, IdPosterior, Descripcion, Cantidad, Digitalizado) VALUES (@IdAsunto, @IdPosterior, @Descripcion, @Cantidad, @Digitalizado);";
 
-                        ProcesarDatosDeInsercion6(descripcion, cantidad);
+                        using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                            cmd.Parameters.AddWithValue("@IdPosterior", idPost);
+                            cmd.Parameters.AddWithValue("@Descripcion", descripcionMayusculas); // Aquí está la corrección
+                            cmd.Parameters.AddWithValue("@Cantidad", Convert.ToInt32(cantidad.Text)); // Asegúrate de que este es el tipo correcto
+                            cmd.Parameters.AddWithValue("@Digitalizado", digital);
 
-                        // Resto de los parámetros...
+                            ProcesarDatosDeInsercion6(descripcion, cantidad);
 
-                        cmd.ExecuteNonQuery();
+                            // Resto de los parámetros...
+
+                            cmd.ExecuteNonQuery();
+                        }
                     }
                 }
             }
@@ -3070,9 +3092,12 @@ namespace SIPOH.Views
                     string descripcionEnMayusculas = descripcion.Text.ToUpper();
                     string cantidadEnMayusculas = cantidad.Text.ToUpper();
 
-                    ticket.AppendLine(AlinearTexto3(descripcionEnMayusculas, cantidadEnMayusculas, anchoLinea));
-                    total += Convert.ToInt32(cantidad.Text);
-
+                    // Verifica si la descripción y la cantidad están vacías antes de intentar agregarlas al ticket
+                    if (!string.IsNullOrEmpty(descripcionEnMayusculas) && !string.IsNullOrEmpty(cantidadEnMayusculas))
+                    {
+                        ticket.AppendLine(AlinearTexto3(descripcionEnMayusculas, cantidadEnMayusculas, anchoLinea));
+                        total += Convert.ToInt32(cantidad.Text);
+                    }
                 }
             }
 
