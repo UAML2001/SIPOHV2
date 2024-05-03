@@ -790,7 +790,6 @@ C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.C
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.dll
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.pdb
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\PortadaDigitalizacion.rpt
-C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.Up2Date
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\PortadaDigitalizacion.rpt
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\ConsultaPortada.pdf
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\ConsultaPortada.rpt
@@ -830,3 +829,18 @@ C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\Reportes\InicialControl.cs
 C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\Reportes\InicialEjecucion.cs
 C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\Reportes\PosteriorControl.cs
 C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\Reportes\PosteriorEjecucion.cs
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialControl.pdf
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialEjecucion.pdf
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorControl.pdf
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorEjecucion.pdf
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialControl.rpt
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialEjecucion.rpt
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorControl.rpt
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorEjecucion.rpt
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\ConsultaPortada1.cs
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\PortadaDigitalizacion.cs
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialControl.cs
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialEjecucion.cs
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorControl.cs
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorEjecucion.cs
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\obj\Debug\SIPOH.csproj.CopyComplete
