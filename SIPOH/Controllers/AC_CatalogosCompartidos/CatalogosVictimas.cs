@@ -384,7 +384,7 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
             using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT Discapacidad, IdDiscapacidad FROM [SIPOH].[dbo].[P_CatDiscapacidad] WHERE sub_index = @idDiscapacidad", conn))
+                using (SqlCommand cmd = new SqlCommand("SELECT Discapacidad FROM [SIPOH].[dbo].[P_CatDiscapacidad] WHERE sub_index = @idDiscapacidad", conn))
                 {
                     cmd.Parameters.AddWithValue("@idDiscapacidad", idDiscapacidad);
                     SqlDataReader dr = cmd.ExecuteReader();
@@ -392,7 +392,7 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
                     {
                         ListItem listItem = new ListItem();
                         listItem.Text = dr["Discapacidad"].ToString();
-                        listItem.Value = dr["IdDiscapacidad"].ToString();
+                        listItem.Value = dr["Discapacidad"].ToString();
                         dropdown.Items.Add(listItem);
                     }
                 }
