@@ -2410,8 +2410,12 @@
     <Content Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ExpedienteDigital\Imputados\CedulaImputado.pdf" />
-    <Content Include="ExpedienteDigital\Victimas\CedulaVictimas.pdf" />
+    <Content Include="ExpedienteDigital\Imputados\CedulaImputado.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ExpedienteDigital\Victimas\CedulaVictimas.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\consignaciones\Consignaciones.js" />
     <Content Include="Scripts\consignaciones\RegistroIniciales.js" />
@@ -2715,12 +2719,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CedulaImputados.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="ExpedienteDigital\Victimas\CedulaVictimas.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CedulaVictimas.rpt</DependentUpon>
       <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="ExpedienteDigital\Victimas\CSVictimas\AgregarDiscapacidad.cs" />
     <Compile Include="ExpedienteDigital\Victimas\CSVictimas\BusquedaVictimas.cs" />
@@ -3208,14 +3214,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ExpedienteDigital\Imputados\CedulaImputados.rpt">
+    <Content Include="ExpedienteDigital\Imputados\CedulaImputados.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CedulaImputados.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ExpedienteDigital\Victimas\CedulaVictimas.rpt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ExpedienteDigital\Victimas\CedulaVictimas.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CedulaVictimas.cs</LastGenOutput>
-    </EmbeddedResource>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

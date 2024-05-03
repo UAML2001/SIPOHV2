@@ -48,5 +48,3 @@ namespace SIPOH.Controllers.AC_Digitalizacion
         }
     }
 }
-
-}
