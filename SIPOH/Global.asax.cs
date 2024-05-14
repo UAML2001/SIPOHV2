@@ -25,6 +25,7 @@ namespace SIPOH
         }
         private static bool IPBloqueadaUser(string ip)
         {
+
             using (SqlConnection connection = new ConexionBD().Connection)
             {
                 connection.Open();

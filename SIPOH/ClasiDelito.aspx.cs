@@ -1,6 +1,7 @@
 ﻿using SIPOH.Controllers.AC_JefeUnidadCausa;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -8,11 +9,10 @@ using System.Web.UI.WebControls;
 
 namespace SIPOH
 {
-    public partial class clasidelito : System.Web.UI.Page
+    public partial class clasidelito : GeneralesyWebUi
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!IsPostBack)
             {
                 int sessionTimeout = 1 * 60;
@@ -38,102 +38,124 @@ namespace SIPOH
                     Visible = false;
                     Response.Redirect("~/Views/ContenidoDisponible/contenido-denegado");
                 }
-
-                LoadGradosConsumacion();
-                LoadConcursos();
-                LoadFormasAccion();
-                LoadCalificaciones();
-                LoadClasificaciones();
-                LoadElementosComision();
-                LoadFormasComision();
-                LoadModalidades();
-                LoadMunicipios();
-
+                GridViewClasificacionDelitos.DataSource = InicializaTablaVaciaDelitos();
+                GridViewClasificacionDelitos.DataBind();
+                CargarCatalogos loader = new CargarCatalogos();
+                loader.LoadGradosConsumacion(ddlGradoConsumacion);
+                loader.LoadConcursos(ddlConcurso);
+                loader.LoadFormasAccion(ddlFormaAccion);
+                loader.LoadCalificaciones(ddlCalificacion);
+                loader.LoadClasificaciones(ddlOrdenResultado);
+                loader.LoadElementosComision(ddlComision);
+                loader.LoadFormasComision(ddlFormaComision);
+                loader.LoadModalidades(ddlModalidad);
+                loader.LoadMunicipios(ddlCatMunicipios);
+                loader.LoadDelitos(ddDelitos);
+                CargarCatalogos cargador = new CargarCatalogos();
+               
             }
+        }
+        protected void btnAgregarClasiDelito_Click(object sender, EventArgs e)
+        {
+            divAgregarClasificacion.Style["display"] = "block";
+        }
+        private DataTable InicializaTablaVaciaDelitos()
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("Nombre", typeof(string));
+            dt.Columns.Add("Consumacion", typeof(string));
+            dt.Columns.Add("Calificacion", typeof(string));
+            dt.Columns.Add("Concurso", typeof(string));
+            dt.Columns.Add("Clasificacion", typeof(string));
+            dt.Columns.Add("Comision", typeof(string));
+            dt.Columns.Add("Accion", typeof(string));
+            dt.Columns.Add("Modalidad", typeof(string));
+            dt.Columns.Add("ElemComision", typeof(string));
+            dt.Columns.Add("Municipio", typeof(string));
+            dt.Columns.Add("Persecucion", typeof(string));
+            dt.Columns.Add("FeDelito", typeof(string));
+            dt.Columns.Add("Domicilio", typeof(string));
+            return dt;
+        }
+        protected void btnBuscarClasiDelito_Click(object sender, EventArgs e)
+        {
+            string tipoAsunto = ddlTipoAsunto.SelectedValue;
+            string numeroAsunto = txtNumeroAsunto.Text;
+            int idJuzgado = 205;
+            if (string.IsNullOrWhiteSpace(tipoAsunto) || string.IsNullOrWhiteSpace(numeroAsunto))
+            {
+                MensajeError("Por favor, selecciona un tipo de asunto e ingresa un número de asunto.");
+                return;
+            }
+            JUC_ClasificacionDelitoController controller = new JUC_ClasificacionDelitoController();
+            DataTable dt = controller.BuscarDelitos(tipoAsunto, numeroAsunto, idJuzgado);
+            // Manejar el caso cuando el DataTable es nulo debido a un error
+            if (dt == null)
+            {
+                MensajeError("No se encontraron delitos para el tipo de asunto y número proporcionados, verifica el tipo asunto y el número ingresado.");
+                GridViewClasificacionDelitos.DataSource = InicializaTablaVaciaDelitos();
+                GridViewClasificacionDelitos.DataBind();
+                return;
+            }
+            // Si no se encuentran datos, mostrar advertencia
+            if (dt.Rows.Count == 0)
+            {
+                MensajeAdvertencia("No se encontraron delitos para el tipo de asunto y número proporcionados.");
+                return;
+            }
+            // Si se encuentran datos, enlazarlos al GridView
+            GridViewClasificacionDelitos.DataSource = dt;
+            GridViewClasificacionDelitos.DataBind();
+            MensajeExito("Delitos encontrados con éxito.");
+        }
 
+
+        protected void GridViewClasificacionDelitos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                GridViewRow row = GridViewClasificacionDelitos.SelectedRow;
+                if (row != null)
+                {
+                    int idDeliAsunto = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDeliAsunto"]);
+                    System.Diagnostics.Debug.WriteLine("IdDeliAsunto: " + idDeliAsunto);
+
+                    // Utilizar el controlador correcto para cargar los datos del delito
+                    JUC_CatDelitosController controller = new JUC_CatDelitosController();
+                    var delito = JUC_CatDelitosController.GetDelitoByDeliAsunto(idDeliAsunto);
+
+                    if (delito != null)
+                    {
+                        // Cargar el delito en el DropDownList y habilitarlo
+                        controller.LoadDelitoByDeliAsunto(ddDelitos, idDeliAsunto);
+                        ddDelitos.Enabled = true;
+                        System.Diagnostics.Debug.WriteLine("Delito cargado en ddDelitos");
+                        // Mostrar u ocultar el DropDownList de Modalidad según el IdDelito
+                        if (delito.IdDelito == 405)
+                        {
+                            ddlModalidad.Visible = true;
+                            divModalidad.Style["display"] = "block";
+                            // Cargar datos en el DropDownList de Modalidad si es necesario
+                            GeneralesyWebUi.CargarCatalogos cargarCatalogos = new GeneralesyWebUi.CargarCatalogos();
+                            cargarCatalogos.LoadModalidades(ddlModalidad);
+                        }
+                        else
+                        {
+                            ddlModalidad.Visible = false;
+                            divModalidad.Style["display"] = "none";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error en la selección del GridView: " + ex.Message);
+                MensajeError("Error al actualizar la selección: " + ex.Message);
+            }
         }
 
-        private void LoadGradosConsumacion()
-        {
-            var grados = JUC_CatGradoConsumacionController.GetGradosConsumacion();
-            ddlGradoConsumacion.DataSource = grados;
-            ddlGradoConsumacion.DataTextField = "Consumacion";
-            ddlGradoConsumacion.DataValueField = "Id_CatConsumacion";
-            ddlGradoConsumacion.DataBind();
-            ddlGradoConsumacion.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
-        }
-        private void LoadConcursos()
-        {
-            var concursos = JUC_CatConcursoController.GetConcursos();
-            ddlConcurso.DataSource = concursos;
-            ddlConcurso.DataTextField = "NombreConcurso";
-            ddlConcurso.DataValueField = "Id_CatConcurso";
-            ddlConcurso.DataBind();
-            ddlConcurso.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
-        }
-        private void LoadFormasAccion()
-        {
-            var formasAccion = JUC_CatFormaAccionController.GetFormasAccion();
-            ddlFormaAccion.DataSource = formasAccion;
-            ddlFormaAccion.DataTextField = "Accion";
-            ddlFormaAccion.DataValueField = "Id_CatAccion";
-            ddlFormaAccion.DataBind();
-            ddlFormaAccion.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
-        }
-        private void LoadCalificaciones()
-        {
-            var calificaciones = JUC_CatCalificacionController.GetCalificaciones();
-            ddlCalificacion.DataSource = calificaciones;
-            ddlCalificacion.DataTextField = "CalificacionNombre";
-            ddlCalificacion.DataValueField = "Id_CatCalificacion";
-            ddlCalificacion.DataBind();
-            ddlCalificacion.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
-        }
-        private void LoadClasificaciones()
-        {
-            var clasificaciones = JUC_CatClasificacionController.GetClasificaciones();
-            ddlOrdenResultado.DataSource = clasificaciones;
-            ddlOrdenResultado.DataTextField = "ClasificacionNombre";
-            ddlOrdenResultado.DataValueField = "Id_CatClasificacion";
-            ddlOrdenResultado.DataBind();
-            ddlOrdenResultado.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
-        }
-        private void LoadElementosComision()
-        {
-            var elementosComision = JUC_CatElementosComisionController.GetElementosComision();
-            ddlComision.DataSource = elementosComision;
-            ddlComision.DataTextField = "ElemComision";
-            ddlComision.DataValueField = "Id_CatElemComision";
-            ddlComision.DataBind();
-            ddlComision.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
-        }
-        private void LoadFormasComision()
-        {
-            var formasComision = JUC_CatFormaComisionController.GetFormasComision();
-            ddlFormaComision.DataSource = formasComision;
-            ddlFormaComision.DataTextField = "Comision";
-            ddlFormaComision.DataValueField = "Id_CatComision";
-            ddlFormaComision.DataBind();
-            ddlFormaComision.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
-        }
-        private void LoadModalidades()
-        {
-            var modalidades = JUC_CatModalidadController.GetModalidades();
-            ddlModalidad.DataSource = modalidades;
-            ddlModalidad.DataTextField = "ModalidadNombre";
-            ddlModalidad.DataValueField = "Id_CatModalidad";
-            ddlModalidad.DataBind();
-            ddlModalidad.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
-        }
-        private void LoadMunicipios()
-        {
-            var municipios = JUC_CatMunicipiosController.GetMunicipios();
-            ddlCatMunicipios.DataSource = municipios;
-            ddlCatMunicipios.DataTextField = "MunicipioNombre";
-            ddlCatMunicipios.DataValueField = "IdMunicipio";
-            ddlCatMunicipios.DataBind();
-            ddlCatMunicipios.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
-        }
+
+
 
         //
     }
