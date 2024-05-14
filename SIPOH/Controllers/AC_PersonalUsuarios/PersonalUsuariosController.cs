@@ -39,6 +39,7 @@ public class PersonalUsuariosController
         public string AMaterno { get; set; }
         public string Usuario { get; set; }
         public string Contraseña { get; set; }
+        public string Juzgado { get; set; }
         public int IdJuzgado { get; set; }
         public int IdPerfil { get; set; }
         public string Status { get; set; }
@@ -46,6 +47,7 @@ public class PersonalUsuariosController
         public string Email { get; set; }
         public string Telefono { get; set; }
         public string Pass { get; set; }
+        public int IdEquipoTrabajo { get; set; }
     }
     public class DataBuscarUsuario
     {
@@ -56,7 +58,7 @@ public class PersonalUsuariosController
         public string Contraseña { get; set; }
         public string ContraseñaDesencriptada { get; set; }
         public string IdJuzgado { get; set; }
-
+        public string Juzgado { get; set; }
         public string Perfil { get; set; }
         public string Status { get; set; }
         public string Domicilio { get; set; }
@@ -110,7 +112,7 @@ public class PersonalUsuariosController
         }
         return resultados;
     }
-   
+    
     //Obtener perfil de logeos
     public static List<DataCatPerfil> GetCatPerfil()
     {
@@ -160,6 +162,30 @@ public class PersonalUsuariosController
         }
         return resultados;
     }
+    public static string GetCabeceraCircuito(int idJuzgado)
+    {
+        string hasCabecera = null; // Inicializamos la variable fuera del bloque using
+
+        using (SqlConnection connection = new ConexionBD().Connection)
+        {
+            connection.Open();
+
+            using (SqlCommand command = new SqlCommand("SELECT CabDistrito FROM dbo.P_CatJuzgados WHERE IdJuzgado = @IdJuzgado", connection))
+            {
+                command.Parameters.Add("@IdJuzgado", SqlDbType.Int).Value = idJuzgado; //  asignación de valor
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read()) // Verificamos si hay filas en el resultado
+                    {
+                        hasCabecera = reader["CabDistrito"].ToString();
+                    }
+                }
+            }
+        }
+
+        return hasCabecera;
+    }
 
     //obtener circuito login
     public static void GetCircuito(int Juzgado)
@@ -173,7 +199,8 @@ public class PersonalUsuariosController
                 using(SqlDataReader reader = command.ExecuteReader()) {
                     if (reader.Read())
                     {
-                        HttpContext.Current.Session["IdCircuito"] = reader["IdCircuito"].ToString();
+                        HttpContext.Current.Session["IdCircuito"] = reader["IdCircuito"].ToString();                                             
+                        
                     }
                 }                                       
             }                        
@@ -181,8 +208,43 @@ public class PersonalUsuariosController
         
         
     }
-    
-    
+    //CatEquipo de trabajo
+    public class DataCatEquipoTrabajo
+    {
+        public int IdEquipoTrabajo { get; set; }
+        public string Equipo { get; set; }
+        
+    }
+    public static List<DataCatEquipoTrabajo> GetCatEquipoTrabajo(int IdJuzgado, int IdPerfil)
+    {
+        List<DataCatEquipoTrabajo> resultados = new List<DataCatEquipoTrabajo>();
+        using (SqlConnection connection = new ConexionBD().Connection)
+        {
+            connection.Open();
+            SqlTransaction transaction =  connection.BeginTransaction();
+            using (SqlCommand command = new SqlCommand("AC_GetCatEquiposTrabajo", connection, transaction))
+            {
+                command.Parameters.Add("@IdJuzgado",  SqlDbType.Int);
+                command.Parameters["@IdJuzgado"].Value = IdJuzgado;
+                command.Parameters.Add("@IdPerfil", SqlDbType.Int).Value = IdPerfil;
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
+                using (SqlDataReader readerCatEqupoTrabajo = command.ExecuteReader())
+                {
+                    while (readerCatEqupoTrabajo.Read())
+                    {
+                        DataCatEquipoTrabajo equipo = new DataCatEquipoTrabajo();
+                        equipo.IdEquipoTrabajo = int.Parse(readerCatEqupoTrabajo["IdEquipo"].ToString());
+                        equipo.Equipo = readerCatEqupoTrabajo["Equipo"].ToString();                        
+                        resultados.Add(equipo);
+                    }
+                    //transaction.Commit();
+                }
+            }
+        }
+        return resultados;
+    }
+
     //Busqueda de usuarios proceso almacenado
     public static List<DataBuscarUsuario> GetUsuario(string nombre, int Juzgado,  int Perfil)
     {
@@ -207,7 +269,7 @@ public class PersonalUsuariosController
                             infoUser.Nombre = reader["Nombre"].ToString();
                             infoUser.APaterno = reader["APaterno"].ToString();
                             infoUser.AMaterno = reader["AMaterno"].ToString();
-                            infoUser.Contraseña = reader["Contraseña"].ToString();
+                            
                             infoUser.Status = reader["Status"].ToString() == "I" ? "INACTIVO" : "ACTIVO";
                             var Pass = reader["Contraseña"].ToString();
                             string contraseñaEncriptada = CryptographyController.EncryptString(Pass);                           
@@ -218,7 +280,8 @@ public class PersonalUsuariosController
                             infoUser.Domicilio = reader["Domicilio"].ToString();
                             infoUser.telefono = reader["telefono"].ToString();
                             infoUser.Email = reader["Email"].ToString();
-                            infoUser.IdJuzgado = reader["IdJuzgado"].ToString(); 
+                            infoUser.Juzgado = reader["NombreJuzgado"].ToString(); 
+
                             infoUser.TipoCircuito = reader["TipoCircuito"].ToString();
                             resultados.Add(infoUser);
                         }
@@ -242,7 +305,7 @@ public class PersonalUsuariosController
             try
             {
                 connection.Open();
-                using (SqlCommand command =  new SqlCommand("INSERT INTO P_Usuarios (Nombre, APaterno, AMaterno, Usuario, Contraseña, IdJuzgado, IdPerfil, Status , FechaAlta , Domicilio, Email, telefono) VALUES(@Nombre,@APaterno, @AMaterno, @Usuario, @Contraseña, @IdJuzgado, @IdPerfil, @Status, GETDATE(), @Domicilio, @Email, @Telefono );", connection) )
+                using (SqlCommand command =  new SqlCommand("INSERT INTO P_Usuarios (Nombre, APaterno, AMaterno, Usuario, Contraseña, IdJuzgado, IdPerfil, Status , FechaAlta , Domicilio, Email, telefono, IdEquipo) VALUES(@Nombre,@APaterno, @AMaterno, @Usuario, @Contraseña, @IdJuzgado, @IdPerfil, @Status, GETDATE(), @Domicilio, @Email, @Telefono, @IdEquipo );", connection) )
                 {
                     foreach (var infoUsuario in DataUsuario)
                     {
@@ -257,7 +320,7 @@ public class PersonalUsuariosController
                         command.Parameters.AddWithValue("@Domicilio", infoUsuario.Domicilio.ToUpper());
                         command.Parameters.AddWithValue("@Email", infoUsuario.Email.ToUpper());
                         command.Parameters.AddWithValue("@Telefono", infoUsuario.Telefono);
-                       
+                        command.Parameters.AddWithValue("@IdEquipo", infoUsuario.IdEquipoTrabajo);
                         resultados.hayError = false;
                         resultados.mensaje = "Se guardaron los datos correctamente.";
                         command.ExecuteNonQuery(); 
@@ -300,8 +363,6 @@ public class PersonalUsuariosController
             }
         }
     }
-
-
     public static bool EditarÍnformacionUsuario(int IdUsuario, Dictionary<string, string> newData)
     {
         using (SqlConnection connection = new ConexionBD().Connection)

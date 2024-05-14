@@ -81,16 +81,8 @@
                                 </EditItemTemplate>
                             </asp:TemplateField>
                             <%--<asp:BoundField DataField="Contraseña" HeaderText="Contraseña" ItemStyle-CssClass="text-success fw-bold text-center " HeaderStyle-CssClass="bg-success text-white text-center" />--%>
-                            <asp:TemplateField HeaderText="Contraseña" ItemStyle-CssClass="text-secondary text-center" HeaderStyle-CssClass="bg-success text-white text-center">
-                                <ItemTemplate>
-                                    <asp:Label ID="lblContraseña" runat="server" Text='<%# Eval("Contraseña") %>'></asp:Label>
-                                </ItemTemplate>
-                                <EditItemTemplate>
-                                    <asp:Label ID="txtContraseña" runat="server" Text='<%# Bind("Contraseña") %>' CssClass="form-control form-select-sm  border-0 rounded bg-light"></asp:Label>
-                                </EditItemTemplate>
-                            </asp:TemplateField>
                             <%--<asp:BoundField DataField="ContraseñaDesencriptada" HeaderText="Contraseña DES" ItemStyle-CssClass="text-success fw-bold text-center " HeaderStyle-CssClass="bg-success text-white text-center" />--%>
-                            <asp:TemplateField HeaderText="Contraseña desencriptada" ItemStyle-CssClass="text-secondary  text-center col-auto" HeaderStyle-CssClass="bg-success text-white text-center col-auto">
+                            <asp:TemplateField HeaderText="Contraseña" ItemStyle-CssClass="text-secondary  text-center col-auto" HeaderStyle-CssClass="bg-success text-white text-center col-auto">
                                 <ItemTemplate>
                                     <asp:Label ID="lblContraseñaDesencriptada" runat="server" Text='<%# Eval("ContraseñaDesencriptada") %>'></asp:Label>
                                 </ItemTemplate>
@@ -98,6 +90,14 @@
                                     <asp:TextBox ID="txtContraseñaDesencriptada" runat="server" Text='<%# Bind("ContraseñaDesencriptada") %>' CssClass="form-control"></asp:TextBox>
                                 </EditItemTemplate>
                             </asp:TemplateField>                           
+                            <asp:TemplateField HeaderText="Juzgado" ItemStyle-CssClass="text-secondary text-center" HeaderStyle-CssClass="bg-success text-white text-center">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblJuzgado" runat="server" Text='<%# Eval("Juzgado") %>'></asp:Label>
+                                </ItemTemplate>
+                                <EditItemTemplate>
+                                    <asp:Label ID="txtJuzgado" runat="server" Text='<%# Bind("Juzgado") %>' CssClass="form-control form-select-sm  border-0 rounded bg-light"></asp:Label>
+                                </EditItemTemplate>
+                            </asp:TemplateField>
                             <%--<asp:BoundField DataField="Status" HeaderText="Estado" ItemStyle-CssClass="text-secondary text-center " HeaderStyle-CssClass="bg-success text-white text-center" />--%>
                             <asp:TemplateField HeaderText="Estado" ItemStyle-CssClass="text-success fw-bold text-center" HeaderStyle-CssClass="bg-success text-white text-center">
                                 <ItemTemplate>
@@ -105,6 +105,14 @@
                                 </ItemTemplate>
                                 <EditItemTemplate>
                                     <asp:Label ID="lblStatus" runat="server" Text='<%# Bind("Status") %>' CssClass="form-control form-select-sm  border-0 rounded bg-light"></asp:Label>
+                                </EditItemTemplate>
+                            </asp:TemplateField> 
+                            <asp:TemplateField HeaderText="Perfil" ItemStyle-CssClass="text-secondary fw-bold text-center" HeaderStyle-CssClass="bg-success text-white text-center">
+                                <ItemTemplate>
+                                    <asp:Label ID="lblPerfil" runat="server" Text='<%# Eval("Perfil") %>'></asp:Label>
+                                </ItemTemplate>
+                                <EditItemTemplate>
+                                    <asp:Label ID="lblPerfil" runat="server" Text='<%# Bind("Perfil") %>' CssClass="form-control form-select-sm  border-0 rounded bg-light"></asp:Label>
                                 </EditItemTemplate>
                             </asp:TemplateField>                          
                             <asp:TemplateField HeaderText="Telefono" ItemStyle-CssClass="text-secondary text-center" HeaderStyle-CssClass="bg-success text-white text-center">
@@ -114,7 +122,8 @@
                                 <EditItemTemplate>
                                     <asp:TextBox ID="txttelefono" runat="server" Text='<%# Bind("telefono") %>' CssClass="form-control"></asp:TextBox>
                                 </EditItemTemplate>
-                            </asp:TemplateField>                           
+                            </asp:TemplateField>  
+                                                     
                              <asp:CommandField ShowEditButton="True" EditText="✏️" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="bg-light border-0 rounded text-center" HeaderText="Actions" CausesValidation="false"   />                                                       
                                  <asp:TemplateField HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="text-secondary text-center d-flex justify-content-center align-content-center"  >
                                     <ItemTemplate>
@@ -136,18 +145,26 @@
                     <%--Form registro usuarios--%>
                     <div class="row g-3 "  runat="server" id="formRegistroUsuario">
                     <h6 class="text-success fw-bolder bi bi-person-fill-add"> Datos generales del usuario:</h6>
-                        <div class="mb-6 col-12 col-sm-6 col-md-6 col-lg-5 col-xl-5 col-xxl-4 ">
+                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4 " id="contenedorDrplstJuzgados" runat="server">
+                            <label for="inputTipoAsunto" class="form-label text-secondary">Juzgado: </label>
+                            <asp:DropDownList runat="server" ID="inputJuzgado" AutoPostBack="true" CssClass="form-select form-select-sm text-secondary" OnSelectedIndexChanged="inputCatJuzgado_SelectedIndexChanged" AppendDataBoundItems="true" >
+                                <asp:ListItem Text="Selecciona una opción" Value="0" Selected="True" />                                
+                            </asp:DropDownList>
+                        </div>
+                        
+                        <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                             <label for="inputPerfil" class="form-label text-secondary">Perfil: </label>
                             <asp:DropDownList runat="server" ID="inputPerfil" AutoPostBack="true" CssClass="form-select form-select-sm text-secondary" OnSelectedIndexChanged="inputCatPerfil_SelectedIndexChanged" AppendDataBoundItems="true" >
                                 <asp:ListItem Text="Selecciona una opción" Value="" Selected="True"  />                                
                             </asp:DropDownList>
                         </div>
-                        <div class="mb-6 col-12 col-sm-6 col-md-6 col-lg-5 col-xl-5 col-xxl-4 " id="contenedorDrplstJuzgados" runat="server">
-                            <label for="inputTipoAsunto" class="form-label text-secondary">Juzgado: </label>
-                            <asp:DropDownList runat="server" ID="inputJuzgado" AutoPostBack="true" CssClass="form-select form-select-sm text-secondary" OnSelectedIndexChanged="inputCatJuzgado_SelectedIndexChanged" AppendDataBoundItems="true" >
-                                <asp:ListItem Text="Selecciona una opción" Value="" Selected="True" />                                
-                            </asp:DropDownList>
-                        </div>
+                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4 " id="EquipoTrabajo" runat="server" visble="false">
+                                    <label for="inputTipoAsunto" class="form-label text-secondary">Equipo de trabajo: </label>
+                                    <asp:DropDownList runat="server" ID="inputEquipoTrabajo" AutoPostBack="true" CssClass="form-select form-select-sm text-secondary" OnSelectedIndexChanged="inputCatEquipoTrabajo_SelectedIndexChanged" AppendDataBoundItems="true"  >
+                                        <asp:ListItem Text="Selecciona una opción" Value="0" Selected="True" />                                
+                                    </asp:DropDownList>
+                                </div>                            
+                           
                         <div class="row mt-4">
                             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                 <label for="inputNUC" class="form-label text-secondary">Nombre:</label>

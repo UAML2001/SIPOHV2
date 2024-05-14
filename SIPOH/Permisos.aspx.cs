@@ -17,7 +17,8 @@ using static PersonalUsuariosController;
 using static RegistroPerfilController;
 
 using System.Web.Services;
-
+using Microsoft.Ajax.Utilities;
+using System.Collections;
 
 namespace SIPOH
 {
@@ -67,14 +68,12 @@ namespace SIPOH
 
                 LimpiarInputCrearPerfil();
                 LimpiarChecks();
+                Session.Remove("PermisosSeleccionados");
             }
+            // Eliminar por completo la variable de sesión
+
         }
-        [WebMethod]
-        public static string ProcesarDatos(string data)
-        {
-            // Procesa los datos aquí
-            return "¡Datos recibidos: " + data + "!";
-        }
+
         protected void RepeaterPermisoAsociado_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
             if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
@@ -88,17 +87,29 @@ namespace SIPOH
             }
 
         }
+        
         protected void btnGuardarSubPermiso_Click(object sender, EventArgs e)
         {
            //probar funcionalidad modal subpermisos
             Button btn = (Button)sender;
             string SubPermiso = btn.CommandArgument;
-            int idSubpermiso = int.Parse(SubPermiso);           
-            
+            int idSubpermiso = int.Parse(SubPermiso);
             ObtenerSubpermisosCompartidos(idSubpermiso);
             ObtenerSubpermisosControl(idSubpermiso);
             ObtenerSubpermisosEjecucion(idSubpermiso);
             PanelPermisosAsociados.Update();
+
+        }
+        
+        protected void btnEditarEnlacesPerfil_Click(object sender, EventArgs e)
+        {
+           //probar funcionalidad modal subpermisos
+            Button btn = (Button)sender;
+             string SubPermiso = btn.CommandArgument;
+             int idSubpermiso = int.Parse(SubPermiso);
+            IdPerfilSelected.Text = SubPermiso;
+            CatEnlacesTPerfil(idSubpermiso);
+            EnlacesPerfiles.Update();
 
         }
 
@@ -133,31 +144,199 @@ namespace SIPOH
         protected void CatalogoTipoCircuito(object sender, EventArgs e)
         {
         }
+        protected void btnAgregarEnlace(object sender, EventArgs e)
+        {
+            int Perfil = int.Parse(IdPerfilSelected.Text);
+            int IdEnlaceSelected = int.Parse(inputCatenlace.SelectedValue);
+            int IdSubpermiso = 1;
+            bool resul = RegistroEnlaceAsociadoPerfil(Perfil, IdEnlaceSelected, IdSubpermiso);
+            if (resul)
+            {
+                MensajeExito("Registro de enlace al perfil seleccionado fue correcto.");
+
+            }
+            else
+            {
+                MensajeError("Error al agregar un enlace a tu perfil seleccionado, asegurate de que no haya sido agregado anteriormente");
+            }
+            busquedaPerfilAsociado.DataBind();
+            obtenerPerfiles();
+            inputCatenlace.SelectedValue = "0";
+            UpdateTablaPermisos.Update();
+
+                
+        }
+       
+
+        protected void PermisosCompartidos_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            int idPermiso = Convert.ToInt32(checkBox.Attributes["data-IdPermiso"]);
+
+            // Obtenemos la variable de sesión y la convertimos a una lista
+            List<int> permisosSeleccionados = Session["PermisosSeleccionados"] as List<int>;
+
+            // Si la variable de sesión es nula, creamos una nueva lista
+            if (permisosSeleccionados == null)
+            {
+                permisosSeleccionados = new List<int>();
+            }
+
+            // Verificamos si el CheckBox está marcado o desmarcado y actualizamos la lista en consecuencia
+            if (checkBox.Checked)
+            {
+                permisosSeleccionados.Add(idPermiso);
+            }
+            else
+            {
+                permisosSeleccionados.Remove(idPermiso);
+            }
+
+            // Guardamos la lista actualizada en la variable de sesión
+            Session["PermisosSeleccionados"] = permisosSeleccionados;
+        }
+        protected void PermisosControl_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            int idPermiso = Convert.ToInt32(checkBox.Attributes["data-IdPermiso"]);
+
+            // Obtenemos la variable de sesión y la convertimos a una lista
+            List<int> permisosSeleccionados = Session["PermisosSeleccionados"] as List<int>;
+
+            // Si la variable de sesión es nula, creamos una nueva lista
+            if (permisosSeleccionados == null)
+            {
+                permisosSeleccionados = new List<int>();
+            }
+
+            // Verificamos si el CheckBox está marcado o desmarcado y actualizamos la lista en consecuencia
+            if (checkBox.Checked)
+            {
+                permisosSeleccionados.Add(idPermiso);
+            }
+            else
+            {
+                permisosSeleccionados.Remove(idPermiso);
+            }
+
+            // Guardamos la lista actualizada en la variable de sesión
+            Session["PermisosSeleccionados"] = permisosSeleccionados;
+        }
+        protected void PermisosEjecucion_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            int idPermiso = Convert.ToInt32(checkBox.Attributes["data-IdPermiso"]);
+
+            // Obtenemos la variable de sesión y la convertimos a una lista
+            List<int> permisosSeleccionados = Session["PermisosSeleccionados"] as List<int>;
+
+            // Si la variable de sesión es nula, creamos una nueva lista
+            if (permisosSeleccionados == null)
+            {
+                permisosSeleccionados = new List<int>();
+            }
+
+            // Verificamos si el CheckBox está marcado o desmarcado y actualizamos la lista en consecuencia
+            if (checkBox.Checked)
+            {
+                permisosSeleccionados.Add(idPermiso);
+            }
+            else
+            {
+                permisosSeleccionados.Remove(idPermiso);
+            }
+
+            // Guardamos la lista actualizada en la variable de sesión
+            Session["PermisosSeleccionados"] = permisosSeleccionados;
+        }
+       
+       
+
+        protected void btnEnviarModificacionEnlace(object sender, EventArgs e)
+        {
+            // Obtenemos la lista de permisos seleccionados de la variable de sesión
+            List<int> permisosSeleccionados = Session["PermisosSeleccionados"] as List<int>;
+            int perfil = int.Parse(IdPerfilSelected.Text);
+
+            // Verificamos si la lista no es nula
+            if (permisosSeleccionados != null && ((List<int>)Session["PermisosSeleccionados"]).Count >= 0)
+            {
+                // Procesamos la lista de permisos seleccionados como desees
+                bool result  = EliminarEnlacesFromPerfil(perfil, permisosSeleccionados);
+                if (result)
+                {
+                    MensajeExito("Los enlaces seleccionados fueron eliminados");
+            
+                }
+                else
+                {
+                    MensajeError("No se pudieron eliminar los enlaces.");
+                }
+                    MensajeError("No se pudieron eliminar los enlaces probablemente esta vacia.");
+
+            }            
+                    Session.Remove("PermisosSeleccionados");
+            busquedaPerfilAsociado.DataBind();
+            obtenerPerfiles();            
+            UpdateTablaPermisos.Update();
+
+        }
+
+
+
+
+        private void CatEnlacesTPerfil(int IdPerfil)
+        {
+            DataTable dtCompartido = ObtenerCatEnlacesPorPerfil("CO", IdPerfil);
+            EnlacesCompartidos.DataSource = dtCompartido;
+            EnlacesCompartidos.DataBind();
+           
+            DataTable dtEjecucion = ObtenerCatEnlacesPorPerfil("E", IdPerfil);
+            EnlacesEjecucion.DataSource = dtEjecucion;
+            EnlacesEjecucion.DataBind();
+            DataTable dtControl = ObtenerCatEnlacesPorPerfil("C", IdPerfil);
+            EnlacesControl.DataSource = dtControl;
+            EnlacesControl.DataBind();
+
+        }
         private void CatPermisosEjecucion()
         {
             DataTable dt = ObtenerCatPermisos("E");
             // Enlazar el Repeater con los datos obtenidos
             CatSubpermisosEjecucion.DataSource = dt;
             CatSubpermisosEjecucion.DataBind();
+            inputCatenlace.DataSource = dt;
+            inputCatenlace.DataTextField = "linkEnlace";
+            inputCatenlace.DataValueField = "IdPermiso";
+            inputCatenlace.DataBind();
+
         }
         private void CatPermisosControl()
         {
             DataTable dt = ObtenerCatPermisos("C");
             CatSubpermisosControl.DataSource = dt;
             CatSubpermisosControl.DataBind();
+            inputCatenlace.DataSource = dt;
+            inputCatenlace.DataTextField = "linkEnlace";
+            inputCatenlace.DataValueField = "IdPermiso";
+            inputCatenlace.DataBind();
         }
         private void CatPermisosCompartido()
         {
             DataTable dt = ObtenerCatPermisos("CO");
             CatSubpermisosCompartidos.DataSource = dt;
             CatSubpermisosCompartidos.DataBind();
+            inputCatenlace.DataSource = dt;
+            inputCatenlace.DataTextField = "linkEnlace";
+            inputCatenlace.DataValueField = "IdPermiso";
+            inputCatenlace.DataBind();
         }
         private void CatTipoCircuito()
         {
             
             List<TipoCircuito> info = ObtenerTipoCircuito();
             inputTipoCircuito.DataSource = info;
-            inputTipoCircuito.DataTextField = "Circuito";
+            inputTipoCircuito.DataTextField = "NombreCircuito";
             inputTipoCircuito.DataValueField = "Circuito";
             inputTipoCircuito.DataBind();
         }
@@ -263,7 +442,7 @@ namespace SIPOH
                 MensajeExito("Su registro fue exitoso");
                 LimpiarChecks();
                 LimpiarInputCrearPerfil();
-               
+                obtenerPerfiles();
                 PermisosPanel.Update();
             }
 

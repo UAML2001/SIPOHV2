@@ -105,6 +105,78 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.Repeater RepeaterGetSubpermisoAsociadoEjecucion;
 
         /// <summary>
+        /// Control UpdateAgregarEnlace.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdateAgregarEnlace;
+
+        /// <summary>
+        /// Control EquipoTrabajo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl EquipoTrabajo;
+
+        /// <summary>
+        /// Control inputCatenlace.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList inputCatenlace;
+
+        /// <summary>
+        /// Control EnlacesPerfiles.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel EnlacesPerfiles;
+
+        /// <summary>
+        /// Control EnlacesCompartidos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater EnlacesCompartidos;
+
+        /// <summary>
+        /// Control EnlacesControl.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater EnlacesControl;
+
+        /// <summary>
+        /// Control EnlacesEjecucion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater EnlacesEjecucion;
+
+        /// <summary>
+        /// Control IdPerfilSelected.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label IdPerfilSelected;
+
+        /// <summary>
         /// Control PermisosPanel.
         /// </summary>
         /// <remarks>

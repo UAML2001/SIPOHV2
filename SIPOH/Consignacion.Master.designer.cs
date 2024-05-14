@@ -42,13 +42,22 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.Label tipoCircuito;
 
         /// <summary>
-        /// Control OpcionesConjunto.
+        /// Control PanelCatCompartidos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel OpcionesConjunto;
+        protected global::System.Web.UI.WebControls.Panel PanelCatCompartidos;
+
+        /// <summary>
+        /// Control RepeaterCatCompartidos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater RepeaterCatCompartidos;
 
         /// <summary>
         /// Control OpcionesControl.
@@ -60,31 +69,13 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.Panel OpcionesControl;
 
         /// <summary>
-        /// Control OpcionesControlCircuito.
+        /// Control RepeaterCatControl.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel OpcionesControlCircuito;
-
-        /// <summary>
-        /// Control Panel1.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Panel1;
-
-        /// <summary>
-        /// Control ConfiguracionConjuntos.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel ConfiguracionConjuntos;
+        protected global::System.Web.UI.WebControls.Repeater RepeaterCatControl;
 
         /// <summary>
         /// Control OpcionesEjecucion.
@@ -96,6 +87,15 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.Panel OpcionesEjecucion;
 
         /// <summary>
+        /// Control RepeaterCatEjecucion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater RepeaterCatEjecucion;
+
+        /// <summary>
         /// Control userName.
         /// </summary>
         /// <remarks>
@@ -105,13 +105,13 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.Label userName;
 
         /// <summary>
-        /// Control form1.
+        /// Control main.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm main;
 
         /// <summary>
         /// Control RegistroUsuario.
@@ -256,6 +256,15 @@ namespace SIPOH
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentClasiDelito;
+
+        /// <summary>
+        /// Control ContentRecepcionExpedientes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentRecepcionExpedientes;
 
         /// <summary>
         /// Control CerrarSesion.

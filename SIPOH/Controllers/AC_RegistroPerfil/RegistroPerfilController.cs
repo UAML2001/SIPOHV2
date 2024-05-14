@@ -56,10 +56,12 @@ public class RegistroPerfilController
         public int IdPerfil { get; set; }
         public string Perfil { get; set; }
         public string Enlaces { get; set; }
+        public string TipoCircuito { get; set; }
     }
     public class TipoCircuito
     {
         public string Circuito { get; set; }
+        public string NombreCircuito { get; set; }
     }
     public class ResultadoInsertCreacionPerfil
     {
@@ -103,7 +105,7 @@ public class RegistroPerfilController
             connection.Open();
             try
             {
-                using (SqlCommand command = new SqlCommand("SELECT TOP (100) PERCENT IdPerfil, Perfil, dbo.FConcatenarLink(IdPerfil) AS LinkEnlace FROM dbo.P_CatPerfiles WHERE Perfil LIKE '%' +  @NombrePerfil + '%'; ", connection))
+                using (SqlCommand command = new SqlCommand("SELECT TOP (100) PERCENT IdPerfil, Perfil, dbo.FConcatenarLink(IdPerfil) AS LinkEnlace, TipoCircuito FROM dbo.P_CatPerfiles WHERE Perfil LIKE '%' +  @NombrePerfil + '%'; ", connection))
                 {
                     command.Parameters.AddWithValue("@NombrePerfil", nombrePerfil);
                     command.ExecuteNonQuery();
@@ -115,6 +117,25 @@ public class RegistroPerfilController
                             data.IdPerfil = int.Parse(reader["IdPerfil"].ToString());
                             data.Perfil = reader["Perfil"].ToString();
                             data.Enlaces = reader["LinkEnlace"].ToString();
+                            string tipoCircuito = reader["TipoCircuito"].ToString();
+                            switch (tipoCircuito)
+                            {
+                                case "c":
+                                    data.TipoCircuito = "Circuito";
+                                    break;
+                                case "d":
+                                    data.TipoCircuito = "Distrito";
+                                    break;
+                                case "e":
+                                    data.TipoCircuito = "Ejecucion";
+                                    break;
+                                case "a":
+                                    data.TipoCircuito = "Super Administrador";
+                                    break;
+                                default:
+                                    data.TipoCircuito = "No Encontrado";
+                                    break;
+                            }
                             resultados.Add(data);
 
                         }
@@ -127,9 +148,6 @@ public class RegistroPerfilController
         }
         return resultados;
     }
-
-
-
     public static List<DataPermisosAsociados> ObtenerPermisosAsociados()
     {
         List<DataPermisosAsociados> resultados = new List<DataPermisosAsociados>();
@@ -138,7 +156,7 @@ public class RegistroPerfilController
             try
             {
                 connection.Open();
-                using (SqlCommand command = new SqlCommand("SELECT TOP (100) PERCENT IdPerfil, Perfil, dbo.FConcatenarLink(IdPerfil) AS LinkEnlace FROM dbo.P_CatPerfiles", connection))
+                using (SqlCommand command = new SqlCommand("SELECT TOP (100) PERCENT IdPerfil, Perfil, dbo.FConcatenarLink(IdPerfil) AS LinkEnlace, TipoCircuito FROM dbo.P_CatPerfiles", connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
@@ -148,6 +166,25 @@ public class RegistroPerfilController
                             dato.IdPerfil = int.Parse(reader["IdPerfil"].ToString());
                             dato.Perfil = reader["Perfil"].ToString();
                             dato.Enlaces = reader["LinkEnlace"].ToString();
+                            string tipoCircuito = reader["TipoCircuito"].ToString();
+                            switch (tipoCircuito)
+                            {
+                                case "c":
+                                    dato.TipoCircuito = "Circuito";
+                                    break;
+                                case "d":
+                                    dato.TipoCircuito = "Distrito";
+                                    break;
+                                case "e":
+                                    dato.TipoCircuito = "Ejecucion";
+                                    break;
+                                case "a":
+                                    dato.TipoCircuito = "Super Administrador";
+                                    break;
+                                default:
+                                    dato.TipoCircuito = "No Encontrado";
+                                    break;
+                            }
                             resultados.Add(dato);
                         }
                     }
@@ -159,6 +196,31 @@ public class RegistroPerfilController
         }
         return resultados;
 
+    }
+    public static DataTable ObtenerCatEnlacesPorPerfil(string Tipo, int IdPerfil)
+    {
+        DataTable dt = new DataTable();
+        using (SqlConnection connection = new ConexionBD().Connection)
+        {
+            try
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand("SELECT dbo.P_CatPermisos.IdPermiso, dbo.P_CatPermisos.Nombre, dbo.P_CatPermisos.linkEnlace FROM dbo.P_CatPermisos INNER JOIN dbo.P_PermisosAsociados ON dbo.P_CatPermisos.IdPermiso = dbo.P_PermisosAsociados.IdPermiso WHERE(dbo.P_CatPermisos.Tipo = @Tipo) AND (dbo.P_PermisosAsociados.IdPerfil = @IdPerfil)", connection))
+                {
+                    command.Parameters.AddWithValue("@Tipo", Tipo);
+                    command.Parameters.AddWithValue("@IdPerfil", IdPerfil);
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                    {
+                        adapter.Fill(dt);
+                        return dt;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Surgió un problema al obtener los permisos: " + ex.Message);
+            }
+        }
     }
 
 
@@ -208,6 +270,10 @@ public class RegistroPerfilController
                         {
                             TipoCircuito circuito = new TipoCircuito();
                             circuito.Circuito = reader["TipoCircuito"].ToString();
+                            circuito.NombreCircuito = circuito.Circuito == "c" ? "Circuito" :
+                                                       circuito.Circuito == "d" ? "Distrito" :
+                                                        circuito.Circuito == "e" ? "Ejecucion" : 
+                                                        circuito.Circuito == "a"  ? "Super Administrador": "No Encontrado";
                             resultados.Add(circuito);
                         }
                     }
@@ -312,7 +378,8 @@ public class RegistroPerfilController
         {
             try
             {
-                connection.Open();
+                connection.Open();                
+
                 using(SqlCommand command = new SqlCommand("INSERT INTO P_CatPermisos (Nombre, Nombreicono, linkEnlace)VALUES (@Nombre, @NombreIcono, @LinkEnlace);", connection))
                 {
                     foreach (var data in DataPermisos)
@@ -338,7 +405,89 @@ public class RegistroPerfilController
         }
             return resultados;
     }
-    
+    //Agregar enlaces asignados a un perfil en P_PermisosAsociados
+    public static bool RegistroEnlaceAsociadoPerfil(int IdPerfil,int IdPermisoEnlace,int  IdSubpermiso)
+    {
+        using(SqlConnection connection = new ConexionBD().Connection)
+        {
+            connection.Open();
+            try
+            {
+
+
+                using (SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM P_PermisosAsociados WHERE IdPerfil = @Idperfil AND IdPermiso = @IdPermiso;", connection))
+                {
+                    command.Parameters.Add("@Idperfil", SqlDbType.Int).Value = IdPerfil;
+                    command.Parameters.Add("@IdPermiso",SqlDbType.Int).Value = IdPermisoEnlace;
+                    int respuesta = (int)command.ExecuteScalar();
+                    if (respuesta > 0)
+                    {
+                        // Si hay al menos un registro que cumple la condición, no dejes hacer el siguiente procedimiento
+                        throw new Exception("Ya existe un registro con el valor especificado.");
+                    }
+                    else
+                    {
+                        // Si no hay ningún registro que cumpla la condición, avanza y realiza el siguiente procedimiento
+                        using (SqlCommand commandRegistro = new SqlCommand("INSERT INTO P_PermisosAsociados(IdPerfil, IdPermiso, IdSubpermiso )VALUES(@IdPerfil,@IdPermiso, @IdSubpermiso);", connection))
+                        {
+                            commandRegistro.Parameters.Add("@IdPerfil", SqlDbType.Int).Value = IdPerfil;
+                            commandRegistro.Parameters.Add("@IdPermiso", SqlDbType.Int).Value = IdPermisoEnlace;
+                            commandRegistro.Parameters.Add("@IdSubpermiso", SqlDbType.Int).Value = IdSubpermiso;
+                            commandRegistro.ExecuteNonQuery();
+                            return true;
+                        }
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Insersion en el registro de enlaces fue incorrecta: " + ex.Message);
+                return false;
+            }
+        }
+    }
+    public static bool EliminarEnlacesFromPerfil(int IdPerfil, List<int> ListaEnlaces)
+    {
+        string parametros = string.Join(",", ListaEnlaces.Select((id, index) => $"@Id{index}"));
+        using (SqlConnection connection = new ConexionBD().Connection)
+        {
+            connection.Open();
+            try
+            {
+                using(SqlCommand command = new SqlCommand($"DELETE FROM P_PermisosAsociados WHERE IdPerfil = @IdPerfil AND IdPermiso  IN ({parametros})", connection))
+                {
+                    command.Parameters.Add("@IdPerfil", SqlDbType.Int).Value = IdPerfil;
+                    // Agregamos los parámetros a la consulta
+                    for (int i = 0; i < ListaEnlaces.Count; i++)
+                    {
+                        command.Parameters.AddWithValue($"@Id{i}", ListaEnlaces[i]);
+                    }
+
+                    // Ejecutamos la consulta
+                    int filasAfectadas = command.ExecuteNonQuery();
+                    if(filasAfectadas > 0)
+                    {
+                        Debug.WriteLine("ROWS AFECTS: " + filasAfectadas);
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                        throw new Exception("No se elimino ningun elemento");
+                    }
+
+
+                }
+            }
+            catch (Exception ex) 
+            {
+                Debug.WriteLine("Error en eliminar: " + ex.Message);
+                return false;
+            }
+        }
+    }
+            
    
 
 }

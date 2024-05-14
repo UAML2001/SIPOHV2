@@ -1,6 +1,8 @@
 ﻿using DatabaseConnection;
+using SIPOH.Controllers.AC_CatalogosCompartidos;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -20,7 +22,8 @@ namespace SIPOH
             LabelTCircuito.Text = HttpContext.Current.Session["IdCircuito"] as string; 
             //Debug.WriteLine("Los valores de los datos en conjunto: " + Session["NombreJuzgado"] + " " + Session["IdCircuito"]);
             /// Datos usuario
-            LabelProfile.Text = HttpContext.Current.Session["Perfil"] as string;
+            LabelProfile.Text = HttpContext.Current.Session["PerfilNombre"] as string;            
+            int IdPefil = int.Parse(HttpContext.Current.Session["IdPerfil"] as string);            
             LabelAddress.Text = HttpContext.Current.Session["Address"] as string;
             LabelPhoneNum.Text = HttpContext.Current.Session["PhoneNum"] as string;
             LabelEmail.Text = HttpContext.Current.Session["Email"] as string;
@@ -28,38 +31,55 @@ namespace SIPOH
             LabelFistName.Text = HttpContext.Current.Session["FistName"] as string;
             LabelLastName.Text = HttpContext.Current.Session["LastName"] as string;
             userName.Text = HttpContext.Current.Session["Name"] as string;
-            string circuito = HttpContext.Current.Session["TCircuito"] as string;
-            tipoCircuito.Text = circuito == "c" || circuito == "d" ? "Atencion Ciudadana" : "Ejecucion";
-            MostrarOpcionesConjunto(circuito);            
-            MostrarOpcionesPorRol(circuito, OpcionesEjecucion, "e");
-            MostrarOpcionesPorRol(circuito, OpcionesControl, "d");
-            MostrarOpcionesCircuito(circuito, OpcionesControlCircuito, "c");
-            ConfiguracioConjuntos(circuito, ConfiguracionConjuntos, "a","d");
             
-        }
-        private void ConfiguracioConjuntos(string circuito, Panel panelOpciones, string rolObjetivo, string rolObjetivo2)
-        {
-            panelOpciones.Visible = (circuito == rolObjetivo ) || (circuito == rolObjetivo2);            
-            
-        }
-        private void MostrarOpcionesPorRol(string circuito, Panel panelOpciones, string rolObjetivo)
-        {
-            panelOpciones.Visible = (circuito == rolObjetivo);
-        }
-        private void MostrarOpcionesCircuito(string circuito, Panel panelOpciones, string rolObjetivo)
-        {
-            panelOpciones.Visible = (circuito == rolObjetivo);
-        }
+            tipoCircuito.Text = HttpContext.Current.Session["PerfilNombre"] as string;
 
-        private void MostrarOpcionesConjunto(string circuito)
+
+
+
+
+
+            //Menu dinamico:
+            MostrarOpcionesMenu(IdPefil);
+
+
+        }
+       
+
+        private void MostrarOpcionesMenu(int IdPerfil)
         {
-            if (circuito == "c" || circuito == "d" || circuito =="e")
+            DataTable co =   MenuDinamicoController.ObtenerCatEnlacesPorPerfilToMenuDinamico("CO", IdPerfil);
+            RepeaterCatCompartidos.DataSource = co;
+            RepeaterCatCompartidos.DataBind();
+            if (co != null && co.Rows.Count > 0)
             {
-                OpcionesConjunto.Visible = true;
+                PanelCatCompartidos.Visible = true;
             }
             else
             {
-                OpcionesConjunto.Visible = false;
+                PanelCatCompartidos.Visible = false;
+            }
+            DataTable c =   MenuDinamicoController.ObtenerCatEnlacesPorPerfilToMenuDinamico("C", IdPerfil);
+            RepeaterCatControl.DataSource = c;
+            RepeaterCatControl.DataBind();
+            if (c != null && c.Rows.Count > 0)
+            {
+                OpcionesControl.Visible = true;
+            }
+            else
+            {
+                OpcionesControl.Visible = false;
+            }
+            DataTable e = MenuDinamicoController.ObtenerCatEnlacesPorPerfilToMenuDinamico("E", IdPerfil);
+            RepeaterCatEjecucion.DataSource = e;
+            RepeaterCatEjecucion.DataBind();
+            if (e != null && e.Rows.Count > 0)
+            {
+                OpcionesEjecucion.Visible = true;
+            }
+            else
+            {
+                OpcionesEjecucion.Visible = false;
             }
         }
 

@@ -52,6 +52,7 @@ public class AutenticacionController
                         HttpContext.Current.Session["PhoneNum"] = reader["telefono"].ToString();
                         HttpContext.Current.Session["Address"] = reader["Domicilio"].ToString();
                         HttpContext.Current.Session["Email"] = reader["Email"].ToString();
+                        HttpContext.Current.Session["PerfilNombre"] = reader["Perfil"].ToString();
                         reader.Close();
 
                         using (SqlCommand command2 = new SqlCommand("getPerfil", connection))

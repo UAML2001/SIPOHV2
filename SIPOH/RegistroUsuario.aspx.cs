@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SIPOH.Firma;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -11,6 +12,7 @@ using static PersonalUsuariosController;
 using static SIPOH.Controllers.AC_CatalogosCompartidos.CatEjecucion_Cat_JuzgadosController;
 using static SIPOH.Controllers.AC_CatalogosCompartidos.CatJuzgadosConTipoYSubtipoController;
 using static SIPOH.Controllers.AC_RegistroHistoricos.RegistroHistoricoJOController;
+using static SIPOH.Promociones;
 using static SIPOH.Views.CustomRegistroIniciales;
 
 namespace SIPOH
@@ -85,14 +87,14 @@ namespace SIPOH
             List<PermisosAsociados> permisos = ObtenerSubPermisos(IdPermiso, IdPerfil);
             foreach (var permiso in permisos)
             {
-                Debug.WriteLine("v: " + permiso.ver + permiso.editar + permiso.eliminar + permiso.administrador + permiso.superUsuario + permiso.usuario);
+               
                 PermisoVer= permiso.ver;
                 PermisoEditar = permiso.editar;
                 PermisoEliminar = permiso.eliminar;
                 PermisoAdministrador = permiso.administrador;
                 PermisoSistemas = permiso.superUsuario;
                 PermisoUsuario = permiso.usuario;
-                Debug.WriteLine("de: " + PermisoVer + PermisoEditar+ PermisoEliminar + PermisoAdministrador+ PermisoSistemas);
+               
             }
         }
             
@@ -121,7 +123,7 @@ namespace SIPOH
                 Response.Redirect("~/Default.aspx");
             }
 
-            if ((circuito == "a" || circuito == "d") && tienePermiso)
+            if ((circuito == "a" || circuito == "d" || circuito == "c") && tienePermiso)
             {
                 Visible = true;
             }
@@ -134,21 +136,50 @@ namespace SIPOH
             {
                 int IdJuzgado = int.Parse(Session["IDJuzgado"]as string);
                 int Idperfil = int.Parse(Session["IdPerfil"]as string);
-                
 
                 obtnerPermisos(IdPermiso , Idperfil);
-
                 Actions();
-                GetCircuito(IdJuzgado);
+                
+                //GetCircuito(IdJuzgado);
                 LimpiarCampos();
                 formRegistroUsuario.Visible = false;
                 inputBuscarusuario.Text = "";
-                
-                
+                GetCircuito(Idperfil);
+                CatCargaTrabajo(IdJuzgado, Idperfil);
 
                 
             }
+                
             
+            
+        }
+        protected void InfoInputCargaTrabajo(int IdJuzgado, int Perfil)
+        {
+            
+            List<DataCatEquipoTrabajo> data = GetCatEquipoTrabajo(IdJuzgado, Perfil);
+            inputEquipoTrabajo.Items.Clear();
+            inputEquipoTrabajo.Items.Add(new ListItem("Selecciona una opción", "0"));
+            inputEquipoTrabajo.DataSource = data;
+            inputEquipoTrabajo.DataTextField = "Equipo";
+            inputEquipoTrabajo.DataValueField = "IdEquipoTrabajo";
+            inputEquipoTrabajo.DataBind();
+        }
+        protected void CatCargaTrabajo(int IdJuzgado, int Perfil)
+        {
+           
+            string isCabecera = GetCabeceraCircuito(IdJuzgado);
+            if(isCabecera == "S")
+            {
+                EquipoTrabajo.Visible = true;
+                InfoInputCargaTrabajo(IdJuzgado, Perfil);
+                
+            }
+            else
+            {
+
+                EquipoTrabajo.Visible = false;
+                inputEquipoTrabajo.Items.Clear();
+            }
         }
         protected void grdVwBusquedaUsuarios_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
@@ -183,14 +214,6 @@ namespace SIPOH
                     btnUsuario.Visible = false;
 
                 }
-
-
-
-
-
-
-
-
 
             }
         }
@@ -357,6 +380,7 @@ namespace SIPOH
         protected void btnBuscarUsuario(object sender, EventArgs e)
         {
             formRegistroUsuario.Visible = false;
+                        
             try
             {
                 bool resultado = ActualizarTabla();
@@ -397,8 +421,7 @@ namespace SIPOH
             {
                 GridViewRow row = grdVwBusquedaUsuarios.SelectedRow;
                 int idUsuario = Convert.ToInt32(row.Cells[0].Text);
-                // Ajusta esta lógica según tus necesidades específicas.
-               
+                
 
                 var respuesta = AltaDeUsuario(idUsuario);
                 if (respuesta)
@@ -438,6 +461,10 @@ namespace SIPOH
         protected void inputCatPerfil_SelectedIndexChanged(object sender, EventArgs e)
         {
             string perfil = inputPerfil.SelectedItem.Text.ToUpper();
+            int idpefil = int.Parse(inputPerfil.SelectedValue);
+            int idJuzgado = int.Parse(inputJuzgado.SelectedValue);
+            CatCargaTrabajo(idJuzgado, idpefil);
+
             copyPerfil.Text = perfil;
         }
         
@@ -469,27 +496,36 @@ namespace SIPOH
 
             if (sistemas)
             {
+                
                 contenedorDrplstJuzgados.Visible = true;
                 List<DataCatJuzgado> catJuzgado = GetCatJuzgado();
                 inputJuzgado.DataSource = catJuzgado;
                 inputJuzgado.DataValueField = "IdJuzgado";
                 inputJuzgado.DataTextField = "Juzgado";
                 inputJuzgado.DataBind();
+                
             }
             else
             {
                 contenedorDrplstJuzgados.Visible = false;
+                
             }
         }
+        
         protected void inputCatJuzgado_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string juzgado = inputJuzgado.SelectedItem.Text;
-            copyJuzgado.Text = juzgado;
+            string juzgado = inputJuzgado.SelectedItem.Text;                                 
+            copyJuzgado.Text = juzgado;            
+
+        }
+        protected void inputCatEquipoTrabajo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
         }
         
         protected void btnEnviarUsuario_Click(object sender, EventArgs e)
         {
-            
+            //NOTA: CADENA DE TIPO DE EQUIPO UNDEFINIDO
             try
             {
                 string Nombre = inputNombre.Text;
@@ -504,8 +540,10 @@ namespace SIPOH
                  //si es de sistemas(superadmin) cambiara el juzgado
                 if (TipoCircuito != "a" || TipoCircuito.IsEmpty()) Juzgado = int.Parse(Session["IDJuzgado"] != null ? Session["IDJuzgado"].ToString() : string.Empty);
                 else Juzgado = int.Parse(inputJuzgado.SelectedValue);// sistemas (SUPER ADMINISTRADOR)                    
-                
-                
+
+                int EquipoTrabajo = !string.IsNullOrEmpty(inputEquipoTrabajo.SelectedValue) ? int.Parse(inputEquipoTrabajo.SelectedValue) : 0;
+
+
                 string Telefono = inputTelefono.Text;
                 string Domicilio = inputDomicilio.Text;
                 string Email = inputEmail.Text;
@@ -556,7 +594,8 @@ namespace SIPOH
                     Domicilio = Domicilio,
                     Email = Email,
                     Status = "A",
-                    Pass = "0"
+                    Pass = "0",
+                    IdEquipoTrabajo = EquipoTrabajo
                 };
                 List<DataInsertUsuario> listaInfoUser = new List<DataInsertUsuario> { infoUser };
 
