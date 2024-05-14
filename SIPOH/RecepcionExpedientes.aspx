@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Consignacion.Master" AutoEventWireup="true" CodeBehind="RecepcionExpedientes.aspx.cs" Inherits="SIPOH.RecepcionExpedientes" %>
 
 
+
+
 <asp:Content ID="ContentRecepcionExpedientes" ContentPlaceHolderID="ContentRecepcionExpedientes" runat="server">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
@@ -15,9 +17,12 @@
     </div>
     <div class="col-md-12  col-xl-12 m-0">
         <!-- Nav tabs -->
-        <div class="card py-4 px-3  ">                       
-                <%@ Register Src="~/Views/ContenidoExpediente/InformacionExpediente.ascx" TagPrefix="Informacion" TagName="InformacionExpediente" %>
-                <Informacion:InformacionExpediente runat="server" id="InformacionExpediente" />               
+        <div class="card py-4 px-3  "> 
+            <%@ Register Src="~/Views/ContenidoExpedientes/InformacionExpediente.ascx" TagPrefix="uc1" TagName="InformacionExpediente" %>
+            <uc1:InformacionExpediente runat="server" ID="InformacionExpediente" />
+           <%-- <%@ Register Src="~/Views/ContenidoExpedientes/InformacionExpediente.ascx" TagPrefix="uc1" TagName="InformacionExpediente" %>
+
+            <Informacion:InformacionExpediente runat="server" id="InformacionExpediente" />     --%>          
         </div>
     </div>
     

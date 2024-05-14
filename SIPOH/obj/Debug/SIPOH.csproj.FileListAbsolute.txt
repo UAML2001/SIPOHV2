@@ -856,3 +856,9 @@ C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\ExpedienteDigital\Im
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\ExpedienteDigital\Victimas\CedulaVictimas.rpt
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\ExpedienteDigital\Imputados\CedulaImputados.cs
 C:\Users\braya\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\ExpedienteDigital\Victimas\CedulaVictimas.cs
+C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\ExpedienteDigital\Imputados\CedulaImputado.pdf
+C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\ExpedienteDigital\Victimas\CedulaVictimas.pdf
+C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\ExpedienteDigital\Imputados\CedulaImputados.rpt
+C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\ExpedienteDigital\Victimas\CedulaVictimas.rpt
+C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\ExpedienteDigital\Imputados\CedulaImputados.cs
+C:\Users\20111\Documents\GitHub\SIPOH\SIPOH\bin\ExpedienteDigital\Victimas\CedulaVictimas.cs

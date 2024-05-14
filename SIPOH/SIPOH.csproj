@@ -2206,6 +2206,7 @@
     <Content Include="PortadasDigitalizacion.aspx" />
     <Content Include="Promociones.aspx" />
     <Content Include="PromocionesCtrl.aspx" />
+    <Content Include="RecepcionExpedientes.aspx" />
     <Content Include="RegistroUsuario.aspx" />
     <Content Include="ReportesCtrl.aspx" />
     <Content Include="ReportesEjec.aspx" />
@@ -2530,6 +2531,7 @@
     <Content Include="Views\ConsignacionElements\CerrarSesion.ascx" />
     <Content Include="Views\ConsultarControl.ascx" />
     <Content Include="Views\ContenidoDisponible\contenido-denegado.aspx" />
+    <Content Include="Views\ContenidoExpedientes\InformacionExpediente.ascx" />
     <Content Include="Views\CustomAmparo.ascx" />
     <Content Include="Views\CustomHistoricosCupreCausa.ascx" />
     <Content Include="Views\CustomHistoricosJuicioOral.ascx" />
@@ -2646,6 +2648,7 @@
     <Compile Include="Controllers\AC_CatalogosCompartidos\CatTipoSolicitudController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\Cat_Ejecucion_Cat_JuzgadosPorCircuitoEController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\EJ_ValidarNumeroEjecucionController.cs" />
+    <Compile Include="Controllers\AC_CatalogosCompartidos\MenuDinamicoController.cs" />
     <Compile Include="Controllers\AC_CatalogosCompartidos\P_CatSolicitanteController.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\ArchivosFTP.cs" />
     <Compile Include="Controllers\AC_Digitalizacion\ConexionFTP.cs" />
@@ -2894,6 +2897,13 @@
       <DependentUpon>PromocionesCtrl.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecepcionExpedientes.aspx.cs">
+      <DependentUpon>RecepcionExpedientes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecepcionExpedientes.aspx.designer.cs">
+      <DependentUpon>RecepcionExpedientes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="RegistroUsuario.aspx.cs">
       <DependentUpon>RegistroUsuario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2991,6 +3001,13 @@
     </Compile>
     <Compile Include="Views\ContenidoDisponible\contenido-denegado.aspx.designer.cs">
       <DependentUpon>contenido-denegado.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ContenidoExpedientes\InformacionExpediente.ascx.cs">
+      <DependentUpon>InformacionExpediente.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\ContenidoExpedientes\InformacionExpediente.ascx.designer.cs">
+      <DependentUpon>InformacionExpediente.ascx</DependentUpon>
     </Compile>
     <Compile Include="Views\CustomAmparo.ascx.cs">
       <DependentUpon>CustomAmparo.ascx</DependentUpon>

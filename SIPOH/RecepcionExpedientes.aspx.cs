@@ -24,7 +24,7 @@ namespace SIPOH
             string circuito = HttpContext.Current.Session["TCircuito"] as string;
             List<string> enlaces = HttpContext.Current.Session["enlace"] as List<string>;
             //bool tienePermiso = enlaces.Any(enlace => enlace.Contains("/promocionesCtrl"));
-            bool tienePermiso = enlaces != null ? enlaces.Any(enlace => enlace.Contains("/recepcionExpediente")) : false;
+            bool tienePermiso = enlaces != null ? enlaces.Any(enlace => enlace.Contains("/recepcionExpedientes")) : false;
 
             // Si enlaces es nulo, redirige a Default.aspx
             if (enlaces == null)
