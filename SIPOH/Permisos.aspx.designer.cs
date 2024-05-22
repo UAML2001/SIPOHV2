@@ -60,6 +60,15 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.HiddenField HiddenIdPermisoAsociado;
 
         /// <summary>
+        /// Control txtbxPerfilSelected.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtbxPerfilSelected;
+
+        /// <summary>
         /// Control lblIdSeleccionado.
         /// </summary>
         /// <remarks>
@@ -69,13 +78,49 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.Label lblIdSeleccionado;
 
         /// <summary>
-        /// Control PanelPermisosAsociados.
+        /// Control PanelPermisos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel PanelPermisosAsociados;
+        protected global::System.Web.UI.UpdatePanel PanelPermisos;
+
+        /// <summary>
+        /// Control CatEnlacesNoAsignados.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CatEnlacesNoAsignados;
+
+        /// <summary>
+        /// Control TipoUsuario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList TipoUsuario;
+
+        /// <summary>
+        /// Control RepeaterPermiosEnlace.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater RepeaterPermiosEnlace;
+
+        /// <summary>
+        /// Control Button1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button1;
 
         /// <summary>
         /// Control RepeaterGetSubpermisoAsociadoCompartidos.

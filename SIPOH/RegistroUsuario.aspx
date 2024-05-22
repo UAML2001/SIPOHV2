@@ -1,12 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Consignacion.Master" AutoEventWireup="true" CodeBehind="RegistroUsuario.aspx.cs" Inherits="SIPOH.RegistroUsuario" %>
-<asp:Content ID="RegistroUsuario" ContentPlaceHolderID="RegistroUsuario" runat="server">
-
-    <asp:UpdatePanel ID="UpdatePanelPersonal" runat="server" UpdateMode="Conditional">
-        <ContentTemplate>
-            <asp:ScriptManager ID="ScriptManagerRegistroPersonal" runat="server"></asp:ScriptManager>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+<%--<asp:Content ID="RegistroUsuario" ContentPlaceHolderID="RegistroUsuario" runat="server">--%>
+<asp:Content ID="Contents" ContentPlaceHolderID="RegistroUsuario" runat="server">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin=""></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+            <asp:ScriptManager ID="ScriptManagerRegistroPersonal" runat="server"></asp:ScriptManager>
+    
     <div class="d-flex justify-content-between px-3 mb-4">
         <span class="text-sm">Personal de SIPOH <i class="fas fa-angle-right"></i><span id="dataSplash" class="text-success fw-bold "> Registro de usuarios</span> </span>
         <b>Registro</b>
@@ -27,6 +26,8 @@
                         <asp:Button runat="server" ID="btnSearchNuevoUsuario" CssClass="btn btn-success btn-sm" Text="+" OnClick="btnNuevoUsuario" AutoPostBack="true"></asp:Button>
                       </div>
                  </div> 
+                <asp:UpdatePanel ID="UpdatePanelPersonal" runat="server" UpdateMode="Conditional">
+        <ContentTemplate>
                 <div class="card-body mx-0 mt-4  p-0">
                 <!-- Tab panes -->
                 <div class="tab-content ">
@@ -387,4 +388,5 @@
             copyEmail.val(inputEmail.val());
         }
 </script>
+    
 </asp:Content>

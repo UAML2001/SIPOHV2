@@ -19,6 +19,7 @@ using static RegistroPerfilController;
 using System.Web.Services;
 using Microsoft.Ajax.Utilities;
 using System.Collections;
+using static SIPOH.Views.CustomRegistroIniciales;
 
 namespace SIPOH
 {
@@ -64,8 +65,8 @@ namespace SIPOH
                 CatPermisosControl();
                 CatPermisosCompartido();
                 CatTipoCircuito();
-                obtenerPerfiles();                                
-
+                obtenerPerfiles();
+                ListaPermisosAsociados();
                 LimpiarInputCrearPerfil();
                 LimpiarChecks();
                 Session.Remove("PermisosSeleccionados");
@@ -73,6 +74,180 @@ namespace SIPOH
             // Eliminar por completo la variable de sesión
 
         }
+
+        protected void ListaPermisosAsociados()
+        {
+            List<TipoPermiso> permisos = new List<TipoPermiso>
+            {
+                new TipoPermiso { IdTipoPermisoUsuario = 1, TipoPermisoUsuario = "Ver" , iconoPermiso = "bi bi-eye-fill"},
+                new TipoPermiso { IdTipoPermisoUsuario = 2, TipoPermisoUsuario = "Editar" , iconoPermiso = "bi bi-pen-fill"},    
+                new TipoPermiso { IdTipoPermisoUsuario = 3, TipoPermisoUsuario = "Eliminar" , iconoPermiso = "bi bi-trash2-fill"},
+            };
+
+            RepeaterPermiosEnlace.DataSource = permisos;
+            RepeaterPermiosEnlace.DataBind();
+        }
+        protected void ListaTipoUsuario()
+        {
+            List<TipoUsuario> TipoPermiso = new List<TipoUsuario>
+            {
+                new TipoUsuario {IdUsuario = 0, Usuario = "Selecciona una opción"},
+                new TipoUsuario { IdUsuario = 1, Usuario = "Normal" },
+                new TipoUsuario { IdUsuario = 2, Usuario = "Administrador" },    
+                new TipoUsuario { IdUsuario = 3, Usuario = "SuperAdministrador" },
+            };
+
+            TipoUsuario.DataSource = TipoPermiso;
+            TipoUsuario.DataTextField = "Usuario";
+            TipoUsuario.DataValueField = "IdUsuario";
+            TipoUsuario.DataBind();
+        }
+        
+        public static string SubPermiso;
+        public static bool IsNormal;
+        public static bool IsAdministrador;
+        public static bool isSuperAdministrador;
+        public static bool hasVer = false;
+        public static bool hasEditar = false;
+        public static bool hasEliminar = false;
+        
+        protected void btnAsignarSubPermisosAsociados_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                if (!int.TryParse(CatEnlacesNoAsignados.SelectedValue, out int IdEnlace) || IdEnlace <= 0)
+                {
+                    MensajeError("Por favor necesita seleccionar un enlace válido.");
+                    return;
+                }
+
+                if (!int.TryParse(SubPermiso, out int IdPerfil) || IdPerfil <= 0)
+                {
+                    MensajeError("El IdPerfil no es válido.");
+                    return;
+                }
+
+                if (!int.TryParse(TipoUsuario.SelectedValue, out int isUsuario))
+                {
+                    MensajeError("Necesita elegir un tipo de usuario");
+                    return;
+                }
+                switch (isUsuario)
+                {
+                    case 1:
+                        IsNormal = true;
+                        IsAdministrador = false;
+                        isSuperAdministrador = false;
+                        break;
+                     case 2:
+                        IsNormal = false;
+                        IsAdministrador = true;
+                        isSuperAdministrador = false;
+                        break;
+                     case 3:
+                        IsNormal = false;
+                        IsAdministrador = false;
+                        isSuperAdministrador = true;
+                        break;
+                    default:
+                        MensajeError("Necesita elegir un tipo de usuario");
+                        break;
+                }
+                //obtener el check seleccionado de permisos asociados
+                foreach (RepeaterItem item in RepeaterPermiosEnlace.Items)
+                {
+                
+                    CheckBox chk = (CheckBox)item.FindControl("chkExample");
+
+                    if (chk != null)
+                    { 
+                    
+                        int idTipoPermiso = Convert.ToInt32(chk.Attributes["data-IdTipoPermiso"]);
+                        if (chk.Checked)
+                        {                                                
+                            switch (idTipoPermiso)
+                            {
+                                case 1: 
+                                    hasVer = true;
+                                    break;
+                                case 2:
+                                    hasEditar = true;
+                                    break;
+                                case 3:
+                                    hasEliminar = true;
+                                    break;
+                                default:                                    
+                                    return;
+
+                            }
+
+                        }
+                        else
+                        {
+                            switch (idTipoPermiso)
+                            {
+                                case 1:
+                                    hasVer = false;
+                                    break;
+                                case 2:
+                                    hasEditar = false;
+                                    break;
+                                case 3:
+                                    hasEliminar = false;
+                                    break;
+                                default:                                    
+                                    return;
+
+                            }
+                        }
+                    }
+                }
+                List<SubPermisoAsociadoInfo> info = new List<SubPermisoAsociadoInfo>
+                {
+                    new SubPermisoAsociadoInfo {
+                        hasVer = hasVer,
+                        hasEditar = hasEditar,
+                        hasEliminar = hasEliminar,
+                        isNormal = IsNormal,
+                        isAdministrador = IsAdministrador,
+                        isSuperAdministrador  = isSuperAdministrador
+                    },
+
+                };
+                                
+                if (RegistroSubpermisosAsociados(IdPerfil, IdEnlace, info))
+                {
+                    MensajeExito("Se ha registrado el Subpermiso asociado.");
+                    var perfil = int.Parse(txtbxPerfilSelected.Text);
+                    Debug.WriteLine("DADADDADADADAD VALOR DE MI TEXTBOX: " + perfil);
+                    ObtenerSubpermisosCompartidos(perfil);
+                    ObtenerSubpermisosControl(perfil);
+                    ObtenerSubpermisosEjecucion(perfil);
+                    
+                    
+                }
+                else
+                {
+                    MensajeError("Ocurrió un error en asignación de Subpermiso asociado");
+                    
+                }
+                    
+
+            }
+            catch (Exception ex)
+            {
+                MensajeError("Surgio un problema al asignar el permiso asociado: " + ex.Message);
+            }
+            finally
+            {
+                PanelPermisos.Update();
+
+            }
+        }
+
+
+
 
         protected void RepeaterPermisoAsociado_ItemDataBound(object sender, RepeaterItemEventArgs e)
         {
@@ -84,21 +259,61 @@ namespace SIPOH
                 lblIdSeleccionado.Text = NombreInculpado;
                 HiddenIdPermisoAsociado.Value = idPermisoAsociado;
 
-            }
+            }            
 
         }
-        
         protected void btnGuardarSubPermiso_Click(object sender, EventArgs e)
         {
-           //probar funcionalidad modal subpermisos
-            Button btn = (Button)sender;
-            string SubPermiso = btn.CommandArgument;
-            int idSubpermiso = int.Parse(SubPermiso);
-            ObtenerSubpermisosCompartidos(idSubpermiso);
-            ObtenerSubpermisosControl(idSubpermiso);
-            ObtenerSubpermisosEjecucion(idSubpermiso);
-            PanelPermisosAsociados.Update();
+            try
+            {
+                // Obtener el botón que desencadenó el evento y su CommandArgument
+                Button btn = (Button)sender;
+                SubPermiso = btn.CommandArgument;
 
+                // Validar y convertir CommandArgument a entero
+                if (!int.TryParse(SubPermiso, out int idSubpermiso))
+                {
+                    // Manejar el caso donde la conversión falla
+                    throw new ArgumentException("El CommandArgument no es un entero válido.");
+                }
+                                                             
+                // Llamar a los métodos para obtener subpermisos
+                ObtenerSubpermisosCompartidos(idSubpermiso);
+                ObtenerSubpermisosControl(idSubpermiso);
+                ObtenerSubpermisosEjecucion(idSubpermiso);
+
+                // Obtener los permisos sin asignación
+                List<InfoGetEnlacePermisosAsociadoVacio> info = GetPermisosSinAsignacion(idSubpermiso);
+            
+                // Enlazar los datos al control DropDownList
+                CatEnlacesNoAsignados.DataSource = info;                            
+                CatEnlacesNoAsignados.DataTextField = "Enlace";
+                CatEnlacesNoAsignados.DataValueField = "IdEnlace";
+                CatEnlacesNoAsignados.DataBind();
+                CatEnlacesNoAsignados.Items.Insert(0, new ListItem("Selecciona una opción", "0"));
+
+                // Actualizar lista de tipo de usuario
+                ListaTipoUsuario();
+
+            }
+            catch (Exception ex)
+            {
+                
+                Debug.WriteLine("Se ha producido un error: " + ex.Message);
+            }
+                // Actualizar el UpdatePanel
+                PanelPermisos.Update();
+        }
+
+        protected void GetCatalogoAsignacionPermisos(int idSubpermiso)
+        {
+
+            List<InfoGetEnlacePermisosAsociadoVacio> info = GetPermisosSinAsignacion(idSubpermiso);
+            CatEnlacesNoAsignados.DataSource = info;
+            CatEnlacesNoAsignados.DataTextField = "Enlace";
+            CatEnlacesNoAsignados.DataValueField = "IdEnlace";
+            CatEnlacesNoAsignados.DataBind();
+            
         }
         
         protected void btnEditarEnlacesPerfil_Click(object sender, EventArgs e)
@@ -138,6 +353,7 @@ namespace SIPOH
         {
             DataTable data = ObtenerPermisosAsociados(perfil, "E");
             RepeaterGetSubpermisoAsociadoEjecucion.DataSource = data;
+            
             RepeaterGetSubpermisoAsociadoEjecucion.DataBind();
         }
 
@@ -148,8 +364,8 @@ namespace SIPOH
         {
             int Perfil = int.Parse(IdPerfilSelected.Text);
             int IdEnlaceSelected = int.Parse(inputCatenlace.SelectedValue);
-            int IdSubpermiso = 1;
-            bool resul = RegistroEnlaceAsociadoPerfil(Perfil, IdEnlaceSelected, IdSubpermiso);
+            //int IdSubpermiso = 1;
+            bool resul = RegistroEnlaceAsociadoPerfil(Perfil, IdEnlaceSelected);
             if (resul)
             {
                 MensajeExito("Registro de enlace al perfil seleccionado fue correcto.");

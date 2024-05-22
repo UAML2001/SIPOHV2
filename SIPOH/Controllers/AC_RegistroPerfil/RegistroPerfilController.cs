@@ -17,10 +17,23 @@ using System.Threading.Tasks;
 
 public class RegistroPerfilController
 {
-    public class RespuestaRegistroPerfil
+   
+    public class TipoPermiso
     {
-        public bool hayError { get; set; }
-        public string mensaje { get; set; }
+        public string TipoPermisoUsuario { get; set; }
+        public string iconoPermiso { get; set; }
+        public int IdTipoPermisoUsuario { get; set; }
+
+    }
+    public class TipoUsuario
+    {
+        public string Usuario { get; set; }
+        public int IdUsuario { get; set; }
+    }
+    public class InfoGetEnlacePermisosAsociadoVacio
+    {
+        public int IdEnlace { get; set; }
+        public string Enlace { get; set; }
 
     }
     public class DataPerfil
@@ -343,32 +356,41 @@ public class RegistroPerfilController
     }
 
 
-    //Registro subpermisos para ver, editar, eliminar, usuario
-    public static RespuestaRegistroPerfil RegistroSubPermisosAsociados(int IdPerfil,  List<ResultadosInsertDataPermisosAsociados> permisos)
+    //TRAER enlaces con suppermisosasociados no asignados
+    public static List<InfoGetEnlacePermisosAsociadoVacio> GetPermisosSinAsignacion(int IdPerfil)
     {
-        RespuestaRegistroPerfil resultados = new RespuestaRegistroPerfil();
+        List<InfoGetEnlacePermisosAsociadoVacio> resultados = new List<InfoGetEnlacePermisosAsociadoVacio>();
         using (SqlConnection connection  = new ConexionBD().Connection)
         {
             connection.Open();
             try
             {
-                using(SqlCommand command = new SqlCommand("INSERT INTO ", connection))
+                using(SqlCommand command = new SqlCommand("SELECT dbo.P_PermisosAsociados.IdPermiso, dbo.P_CatPermisos.Nombre FROM dbo.P_PermisosAsociados INNER JOIN dbo.P_CatPermisos ON dbo.P_PermisosAsociados.IdPermiso = dbo.P_CatPermisos.IdPermiso WHERE(dbo.P_PermisosAsociados.IdPerfil = @IdPerfil) AND (dbo.P_PermisosAsociados.IdSubpermiso IS NULL)", connection))
                 {
-                    
+                    command.Parameters.Add("@IdPerfil", SqlDbType.Int).Value = IdPerfil;
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            InfoGetEnlacePermisosAsociadoVacio info = new InfoGetEnlacePermisosAsociadoVacio
+                            {
+                                IdEnlace = int.Parse(reader["IdPermiso"].ToString()),
+                                Enlace = reader["Nombre"].ToString()
+                            };
+
+                            // Agregar el objeto a la lista de resultados
+                            resultados.Add(info);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
-            {
-                resultados.hayError = true;
-                resultados.mensaje  = "Error en creacion de perfil.";
-                return resultados;
+            {                               
                 throw new Exception("Error en registro de  sub permisos asociados:  " + ex);
             }
         }
         return resultados;
     }
-    
-    
     
     //funcion para el RegistroEnlaces en P_CatPermiso
     public static ResultadoInsertarPermisos RegistroEnlaces(List<DataPermiso> DataPermisos)
@@ -406,7 +428,7 @@ public class RegistroPerfilController
             return resultados;
     }
     //Agregar enlaces asignados a un perfil en P_PermisosAsociados
-    public static bool RegistroEnlaceAsociadoPerfil(int IdPerfil,int IdPermisoEnlace,int  IdSubpermiso)
+    public static bool RegistroEnlaceAsociadoPerfil(int IdPerfil,int IdPermisoEnlace)
     {
         using(SqlConnection connection = new ConexionBD().Connection)
         {
@@ -428,11 +450,10 @@ public class RegistroPerfilController
                     else
                     {
                         // Si no hay ningún registro que cumpla la condición, avanza y realiza el siguiente procedimiento
-                        using (SqlCommand commandRegistro = new SqlCommand("INSERT INTO P_PermisosAsociados(IdPerfil, IdPermiso, IdSubpermiso )VALUES(@IdPerfil,@IdPermiso, @IdSubpermiso);", connection))
+                        using (SqlCommand commandRegistro = new SqlCommand("INSERT INTO P_PermisosAsociados(IdPerfil, IdPermiso)VALUES(@IdPerfil,@IdPermiso);", connection))
                         {
                             commandRegistro.Parameters.Add("@IdPerfil", SqlDbType.Int).Value = IdPerfil;
-                            commandRegistro.Parameters.Add("@IdPermiso", SqlDbType.Int).Value = IdPermisoEnlace;
-                            commandRegistro.Parameters.Add("@IdSubpermiso", SqlDbType.Int).Value = IdSubpermiso;
+                            commandRegistro.Parameters.Add("@IdPermiso", SqlDbType.Int).Value = IdPermisoEnlace;                            
                             commandRegistro.ExecuteNonQuery();
                             return true;
                         }
@@ -487,7 +508,44 @@ public class RegistroPerfilController
             }
         }
     }
-            
-   
+    public class SubPermisoAsociadoInfo
+    {
+        public bool hasVer { get; set; }
+        public bool hasEditar { get; set; }
+        public bool hasEliminar { get; set; }
+        public bool isNormal { get; set; }
+        public bool isAdministrador { get; set; }
+        public bool isSuperAdministrador { get; set; }
+    }
+        public static int IdSubPermisoInserted;
+
+   public static bool RegistroSubpermisosAsociados(int IdPerfil, int IdPermiso, List<SubPermisoAsociadoInfo> subpermisoAsociado)
+    {
+        using (SqlConnection connection = new ConexionBD().Connection)
+        {
+            connection.Open();
+            using (SqlCommand command = new SqlCommand("INSERT INTO P_SubPermisosAsociados(Ver, Editar, Eliminar, SuperUser, Administrador, Usuario)VALUES(@hasPermisoVer, @hasPermisoEditar, @hasPermisoEliminar, @isSuperUser, @isAdministrador, @isUsuarioNormal); SELECT SCOPE_IDENTITY();", connection))
+            {
+                foreach (var info in subpermisoAsociado)
+                {
+                    command.Parameters.Add("@hasPermisoVer", SqlDbType.Bit).Value = info.hasVer;
+                    command.Parameters.Add("@hasPermisoEditar", SqlDbType.Bit).Value = info.hasEditar;
+                    command.Parameters.Add("@hasPermisoEliminar", SqlDbType.Bit).Value = info.hasEliminar;
+                    command.Parameters.Add("@isSuperUser", SqlDbType.Bit).Value = info.isSuperAdministrador;
+                    command.Parameters.Add("@isAdministrador", SqlDbType.Bit).Value = info.isAdministrador;
+                    command.Parameters.Add("@isUsuarioNormal", SqlDbType.Bit).Value = info.isNormal;
+                    IdSubPermisoInserted = Convert.ToInt32(command.ExecuteScalar());
+                }
+            }
+            using (SqlCommand command = new SqlCommand("UPDATE P_PermisosAsociados SET IdSubpermiso = @SubPermisoSelected WHERE IdPerfil = @IdPerfil AND IdPermiso = @IdEnlace ", connection))
+            {
+                command.Parameters.Add("@IdPerfil", SqlDbType.Int).Value = IdPerfil;
+                command.Parameters.Add("@IdEnlace", SqlDbType.Int).Value = IdPermiso;
+                command.Parameters.Add("@SubPermisoSelected", SqlDbType.Int).Value = IdSubPermisoInserted;
+                command.ExecuteNonQuery();
+            }
+        }
+        return true;
+    }
 
 }
