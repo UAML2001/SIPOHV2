@@ -1,12 +1,11 @@
 ﻿using SIPOH.Controllers.AC_Digitalizacion;
-using SIPOH.ExpedienteDigital.Victimas.CSVictimas;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 
-public class BusquedaVictimas
+public class BusquedaImputado
 {
-    public (string mensaje, DataTable dt) BuscarVictimas(string tipoAsunto, string numeroExpediente)
+    public (string mensaje, DataTable dt) BuscarImputados(string tipoAsunto, string numeroExpediente)
     {
         if (string.IsNullOrWhiteSpace(tipoAsunto) || tipoAsunto == "SO" || string.IsNullOrWhiteSpace(numeroExpediente))
             return ("Por favor, selecciona un asunto válido y proporciona un número de expediente.", null);
@@ -17,7 +16,7 @@ public class BusquedaVictimas
         using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
         {
             conn.Open();
-            using (SqlCommand cmd = new SqlCommand("ConsultarVictimas", conn))
+            using (SqlCommand cmd = new SqlCommand("ConsultarImputados", conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add(new SqlParameter("@TipoAsunto", tipoAsunto));
@@ -34,12 +33,12 @@ public class BusquedaVictimas
                             row.ItemArray = new object[] { reader["IdAsunto"], reader["IdPartes"], reader["APaterno"], reader["AMaterno"], reader["Nombre"], reader["Delitos"], reader["Edad"], reader["Genero"] };
                             dt.Rows.Add(row);
                         }
-                        return ("Se encontraron registros de las víctimas.", dt);
+                        return ("Se encontraron registros de los imputados.", dt);
                     }
                     else
                     {
                         // Si no hay registros, devolvemos la tabla vacía en lugar de null
-                        return ("No se encontraron Víctimas.", dt);
+                        return ("No se encontraron Imputados.", dt);
                     }
                 }
             }

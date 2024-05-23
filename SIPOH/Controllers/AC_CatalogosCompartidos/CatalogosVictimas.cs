@@ -16,14 +16,14 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
             using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT DescripcionTribunal, TipoSexo FROM [SIPOH].[dbo].[P_CatGenero]", conn))
+                using (SqlCommand cmd = new SqlCommand("SELECT DescripcionTribunal, IdSexo FROM [SIPOH].[dbo].[P_CatGenero]", conn))
                 {
                     SqlDataReader dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
                         ListItem listItem = new ListItem();
                         listItem.Text = dr["DescripcionTribunal"].ToString();
-                        listItem.Value = dr["TipoSexo"].ToString();
+                        listItem.Value = dr["IdSexo"].ToString();
                         dropdown.Items.Add(listItem);
                     }
                 }
@@ -204,14 +204,14 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
             using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT [Descripcion Tribunal], [Tipo] FROM [SIPOH].[dbo].[P_CatEstadoCivil]", conn))
+                using (SqlCommand cmd = new SqlCommand("SELECT [Descripcion Tribunal], [Id_EstCivil] FROM [SIPOH].[dbo].[P_CatEstadoCivil]", conn))
                 {
                     SqlDataReader dr = cmd.ExecuteReader();
                     while (dr.Read())
                     {
                         ListItem listItem = new ListItem();
                         listItem.Text = dr["Descripcion Tribunal"].ToString();
-                        listItem.Value = dr["Tipo"].ToString();
+                        listItem.Value = dr["Id_EstCivil"].ToString();
                         dropdown.Items.Add(listItem);
                     }
                 }
@@ -384,7 +384,7 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
             using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
             {
                 conn.Open();
-                using (SqlCommand cmd = new SqlCommand("SELECT Discapacidad FROM [SIPOH].[dbo].[P_CatDiscapacidad] WHERE sub_index = @idDiscapacidad", conn))
+                using (SqlCommand cmd = new SqlCommand("SELECT Discapacidad, IdDiscapacidad FROM [SIPOH].[dbo].[P_CatDiscapacidad] WHERE sub_index = @idDiscapacidad", conn))
                 {
                     cmd.Parameters.AddWithValue("@idDiscapacidad", idDiscapacidad);
                     SqlDataReader dr = cmd.ExecuteReader();
@@ -392,7 +392,7 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
                     {
                         ListItem listItem = new ListItem();
                         listItem.Text = dr["Discapacidad"].ToString();
-                        listItem.Value = dr["Discapacidad"].ToString();
+                        listItem.Value = dr["IdDiscapacidad"].ToString();
                         dropdown.Items.Add(listItem);
                     }
                 }
@@ -471,6 +471,121 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
                         ListItem listItem = new ListItem();
                         listItem.Text = dr["Pregunta"].ToString();
                         listItem.Value = dr["IdPregunta"].ToString();
+                        dropdown.Items.Add(listItem);
+                    }
+                }
+            }
+        }
+
+
+        public void DropdownConsSustancias(DropDownList dropdown)
+        {
+            using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT Sustancias, IdSustancias FROM [SIPOH].[dbo].[P_CatSustancias]", conn))
+                {
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        ListItem listItem = new ListItem();
+                        listItem.Text = dr["Sustancias"].ToString();
+                        listItem.Value = dr["IdSustancias"].ToString();
+                        dropdown.Items.Add(listItem);
+                    }
+                }
+            }
+        }
+
+        public void DropdownCondFamiliar(DropDownList dropdown)
+        {
+            using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT CondicionFamiliar, IdCondFamiliar FROM [SIPOH].[dbo].[P_CatCondicionFamiliar]", conn))
+                {
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        ListItem listItem = new ListItem();
+                        listItem.Text = dr["CondicionFamiliar"].ToString();
+                        listItem.Value = dr["IdCondFamiliar"].ToString();
+                        dropdown.Items.Add(listItem);
+                    }
+                }
+            }
+        }
+
+        public void DropdownEstadoPsico(DropDownList dropdown)
+        {
+            using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT EstadoPsicofisico, IdPsicofisico FROM [SIPOH].[dbo].[P_CatEstadoPsicofisico]", conn))
+                {
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        ListItem listItem = new ListItem();
+                        listItem.Text = dr["EstadoPsicofisico"].ToString();
+                        listItem.Value = dr["IdPsicofisico"].ToString();
+                        dropdown.Items.Add(listItem);
+                    }
+                }
+            }
+        }
+
+        public void DropdownReincidente(DropDownList dropdown)
+        {
+            using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT Reincidente, IdReincidente FROM [SIPOH].[dbo].[P_CatReincidente]", conn))
+                {
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        ListItem listItem = new ListItem();
+                        listItem.Text = dr["Reincidente"].ToString();
+                        listItem.Value = dr["IdReincidente"].ToString();
+                        dropdown.Items.Add(listItem);
+                    }
+                }
+            }
+        }
+
+        public void DropdownDetencion(DropDownList dropdown)
+        {
+            using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT TipoDetencion, IdTipoDetencion FROM [SIPOH].[dbo].[P_CatTipoDetencion]", conn))
+                {
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        ListItem listItem = new ListItem();
+                        listItem.Text = dr["TipoDetencion"].ToString();
+                        listItem.Value = dr["IdTipoDetencion"].ToString();
+                        dropdown.Items.Add(listItem);
+                    }
+                }
+            }
+        }
+
+        public void DropdownOrdenJud(DropDownList dropdown)
+        {
+            using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("SELECT OrdenJudicial, IdOrdenJudicial FROM [SIPOH].[dbo].[P_CatOrdeneJudicial]", conn))
+                {
+                    SqlDataReader dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        ListItem listItem = new ListItem();
+                        listItem.Text = dr["OrdenJudicial"].ToString();
+                        listItem.Value = dr["IdOrdenJudicial"].ToString();
                         dropdown.Items.Add(listItem);
                     }
                 }

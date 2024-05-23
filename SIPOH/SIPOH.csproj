@@ -2185,7 +2185,6 @@
     <Content Include="DigitalizarIniciales.aspx" />
     <Content Include="DigitalizarPosteriores.aspx" />
     <Content Include="Error.aspx" />
-    <Content Include="ExpeDigital.aspx" />
     <Content Include="Externo\BandejaSeguimiento.aspx" />
     <Content Include="Externo\FirmaDocumentos.aspx" />
     <Content Include="Externo\InicialesDigitales.aspx" />
@@ -2194,6 +2193,7 @@
     <Content Include="Externo\PosterioresDigitales.aspx" />
     <Content Include="Externo\RegistroExterno.aspx" />
     <Content Include="Externo\ServicioWeb.asmx" />
+    <Content Include="Imputados.aspx" />
     <Content Include="Inicio.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Estadistica.aspx" />
@@ -2527,6 +2527,7 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="SolicitudCDs.aspx" />
+    <Content Include="Victimas.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Views\ConsignacionElements\CerrarSesion.ascx" />
     <Content Include="Views\ConsultarControl.ascx" />
@@ -2730,6 +2731,10 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="ExpedienteDigital\Imputados\CSImputado\BusquedaImputado.cs" />
+    <Compile Include="ExpedienteDigital\Imputados\CSImputado\InsertarImputado.cs" />
+    <Compile Include="ExpedienteDigital\Imputados\CSImputado\LlenarFormularioTrasConsultaImputados.cs" />
+    <Compile Include="ExpedienteDigital\Imputados\CSImputado\ReiniciarFormularioImputado.cs" />
     <Compile Include="ExpedienteDigital\Victimas\CedulaVictimas.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2739,13 +2744,12 @@
     </Compile>
     <Compile Include="ExpedienteDigital\Victimas\CSVictimas\AgregarDiscapacidad.cs" />
     <Compile Include="ExpedienteDigital\Victimas\CSVictimas\BusquedaVictimas.cs" />
-    <Compile Include="ExpeDigital.aspx.cs">
-      <DependentUpon>ExpeDigital.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ExpeDigital.aspx.designer.cs">
-      <DependentUpon>ExpeDigital.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="ExpedienteDigital\Victimas\CSVictimas\CambioTipoVictima.cs" />
+    <Compile Include="ExpedienteDigital\Victimas\CSVictimas\ConsultarIdAsunto.cs" />
+    <Compile Include="ExpedienteDigital\Victimas\CSVictimas\IdUsuarioPorSesion.cs" />
+    <Compile Include="ExpedienteDigital\Victimas\CSVictimas\InsertarVictima.cs" />
+    <Compile Include="ExpedienteDigital\Victimas\CSVictimas\LlenarFormularioTrasConsulta.cs" />
+    <Compile Include="ExpedienteDigital\Victimas\CSVictimas\ReiniciarFormulario.cs" />
     <Compile Include="Externo\BandejaSeguimiento.aspx.cs">
       <DependentUpon>BandejaSeguimiento.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2807,6 +2811,13 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Firma\Controller.cs" />
+    <Compile Include="Imputados.aspx.cs">
+      <DependentUpon>Imputados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Imputados.aspx.designer.cs">
+      <DependentUpon>Imputados.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Inicio.aspx.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2974,6 +2985,13 @@
     </Compile>
     <Compile Include="SolicitudCDs.aspx.designer.cs">
       <DependentUpon>SolicitudCDs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Victimas.aspx.cs">
+      <DependentUpon>Victimas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Victimas.aspx.designer.cs">
+      <DependentUpon>Victimas.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Consignacion.Master" CodeBehind="ExpeDigital.aspx.cs" Inherits="SIPOH.ExpeDigital" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Consignacion.Master" CodeBehind="Victimas.aspx.cs" Inherits="SIPOH.ExpeDigital" %>
 
 <%@ Register Assembly="System.Web.Extensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" Namespace="System.Web.UI" TagPrefix="asp" %>
 
@@ -108,33 +108,35 @@
                             <div class="scrollable" runat="server" id="TablVicti" style="display:none;">
                                 <div class="mb-2 d-flex justify-content-between align-items-center">
                                     <span class="text-success fw-bold m-2"><i class="bi bi-emoji-frown"></i> Victimas Asociadas: </span>
-                                    <asp:Button ID="Button11" runat="server" CssClass="btn btn-success btn-sm mayusculas" OnClick="Button_Click" Text="➕ Agregar Victima" />
+                                    <asp:Button ID="buscarVicti" runat="server" CssClass="btn btn-success btn-sm mayusculas" OnClick="AgregarVicitmaForm_Click" Text="➕ Agregar Victima" />
                                 </div>
-                                <asp:GridView ID="gvVictimas" CssClass="table table-striped text-center table-hover table-sm" runat="server" AutoGenerateColumns="False" AllowPaging="True" PageSize="3" OnPageIndexChanging="PDigitalizar_PageIndexChanging">
-                                    <Columns>
-                                        <asp:BoundField DataField="APaterno" HeaderText="Apellido Paterno o Razón Social" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
-                                        <asp:BoundField DataField="AMaterno" HeaderText="Apellido Materno" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
-                                        <asp:BoundField DataField="Nombre" HeaderText="Nombre(s)" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
-                                        <asp:BoundField DataField="Delitos" HeaderText="Delito(s) Cometido(s)" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
-                                        <asp:BoundField DataField="Edad" HeaderText="Edad" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
-                                        <asp:BoundField DataField="Genero" HeaderText="Genero" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
-                                        <asp:TemplateField HeaderStyle-CssClass="bg-success text-white" HeaderText="Editar">
-                                            <ItemTemplate>
-                                                <asp:CheckBox ID="chkSelect" runat="server" AutoPostBack="False" onclick="handleCheckboxChange(this);"/>
-                                            </ItemTemplate>
-                                        </asp:TemplateField>
-                                    </Columns>
-                                    <PagerTemplate>
-                                        <asp:Button ID="btnFirst" CssClass="btn btn-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="First" Text=" Primero" />
-                                        <asp:Button ID="btnPrev" CssClass="btn btn-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Prev" Text="⏮️ Anterior" />
-                                        <asp:Button ID="btnNext" CssClass="btn btn-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Next" Text="⏭️ Siguiente" />
-                                        <asp:Button ID="btnLast" CssClass="btn btn-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Last" Text=" Ultimo" />
-                                    </PagerTemplate>
-                                </asp:GridView>
+                                        <asp:GridView ID="gvVictimas" CssClass="table table-striped text-center table-hover table-sm" runat="server" OnRowDataBound="gvVictimas_RowDataBound" AutoGenerateColumns="False" AllowPaging="True" PageSize="3" OnPageIndexChanging="gvVictimas_PageIndexChanging">
+                                            <Columns>
+                                                <asp:BoundField DataField="APaterno" HeaderText="Apellido Paterno o Razón Social" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
+                                                <asp:BoundField DataField="AMaterno" HeaderText="Apellido Materno" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
+                                                <asp:BoundField DataField="Nombre" HeaderText="Nombre(s)" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
+                                                <asp:BoundField DataField="Delitos" HeaderText="Delito(s) Cometido(s)" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
+                                                <asp:BoundField DataField="Edad" HeaderText="Edad" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
+                                                <asp:BoundField DataField="Genero" HeaderText="Genero" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
+                                                <asp:TemplateField HeaderStyle-CssClass="bg-success text-white">
+                                                    <ItemTemplate>
+                                                        <asp:HiddenField Visible="False" ID="hidIdAsunto" runat="server" Value='<%# Eval("IdAsunto") %>' />
+                                                        <asp:HiddenField Visible="False" ID="hidIdPartes" runat="server" Value='<%# Eval("IdPartes") %>' />
+                                                        <asp:CheckBox ID="chkSelect" runat="server" AutoPostBack="True" OnCheckedChanged="chkSelect_CheckedChanged" />
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                            <PagerTemplate>
+                                                <asp:Button ID="btnFirst" CssClass="btn btn-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="First" Text=" Primero" />
+                                                <asp:Button ID="btnPrev" CssClass="btn btn-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Prev" Text="⏮️ Anterior" />
+                                                <asp:Button ID="btnNext" CssClass="btn btn-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Next" Text="⏭️ Siguiente" />
+                                                <asp:Button ID="btnLast" CssClass="btn btn-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Last" Text=" Ultimo" />
+                                            </PagerTemplate>
+                                        </asp:GridView>
                             </div>
 
                             <br />
-
+                          
                             <div id="accVictim" runat="server" style="display: none">
                                 <div class="mb-2">
                                     <br />
@@ -151,6 +153,9 @@
                                             <div class="accordion-body">
                                                 <h5 class="text-secondary mb-4"><b>Datos Personales de la Victima</b></h5>
                                                 <div class="row">
+                                                    <asp:UpdatePanel ID="UpdatePanel6" runat="server">
+                                                    <ContentTemplate>
+                                                        <div class="row">
                                                     <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                         <label for="" class="form-label text-secondary">Apellido Paterno:</label>
                                                         <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Ingrese apellido paterno o razón social" ID="APVic"></asp:TextBox>
@@ -173,7 +178,7 @@
 
                                                     <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                         <label for="fojas1" class="form-label text-secondary">Tipo Victima: </label>
-                                                        <asp:DropDownList ID="TipoVict" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" onchange="habilitarCampos()">
+                                                        <asp:DropDownList ID="TipoVict" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="TipoVict_SelectedIndexChanged">
                                                             <asp:ListItem runat="server" Value="SV" Selected="True" Text="Seleccione el tipo de víctima..."></asp:ListItem>
                                                         </asp:DropDownList>
                                                     </div>
@@ -182,8 +187,8 @@
                                                         <label for="fojas1" class="form-label text-secondary">Clasificacion de Victima: </label>
                                                         <asp:DropDownList ID="ClasifVicti" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
                                                             <asp:ListItem runat="server" Value="CV" Selected="True" Text="Seleccione la clasificacion de la victima..."></asp:ListItem>
-                                                            <asp:ListItem runat="server" Value="DIR" Text="DIRECTA"></asp:ListItem>
-                                                            <asp:ListItem runat="server" Value="IND" Text="INDIRECTA"></asp:ListItem>
+                                                            <asp:ListItem runat="server" Value="1" Text="DIRECTA"></asp:ListItem>
+                                                            <asp:ListItem runat="server" Value="0" Text="INDIRECTA"></asp:ListItem>
                                                         </asp:DropDownList>
                                                     </div>
 
@@ -193,6 +198,7 @@
                                                             <asp:ListItem runat="server" Value="SS" Selected="True" Text="Seleccione el sector..."></asp:ListItem>
                                                             <asp:ListItem runat="server" Value="PUB" Text="PUBLICO"></asp:ListItem>
                                                             <asp:ListItem runat="server" Value="PRI" Text="PRIVADO"></asp:ListItem>
+                                                            <asp:ListItem runat="server" Value="NID" Text="NO IDENTIFICADO"></asp:ListItem>
                                                         </asp:DropDownList>
                                                     </div>
 
@@ -222,6 +228,10 @@
                                                         <label for="" class="form-label text-secondary">Edad:</label>
                                                         <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" Text="0" Type="Number" placeholder="Ingrese la edad de la victima" ID="EdadVicti"></asp:TextBox>
                                                     </div>
+
+                                                        </div>
+                                                    </ContentTemplate>
+                                                        </asp:UpdatePanel>
 
                                                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                                         <ContentTemplate>
@@ -258,11 +268,10 @@
                                                             </div>
                                                      </ContentTemplate>
                                                     </asp:UpdatePanel>
-                                                    </div>
                                                 </div>
                                             </div>
-                </div>
-
+                                        </div>
+                                    </div>
 
 
 
@@ -273,10 +282,11 @@
                                                 </button>
                                             </h2>
                                             <div id="Element2" class="accordion-collapse collapse" data-bs-parent="#AccordionVictimas">
+                                                <asp:UpdatePanel ID="UpdatePanel5" runat="server">
+                                                    <ContentTemplate>
                                                 <div class="accordion-body">
                                                     <h5 class="text-secondary mb-4"><b>Datos Generales de la Victima</b></h5>
-                                                    <div class="row">
-
+                                                            <div class="row">
                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                             <label for="" class="form-label text-secondary">Nacionalidad:</label>
                                                             <asp:DropDownList ID="NacVicti" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
@@ -317,7 +327,7 @@
                                                             </asp:DropDownList>
                                                             <br />
                                                             <label for="" class="form-label text-secondary">¿Habla alguna lengua?:</label>
-                                                            <asp:DropDownList ID="HablLengIndi" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
+                                                            <asp:DropDownList ID="HablLengIndi" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="True" OnSelectedIndexChanged="HabLenIndi_SelectedIndexChanged">
                                                                 <asp:ListItem runat="server" Value="SHL" Selected="True" Text="Seleccione una opción..."></asp:ListItem>
                                                             </asp:DropDownList>
                                                             <br />
@@ -374,9 +384,9 @@
                                                                                 <label for="" class="form-label text-secondary">Cuenta con discapacidad:</label>
                                                                                 <asp:DropDownList ID="CuenDisca" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" OnSelectedIndexChanged="CuenDisca_SelectedIndexChanged" AutoPostBack="true">
                                                                                     <asp:ListItem runat="server" Value="SCD" Selected="True" Text="Seleccione una opción..."></asp:ListItem>
-                                                                                    <asp:ListItem runat="server" Value="S" Text="SI"></asp:ListItem>
-                                                                                    <asp:ListItem runat="server" Value="N" Text="NO"></asp:ListItem>
-                                                                                    <asp:ListItem runat="server" Value="SD" Text="SE DESCONOCE"></asp:ListItem>
+                                                                                    <asp:ListItem runat="server" Value="1" Text="SI"></asp:ListItem>
+                                                                                    <asp:ListItem runat="server" Value="2" Text="NO"></asp:ListItem>
+                                                                                    <asp:ListItem runat="server" Value="3" Text="NO IDENTIFICADO"></asp:ListItem>
                                                                                 </asp:DropDownList>
                                                                             </div>
 
@@ -407,6 +417,20 @@
                                                                                 <asp:GridView ID="gvDiscapacidades" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="GridView1_RowCommand" ShowHeaderWhenEmpty="true">
                                                                                     <Columns>
                                                                                         <asp:BoundField DataField="Discapacidad" HeaderText="Discapacidad" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="mayusculas" />
+                                                                                        <asp:BoundField DataField="IdDiscapacidad" Visible="false" />
+                                                                                        <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
+                                                                                            <ItemTemplate>
+                                                                                                <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" CommandName="Eliminar" CommandArgument='<%# ((GridViewRow)Container).RowIndex %>' />
+                                                                                            </ItemTemplate>
+                                                                                        </asp:TemplateField>
+                                                                                    </Columns>
+                                                                                </asp:GridView>
+
+
+                                                                                <asp:GridView ID="gvDiscapacidades2" Visible="false" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="GridView1_RowCommand" ShowHeaderWhenEmpty="true">
+                                                                                    <Columns>
+                                                                                        <asp:BoundField DataField="DiscapacidadAgregada" HeaderText="Discapacidad" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="mayusculas" />
+                                                                                        <asp:BoundField DataField="IdDiscapacidad" Visible="false" />
                                                                                         <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
                                                                                             <ItemTemplate>
                                                                                                 <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" CommandName="Eliminar" CommandArgument='<%# ((GridViewRow)Container).RowIndex %>' />
@@ -423,7 +447,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                                    </div>
+                                         </div>
+
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
 
 
                                         <div class="accordion-item">
@@ -466,9 +493,6 @@
                                                                         <asp:ListItem runat="server" Value="SM" Selected="True" Text="Seleccione el municipio..."></asp:ListItem>
                                                                     </asp:DropDownList>
                                                                 </div>
-                                                                </div>
-                                                            </ContentTemplate>
-                                                        </asp:UpdatePanel>
 
                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-12 col-xxl-12">
                                                             <label for="" class="form-label text-secondary">Domicilio personal cierto y referencia de ubicacion: </label>
@@ -532,29 +556,28 @@
                                                             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-12 col-xl-12 col-xxl-12">
                                                                 <label for="" class="form-label text-secondary">Datos personales en el desarrollo de la audiencia:</label>
                                                                 <asp:RadioButtonList RepeatDirection="Horizontal" ID="AceptaDatos" runat="server" CssClass="myRadioButtonList">
-                                                                    <asp:ListItem>Acepta la Publicidad</asp:ListItem>
-                                                                    <asp:ListItem>Solicita Reserva</asp:ListItem>
+                                                                    <asp:ListItem Value="PUBLICO">Acepta la Publicidad</asp:ListItem>
+                                                                    <asp:ListItem Value="PRIVADO">Solicita Reserva</asp:ListItem>
                                                                 </asp:RadioButtonList>
                                                             </div>
                                                         </center>
 
                                                     </div>
                                                 </div>
-                                            </div>
+                                                            </ContentTemplate>
+                                                        </asp:UpdatePanel>
+                                                    </div>
                                         </div>
                                     </div>
                                 </div>
                             <br />
-
-                            <center>
-                                <div runat="server" id="btnFinales" class="row" style="display: none">
-                                    <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px;">
-                                        <asp:Button ID="UpVict" runat="server" Text="🔃 Actualizar" CssClass="btn btn-primary btn-sm mayusculas" />
-                                        <asp:Button ID="SvVicti" runat="server" Text="💾 Guardar" CssClass="btn btn-success btn-sm mayusculas" />
-                                        <asp:Button ID="LimpVicti" runat="server" Text="🧹 Limpiar" CssClass="btn btn-danger btn-sm mayusculas" />
-                                    </div>
-                                </div>
-                            </center>
+                                                <center>
+                                                                <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px;">
+                                                                    <asp:Button ID="UpVict" runat="server" Text="🔃 Actualizar" CssClass="btn btn-primary btn-sm mayusculas" />
+                                                                    <asp:Button ID="SvVicti" runat="server" Text="💾 Guardar" CssClass="btn btn-success btn-sm mayusculas" OnClick="SvVicti_Click" />
+                                                                    <asp:Button ID="LimpVicti" runat="server" Text="🧹 Limpiar" CssClass="btn btn-danger btn-sm mayusculas" />
+                                                                </div>
+                                                </center>
 
 
                         </div>
@@ -592,52 +615,18 @@
         }
     </script>
 
-    <script type="text/javascript">
-        function habilitarCampos() {
-            var tipoVictima = document.getElementById('<%= TipoVict.ClientID %>').value;
-        var elementos = [
-            '<%= AMVic.ClientID %>', '<%= NomVic.ClientID %>', '<%= GeneVicti.ClientID %>',
-            '<%= CURPVicti.ClientID %>', '<%= RFCVicti.ClientID %>', '<%= FeNacVic.ClientID %>',
-            '<%= EdadVicti.ClientID %>', '<%= ContiNac.ClientID %>', '<%= PaisNac.ClientID %>',
-            '<%= NacVicti.ClientID %>', '<%= HabLenExtra.ClientID %>', '<%= HablEsp.ClientID %>',
-            '<%= LengIndi.ClientID %>', '<%= CondMigVic.ClientID %>', '<%= CondAlfVic.ClientID %>',
-            '<%= HablLengIndi.ClientID %>', '<%= PuebloIndi.ClientID %>', '<%= EstCivil.ClientID %>',
-            '<%= GradEst.ClientID %>', '<%= OcupaVicti.ClientID %>', '<%= DetaOcupaVic.ClientID %>',
-            ];
-
-            for (var i = 0; i < elementos.length; i++) {
-                document.getElementById(elementos[i]).disabled = tipoVictima !== "PF";
-            }
-        }
-    </script>
-
-
-    <script type="text/javascript">
-        var lastChecked = null;
-
-        function handleCheckboxChange(checkbox) {
-            var row = checkbox.closest('tr');
-            var cells = row.cells;
-            var elements = ['<%= APVic.ClientID %>', '<%= AMVic.ClientID %>', '<%= NomVic.ClientID %>'].map(id => document.getElementById(id));
-        var accVictim = document.getElementById('<%= accVictim.ClientID %>');
-        var btnFinales = document.getElementById('<%= btnFinales.ClientID %>');
-
-            if (lastChecked && lastChecked !== checkbox) {
-                lastChecked.checked = false;
-            }
-
-            elements.forEach((element, index) => {
-                element.value = checkbox.checked ? cells[index].innerText : "";
-                element.disabled = !checkbox.checked;
-            });
-
-            accVictim.style.display = checkbox.checked ? "block" : "none";
-            btnFinales.style.display = checkbox.checked ? "block" : "none";
-
-            lastChecked = checkbox.checked ? checkbox : null;
-        }
-    </script>
-
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $("[id*=gvVictimas] input:checkbox").click(function () {
+                                var selected = $(this).is(":checked");
+                                $("[id*=gvVictimas] input:checkbox").prop("checked", false);
+                                if (selected) {
+                                    $(this).prop("checked", true);
+                                }
+                            });
+                        });
+                    </script>
 
 
 

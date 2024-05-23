@@ -157,6 +157,20 @@
                                 <a class="collapse-item" href="PortadasDigitalizacion.aspx">Portadas</a>
                             </div>
                         </div>
+
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa fa-folder-open"></i>
+                        <span>Expediente Digital</span>
+                    </a>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Expediente Digital</h6>
+                            <a class="collapse-item" href="Victimas.aspx">Victimas</a>
+                            <a class="collapse-item" href="Imputados.aspx">Imputados</a>
+                        </div>
+                    </div>
                     
                     </div>
             <!-- Heading -->
@@ -447,6 +461,8 @@
                              </asp:ContentPlaceHolder>
                             <asp:ContentPlaceHolder ID="ContentRecepcionExpedientes" runat="server">
                              </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentImputados" runat="server">
+                            </asp:ContentPlaceHolder>
                             
                             
                             <!-- Estilos de admin lte agregue para el calendario by brayan -->
