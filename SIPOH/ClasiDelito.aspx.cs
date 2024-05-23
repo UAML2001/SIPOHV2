@@ -103,7 +103,6 @@ namespace SIPOH
                 btnAgregarClasiDelito.Visible = true;
             }
         }
-
         protected void ddDelitos_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idDelito = Convert.ToInt32(ddDelitos.SelectedValue);
@@ -177,34 +176,47 @@ namespace SIPOH
             dt.Columns.Add("Domicilio", typeof(string));
             return dt;
         }
+
         protected void btnBuscarClasiDelito_Click(object sender, EventArgs e)
         {
             string tipoAsunto = ddlTipoAsunto.SelectedValue;
             string numeroAsunto = txtNumeroAsunto.Text;
-            int idJuzgado = 205;
 
-            if (string.IsNullOrWhiteSpace(tipoAsunto) || string.IsNullOrWhiteSpace(numeroAsunto))
+            // Recuperar el ID del juzgado desde la sesión
+            int idJuzgado;
+            if (HttpContext.Current.Session["IDJuzgado"] != null && int.TryParse(HttpContext.Current.Session["IDJuzgado"].ToString(), out idJuzgado))
             {
-                MensajeError("Por favor, selecciona un tipo de asunto e ingresa un número de asunto.");
-                return;
-            }
+                // Continúa con la lógica si el IDJuzgado es válido
+                if (string.IsNullOrWhiteSpace(tipoAsunto) || string.IsNullOrWhiteSpace(numeroAsunto))
+                {
+                    MensajeError("Por favor, selecciona un tipo de asunto e ingresa un número de asunto.");
+                    return;
+                }
 
-            JUC_ClasificacionDelitoController controller = new JUC_ClasificacionDelitoController();
-            DataTable dt = controller.BuscarDelitos(tipoAsunto, numeroAsunto, idJuzgado);
+                JUC_ClasificacionDelitoController controller = new JUC_ClasificacionDelitoController();
+                DataTable dt = controller.BuscarDelitos(tipoAsunto, numeroAsunto, idJuzgado);
 
-            if (dt == null || dt.Rows.Count == 0)
-            {
-                MensajeAdvertencia("No se encontraron resultados para el tipo de asunto y número proporcionados.");
-                GridViewClasificacionDelitos.DataSource = InicializaTablaVaciaDelitos();
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    MensajeAdvertencia("No se encontraron resultados para el tipo de asunto y número proporcionados.");
+                    GridViewClasificacionDelitos.DataSource = InicializaTablaVaciaDelitos();
+                    GridViewClasificacionDelitos.DataBind();
+                    return;
+                }
+
+                GridViewClasificacionDelitos.DataSource = dt;
                 GridViewClasificacionDelitos.DataBind();
-                return;
+                MensajeExito("Delitos encontrados con éxito.");
+                divCheckReclasificar.Style["display"] = "none";
             }
-
-            GridViewClasificacionDelitos.DataSource = dt;
-            GridViewClasificacionDelitos.DataBind();
-            MensajeExito("Delitos encontrados con éxito.");
-            divCheckReclasificar.Style["display"] = "none";
+            else
+            {
+                MensajeError("No se ha podido identificar el juzgado correspondiente. Por favor, inicie sesión nuevamente.");
+            }
         }
+
+
+
         private void SeleccionarTipoPersecucion(string tipoPersecucion)
         {
             rbQuerella.Checked = false;
@@ -337,7 +349,8 @@ namespace SIPOH
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine("Error en la selección del GridView: " + ex.Message);
-                MensajeError("Error al actualizar la selección: " + ex.Message);
+                //MensajeError("Error al actualizar la selección: " + ex.Message);
+                MensajeAdvertencia("Hay datos vacios en la tabla, te recomendamos actualizar el delito con su información");
                 divAgregarClasificacion.Style["display"] = "none";
             }
         }
