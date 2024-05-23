@@ -2683,6 +2683,7 @@
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatCalificacionController.cs" />
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatClasificacionController.cs" />
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatConcursoController.cs" />
+    <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatDelitoDetalleController.cs" />
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatDelitosController.cs" />
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatElementosComisionController.cs" />
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatFormaAccionController.cs" />
@@ -3180,7 +3181,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\JUC_CatDelitos\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

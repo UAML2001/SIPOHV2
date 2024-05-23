@@ -124,6 +124,27 @@ namespace SIPOH.Controllers.AC_JefeUnidadCausa
                 ddl.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
             }
 
+            public void LoadModalidadPorIdDelDetalle(DropDownList ddl, int idDelito, int? idDelDetalle)
+            {
+                var detalles = JUC_CatDelitoDetalleController.GetDelitoDetallesPorId(idDelito, idDelDetalle);
+                ddl.Items.Clear();  // Limpia primero el DropDownList para asegurar que no haya elementos residuales.
+
+                if (detalles != null && detalles.Count > 0)
+                {
+                    ddl.DataSource = detalles;
+                    ddl.DataTextField = "DelitoDetalle";
+                    ddl.DataValueField = "IdDelDetalle";
+                    ddl.DataBind();
+                }
+
+                // Insertar la opción "-- SELECCIONAR --" al principio independientemente de si se recuperan datos o no
+                ddl.Items.Insert(0, new ListItem("-- SELECCIONAR --", "0"));
+                ddl.SelectedIndex = 0; // Asegúrate de que la opción predeterminada esté seleccionada por defecto.
+            }
+
+
+
+
             //
         }
         //

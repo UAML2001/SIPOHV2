@@ -87,6 +87,33 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.GridView GridViewClasificacionDelitos;
 
         /// <summary>
+        /// Control divCheckReclasificar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCheckReclasificar;
+
+        /// <summary>
+        /// Control reclasificacionSi.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox reclasificacionSi;
+
+        /// <summary>
+        /// Control divFechaReclasificacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFechaReclasificacion;
+
+        /// <summary>
         /// Control FechaReclasificacion.
         /// </summary>
         /// <remarks>
@@ -114,13 +141,13 @@ namespace SIPOH
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divModalidad;
 
         /// <summary>
-        /// Control DropDownList1.
+        /// Control ddlModDelito.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList1;
+        protected global::System.Web.UI.WebControls.DropDownList ddlModDelito;
 
         /// <summary>
         /// Control divAgregarClasificacion.
@@ -132,31 +159,49 @@ namespace SIPOH
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAgregarClasificacion;
 
         /// <summary>
-        /// Control RadioButton3.
+        /// Control rbQuerella.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RadioButton3;
+        protected global::System.Web.UI.WebControls.RadioButton rbQuerella;
 
         /// <summary>
-        /// Control RadioButton1.
+        /// Control rbDenuncia.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RadioButton1;
+        protected global::System.Web.UI.WebControls.RadioButton rbDenuncia;
 
         /// <summary>
-        /// Control RadioButton2.
+        /// Control rbNoIdentificado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton RadioButton2;
+        protected global::System.Web.UI.WebControls.RadioButton rbNoIdentificado;
+
+        /// <summary>
+        /// Control checkNoIdentificado.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox checkNoIdentificado;
+
+        /// <summary>
+        /// Control FechaDelito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox FechaDelito;
 
         /// <summary>
         /// Control ddlCatMunicipios.
@@ -168,13 +213,13 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.DropDownList ddlCatMunicipios;
 
         /// <summary>
-        /// Control TextBox1.
+        /// Control txtLocalidad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TextBox1;
+        protected global::System.Web.UI.WebControls.TextBox txtLocalidad;
 
         /// <summary>
         /// Control ddlGradoConsumacion.
@@ -256,15 +301,6 @@ namespace SIPOH
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnGuardarClasiDeli;
-
-        /// <summary>
-        /// Control btnDeleteClasiDeli.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDeleteClasiDeli;
 
         /// <summary>
         /// Control Button1.
