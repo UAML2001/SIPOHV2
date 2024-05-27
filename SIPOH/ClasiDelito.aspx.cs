@@ -176,9 +176,12 @@ namespace SIPOH
             dt.Columns.Add("Domicilio", typeof(string));
             return dt;
         }
-
         protected void btnBuscarClasiDelito_Click(object sender, EventArgs e)
         {
+            Limpiar();
+            divFechaReclasificacion.Style["display"] = "none";
+            divCheckReclasificar.Style["display"] = "none";
+            divAgregarClasificacion.Style["display"] = "none";
             string tipoAsunto = ddlTipoAsunto.SelectedValue;
             string numeroAsunto = txtNumeroAsunto.Text;
 
@@ -217,6 +220,106 @@ namespace SIPOH
 
 
 
+        protected void GridViewClasificacionDelitos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ViewState["SelectedRowIndex"] != null)
+                {
+                    int previousIndex = (int)ViewState["SelectedRowIndex"];
+                    if (previousIndex > -1 && previousIndex < GridViewClasificacionDelitos.Rows.Count)
+                    {
+                        GridViewClasificacionDelitos.Rows[previousIndex].CssClass = "";
+                    }
+                }
+                divCheckReclasificar.Style["display"] = "block";
+                GridViewRow row = GridViewClasificacionDelitos.SelectedRow;
+                if (row != null)
+                {
+                    row.CssClass = "table-success";
+                    ViewState["SelectedRowIndex"] = row.RowIndex;
+
+                    // Carga detalles del delito seleccionado
+                    int idDeliAsunto = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDeliAsunto"]);
+                    JUC_CatDelitosController controller = new JUC_CatDelitosController();
+                    var delito = JUC_CatDelitosController.GetDelitoByDeliAsunto(idDeliAsunto);
+                    if (delito != null)
+                    {
+                        controller.LoadDelitoByDeliAsunto(ddDelitos, idDeliAsunto);
+                        ddDelitos.Enabled = true;
+                        ddDelitos.SelectedValue = delito.IdDelito.ToString();
+
+                        // Manejo específico para delitos con IdDelito 405
+                        if (delito.IdDelito == 405)
+                        {
+                            ddlModDelito.Visible = true;
+                            divModalidad.Style["display"] = "block";
+                            int idDelDetalle = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDelDetalle"] ?? 0);
+                            CargarCatalogos cargarCatalogos = new CargarCatalogos();
+                            cargarCatalogos.LoadModalidadPorIdDelDetalle(ddlModDelito, delito.IdDelito, idDelDetalle);
+                            ddlModDelito.SelectedValue = idDelDetalle.ToString();
+                        }
+                        else
+                        {
+                            ddlModDelito.Visible = false;
+                            divModalidad.Style["display"] = "none";
+                        }
+                    }
+
+                    // Verificar si hay datos esenciales vacíos
+                    if (GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdMunicipio"] == DBNull.Value ||
+                        GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Persecucion"] == DBNull.Value)
+                    {
+                        MensajeAdvertencia("Hay datos vacíos en la tabla, te recomendamos actualizar el delito con su información");
+                        divAgregarClasificacion.Style["display"] = "block";
+                        return;
+                    }
+
+                    // Actualización de DropDownList y detalles de localización
+                    UpdateDropDownLists(row);
+                    SetLocationDetails(row);
+                    string tipoPersecucion = GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Persecucion"].ToString();
+                    SeleccionarTipoPersecucion(tipoPersecucion);
+                    divAgregarClasificacion.Style["display"] = "block";
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("Error en la selección del GridView: " + ex.Message);
+                MensajeError("Error al actualizar la selección: " + ex.Message);
+                divAgregarClasificacion.Style["display"] = "none";
+            }
+        }
+        //Actualiza los dropdown 
+        private void UpdateDropDownLists(GridViewRow row)
+        {
+            SetDropDownValue(ddlCatMunicipios, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdMunicipio"]));
+            SetDropDownValue(ddlGradoConsumacion, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatConsumacion"]));
+            SetDropDownValue(ddlConcurso, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatConcurso"]));
+            SetDropDownValue(ddlFormaAccion, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatAccion"]));
+            SetDropDownValue(ddlCalificacion, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatCalificacion"]));
+            SetDropDownValue(ddlOrdenResultado, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatClasificacion"]));
+            SetDropDownValue(ddlComision, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatComision"]));
+            SetDropDownValue(ddlFormaComision, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatElemComision"]));
+            SetDropDownValue(ddlModalidad, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatModalidad"]));
+        }
+        //Agrega un valor a el item de un dll por parametro
+        private void SetDropDownValue(DropDownList ddl, int value)
+        {
+            if (ddl.Items.FindByValue(value.ToString()) != null)
+            {
+                ddl.SelectedValue = value.ToString();
+            }
+        }
+        //Actualiza los campos de texto relacionados con la localización y fecha del delito basado en la fila seleccionada del GridView.
+        private void SetLocationDetails(GridViewRow row)
+        {
+            string fechaDelito = Convert.ToDateTime(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["FeDelito"]).ToString("yyyy-MM-dd");
+            string domicilio = GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Domicilio"].ToString();
+            txtLocalidad.Text = domicilio;
+            FechaDelito.Text = fechaDelito;
+        }
+        //Configura el estado de los radio buttons relacionados con el tipo de persecución del delito.
         private void SeleccionarTipoPersecucion(string tipoPersecucion)
         {
             rbQuerella.Checked = false;
@@ -234,128 +337,9 @@ namespace SIPOH
                     rbNoIdentificado.Checked = true;
                     break;
                 default:
-                    // En caso de que el valor no coincida, no se selecciona ningún RadioButton
                     break;
             }
         }
-        protected void GridViewClasificacionDelitos_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (ViewState["SelectedRowIndex"] != null)
-                {
-                    int previousIndex = (int)ViewState["SelectedRowIndex"];
-                    if (previousIndex > -1 && previousIndex < GridViewClasificacionDelitos.Rows.Count)
-                    {
-                        GridViewClasificacionDelitos.Rows[previousIndex].CssClass = "";
-                        
-                    }
-                }
-                divCheckReclasificar.Style["display"] = "block";
-                GridViewRow row = GridViewClasificacionDelitos.SelectedRow;
-
-                if (row != null)
-                {
-                    row.CssClass = "table-success";
-                    ViewState["SelectedRowIndex"] = row.RowIndex;
-                    int idDeliAsunto = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDeliAsunto"]);
-                    int idDelDetalle = 0;
-                    if (GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDelDetalle"] != DBNull.Value)
-                    {
-                        idDelDetalle = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDelDetalle"]);
-                    }
-                    int idMunicipio = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdMunicipio"]);
-                    if (ddlCatMunicipios.Items.FindByValue(idMunicipio.ToString()) != null)
-                    {
-                        ddlCatMunicipios.SelectedValue = idMunicipio.ToString();
-                    }
-                    int idCatConsumacion = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatConsumacion"]);
-                    if (ddlGradoConsumacion.Items.FindByValue(idCatConsumacion.ToString()) != null)
-                    {
-                        ddlGradoConsumacion.SelectedValue = idCatConsumacion.ToString();
-                    }
-                    int idCatConcurso = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatConcurso"]);
-                    if (ddlConcurso.Items.FindByValue(idCatConcurso.ToString()) != null)
-                    {
-                        ddlConcurso.SelectedValue = idCatConcurso.ToString();
-                    }
-                    int idCatFormaAccion = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatAccion"]);
-                    if (ddlFormaAccion.Items.FindByValue(idCatFormaAccion.ToString()) != null)
-                    {
-                        ddlFormaAccion.SelectedValue = idCatFormaAccion.ToString();
-                    }
-                    int idCatCalificacion = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatCalificacion"]);
-                    if (ddlCalificacion.Items.FindByValue(idCatCalificacion.ToString()) != null)
-                    {
-                        ddlCalificacion.SelectedValue = idCatCalificacion.ToString();
-                    }
-                    int idCatOrdenResult = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatClasificacion"]);
-                    if (ddlOrdenResultado.Items.FindByValue(idCatOrdenResult.ToString()) != null)
-                    {
-                        ddlOrdenResultado.SelectedValue = idCatOrdenResult.ToString();
-                    }
-                    int idCatComision = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatComision"]);
-                    if (ddlComision.Items.FindByValue(idCatComision.ToString()) != null)
-                    {
-                        ddlComision.SelectedValue = idCatComision.ToString();
-                    }
-                    int idCatFormaComision = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatElemComision"]);
-                    if (ddlFormaComision.Items.FindByValue(idCatFormaComision.ToString()) != null)
-                    {
-                        ddlFormaComision.SelectedValue = idCatFormaComision.ToString();
-                    }
-                    int idCatModalidad = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatModalidad"]);
-                    if (ddlModalidad.Items.FindByValue(idCatModalidad.ToString()) != null)
-                    {
-                        ddlModalidad.SelectedValue = idCatModalidad.ToString();
-                    }
-                    string tipoPersecucion = GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Persecucion"].ToString();
-                    string fechaDelito = Convert.ToDateTime(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["FeDelito"]).ToString("yyyy-MM-dd");
-                    string domicilio = GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Domicilio"].ToString();
-                    txtLocalidad.Text = domicilio;
-                    System.Diagnostics.Debug.WriteLine("IdDeliAsunto: " + idDeliAsunto);
-                    System.Diagnostics.Debug.WriteLine("IdDelDetalle: " + idDelDetalle);
-                    System.Diagnostics.Debug.WriteLine("TipoPersecucion: " + tipoPersecucion);
-                    System.Diagnostics.Debug.WriteLine("IdMunicipio: " + idMunicipio);
-                    divAgregarClasificacion.Style["display"] = "block";
-                    FechaDelito.Text = fechaDelito;
-                    JUC_CatDelitosController controller = new JUC_CatDelitosController();
-                    var delito = JUC_CatDelitosController.GetDelitoByDeliAsunto(idDeliAsunto);
-                    if (delito != null)
-                    {
-
-                        controller.LoadDelitoByDeliAsunto(ddDelitos, idDeliAsunto);
-                        ddDelitos.Enabled = true;
-                        ddDelitos.SelectedValue = delito.IdDelito.ToString();
-                        System.Diagnostics.Debug.WriteLine("Delito cargado en ddDelitos");
-                        if (delito.IdDelito == 405)
-                        {
-                            ddlModDelito.Visible = true;
-                            divModalidad.Style["display"] = "block";
-                            CargarCatalogos cargarCatalogos = new CargarCatalogos();
-                            cargarCatalogos.LoadModalidadPorIdDelDetalle(ddlModDelito, delito.IdDelito, idDelDetalle);
-                            ddlModDelito.SelectedValue = GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDelDetalle"].ToString();
-                        }
-                        else
-                        {
-                            ddlModDelito.Visible = false;
-                            divModalidad.Style["display"] = "none";
-
-                        }
-                    }
-                    SeleccionarTipoPersecucion(tipoPersecucion);
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine("Error en la selección del GridView: " + ex.Message);
-                //MensajeError("Error al actualizar la selección: " + ex.Message);
-                MensajeAdvertencia("Hay datos vacios en la tabla, te recomendamos actualizar el delito con su información");
-                divAgregarClasificacion.Style["display"] = "none";
-            }
-        }
-
- 
 
         //
     }

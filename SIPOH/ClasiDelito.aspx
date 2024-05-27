@@ -48,7 +48,7 @@
                                             <div class="mb-5 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                 <label class="form-label text-secondary">Número</label>
                                                 <div class="input-group">
-                                                    <asp:TextBox runat="server" type="text" ID="txtNumeroAsunto" class="form-control form-control-sm mayusculas" />
+                                                    <asp:TextBox runat="server" type="text" ID="txtNumeroAsunto" class="form-control form-control-sm mayusculas" onblur="padLeadingZeros(this)" />
                                                     <div class="input-group-append">
                                                         <asp:Button ID="btnBuscarClasiDelito" runat="server" Text="Buscar"
                                                             CssClass="btn btn-outline-primary btn-sm ml-2" OnClick="btnBuscarClasiDelito_Click" />
