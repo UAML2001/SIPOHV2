@@ -126,9 +126,9 @@ namespace SIPOH
         protected void Limpiar()
         {
             DropDownList[] dropdowns = new DropDownList[] {
-            ddlModDelito, ddlCatMunicipios, ddlGradoConsumacion, ddlConcurso,
-            ddlFormaAccion, ddlCalificacion, ddlOrdenResultado,
-            ddlComision, ddlFormaComision, ddlModalidad, ddlModDelito
+                ddlModDelito, ddlCatMunicipios, ddlGradoConsumacion, ddlConcurso,
+                ddlFormaAccion, ddlCalificacion, ddlOrdenResultado,
+                ddlComision, ddlFormaComision, ddlModalidad, ddlModDelito
             };
             foreach (var ddl in dropdowns)
             {
@@ -145,7 +145,19 @@ namespace SIPOH
             CargarCatalogos cargarCatalogos = new CargarCatalogos();
             cargarCatalogos.LoadDelitos(ddDelitos);
             FechaDelito.Text = "";
+
+            // Limpiar la selección del GridView usando CSS
+            if (ViewState["SelectedRowIndex"] != null)
+            {
+                int previousIndex = (int)ViewState["SelectedRowIndex"];
+                if (previousIndex > -1 && previousIndex < GridViewClasificacionDelitos.Rows.Count)
+                {
+                    GridViewClasificacionDelitos.Rows[previousIndex].CssClass = "";
+                }
+                ViewState["SelectedRowIndex"] = -1; // Resetear el índice seleccionado
+            }
         }
+
         protected void btnAgregarClasiDelito_Click(object sender, EventArgs e)
         {
             if (GridViewClasificacionDelitos.Rows.Count == 0)
@@ -153,10 +165,10 @@ namespace SIPOH
                 MensajeAdvertencia("Necesitas buscar un asunto para poder agregar más delitos.");
                 return;
             }
+            Limpiar();
             divAgregarClasificacion.Style["display"] = "block";
             divCheckReclasificar.Style["display"] = "none";
             divFechaReclasificacion.Style["display"] = "none";
-            Limpiar();
         }
         private DataTable InicializaTablaVaciaDelitos()
         {
@@ -179,12 +191,12 @@ namespace SIPOH
         protected void btnBuscarClasiDelito_Click(object sender, EventArgs e)
         {
             Limpiar();
+            ddDelitos.Enabled = false;
             divFechaReclasificacion.Style["display"] = "none";
             divCheckReclasificar.Style["display"] = "none";
             divAgregarClasificacion.Style["display"] = "none";
             string tipoAsunto = ddlTipoAsunto.SelectedValue;
             string numeroAsunto = txtNumeroAsunto.Text;
-
             // Recuperar el ID del juzgado desde la sesión
             int idJuzgado;
             if (HttpContext.Current.Session["IDJuzgado"] != null && int.TryParse(HttpContext.Current.Session["IDJuzgado"].ToString(), out idJuzgado))
@@ -195,7 +207,6 @@ namespace SIPOH
                     MensajeError("Por favor, selecciona un tipo de asunto e ingresa un número de asunto.");
                     return;
                 }
-
                 JUC_ClasificacionDelitoController controller = new JUC_ClasificacionDelitoController();
                 DataTable dt = controller.BuscarDelitos(tipoAsunto, numeroAsunto, idJuzgado);
 
@@ -206,7 +217,6 @@ namespace SIPOH
                     GridViewClasificacionDelitos.DataBind();
                     return;
                 }
-
                 GridViewClasificacionDelitos.DataSource = dt;
                 GridViewClasificacionDelitos.DataBind();
                 MensajeExito("Delitos encontrados con éxito.");
@@ -217,9 +227,6 @@ namespace SIPOH
                 MensajeError("No se ha podido identificar el juzgado correspondiente. Por favor, inicie sesión nuevamente.");
             }
         }
-
-
-
         protected void GridViewClasificacionDelitos_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -238,7 +245,6 @@ namespace SIPOH
                 {
                     row.CssClass = "table-success";
                     ViewState["SelectedRowIndex"] = row.RowIndex;
-
                     // Carga detalles del delito seleccionado
                     int idDeliAsunto = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDeliAsunto"]);
                     JUC_CatDelitosController controller = new JUC_CatDelitosController();
@@ -248,7 +254,6 @@ namespace SIPOH
                         controller.LoadDelitoByDeliAsunto(ddDelitos, idDeliAsunto);
                         ddDelitos.Enabled = true;
                         ddDelitos.SelectedValue = delito.IdDelito.ToString();
-
                         // Manejo específico para delitos con IdDelito 405
                         if (delito.IdDelito == 405)
                         {
@@ -265,7 +270,6 @@ namespace SIPOH
                             divModalidad.Style["display"] = "none";
                         }
                     }
-
                     // Verificar si hay datos esenciales vacíos
                     if (GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdMunicipio"] == DBNull.Value ||
                         GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Persecucion"] == DBNull.Value)
@@ -274,7 +278,6 @@ namespace SIPOH
                         divAgregarClasificacion.Style["display"] = "block";
                         return;
                     }
-
                     // Actualización de DropDownList y detalles de localización
                     UpdateDropDownLists(row);
                     SetLocationDetails(row);
@@ -340,7 +343,6 @@ namespace SIPOH
                     break;
             }
         }
-
         //
     }
 }

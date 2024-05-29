@@ -242,7 +242,7 @@
                                             <p></p>
                                             <div class="row justify-content-md-center">
                                                 <div class="col col-lg-2">
-                                                    <asp:Button ID="btnGuardarClasiDeli" runat="server" Text="Guardar" CssClass="btn btn-sm btn-outline-primary" />
+                                                    <asp:Button ID="btnGuardarClasiDeli" runat="server" Text="Guardar o Modificar" CssClass="btn btn-sm btn-outline-primary" />
                                                 </div>
                                                 <div class="col col-lg-2">
                                                     <asp:Button ID="Button1" runat="server" Text="Eliminar" CssClass="btn btn-sm btn-outline-danger" />
