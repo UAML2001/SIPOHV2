@@ -21,14 +21,14 @@ namespace SIPOH.Views
         public string Promovente { get; set; }
         public string Digitalizado { get; set; }
         public string TipoPromocion { get; set; }
-        public string FechaRecepcion { get; set; }
+        public DateTime FechaRecepcion { get; set; }
         public string Tipo { get; set; }
         public DateTime FechaIngreso { get; set; }
         //MORE
         public int IdActividad { get; set; }
         
 
-        public string FeAsunto { get; set; }
+        public DateTime FeAsunto { get; set; }
         
         
         public string EstadoPromocion { get; set; }
@@ -99,7 +99,7 @@ namespace SIPOH.Views
             try
             {
                 string promovente = inputPromovente.Text;
-                string fechaCaptura = inputFechaRecepcion.Text;
+                DateTime fechaCaptura = DateTime.Parse(inputFechaRecepcion.Text);
                 string Digitalizado;
 
                 if (Session["IdAsuntoPromocion"] == null || string.IsNullOrEmpty(Session["IdAsuntoPromocion"].ToString()))
@@ -109,7 +109,7 @@ namespace SIPOH.Views
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastError", script, true);
                     return;
                 }
-                if (string.IsNullOrEmpty(promovente) || string.IsNullOrEmpty(fechaCaptura))
+                if (string.IsNullOrEmpty(promovente) || fechaCaptura == DateTime.MinValue)
                 {
                     List<string> camposFaltantes = new List<string>();
 
@@ -118,7 +118,7 @@ namespace SIPOH.Views
                         camposFaltantes.Add("promovente");
                     }
 
-                    if (string.IsNullOrEmpty(fechaCaptura))
+                    if (fechaCaptura == DateTime.MinValue)
                     {
                         camposFaltantes.Add("fecha");
                     }

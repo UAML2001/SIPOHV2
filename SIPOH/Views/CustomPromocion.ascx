@@ -187,7 +187,7 @@
                     
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                         <label for="inputFechaRecepcion" class="form-label text-secondary"><b>Fecha de Recepción:</b></label>                                        
-                        <asp:TextBox runat="server" ID="inputFechaRecepcion" CssClass="form-control form-control-sm" TextMode="Date" onblur="validarFecha()"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="inputFechaRecepcion" CssClass="form-control form-control-sm" TextMode="DateTimeLocal" onblur="validarFecha()"></asp:TextBox>
                     </div>
                 </div>
 

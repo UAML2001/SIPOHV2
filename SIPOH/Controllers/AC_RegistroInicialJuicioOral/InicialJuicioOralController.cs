@@ -1,4 +1,5 @@
 ﻿using DatabaseConnection;
+using SIPOH.Controllers.AC_Digitalizacion;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -223,8 +224,8 @@ namespace SIPOH.Controllers.AC_RegistroInicialJuicioOral
             }
             return resultados;
         }
-        
 
+        public static int Equipo;
 
         public static DatosJO InsertJuicioOral(List<DataInsertJuicioOral> objetoDataJuicioOral, List<DataRegistroAnexos> Anexos, List<DataRelacionesVI> Partes)
         {   
@@ -278,6 +279,7 @@ namespace SIPOH.Controllers.AC_RegistroInicialJuicioOral
                                         
                         try
                         {
+                           
                             using (SqlCommand commandConsultaNumero = new SqlCommand("AC_verificar_disponibilidad_folio_en_PAsuntoJO", connection, transaction))
                             {
                                 commandConsultaNumero.Parameters.AddWithValue("@NuevoNumero", infoInsertJO.NumeroJOAsignado);
@@ -329,6 +331,24 @@ namespace SIPOH.Controllers.AC_RegistroInicialJuicioOral
 
                         try
                         {
+                            //Asignacion carga de trabjo
+                            using (SqlConnection Connection = new ConexionBD().Connection)
+                            {
+                                using (SqlCommand command = new SqlCommand("AC_AsignacionCargaTrabajo", connection, transaction))
+                                {
+                                    command.Parameters.Add("@IdJuzgado", SqlDbType.Int).Value = DataInsertJuicioOral.dIdJuzgado;
+                                    command.Parameters.Add("@TipoAsunto", SqlDbType.VarChar).Value = DataInsertJuicioOral.dTipoAsunto.ToUpper();
+                                    command.CommandType = CommandType.StoredProcedure;
+                                    using (SqlDataReader reader = command.ExecuteReader())
+                                    {
+                                        while (reader.Read())
+                                        {
+                                            Equipo = int.Parse(reader["Equipo"].ToString());
+
+                                        }
+                                    }
+                                }
+                            }
                             //Inicio de insert en JO: Tabla P_Asunto
                             using (SqlCommand commandIn = new SqlCommand("AC_InsertarInicial", connection, transaction))
                             {
@@ -349,6 +369,7 @@ namespace SIPOH.Controllers.AC_RegistroInicialJuicioOral
                                 commandIn.Parameters.AddWithValue("@IdAsunto", ParameterDirection.Output);
                                 commandIn.Parameters.AddWithValue("@NumCausa", DataInsertJuicioOral.NumCausa);
                                 commandIn.Parameters.AddWithValue("@IdAsuntoCau", DataInsertJuicioOral.IdAsuntoCausa);
+                                commandIn.Parameters.AddWithValue("@Equipo", Equipo);
 
                                 commandIn.CommandType = CommandType.StoredProcedure;
 
@@ -446,6 +467,7 @@ namespace SIPOH.Controllers.AC_RegistroInicialJuicioOral
                                 commandTrayecto.Parameters.Add("@FeAsunto", SqlDbType.VarChar).Value = DataInsertJuicioOral.dFeCaptura;
                                 commandTrayecto.Parameters.Add("@Tipo", SqlDbType.VarChar).Value = DataInsertJuicioOral.dtipo.ToUpper();
                                 commandTrayecto.Parameters.Add("@Estado", SqlDbType.VarChar).Value = DataInsertJuicioOral.dEstado.ToUpper();
+                                commandTrayecto.Parameters.Add("@IdEquipo", SqlDbType.Int).Value = Equipo;
                                 commandTrayecto.CommandType = CommandType.StoredProcedure;
                                 commandTrayecto.ExecuteNonQuery();
                             }

@@ -84,8 +84,6 @@ namespace SIPOH.Views
                 //Session["NombresDelitos"] = new List<string>();
                 Session["Anexos"] = new List<Anexos>();
 
-                
-
                 CleanEtiquetaFormImputado();
                 CleanEtiquetaFormAnexo();
                 CleanEtiquetaFormDelito();
@@ -285,6 +283,7 @@ namespace SIPOH.Views
 
         protected void inputTipoAsunto_SelectedIndexChanged(object sender, EventArgs e)
         {
+            TicketDiv.Style["display"] = "none";
             string valorSeleccionado = inputTipoAsunto.SelectedValue;
 
             // Limpia el DropDownList antes de agregar nuevas opciones
@@ -635,7 +634,7 @@ namespace SIPOH.Views
             string Prioridad = inputPrioridad.SelectedValue;
             string Fojas = inputNumeroFojas.Text;
             string IdAudiencia = inputRadicacion.SelectedValue;
-            string FeIngreso = inputFechaRecepcion.Text;
+            DateTime FeIngreso = DateTime.Parse(inputFechaRecepcion.Text);
             string NUC = inputNUC.Text;
 
             camposFaltantes = new string[]
@@ -647,8 +646,8 @@ namespace SIPOH.Views
         string.IsNullOrWhiteSpace(Prioridad) ? "Prioridad" : "",
         string.IsNullOrWhiteSpace(Fojas) ? "Número de Fojas" : "",
         string.IsNullOrWhiteSpace(IdAudiencia) ? "Tipo de solicitud" : "",
-        string.IsNullOrWhiteSpace(FeIngreso) ? "Fecha de Ingreso" : "",
-        string.IsNullOrWhiteSpace(NUC) ? "NUC" : "",
+        FeIngreso == DateTime.MinValue ? "Fecha de Ingreso" : "",
+            string.IsNullOrWhiteSpace(NUC) ? "NUC" : "",
             };
 
             return camposFaltantes.Any(campo => !string.IsNullOrWhiteSpace(campo));
@@ -693,10 +692,10 @@ namespace SIPOH.Views
                 if (Session["IdSolicitudBuzon"] != null)
                 {
                     string estatus = "A";
-                    actividad = 5;
+                    actividad = 3;
                     Digitalizado = "S";
                     int idSolicitudBuzon = int.Parse(Session["IdSolicitudBuzon"].ToString());
-                    transaccionExitosa = RegistroIniciales.SendRegistroIniciales(fechaActual, actividad, inputFechaRecepcion.Text, tipoAsunto, Digitalizado, inputRadicacion.SelectedValue, observaciones, quienIngresa, mp, prioridad, inputNumeroFojas.Text, tipoRadicacion, inputNUC.Text, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
+                    transaccionExitosa = RegistroIniciales.SendRegistroIniciales(fechaActual, actividad, DateTime.Parse(inputFechaRecepcion.Text), tipoAsunto, Digitalizado, inputRadicacion.SelectedValue, observaciones, quienIngresa, mp, prioridad, inputNumeroFojas.Text, tipoRadicacion, inputNUC.Text, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
                     bool result = RegistroIniciales.UpdateBuzonSalida(idSolicitudBuzon, fechaActual, estatus);
 
                     mensaje = result ? "Se actualizó correctamente la solicitud de buzón." : "Problemas al actualizar el buzón de salida.";
@@ -706,7 +705,7 @@ namespace SIPOH.Views
                 {
                     actividad = 1;
                     Digitalizado = "N";
-                    transaccionExitosa = RegistroIniciales.SendRegistroIniciales(fechaActual, actividad, inputFechaRecepcion.Text, tipoAsunto, Digitalizado, inputRadicacion.SelectedValue, observaciones, quienIngresa, mp, prioridad, inputNumeroFojas.Text, tipoRadicacion, inputNUC.Text, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
+                    transaccionExitosa = RegistroIniciales.SendRegistroIniciales(fechaActual, actividad, DateTime.Parse(inputFechaRecepcion.Text), tipoAsunto, Digitalizado, inputRadicacion.SelectedValue, observaciones, quienIngresa, mp, prioridad, inputNumeroFojas.Text, tipoRadicacion, inputNUC.Text, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
                     mensaje = transaccionExitosa ? "Envío exitoso. Tu registro se ha hecho correctamente." : "¡Ocurrió un error en la transacción! El folio ha sido asignado, consulta a soporte.";
                     scriptToast = transaccionExitosa ? $"toastInfo('{mensaje}');" : $"toastError('{mensaje}');";
                 }
@@ -722,6 +721,7 @@ namespace SIPOH.Views
                     ScriptManager.RegisterStartupScript(this, GetType(), "mostrarTituloSello", "mostrarTituloSello();", true);
 
                     Session.Remove("IdSolicitudBuzon");
+                    LimpiarDatosDespuesDeProcesar();
                 }
             }
             catch (Exception ex)
@@ -731,7 +731,7 @@ namespace SIPOH.Views
             }
             finally
             {
-                LimpiarDatosDespuesDeProcesar();
+                inputRadicacion.Items.Clear();
             }
         }
 

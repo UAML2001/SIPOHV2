@@ -1,24 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="CustomRegistroIniciales.ascx.cs" Inherits="SIPOH.Views.CustomRegistroIniciales" %>
-
-
 <script type="text/javascript">
     
-    function seleccionarOpcion() {
-        var ddlTipoFiltrado = document.getElementById('<%= ddlTipoFiltrado.ClientID %>');
-        var inputBuscarInicial = document.getElementById('<%= inputBuscarInicial.ClientID %>');
-
-        if (ddlTipoFiltrado.value === "NUC") {
-            inputBuscarInicial.setAttribute("onblur", "formatNuc(this)");
-        } else {
-            inputBuscarInicial.removeAttribute("onblur");
-        }
-    }
-
-
-
-
-
+    //******************************************************************** */
+    //ACCIONES DE SELLO O TICKET 
     function mostrarTituloSello() {
+        //MOSTRAR BUTTON 
         var tituloSello = document.getElementById('tituloSelloIniciales');
         if (tituloSello) {
             tituloSello.style.display = 'block';
@@ -41,6 +27,19 @@
         ventanaImpresion.print();
 
     }
+    /* ******************************************************************************* */
+    //CONTENIDO
+    //OPCIONES DE FORMATEO DE NUC TRAIDO DE METODO BRAYAN     
+    function seleccionarOpcion() {
+        var ddlTipoFiltrado = document.getElementById('<%= ddlTipoFiltrado.ClientID %>');
+        var inputBuscarInicial = document.getElementById('<%= inputBuscarInicial.ClientID %>');
+        if (ddlTipoFiltrado.value === "NUC") {
+            inputBuscarInicial.setAttribute("onblur", "formatNuc(this)");
+        } else {
+            inputBuscarInicial.removeAttribute("onblur"); //METODO ONBLUR
+        }
+    }
+    //ELEMENS DROPDOWN DE TIPO DE PERSONA (MORAL O FISICA)
     function cambiarTipoPersona() {
         var valueDropDownList = $("#<%= ddlPersonaVictima.ClientID %>");
         var txtValue = $("#<%= lblAP.ClientID %>");
@@ -50,17 +49,10 @@
         var lblApellidoMaternoVictima = $("#<%= txtAMVictima.ClientID %>");
         var lblApellidoMaternoVictima = $("#<%= txtAMVictima.ClientID %>");
         var ddlGeneroVictima = $("#<%= ddlSexoVictima.ClientID %>");
-
         var txtApellidoMaternoVictima = $("#<%= lblAM.ClientID %>");
         var txtNombreVictima = $("#<%= lblNombre.ClientID %>");
-
         var txtGeneroVictima = $("#<%= lblSexo.ClientID %>");
-
-
-
-
-
-
+        //ASIGNACION DE CONTENIDO 
         if (valueDropDownList.val() === "F") {
             txtValue.html("Apellido paterno: ");
             txtValue.fadeIn();
@@ -72,7 +64,6 @@
             lblNombreVictima.fadeIn();
             ddlGeneroVictima.fadeIn();
             lblRazonSocialVictima.fadeOut();
-
         } else if (valueDropDownList.val() === "M") {
             txtValue.html("Persona moral:");
             txtValue.fadeIn();
@@ -97,35 +88,31 @@
             ddlGeneroVictima.fadeOut();
         }
     }
-
-
+    //INGRESO DE SOLO NUMEROS EN TEXTBOX
     function validarNumero(input) {
         // Obtener el valor del campo
         var valor = input.value;
-
         // Verificar si el valor es un número
         if (isNaN(valor)) {
             // Si no es un número, mostrar un mensaje de error y limpiar el campo
             var mensaje = "Este  campo solo acepta numeros";
             //alert("Este  campo solo acepta numeros");
             toastError(mensaje);
-
-
             input.value = "";
         }
     }
 
-
+    //ACCIONES DE CONTENEDOR MOSTRAR Y OCULTAR ELEMENTOS
     function mostrarOcultarDescripcion() {
         var dropdown = $("#<%= txtAnexosTipo.ClientID %>");
         var contenedor = $("#contenedorDescripcion");
-
         if (dropdown.val() === "Otro") {
             contenedor.fadeIn();
         } else {
             contenedor.fadeOut();
         }
     }
+    // ACCIONES DE COPIADO DE INFORMACION EN MODAL PRE-ENVIO
     function valoresFinalesCC() {
         copiarNUC();
         copiarTipoAsunto();
@@ -134,10 +121,10 @@
         copiarQuienIngresa();
         copiarEspecificarNombre();
         copiarTipoRadicacion();
-
         copiarObservacione();
 
     }
+    //NUC
     function copiarNUC() {
         var inputNUC = $("#<%= inputNUC.ClientID %>");
         var copyTextBoxNUC = $("#<%= copyTextBoxNUC.ClientID %>");
@@ -278,7 +265,7 @@
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inpuTipoSolicitud" class="form-label text-secondary">Tipo solicitud: </label>
 
-                    <asp:DropDownList runat="server" ID="inputRadicacion" CssClass="form-select form-select-sm text-secondary" AppendDataBoundItems="true" OnSelectedIndexChanged="inputRadicacion_SelectedIndexChanged" AutoPostBack="true">
+                    <asp:DropDownList runat="server" ID="inputRadicacion" CssClass="form-select form-select-sm text-secondary" AppendDataBoundItems="true" OnSelectedIndexChanged="inputRadicacion_SelectedIndexChanged" >
                         <asp:ListItem Text="Selecciona una opción" Value="" />
                     </asp:DropDownList>
 
@@ -286,7 +273,7 @@
                 </div>
                 <div class=" mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inputFechaRecepcion" class="form-label text-secondary">Fecha de recepción</label>
-                   <asp:TextBox runat="server" ID="inputFechaRecepcion" CssClass="form-control form-control-sm" TextMode="Date" onblur="validarFecha()"></asp:TextBox>
+                   <asp:TextBox runat="server" ID="inputFechaRecepcion" CssClass="form-control form-control-sm" TextMode="DateTimeLocal" onblur="validarFecha()"></asp:TextBox>
 
 
                 </div>
@@ -539,11 +526,11 @@
                 <asp:Label runat="server" ID="lblSuccess" Text="" CssClass="text-success text-center"></asp:Label>
                 <asp:Label runat="server" ID="lblError" Text="" CssClass="text-danger text-center"></asp:Label>
                 <!-- FIN DIV OCULTO DOS -->
-                <div class=" d-flex justify-content-center align-content-center w-100vw  mt-3">
+                <div class=" d-flex justify-content-center align-content-center w-100vw  mt-3" >
                     <pre id="TicketDiv" runat="server"></pre>
 
                 </div>
-                <div class="container d-flex flex-row-reverse justify-content-center align-content-center w-100vw m-0 " id="tituloSelloIniciales" style="display: none !important;" runat="server">
+                <div class="container d-flex flex-row-reverse justify-content-center align-content-center w-100vw m-0 my-2 " id="tituloSelloIniciales" style="display: none !important;" runat="server">
                     <div class="col-auto flex-column-reverse btn btn-info d-flex btn-sm" onclick="imprimirTicketIniciales()" style="cursor: pointer;">
                         <h6 class="text-center align-self-center m-0 p-0 ">¡Imprimir <span class="text-black">ticket!</span></h6>
                         <div class="col-auto ">

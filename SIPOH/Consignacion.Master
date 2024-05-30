@@ -73,7 +73,7 @@
                             <h6 class="collapse-header">Opciones:</h6>    
                              <asp:Repeater ID="RepeaterCatCompartidos" runat="server">
                                 <ItemTemplate>
-                                    <a class="collapse-item text-secondary" href="<%# Eval("linkEnlace") %>.aspx"><i class="<%# Eval("Nombreicono") %>  text-success"></i> <%# Eval("Nombre") %></a>                            
+                                    <a class="collapse-item text-secondary" href=" <%# ObtenerLinkConServidor(Eval("linkEnlace").ToString()) %>.aspx"><i class="<%# Eval("Nombreicono") %>  text-success"></i> <%# Eval("Nombre") %></a>                            
                                 </ItemTemplate>
                             </asp:Repeater> 
                           
@@ -106,7 +106,7 @@
                             <h6 class="collapse-header">Opciones de Control:</h6>    
                              <asp:Repeater ID="RepeaterCatControl" runat="server">
                                 <ItemTemplate>
-                                    <a class="collapse-item text-secondary " href="<%# Eval("linkEnlace") %>.aspx"><i class="<%# Eval("Nombreicono") %>  text-success"></i> <%# Eval("Nombre") %></a>                            
+                                    <a class="collapse-item text-secondary " href=" <%# ObtenerLinkConServidor(Eval("linkEnlace").ToString()) %>.aspx"><i class="<%# Eval("Nombreicono") %>  text-success"></i> <%# Eval("Nombre") %></a>                            
                                 </ItemTemplate>
                             </asp:Repeater> 
                           
@@ -129,7 +129,7 @@
                             <h6 class="collapse-header">Opciones de Ejecucion:</h6>
                             <asp:Repeater ID="RepeaterCatEjecucion" runat="server">
                                 <ItemTemplate>
-                                    <a class="collapse-item text-secondary" href="<%# Eval("linkEnlace") %>.aspx"><i class="<%# Eval("Nombreicono") %> text-success"></i> <%# Eval("Nombre") %></a>                            
+                                    <a class="collapse-item text-secondary" href=" <%# ObtenerLinkConServidor(Eval("linkEnlace").ToString()) %>.aspx"><i class="<%# Eval("Nombreicono") %> text-success"></i> <%# Eval("Nombre") %></a>                            
                                 </ItemTemplate>
                             </asp:Repeater> 
                             
@@ -157,20 +157,6 @@
                                 <a class="collapse-item" href="PortadasDigitalizacion.aspx">Portadas</a>
                             </div>
                         </div>
-
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa fa-folder-open"></i>
-                        <span>Expediente Digital</span>
-                    </a>
-                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Expediente Digital</h6>
-                            <a class="collapse-item" href="Victimas.aspx">Victimas</a>
-                            <a class="collapse-item" href="Imputados.aspx">Imputados</a>
-                        </div>
-                    </div>
                     
                     </div>
             <!-- Heading -->
@@ -461,17 +447,15 @@
                              </asp:ContentPlaceHolder>
                             <asp:ContentPlaceHolder ID="ContentRecepcionExpedientes" runat="server">
                              </asp:ContentPlaceHolder>
-                            <asp:ContentPlaceHolder ID="ContentImputados" runat="server">
-                            </asp:ContentPlaceHolder>
                             
                             
                             <!-- Estilos de admin lte agregue para el calendario by brayan -->
-                            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="CerrarSesionModalLabel"
                                 aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">¿Seguro de cerrar sesion?</h5>
+                                            <h5 class="modal-title" id="CerrarSesionModalLabel">¿Seguro de cerrar sesion?</h5>
                                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
