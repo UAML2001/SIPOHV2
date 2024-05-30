@@ -103,6 +103,38 @@
                                 </div>
                             </center>
 
+                            <center>
+                            <div class="center-panel" runat="server" id="panelPdfInsertar" style="display: none;">
+                                    <br />
+                                    <br />
+                                    <asp:Label ID="AgregadoExito" runat="server" CssClass="h4" Text="¡Victima agregada exitosamente! 🎉" Visible="false" />
+                                    <br />
+                                    <br />
+                                    <asp:Label ID="CedulaExito" runat="server" CssClass="h6" Text="¡Cedula de victima generada con exito! 🎉" Visible="false" />
+                                    <br />
+                                    <br />
+                                    <asp:Button ID="GenerarOtro" CssClass="btn btn-success align-content-center" runat="server" Text="🔙 Administrar otras victimas" Visible="false" OnClick="GenerarOtro_Click" />
+                                    <br />
+                                    <br />
+                                    <iframe id="cedulaimput" runat="server" style="width: 100%; height: 500px;" src=""></iframe>
+                            </div>
+
+                            <div class="center-panel" runat="server" id="panelPdfActualizar" style="display: none;">
+                                    <br />
+                                    <br />
+                                    <asp:Label ID="ActExito" runat="server" CssClass="h4" Text="¡Victima actualizada exitosamente! 🎉" Visible="false" />
+                                    <br />
+                                    <br />
+                                    <asp:Label ID="CedulaActExito" runat="server" CssClass="h6" Text="¡Cedula de victima actualizada con éxito! 🎉" Visible="false" />
+                                    <br />
+                                    <br />
+                                    <asp:Button ID="GenerarOtroImp" CssClass="btn btn-success align-content-center" runat="server" Text="🔙 Administrar otras victimas" Visible="false" OnClick="GenerarOtro_Click" />
+                                    <br />
+                                    <br />
+                                    <iframe id="cedulaimputAct" runat="server" style="width: 100%; height: 500px;" src=""></iframe>
+                            </div>
+                            </center>
+
                             <br />
 
                             <div class="scrollable" runat="server" id="TablVicti" style="display:none;">
@@ -573,7 +605,7 @@
                             <br />
                                                 <center>
                                                                 <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px;">
-                                                                    <asp:Button ID="UpVict" runat="server" Text="🔃 Actualizar" CssClass="btn btn-primary btn-sm mayusculas" />
+                                                                    <asp:Button ID="UpVict" runat="server" Text="🔃 Actualizar" CssClass="btn btn-primary btn-sm mayusculas" OnClick="UpVicti_Click" />
                                                                     <asp:Button ID="SvVicti" runat="server" Text="💾 Guardar" CssClass="btn btn-success btn-sm mayusculas" OnClick="SvVicti_Click" />
                                                                     <asp:Button ID="LimpVicti" runat="server" Text="🧹 Limpiar" CssClass="btn btn-danger btn-sm mayusculas" />
                                                                 </div>

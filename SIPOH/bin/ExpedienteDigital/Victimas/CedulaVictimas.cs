@@ -90,7 +90,7 @@ namespace SIPOH.ExpedienteDigital.Victimas {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_IdAsunto {
+        public CrystalDecisions.Shared.IParameterField Parameter_IdUsuario {
             get {
                 return this.DataDefinition.ParameterFields[0];
             }
@@ -98,9 +98,17 @@ namespace SIPOH.ExpedienteDigital.Victimas {
         
         [Browsable(false)]
         [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
-        public CrystalDecisions.Shared.IParameterField Parameter_IdJuzgado {
+        public CrystalDecisions.Shared.IParameterField Parameter_IdAsunto {
             get {
                 return this.DataDefinition.ParameterFields[1];
+            }
+        }
+        
+        [Browsable(false)]
+        [DesignerSerializationVisibilityAttribute(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public CrystalDecisions.Shared.IParameterField Parameter_IdPartes {
+            get {
+                return this.DataDefinition.ParameterFields[2];
             }
         }
     }

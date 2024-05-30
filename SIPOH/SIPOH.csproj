@@ -2732,6 +2732,7 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="ExpedienteDigital\Imputados\CSImputado\ActualizarImputado.cs" />
     <Compile Include="ExpedienteDigital\Imputados\CSImputado\BusquedaImputado.cs" />
     <Compile Include="ExpedienteDigital\Imputados\CSImputado\InsertarImputado.cs" />
     <Compile Include="ExpedienteDigital\Imputados\CSImputado\LlenarFormularioTrasConsultaImputados.cs" />
@@ -2743,6 +2744,7 @@
       <SubType>Component</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="ExpedienteDigital\Victimas\CSVictimas\ActualizarVictima.cs" />
     <Compile Include="ExpedienteDigital\Victimas\CSVictimas\AgregarDiscapacidad.cs" />
     <Compile Include="ExpedienteDigital\Victimas\CSVictimas\BusquedaVictimas.cs" />
     <Compile Include="ExpedienteDigital\Victimas\CSVictimas\CambioTipoVictima.cs" />

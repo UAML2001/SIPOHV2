@@ -30,6 +30,13 @@
             color: white;
             border-color: #1bbe83; /* Un verde más oscuro para el borde */
         }
+        .center-panel {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
     </style>
 
     <!-- Include Toastr CSS -->
@@ -101,6 +108,38 @@
                                         <asp:Button ID="btnBuscar" runat="server" Text="🔎 Buscar Asunto" CssClass="btn btn-success btn-sm mayusculas" OnClick="btnBuscar_Click" />
                                     </div>
                                 </div>
+                            </center>
+                            
+                            <center>
+                            <div class="center-panel" runat="server" id="panelPdfInsertar" style="display: none;">
+                                    <br />
+                                    <br />
+                                    <asp:Label ID="AgregadoExito" runat="server" CssClass="h4" Text="¡Imputado agregado exitosamente! 🎉" Visible="false" />
+                                    <br />
+                                    <br />
+                                    <asp:Label ID="CedulaExito" runat="server" CssClass="h6" Text="¡Cedula de imputado generada con exito! 🎉" Visible="false" />
+                                    <br />
+                                    <br />
+                                    <asp:Button ID="GenerarOtro" CssClass="btn btn-success align-content-center" runat="server" Text="🔙 Administrar otros imputados" Visible="false" OnClick="GenerarOtro_Click" />
+                                    <br />
+                                    <br />
+                                    <iframe id="cedulaimput" runat="server" style="width: 100%; height: 500px;" src=""></iframe>
+                            </div>
+
+                            <div class="center-panel" runat="server" id="panelPdfActualizar" style="display: none;">
+                                    <br />
+                                    <br />
+                                    <asp:Label ID="ActExito" runat="server" CssClass="h4" Text="¡Imputado actualizado exitosamente! 🎉" Visible="false" />
+                                    <br />
+                                    <br />
+                                    <asp:Label ID="CedulaActExito" runat="server" CssClass="h6" Text="¡Cedula de imputado actualizada con éxito! 🎉" Visible="false" />
+                                    <br />
+                                    <br />
+                                    <asp:Button ID="GenerarOtroImp" CssClass="btn btn-success align-content-center" runat="server" Text="🔙 Administrar otros imputados" Visible="false" OnClick="GenerarOtro_Click" />
+                                    <br />
+                                    <br />
+                                    <iframe id="cedulaimputAct" runat="server" style="width: 100%; height: 500px;" src=""></iframe>
+                            </div>
                             </center>
 
                             <br />
@@ -203,22 +242,22 @@
                                                             <div class="row">
                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                     <asp:DropDownList ID="ContiNac" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ContiNac_SelectedIndexChanged">
-                                                                        <asp:ListItem runat="server" Value="SC" Selected="True" Text="Seleccione el continente..."></asp:ListItem>
+                                                                        <asp:ListItem runat="server" Index="0" Value="SC" Selected="True" Text="Seleccione el continente..."></asp:ListItem>
                                                                     </asp:DropDownList>
                                                                 </div>
                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                     <asp:DropDownList ID="PaisNac" CssClass="form-select form-select-sm text-secondary mayusculas" AutoPostBack="true" OnSelectedIndexChanged="PaisNac_SelectedIndexChanged" runat="server">
-                                                                        <asp:ListItem runat="server" Value="SP" Selected="True" Text="Seleccione el país..."></asp:ListItem>
+                                                                        <asp:ListItem runat="server" Index="0" Value="SP" Selected="True" Text="Seleccione el país..."></asp:ListItem>
                                                                     </asp:DropDownList>
                                                                 </div>
                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                     <asp:DropDownList ID="EstNaci" AutoPostBack="true" OnSelectedIndexChanged="EstNaci_SelectedIndexChanged" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                        <asp:ListItem runat="server" Value="SE" Selected="True" Text="Seleccione el estado..."></asp:ListItem>
+                                                                        <asp:ListItem runat="server" Index="0" Value="SE" Selected="True" Text="Seleccione el estado..."></asp:ListItem>
                                                                     </asp:DropDownList>
                                                                 </div>
                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                     <asp:DropDownList ID="MuniNac" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                        <asp:ListItem runat="server" Value="SM" Selected="True" Text="Seleccione el municipio..."></asp:ListItem>
+                                                                        <asp:ListItem runat="server" Index="0" Value="SM" Selected="True" Text="Seleccione el municipio..."></asp:ListItem>
                                                                     </asp:DropDownList>
                                                                 </div>
                                                             </div>
@@ -491,25 +530,25 @@
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                             <%--<label for="" class="form-label text-secondary">Continente de nacimiento:</label>--%>
                                                                             <asp:DropDownList ID="ContiRes" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ContiRes_SelectedIndexChanged">
-                                                                                <asp:ListItem runat="server" Value="SC" Selected="True" Text="Seleccione el continente..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="SC" Selected="True" Text="Seleccione el continente..."></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                             <%--<label for="" class="form-label text-secondary">País de nacimiento</label>--%>
                                                                             <asp:DropDownList ID="PaisRes" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="PaisRes_SelectedIndexChanged">
-                                                                                <asp:ListItem runat="server" Value="SP" Selected="True" Text="Seleccione el país..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="SP" Selected="True" Text="Seleccione el país..."></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                             <%--<label for="" class="form-label text-secondary">Estado de nacimiento</label>--%>
                                                                             <asp:DropDownList ID="EstaRes" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="EstRes_SelectedIndexChanged">
-                                                                                <asp:ListItem runat="server" Value="SE" Selected="True" Text="Seleccione el estado..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="SE" Selected="True" Text="Seleccione el estado..."></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                             <%--<label for="" class="form-label text-secondary">Municipio de nacimiento</label>--%>
                                                                             <asp:DropDownList ID="MuniRes" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                                <asp:ListItem runat="server" Value="SM" Selected="True" Text="Seleccione el municipio..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="SM" Selected="True" Text="Seleccione el municipio..."></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
 
@@ -589,8 +628,8 @@
 
                                             <br />
                                             <center>
-                                                <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px;">
-                                                    <asp:Button ID="UpVict" runat="server" Text="🔃 Actualizar" CssClass="btn btn-primary btn-sm mayusculas" />
+                                                <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px;" runat="server" id="BtnsAcciones">
+                                                    <asp:Button ID="UpVict" runat="server" Text="🔃 Actualizar" CssClass="btn btn-primary btn-sm mayusculas" OnClick="UpImput_Click" />
                                                     <asp:Button ID="SvVicti" runat="server" Text="💾 Guardar" CssClass="btn btn-success btn-sm mayusculas" OnClick="SvImput_Click" />
                                                     <asp:Button ID="LimpVicti" runat="server" Text="🧹 Limpiar" CssClass="btn btn-danger btn-sm mayusculas" />
                                                 </div>
@@ -612,32 +651,32 @@
 
 
             <script>
-        function formatoRFC(input) {
-            // Eliminar caracteres que no son dígitos ni letras
-            var rfc = input.value.replace(/[^\dA-Za-z]/g, '');
+                function formatoRFC(input) {
+                    // Eliminar caracteres que no son dígitos ni letras
+                    var rfc = input.value.replace(/[^\dA-Za-z]/g, '');
 
-            // Verificar que la longitud del RFC es al menos de 13 caracteres
-            if (rfc.length >= 13) {
-                // Separar los últimos 3 caracteres con un guión
-                var formattedRFC = rfc.substring(0, rfc.length - 3) + '-' + rfc.substring(rfc.length - 3);
-                input.value = formattedRFC;
-            }
-        }
+                    // Verificar que la longitud del RFC es al menos de 13 caracteres
+                    if (rfc.length >= 13) {
+                        // Separar los últimos 3 caracteres con un guión
+                        var formattedRFC = rfc.substring(0, rfc.length - 3) + '-' + rfc.substring(rfc.length - 3);
+                        input.value = formattedRFC;
+                    }
+                }
 
-        function formatoNumeroToca(input) {
-            // Divide el valor ingresado en el número y el año
-            var [number, year] = input.value.split("/");
+                function formatoNumeroToca(input) {
+                    // Divide el valor ingresado en el número y el año
+                    var [number, year] = input.value.split("/");
 
-            // Rellena el número con ceros a la izquierda hasta que tenga 4 dígitos
-            number = number.padStart(4, '0');
+                    // Rellena el número con ceros a la izquierda hasta que tenga 4 dígitos
+                    number = number.padStart(4, '0');
 
-            // Combina el número y el año para obtener el número de toca
-            var numeroToca = number + "/" + year;
+                    // Combina el número y el año para obtener el número de toca
+                    var numeroToca = number + "/" + year;
 
-            // Establece el valor del input al número de toca
-            input.value = numeroToca;
-        }
-    </script>
+                    // Establece el valor del input al número de toca
+                    input.value = numeroToca;
+                }
+            </script>
 
                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                     <script type="text/javascript">
