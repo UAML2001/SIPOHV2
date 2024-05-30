@@ -44,7 +44,23 @@ namespace SIPOH
 
 
         }
-       
+
+        
+        public string ObtenerLinkConServidor(string enlace)
+        {
+            // Obtiene el objeto de la URL
+            Uri url = HttpContext.Current.Request.Url;
+
+            // Obtiene el esquema (http o https)
+            string esquema = url.Scheme;
+
+            // Obtiene el nombre del servidor y el puerto si está en localhost
+            string nombreServidor = url.IsLoopback ? $"{url.Host}:{url.Port}" : url.Host;
+
+            // Combina el esquema, el nombre del servidor y el enlace
+            return $"{esquema}://{nombreServidor}{enlace}";
+        }
+
 
         private void MostrarOpcionesMenu(int IdPerfil)
         {

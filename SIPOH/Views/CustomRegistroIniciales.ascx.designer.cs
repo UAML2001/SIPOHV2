@@ -11,9 +11,9 @@ namespace SIPOH.Views
 {
 
 
-    public partial class CustomRegistroIniciales 
+    public partial class CustomRegistroIniciales
     {
-         
+
         /// <summary>
         /// Control updPanel.
         /// </summary>
