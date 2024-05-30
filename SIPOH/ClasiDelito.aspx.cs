@@ -157,7 +157,6 @@ namespace SIPOH
                 ViewState["SelectedRowIndex"] = -1; // Resetear el índice seleccionado
             }
         }
-
         protected void btnAgregarClasiDelito_Click(object sender, EventArgs e)
         {
             if (GridViewClasificacionDelitos.Rows.Count == 0)
@@ -343,6 +342,79 @@ namespace SIPOH
                     break;
             }
         }
+        //INICIA GUARDADO
+        protected void btnGuardarClasiDeli_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string accion = "U"; // Siempre actualización en este caso
+
+                if (GridViewClasificacionDelitos.SelectedDataKey == null)
+                {
+                    MensajeError("No se ha seleccionado ningún delito.");
+                    return;
+                }
+
+                int idDeliAsunto = Convert.ToInt32(GridViewClasificacionDelitos.SelectedDataKey.Values["IdDeliAsunto"]);
+                System.Diagnostics.Debug.WriteLine("idDeliAsunto: " + idDeliAsunto);
+
+                // Obtener valores de los controles y validar que no sean nulos o vacíos
+                int consumacion = Convert.ToInt32(ddlGradoConsumacion.SelectedValue);
+                int calificacion = Convert.ToInt32(ddlCalificacion.SelectedValue);
+                int concurso = Convert.ToInt32(ddlConcurso.SelectedValue);
+                int clasificacion = Convert.ToInt32(ddlOrdenResultado.SelectedValue);
+                int fComision = Convert.ToInt32(ddlComision.SelectedValue);
+                int fAccion = Convert.ToInt32(ddlFormaAccion.SelectedValue);
+                int modalidad = Convert.ToInt32(ddlModalidad.SelectedValue);
+                int elemComision = Convert.ToInt32(ddlComision.SelectedValue);
+                string persecucion = GetSelectedPersecucion();
+                int idMunicipio = Convert.ToInt32(ddlCatMunicipios.SelectedValue);
+                DateTime feDelito = DateTime.Parse(FechaDelito.Text);
+                string domicilio = txtLocalidad.Text;
+
+                // Depurar otros valores
+                System.Diagnostics.Debug.WriteLine($"consumacion: {consumacion}, calificacion: {calificacion}, concurso: {concurso}, clasificacion: {clasificacion}");
+                System.Diagnostics.Debug.WriteLine($"fComision: {fComision}, fAccion: {fAccion}, modalidad: {modalidad}, elemComision: {elemComision}");
+                System.Diagnostics.Debug.WriteLine($"persecucion: {persecucion}, idMunicipio: {idMunicipio}, feDelito: {feDelito}, domicilio: {domicilio}");
+
+                if (persecucion == null)
+                {
+                    MensajeError("Debe seleccionar un tipo de persecución.");
+                    return;
+                }
+
+                // Llamar al controlador
+                JUC_CrudClasiDelitosController controller = new JUC_CrudClasiDelitosController();
+                bool result = controller.InsertarActualizarDelito(
+                    accion, idDeliAsunto, consumacion, calificacion, concurso, clasificacion,
+                    fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio,
+                    feDelito, domicilio);
+
+                if (result)
+                {
+                    MensajeExito("Registro actualizado con éxito.");
+                    Limpiar();
+                }
+                else
+                {
+                    MensajeError("Error al actualizar el registro.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MensajeError("Error: " + ex.Message);
+            }
+        }
+
+        private string GetSelectedPersecucion()
+        {
+            if (rbQuerella.Checked) return "Q";
+            if (rbDenuncia.Checked) return "D";
+            if (rbNoIdentificado.Checked) return "N";
+            return null;
+        }
+
+
         //
     }
 }

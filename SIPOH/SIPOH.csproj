@@ -2692,6 +2692,7 @@
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatGradoConsumacionController.cs" />
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatModalidadController.cs" />
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatMunicipiosController.cs" />
+    <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CrudClasiDelitosController.cs" />
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_GeneralesController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -3199,6 +3200,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\JUC_CrudClasiDelitos\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

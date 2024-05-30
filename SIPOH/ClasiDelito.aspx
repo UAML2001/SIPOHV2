@@ -201,12 +201,12 @@
                                                     <asp:DropDownList ID="ddlGradoConsumacion" runat="server" CssClass="form-select form-select-sm mayusculas" AutoPostBack="True"></asp:DropDownList>
                                                 </div>
                                                 <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
-                                                    <label for="lbltipoasunto" class="form-label text-secondary">Tipo de concurso:</label>
+                                                    <label for="lbltipoconcurso" class="form-label text-secondary">Tipo de concurso:</label>
                                                     <asp:DropDownList runat="server" ID="ddlConcurso" CssClass="form-select form-select-sm mayusculas" AutoPostBack="true">
                                                     </asp:DropDownList>
                                                 </div>
                                                 <div class="col-md-3 col-lg-3 col-xl-3 col-xxl-3 col-sm-12">
-                                                    <label for="lbltipoasunto" class="form-label text-secondary">Forma de acción:</label>
+                                                    <label for="lblformaaccion" class="form-label text-secondary">Forma de acción:</label>
                                                     <asp:DropDownList runat="server" ID="ddlFormaAccion" CssClass="form-select form-select-sm mayusculas" AutoPostBack="true">
                                                     </asp:DropDownList>
                                                 </div>
@@ -242,7 +242,7 @@
                                             <p></p>
                                             <div class="row justify-content-md-center">
                                                 <div class="col col-lg-2">
-                                                    <asp:Button ID="btnGuardarClasiDeli" runat="server" Text="Guardar o Modificar" CssClass="btn btn-sm btn-outline-primary" />
+                                                    <asp:Button ID="btnGuardarClasiDeli" runat="server" Text="Guardar o Modificar" CssClass="btn btn-sm btn-outline-primary" OnClick="btnGuardarClasiDeli_Click"/>
                                                 </div>
                                                 <div class="col col-lg-2">
                                                     <asp:Button ID="Button1" runat="server" Text="Eliminar" CssClass="btn btn-sm btn-outline-danger" />
