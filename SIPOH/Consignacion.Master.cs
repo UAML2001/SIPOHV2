@@ -72,7 +72,7 @@ namespace SIPOH
             // Determina el nombre del servidor y el puerto si está en localhost
             string nombreServidor = url.IsLoopback
                 ? $"{url.Host}:{url.Port}"
-                : ServerName;            
+                : $"{url.Host}:{url.Port}/{ServerName}";            
 
             // Combina el esquema, el nombre del servidor y el enlace
             return $"{esquema}://{nombreServidor}{enlace}";
