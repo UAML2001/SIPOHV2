@@ -14,6 +14,7 @@ namespace SIPOH
 {
     public partial class Consignacion : System.Web.UI.MasterPage
     {
+        private const string ServerName = "sipoh";
         protected void Page_Load(object sender, EventArgs e)
         {
             
@@ -45,7 +46,21 @@ namespace SIPOH
 
         }
 
-        
+
+        //public string ObtenerLinkConServidor(string enlace)
+        //{
+        //    // Obtiene el objeto de la URL
+        //    Uri url = HttpContext.Current.Request.Url;
+
+        //    // Obtiene el esquema (http o https)
+        //    string esquema = url.Scheme;
+
+        //    // Obtiene el nombre del servidor y el puerto si está en localhost
+        //    string nombreServidor = url.IsLoopback ? $"{url.Host}:{url.Port}" : url.Host;
+        //    Debug.WriteLine(nombreServidor);
+        //    // Combina el esquema, el nombre del servidor y el enlace
+        //    return $"{esquema}://{nombreServidor}{enlace}";
+        //}
         public string ObtenerLinkConServidor(string enlace)
         {
             // Obtiene el objeto de la URL
@@ -54,8 +69,10 @@ namespace SIPOH
             // Obtiene el esquema (http o https)
             string esquema = url.Scheme;
 
-            // Obtiene el nombre del servidor y el puerto si está en localhost
-            string nombreServidor = url.IsLoopback ? $"{url.Host}:{url.Port}" : url.Host;
+            // Determina el nombre del servidor y el puerto si está en localhost
+            string nombreServidor = url.IsLoopback
+                ? $"{url.Host}:{url.Port}"
+                : ServerName;            
 
             // Combina el esquema, el nombre del servidor y el enlace
             return $"{esquema}://{nombreServidor}{enlace}";
