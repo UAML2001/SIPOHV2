@@ -7,28 +7,34 @@ using System.Web.UI.WebControls;
 
 namespace SIPOH.ExpedienteDigital.Victimas.CSVictimas
 {
-    // ReiniciarFormulario.cs
-    // ReiniciarFormulario.cs
-    public class ReiniciarFormulario
+    public class LimpiarFormularioImputado
     {
-        public void Reiniciar(Button UpVict, Button LimpVicti, Button SvVicti, DropDownList SectorVicti, DropDownList TipoSocie, TextBox APVic, TextBox AMVic, TextBox NomVic, DropDownList GeneVicti, DropDownList ClasifVicti, TextBox CURPVicti,
+        public void Reiniciar(Button UpVict, Button LimpVicti, Button SvVicti, TextBox APVic, TextBox AMVic, TextBox NomVic, DropDownList GeneVicti, TextBox CURPVicti,
             TextBox RFCVicti, TextBox FeNacVic, TextBox EdadVicti, DropDownList ContiNac, DropDownList PaisNac, DropDownList EstNaci, DropDownList MuniNac, DropDownList NacVicti, DropDownList HabLenExtra,
-            DropDownList HablEsp, DropDownList LengIndi, DropDownList VicVulne, DropDownList CondMigVic, DropDownList CondAlfVic, DropDownList HablLengIndi, DropDownList PuebloIndi, TextBox DomiTrabVicti,
+            DropDownList HablEsp, DropDownList LengIndi, DropDownList CondMigVic, DropDownList CondAlfVic, DropDownList HablLengIndi, DropDownList PuebloIndi, TextBox DomiTrabVicti,
             DropDownList EstCivil, DropDownList GradEst, DropDownList OcupaVicti, DropDownList DetaOcupaVic, DropDownList CuenDisca, DropDownList TipoDisca, DropDownList DiscaEspe, DropDownList ContiRes, DropDownList PaisRes,
             DropDownList EstaRes, DropDownList MuniRes, TextBox DomicPersonVicti, DropDownList AseJur, DropDownList ReqInter, TextBox TelCont, TextBox EmailCont, TextBox Fax, DropDownList RelacVic, TextBox HoraIndivi,
-            DropDownList IDVicti, TextBox Domici, TextBox OtroMed, RadioButtonList AceptaDatos)
+            DropDownList IDVicti, TextBox Domici, TextBox OtroMed, RadioButtonList AceptaDatos, TextBox AliasImp, DropDownList CondiFam, DropDownList ConsSus, TextBox DepEconom, DropDownList EstPsi, DropDownList Reinci,
+            DropDownList AcciPenal, DropDownList TipoDeten, DropDownList OrdenJudi)
         {
-            UpVict.Visible = false;
+            UpVict.Visible = true;
             LimpVicti.Visible = true;
-            SvVicti.Visible = true;
+            SvVicti.Visible = false;
 
-            SectorVicti.SelectedValue = "NID";
-            TipoSocie.SelectedValue = "S";
+            AliasImp.Text = String.Empty;
+            CondiFam.ClearSelection();
+            ConsSus.ClearSelection();
+            DepEconom.Text = String.Empty;
+            EstPsi.ClearSelection();
+            Reinci.ClearSelection();
+            AcciPenal.ClearSelection();
+            TipoDeten.ClearSelection();
+            OrdenJudi.ClearSelection();
+
             APVic.Text = String.Empty;
             AMVic.Text = String.Empty;
             NomVic.Text = String.Empty;
             GeneVicti.ClearSelection();
-            ClasifVicti.ClearSelection();
             CURPVicti.Text = String.Empty;
             RFCVicti.Text = String.Empty;
             FeNacVic.Text = String.Empty;
@@ -41,7 +47,6 @@ namespace SIPOH.ExpedienteDigital.Victimas.CSVictimas
             HabLenExtra.ClearSelection();
             HablEsp.ClearSelection();
             LengIndi.ClearSelection();
-            VicVulne.ClearSelection();
             CondMigVic.ClearSelection();
             CondAlfVic.ClearSelection();
             HablLengIndi.ClearSelection();
@@ -71,5 +76,6 @@ namespace SIPOH.ExpedienteDigital.Victimas.CSVictimas
             OtroMed.Text = String.Empty;
             AceptaDatos.SelectedValue = "";
         }
-    }
+   
+}
 }

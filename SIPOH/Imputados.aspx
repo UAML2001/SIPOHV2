@@ -19,7 +19,7 @@
         .h5 {
             margin-left: 5%;
         }
-
+        
         .myRadioButtonList input[type="radio"] {
             margin-left: 10px;
             margin-right: 5px;
@@ -105,7 +105,7 @@
                             <center>
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px;">
-                                        <asp:Button ID="btnBuscar" runat="server" Text="🔎 Buscar Asunto" CssClass="btn btn-success btn-sm mayusculas" OnClick="btnBuscar_Click" />
+                                        <asp:Button ID="btnBuscar" runat="server" Text="🔎 Buscar Asunto" CssClass="btn btn-outline-success btn-sm mayusculas" OnClick="btnBuscar_Click" />
                                     </div>
                                 </div>
                             </center>
@@ -120,7 +120,7 @@
                                     <asp:Label ID="CedulaExito" runat="server" CssClass="h6" Text="¡Cedula de imputado generada con exito! 🎉" Visible="false" />
                                     <br />
                                     <br />
-                                    <asp:Button ID="GenerarOtro" CssClass="btn btn-success align-content-center" runat="server" Text="🔙 Administrar otros imputados" Visible="false" OnClick="GenerarOtro_Click" />
+                                    <asp:Button ID="GenerarOtro" CssClass="btn btn-outline-success align-content-center" runat="server" Text="🔙 Administrar otros imputados" Visible="false" OnClick="GenerarOtro_Click" />
                                     <br />
                                     <br />
                                     <iframe id="cedulaimput" runat="server" style="width: 100%; height: 500px;" src=""></iframe>
@@ -135,7 +135,7 @@
                                     <asp:Label ID="CedulaActExito" runat="server" CssClass="h6" Text="¡Cedula de imputado actualizada con éxito! 🎉" Visible="false" />
                                     <br />
                                     <br />
-                                    <asp:Button ID="GenerarOtroImp" CssClass="btn btn-success align-content-center" runat="server" Text="🔙 Administrar otros imputados" Visible="false" OnClick="GenerarOtro_Click" />
+                                    <asp:Button ID="GenerarOtroImp" CssClass="btn btn-outline-success align-content-center" runat="server" Text="🔙 Administrar otros imputados" Visible="false" OnClick="GenerarOtro_Click" />
                                     <br />
                                     <br />
                                     <iframe id="cedulaimputAct" runat="server" style="width: 100%; height: 500px;" src=""></iframe>
@@ -147,9 +147,11 @@
                             <div class="scrollable" runat="server" id="TablVicti" style="display: none;">
                                 <div class="mb-2 d-flex justify-content-between align-items-center">
                                     <span class="text-success fw-bold m-2"><i class="bi bi-emoji-frown"></i> Imputados Asociados: </span>
-                                    <asp:Button ID="buscarVicti" runat="server" CssClass="btn btn-success btn-sm mayusculas" OnClick="AgregarInputadoForm_Click" Text="➕ Agregar Imputado" />
+                                    <asp:Button ID="buscarVicti" runat="server" CssClass="btn btn-outline-success btn-sm mayusculas" OnClick="AgregarInputadoForm_Click" Text="➕ Agregar Imputado" />
                                 </div>
-                                <asp:GridView ID="gvVictimas" CssClass="table table-striped text-center table-hover table-sm" runat="server" OnRowDataBound="gvVictimas_RowDataBound" AutoGenerateColumns="False" AllowPaging="True" PageSize="3" OnPageIndexChanging="gvVictimas_PageIndexChanging">
+                                <asp:GridView ID="gvVictimas" CssClass="table table-striped text-center table-hover table-sm" runat="server"
+                                    OnRowDataBound="gvVictimas_RowDataBound" AutoGenerateColumns="False" AllowPaging="True"
+                                    PageSize="3" OnPageIndexChanging="gvVictimas_PageIndexChanging">
                                     <Columns>
                                         <asp:BoundField DataField="APaterno" HeaderText="Apellido Paterno o Razón Social" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
                                         <asp:BoundField DataField="AMaterno" HeaderText="Apellido Materno" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
@@ -166,12 +168,14 @@
                                         </asp:TemplateField>
                                     </Columns>
                                     <PagerTemplate>
-                                        <asp:Button ID="btnFirst" CssClass="btn btn-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="First" Text=" Primero" />
-                                        <asp:Button ID="btnPrev" CssClass="btn btn-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Prev" Text="⏮️ Anterior" />
-                                        <asp:Button ID="btnNext" CssClass="btn btn-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Next" Text="⏭️ Siguiente" />
-                                        <asp:Button ID="btnLast" CssClass="btn btn-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Last" Text=" Ultimo" />
+                                        <asp:Button ID="btnFirst" CssClass="btn btn-outline-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="First" Text="Primero" />
+                                        <asp:Button ID="btnPrev" CssClass="btn btn-outline-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Prev" Text="⏮️ Anterior" />
+                                        <asp:Button ID="btnNext" CssClass="btn btn-outline-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Next" Text="⏭️ Siguiente" />
+                                        <asp:Button ID="btnLast" CssClass="btn btn-outline-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Last" Text="Último" />
                                     </PagerTemplate>
                                 </asp:GridView>
+
+
                             </div>
 
                             <br />
@@ -214,7 +218,7 @@
                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                     <label for="fojas1" class="form-label text-secondary">Genero: </label>
                                                                     <asp:DropDownList ID="GeneVicti" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                        <asp:ListItem runat="server" Value="SG" Selected="True" Text="Seleccione el género..."></asp:ListItem>
+                                                                        <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                     </asp:DropDownList>
                                                                 </div>
                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
@@ -236,7 +240,7 @@
                                                             </div>
                                                         </ContentTemplate>
                                                     </asp:UpdatePanel>
-                                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+<%--                                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                                                         <ContentTemplate>
                                                             <label for="" class="form-label text-secondary">Lugar de nacimiento:</label>
                                                             <div class="row">
@@ -258,6 +262,30 @@
                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                     <asp:DropDownList ID="MuniNac" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
                                                                         <asp:ListItem runat="server" Index="0" Value="SM" Selected="True" Text="Seleccione el municipio..."></asp:ListItem>
+                                                                    </asp:DropDownList>
+                                                                </div>
+                                                            </div>
+                                                        </ContentTemplate>
+                                                    </asp:UpdatePanel>--%>
+
+                                                    <asp:UpdatePanel ID="UpdatePanel8" runat="server">
+                                                        <ContentTemplate>
+                                                            <label for="" class="form-label text-secondary">Lugar de nacimiento:</label>
+                                                            <div class="row">
+                                                                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                                                                    <asp:DropDownList ID="ContiNac" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ContiNac_SelectedIndexChanged">
+                                                                    </asp:DropDownList>
+                                                                </div>
+                                                                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                                                                    <asp:DropDownList ID="PaisNac" CssClass="form-select form-select-sm text-secondary mayusculas" AutoPostBack="true" OnSelectedIndexChanged="PaisNac_SelectedIndexChanged" runat="server">
+                                                                    </asp:DropDownList>
+                                                                </div>
+                                                                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                                                                    <asp:DropDownList ID="EstNaci" AutoPostBack="true" OnSelectedIndexChanged="EstNaci_SelectedIndexChanged" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
+                                                                    </asp:DropDownList>
+                                                                </div>
+                                                                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                                                                    <asp:DropDownList ID="MuniNac" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
                                                                     </asp:DropDownList>
                                                                 </div>
                                                             </div>
@@ -286,32 +314,32 @@
                                                             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                 <label for="" class="form-label text-secondary">Nacionalidad:</label>
                                                                 <asp:DropDownList ID="NacVicti" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                    <asp:ListItem runat="server" Value="SN" Selected="True" Text="Selecciona la nacionalidad..."></asp:ListItem>
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                 </asp:DropDownList>
                                                                 <br />
                                                                 <label for="" class="form-label text-secondary">Habla lengua extranjera:</label>
                                                                 <asp:DropDownList ID="HabLenExtra" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                    <asp:ListItem runat="server" Value="SLE" Selected="True" Text="Seleccione una opcion..."></asp:ListItem>
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                 </asp:DropDownList>
                                                                 <br />
                                                                 <label for="" class="form-label text-secondary">Dominio del idioma español:</label>
                                                                 <asp:DropDownList ID="HablEsp" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                    <asp:ListItem runat="server" Value="SES" Selected="True" Text="Seleccione una opción..."></asp:ListItem>
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                 </asp:DropDownList>
                                                                 <br />
                                                                 <label for="" class="form-label text-secondary">Lengua indigena:</label>
                                                                 <asp:DropDownList ID="LengIndi" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                    <asp:ListItem runat="server" Value="SLI" Selected="True" Text="Seleccione la lengua indigena..."></asp:ListItem>
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                 </asp:DropDownList>
                                                                 <br />
                                                                 <label for="" class="form-label text-secondary">Condicion Familiar:</label>
                                                                 <asp:DropDownList ID="CondiFam" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                    <asp:ListItem runat="server" Value="SPV" Selected="True" Text="Seleccione una opcion..."></asp:ListItem>
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                 </asp:DropDownList>
                                                                 <br />
                                                                 <label for="" class="form-label text-secondary">Consume Sustancias:</label>
                                                                 <asp:DropDownList ID="ConsSus" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                    <asp:ListItem runat="server" Value="SPV" Selected="True" Text="Seleccione una opcion..."></asp:ListItem>
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                 </asp:DropDownList>
                                                                 <br />
                                                             </div>
@@ -319,22 +347,22 @@
                                                             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                 <label for="" class="form-label text-secondary">Condicion migratoria:</label>
                                                                 <asp:DropDownList ID="CondMigVic" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                    <asp:ListItem runat="server" Value="SCM" Selected="True" Text="Seleccione la condición migratoria..."></asp:ListItem>
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                 </asp:DropDownList>
                                                                 <br />
                                                                 <label for="" class="form-label text-secondary">Condicion de alfabetismo:</label>
                                                                 <asp:DropDownList ID="CondAlfVic" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                    <asp:ListItem runat="server" Value="SCA" Selected="True" Text="Seleccione una opción..."></asp:ListItem>
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                 </asp:DropDownList>
                                                                 <br />
                                                                 <label for="" class="form-label text-secondary">¿Habla alguna lengua?:</label>
                                                                 <asp:DropDownList ID="HablLengIndi" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="True" OnSelectedIndexChanged="HabLenIndi_SelectedIndexChanged">
-                                                                    <asp:ListItem runat="server" Value="SHL" Selected="True" Text="Seleccione una opción..."></asp:ListItem>
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                 </asp:DropDownList>
                                                                 <br />
                                                                 <label for="" class="form-label text-secondary">Pueblo indigena:</label>
                                                                 <asp:DropDownList ID="PuebloIndi" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                    <asp:ListItem runat="server" Value="SPI" Selected="True" Text="Seleccione una opcion..."></asp:ListItem>
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                 </asp:DropDownList>
                                                                 <br />
                                                                 <label for="" class="form-label text-secondary">Domicilio del trabajo:</label>
@@ -350,14 +378,14 @@
                                                                     <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                         <label for="" class="form-label text-secondary">Estado Civil:</label>
                                                                         <asp:DropDownList ID="EstCivil" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                            <asp:ListItem runat="server" Value="SEC" Selected="True" Text="Seleccione el estado civil..."></asp:ListItem>
+                                                                            <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                         </asp:DropDownList>
                                                                     </div>
 
                                                                     <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                         <label for="" class="form-label text-secondary">Grado de Estudios:</label>
                                                                         <asp:DropDownList ID="GradEst" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                            <asp:ListItem runat="server" Value="SGE" Selected="True" Text="Seleccione el grado de estudios..."></asp:ListItem>
+                                                                            <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                         </asp:DropDownList>
                                                                     </div>
 
@@ -367,14 +395,14 @@
                                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                                     <label for="" class="form-label text-secondary">Ocupación:</label>
                                                                                     <asp:DropDownList ID="OcupaVicti" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" OnSelectedIndexChanged="DropdownOcupacion_SelectedIndexChanged" AutoPostBack="true">
-                                                                                        <asp:ListItem runat="server" Value="SO" Selected="True" Text="Seleccione la ocupación..."></asp:ListItem>
+                                                                                        <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                                     </asp:DropDownList>
                                                                                 </div>
 
                                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                                     <label for="" class="form-label text-secondary">Detalle ocupación:</label>
                                                                                     <asp:DropDownList ID="DetaOcupaVic" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                                        <asp:ListItem runat="server" Value="SDO" Selected="True" Text="Seleccione el detalle de la ocupación..."></asp:ListItem>
+                                                                                        <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                                     </asp:DropDownList>
                                                                                 </div>
                                                                             </div>
@@ -387,7 +415,7 @@
                                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                                     <label for="" class="form-label text-secondary">Cuenta con discapacidad:</label>
                                                                                     <asp:DropDownList ID="CuenDisca" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" OnSelectedIndexChanged="CuenDisca_SelectedIndexChanged" AutoPostBack="true">
-                                                                                        <asp:ListItem runat="server" Value="SCD" Selected="True" Text="Seleccione una opción..."></asp:ListItem>
+                                                                                        <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                                         <asp:ListItem runat="server" Value="1" Text="SI"></asp:ListItem>
                                                                                         <asp:ListItem runat="server" Value="2" Text="NO"></asp:ListItem>
                                                                                         <asp:ListItem runat="server" Value="3" Text="NO IDENTIFICADO"></asp:ListItem>
@@ -397,14 +425,14 @@
                                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                                     <label for="" class="form-label text-secondary">Tipo discapacidad:</label>
                                                                                     <asp:DropDownList ID="TipoDisca" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="DropdownDiscapacidad_SelectedIndexChanged">
-                                                                                        <asp:ListItem runat="server" Value="SD" Selected="True" Text="Seleccione la discapacidad..."></asp:ListItem>
+                                                                                        <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                                     </asp:DropDownList>
                                                                                 </div>
 
                                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-12 col-xl-12 col-xxl-12">
                                                                                     <label for="" class="form-label text-secondary">Especifique discapacidad:</label>
                                                                                     <asp:DropDownList ID="DiscaEspe" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                                        <asp:ListItem runat="server" Value="SD" Selected="True" Text="Seleccione la discapacidad..."></asp:ListItem>
+                                                                                        <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                                     </asp:DropDownList>
                                                                                 </div>
                                                                             </div>
@@ -414,13 +442,13 @@
                                                                                 <div class="mb-0 row">
                                                                                     <div class="col-md-12">
                                                                                         <span class="text-success fw-bold m-2"><i class="bi bi-person-wheelchair"></i>Discapacidades: </span>
-                                                                                        <asp:Button ID="btnAgregarDiscapacidad" runat="server" CssClass="btn btn-success btn-sm mayusculas" Text="➕" OnClick="btnAgregarDiscapacidad_Click" />
+                                                                                        <asp:Button ID="btnAgregarDiscapacidad" runat="server" CssClass="btn btn-outline-success btn-sm mayusculas" Text="➕" OnClick="btnAgregarDiscapacidad_Click" />
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="table-responsive mt-2">
                                                                                     <asp:GridView ID="gvDiscapacidades" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="GridView1_RowCommand" ShowHeaderWhenEmpty="true">
                                                                                         <Columns>
-                                                                                            <asp:BoundField DataField="Discapacidad" HeaderText="Discapacidad" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="mayusculas" />
+                                                                                            <asp:BoundField DataField="Discapacidad" HeaderText="Discapacidad" HeaderStyle-CssClass="bg-outline-success text-white text-center" ItemStyle-CssClass="mayusculas" />
                                                                                             <asp:BoundField DataField="IdDiscapacidad" Visible="false" />
                                                                                             <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
                                                                                                 <ItemTemplate>
@@ -473,19 +501,19 @@
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-6 col-xxl-6">
                                                                             <label for="" class="form-label text-secondary">Estado psicofísico al momento del delito:</label>
                                                                             <asp:DropDownList ID="EstPsi" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                                <asp:ListItem runat="server" Value="EP" Selected="True" Text="Seleccione el el estado piscofisico..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-6 col-xxl-6">
                                                                             <label for="" class="form-label text-secondary">Reincidente:</label>
                                                                             <asp:DropDownList ID="Reinci" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                                <asp:ListItem runat="server" Value="RE" Selected="True" Text="Seleccione si es reincidente..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-6 col-xxl-6">
                                                                             <label for="" class="form-label text-secondary">Ejercicio de la acción penal:</label>
                                                                             <asp:DropDownList ID="AcciPenal" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="AcciPenal_SelectedIndexChanged">
-                                                                                <asp:ListItem runat="server" Value="EA" Selected="True" Text="Seleccione la acción penal..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                                 <asp:ListItem runat="server" Value="1" Text="Con Detenido"></asp:ListItem>
                                                                                 <asp:ListItem runat="server" Value="2" Text="Sin Detenido"></asp:ListItem>
                                                                             </asp:DropDownList>
@@ -493,13 +521,13 @@
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-6 col-xxl-6" id="TipoDetenc" runat="server">
                                                                             <label for="" class="form-label text-secondary">Tipo de Detención:</label>
                                                                             <asp:DropDownList ID="TipoDeten" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                                <asp:ListItem runat="server" Value="TD" Selected="True" Text="Seleccione el tipo de detención..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-6 col-xxl-6" id="OrdenJudic" runat="server">
                                                                             <label for="" class="form-label text-secondary">Orden Judicial:</label>
                                                                             <asp:DropDownList ID="OrdenJudi" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                                <asp:ListItem runat="server" Value="OJ" Selected="True" Text="Seleccione la orden judicial..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
                                                                     </div>
@@ -530,25 +558,25 @@
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                             <%--<label for="" class="form-label text-secondary">Continente de nacimiento:</label>--%>
                                                                             <asp:DropDownList ID="ContiRes" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ContiRes_SelectedIndexChanged">
-                                                                                <asp:ListItem runat="server" Index="0" Value="SC" Selected="True" Text="Seleccione el continente..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                             <%--<label for="" class="form-label text-secondary">País de nacimiento</label>--%>
                                                                             <asp:DropDownList ID="PaisRes" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="PaisRes_SelectedIndexChanged">
-                                                                                <asp:ListItem runat="server" Index="0" Value="SP" Selected="True" Text="Seleccione el país..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                             <%--<label for="" class="form-label text-secondary">Estado de nacimiento</label>--%>
                                                                             <asp:DropDownList ID="EstaRes" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="EstRes_SelectedIndexChanged">
-                                                                                <asp:ListItem runat="server" Index="0" Value="SE" Selected="True" Text="Seleccione el estado..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                             <%--<label for="" class="form-label text-secondary">Municipio de nacimiento</label>--%>
                                                                             <asp:DropDownList ID="MuniRes" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                                <asp:ListItem runat="server" Index="0" Value="SM" Selected="True" Text="Seleccione el municipio..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                         </div>
 
@@ -561,13 +589,13 @@
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                             <label for="" class="form-label text-secondary">¿Cuenta con asesor jurídico?:</label>
                                                                             <asp:DropDownList ID="AseJur" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                                <asp:ListItem runat="server" Value="SA" Selected="True" Text="Seleccione una opción..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                             <br />
 
                                                                             <label for="" class="form-label text-secondary">¿Requiere intérprete o traductor?:</label>
                                                                             <asp:DropDownList ID="ReqInter" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                                <asp:ListItem runat="server" Value="SO" Selected="True" Text="Seleccione una opción..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                             <br />
 
@@ -586,7 +614,7 @@
                                                                         <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                                                             <label for="" class="form-label text-secondary">Relación con el imputado:</label>
                                                                             <asp:DropDownList ID="RelacVic" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                                <asp:ListItem runat="server" Value="SR" Selected="True" Text="Seleccione la relación..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                             <br />
 
@@ -596,7 +624,7 @@
 
                                                                             <label for="" class="form-label text-secondary">Documento de identificación:</label>
                                                                             <asp:DropDownList ID="IDVicti" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
-                                                                                <asp:ListItem runat="server" Value="SM" Selected="True" Text="Seleccione la identificación..."></asp:ListItem>
+                                                                                <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                             </asp:DropDownList>
                                                                             <br />
 
@@ -629,11 +657,27 @@
                                             <br />
                                             <center>
                                                 <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px;" runat="server" id="BtnsAcciones">
-                                                    <asp:Button ID="UpVict" runat="server" Text="🔃 Actualizar" CssClass="btn btn-primary btn-sm mayusculas" OnClick="UpImput_Click" />
-                                                    <asp:Button ID="SvVicti" runat="server" Text="💾 Guardar" CssClass="btn btn-success btn-sm mayusculas" OnClick="SvImput_Click" />
-                                                    <asp:Button ID="LimpVicti" runat="server" Text="🧹 Limpiar" CssClass="btn btn-danger btn-sm mayusculas" />
+                                                    <asp:Button ID="UpVict" runat="server" Text="🔃 Actualizar" CssClass="btn btn-outline-primary btn-sm mayusculas" OnClick="UpImput_Click" />
+                                                    <asp:Button ID="SvVicti" runat="server" Text="💾 Guardar" CssClass="btn btn-outline-success btn-sm mayusculas" OnClick="SvImput_Click" />
+                                                    <asp:Button ID="LimpVicti" runat="server" Text="🧹 Limpiar" CssClass="btn btn-outline-danger btn-sm mayusculas" OnClick="LimpiarForm_Click" />
+                                                    <asp:Button ID="ImprCedula" runat="server" Text="🖨️ Imprimir Cedula" CssClass="btn btn-outline-info btn-sm mayusculas" OnClick="ImprCedula_Click"/>
                                                 </div>
                                             </center>
+
+                                    <center>
+                                        <div class="center-panel" runat="server" id="panelPdfMostrar" style="display: none;">
+                                            <br />
+                                            <br />
+                                            <asp:Label ID="GenCedula" runat="server" CssClass="h4" Text="¡Cedula de imputado generada exitosamente! 🎉" Visible="false" />
+                                            <br />
+                                            <br />
+                                            <asp:Button ID="OcultCedula" CssClass="btn btn-outline-success align-content-center" runat="server" Text="👁️ Ocultar cedula" Visible="false" OnClick="OcultCedula_Click" />
+                                            <br />
+                                            <br />
+                                            <iframe id="CedulaSinInsert" runat="server" style="width: 100%; height: 500px;" src=""></iframe>
+                                        </div>
+                                    </center>
+
                                         </div>
                                     </div>
                                 </div>

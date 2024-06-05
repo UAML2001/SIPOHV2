@@ -9,7 +9,7 @@ namespace SIPOH.Models
     {
         internal static string ObtenerRutaFTP()
         {
-            return "ftp://192.168.73.7:22/"; 
+            return "ftp://192.168.73.7:22/";
         }
         internal static string ObtenerUsuarioFTP()
         {
@@ -20,4 +20,20 @@ namespace SIPOH.Models
             return "Acu24"; //"";
         }
     }
+
+    //public class ConexionFTP
+    //{
+    //    internal static string ObtenerRutaFTP()
+    //    {
+    //        return "ftp://SIPOHPruebas@192.168.1.4/";
+    //    }
+    //    internal static string ObtenerUsuarioFTP()
+    //    {
+    //        return "SIPOHPruebas"; //"";
+    //    }
+    //    internal static string ObtenerClaveFTP()
+    //    {
+    //        return "uriel2001"; //"";
+    //    }
+    //}
 }

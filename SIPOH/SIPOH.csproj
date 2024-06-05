@@ -2412,12 +2412,10 @@
     <Content Include="Controllers\AC_Digitalizacion\PortadaDigitalizacion.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="ExpedienteDigital\Imputados\CedulaImputado.pdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="ExpedienteDigital\Victimas\CedulaVictimas.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="ExpedienteDigital\Imputados\CedulaImputados.pdf" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\consignaciones\Consignaciones.js" />
     <Content Include="Scripts\consignaciones\RegistroIniciales.js" />
@@ -2737,7 +2735,9 @@
     <Compile Include="ExpedienteDigital\Imputados\CSImputado\ActualizarImputado.cs" />
     <Compile Include="ExpedienteDigital\Imputados\CSImputado\BusquedaImputado.cs" />
     <Compile Include="ExpedienteDigital\Imputados\CSImputado\InsertarImputado.cs" />
+    <Compile Include="ExpedienteDigital\Imputados\CSImputado\LimpiarFormularioImputado.cs" />
     <Compile Include="ExpedienteDigital\Imputados\CSImputado\LlenarFormularioTrasConsultaImputados.cs" />
+    <Compile Include="ExpedienteDigital\Imputados\CSImputado\MostrarCedulaImputado.cs" />
     <Compile Include="ExpedienteDigital\Imputados\CSImputado\ReiniciarFormularioImputado.cs" />
     <Compile Include="ExpedienteDigital\Victimas\CedulaVictimas.cs">
       <AutoGen>True</AutoGen>
@@ -2753,7 +2753,9 @@
     <Compile Include="ExpedienteDigital\Victimas\CSVictimas\ConsultarIdAsunto.cs" />
     <Compile Include="ExpedienteDigital\Victimas\CSVictimas\IdUsuarioPorSesion.cs" />
     <Compile Include="ExpedienteDigital\Victimas\CSVictimas\InsertarVictima.cs" />
+    <Compile Include="ExpedienteDigital\Victimas\CSVictimas\LimpiarFormularioVictima.cs" />
     <Compile Include="ExpedienteDigital\Victimas\CSVictimas\LlenarFormularioTrasConsulta.cs" />
+    <Compile Include="ExpedienteDigital\Victimas\CSVictimas\MostrarCedulaVictima.cs" />
     <Compile Include="ExpedienteDigital\Victimas\CSVictimas\ReiniciarFormulario.cs" />
     <Compile Include="Externo\BandejaSeguimiento.aspx.cs">
       <DependentUpon>BandejaSeguimiento.aspx</DependentUpon>

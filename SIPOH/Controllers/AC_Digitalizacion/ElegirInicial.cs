@@ -29,8 +29,9 @@ namespace SIPOH.Controllers.AC_Digitalizacion
             Label lblAdjuntar,
             System.Web.UI.WebControls.FileUpload UploadFileDigit,
             Button btnDigitalizar,
-            Label PortadaInicial,
-            HtmlIframe VPPortada
+            Button MostrarPort
+           //Label PortadaInicial,
+           //HtmlIframe VPPortada
            )
         {
             // Obtén el CheckBox que disparó el evento
@@ -155,60 +156,61 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                         lblAdjuntar.Visible = true;
                         UploadFileDigit.Visible = true;
                         btnDigitalizar.Visible = true;
-                        PortadaInicial.Visible = true;
+                        MostrarPort.Visible = true;
+                        //PortadaInicial.Visible = true;
 
 
-                        // Crea el comando para ejecutar el procedimiento almacenado
-                        using (SqlCommand comando = new SqlCommand("PortadaDigitalizacion", conn))
-                        {
-                            comando.CommandType = CommandType.StoredProcedure;
+                        //// Crea el comando para ejecutar el procedimiento almacenado
+                        //using (SqlCommand comando = new SqlCommand("PortadaDigitalizacion", conn))
+                        //{
+                        //    comando.CommandType = CommandType.StoredProcedure;
 
-                            // Configura los parámetros del procedimiento almacenado
-                            comando.Parameters.Add("@IdAsunto", SqlDbType.VarChar).Value = IdAsunto;
-                            comando.Parameters.Add("@IdJuzgado", SqlDbType.Int).Value = IdJuzgado;
+                        //    // Configura los parámetros del procedimiento almacenado
+                        //    comando.Parameters.Add("@IdAsunto", SqlDbType.VarChar).Value = IdAsunto;
+                        //    comando.Parameters.Add("@IdJuzgado", SqlDbType.Int).Value = IdJuzgado;
 
-                            // Crear un DataTable para almacenar los resultados
-                            DataTable dt = new DataTable();
+                        //    // Crear un DataTable para almacenar los resultados
+                        //    DataTable dt = new DataTable();
 
-                            // Recoger los resultados
-                            using (SqlDataReader reader = comando.ExecuteReader())
-                            {
-                                // Llenar el DataTable con los resultados
-                                dt.Load(reader);
-                            }
+                        //    // Recoger los resultados
+                        //    using (SqlDataReader reader = comando.ExecuteReader())
+                        //    {
+                        //        // Llenar el DataTable con los resultados
+                        //        dt.Load(reader);
+                        //    }
 
-                            // Asegúrate de que los nombres de los campos coincidan con los de tu procedimiento almacenado
-                            var valorAsunto = dt.Rows[0]["Asunto"].ToString();
-                            var valorNoAsunto = dt.Rows[0]["Numero"].ToString();
-                            var valorDelitos = dt.Rows[0]["Delitos"].ToString();
-                            var valorImputados = dt.Rows[0]["Imputados"].ToString();
-                            var valorVictimas = dt.Rows[0]["Victimas"].ToString();
-                            var valorFojas = dt.Rows[0]["NumeroFojas"].ToString();
+                        //    // Asegúrate de que los nombres de los campos coincidan con los de tu procedimiento almacenado
+                        //    var valorAsunto = dt.Rows[0]["Asunto"].ToString();
+                        //    var valorNoAsunto = dt.Rows[0]["Numero"].ToString();
+                        //    var valorDelitos = dt.Rows[0]["Delitos"].ToString();
+                        //    var valorImputados = dt.Rows[0]["Imputados"].ToString();
+                        //    var valorVictimas = dt.Rows[0]["Victimas"].ToString();
+                        //    var valorFojas = dt.Rows[0]["NumeroFojas"].ToString();
 
-                            // Configura la ruta del informe Crystal Reports (.rpt)
-                            string rutaInforme = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.rpt");
+                        //    // Configura la ruta del informe Crystal Reports (.rpt)
+                        //    string rutaInforme = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.rpt");
 
-                            // Crea el informe
-                            ReportDocument reporte = new ReportDocument();
-                            reporte.Load(rutaInforme);
+                        //    // Crea el informe
+                        //    ReportDocument reporte = new ReportDocument();
+                        //    reporte.Load(rutaInforme);
 
-                            // Asignar el DataTable como fuente de datos del informe
-                            reporte.SetDataSource(dt);
+                        //    // Asignar el DataTable como fuente de datos del informe
+                        //    reporte.SetDataSource(dt);
 
-                            // Configura el formato de salida como PDF
-                            reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
-                            reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
-                            string rutaArchivoPDF = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf");
-                            reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
+                        //    // Configura el formato de salida como PDF
+                        //    reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
+                        //    reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
+                        //    string rutaArchivoPDF = System.Web.HttpContext.Current.Server.MapPath("~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf");
+                        //    reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
 
-                            // Exporta el informe a PDF
-                            reporte.Export();
+                        //    // Exporta el informe a PDF
+                        //    reporte.Export();
 
-                            // Muestra el archivo PDF en el Panel            
-                            VPPortada.Src = "~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf";
-                            VPPortada.Visible = true;
+                        //    // Muestra el archivo PDF en el Panel            
+                        //    VPPortada.Src = "~/Controllers/AC_Digitalizacion/PortadaDigitalizacion.pdf";
+                        //    VPPortada.Visible = true;
 
-                        }
+                        //}
                     }
                     else
                     {
@@ -236,7 +238,8 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                         lblAdjuntar.Visible = false;
                         UploadFileDigit.Visible = false;
                         btnDigitalizar.Visible = false;
-                        PortadaInicial.Visible = false;
+                        MostrarPort.Visible = false;
+                        //PortadaInicial.Visible = false;
                     }
 
 

@@ -133,7 +133,7 @@
 
                         <%--<asp:Button ID="btnConsultarReporte" runat="server" CssClass="btn btn-success align-content-center" Text="Consultar Reporte" OnClick="btnConsultarReporte_Click" />--%>
                         <center>
-                        <asp:Button ID="btnMostrarInforme" CssClass="btn btn-success align-content-center" runat="server" Text="📄 Generar Reporte" OnClick="btnMostrarInforme_Click" OnClientClick="mostrarIndicadorDeCarga()" />
+                        <asp:Button ID="btnMostrarInforme" CssClass="btn btn-outline-success align-content-center" runat="server" Text="📄 Generar Reporte" OnClick="btnMostrarInforme_Click" OnClientClick="mostrarIndicadorDeCarga()" />
                         <div id="loadingDiv" style="display: none; text-align: center; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(128, 128, 128, 0.5); justify-content: center; align-items: center; z-index: 9999;">
                             <img src="https://cms.hvhs.org/carelink/images/loading.gif" alt="Cargando..." height="100px" width="100px" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
                             <br />
@@ -145,7 +145,7 @@
                         <asp:Label ID="TituloReporte" runat="server" CssClass="h4 text-center" Text="¡Su reporte esta listo! 🎉" Visible="false" />
                             <br />
                             <br />
-                        <asp:Button ID="GenerarOtro" CssClass="btn btn-success align-content-center" runat="server" Text="🔙 Generar otro reporte" Visible="false" OnClick="GenerarOtro_Click" />
+                        <asp:Button ID="GenerarOtro" CssClass="btn btn-outline-success align-content-center" runat="server" Text="🔙 Generar otro reporte" Visible="false" OnClick="GenerarOtro_Click" />
                         </center>
                         <br />
                         <iframe id="iframePDF" runat="server" width="100%" height="500px" visible="false" frameborder="0"></iframe>

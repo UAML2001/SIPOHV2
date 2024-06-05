@@ -73,8 +73,8 @@ namespace SIPOH.ExpedienteDigital.Victimas.CSVictimas
             {
                 SectorVicti.Enabled = true;
                 TipoSocie.Enabled = true;
-                SectorVicti.SelectedValue = "SS";
-                TipoSocie.SelectedValue = "SP";
+                SectorVicti.SelectedValue = "S";
+                TipoSocie.SelectedValue = "S";
                 GeneVicti.SelectedValue = "3";
 
                 AMVic.Enabled = false;

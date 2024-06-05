@@ -294,13 +294,13 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.TextBox EdadVicti;
 
         /// <summary>
-        /// Control UpdatePanel1.
+        /// Control UpdatePanel8.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel8;
 
         /// <summary>
         /// Control ContiNac.
@@ -699,6 +699,15 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.RadioButtonList AceptaDatos;
 
         /// <summary>
+        /// Control BtnsAcciones.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl BtnsAcciones;
+
+        /// <summary>
         /// Control UpVict.
         /// </summary>
         /// <remarks>
@@ -724,5 +733,50 @@ namespace SIPOH
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button LimpVicti;
+
+        /// <summary>
+        /// Control ImprCedula.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ImprCedula;
+
+        /// <summary>
+        /// Control panelPdfMostrar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl panelPdfMostrar;
+
+        /// <summary>
+        /// Control GenCedula.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label GenCedula;
+
+        /// <summary>
+        /// Control OcultCedula.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button OcultCedula;
+
+        /// <summary>
+        /// Control CedulaSinInsert.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlIframe CedulaSinInsert;
     }
 }

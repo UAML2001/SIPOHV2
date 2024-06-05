@@ -167,9 +167,9 @@ public class InsertarVictima
 
                 // Insertar los datos en la tabla P_Discapacidad
                 string queryIdDiscapacidadPartes = @"INSERT INTO [SIPOH].[dbo].[P_Discapacidades] 
-            ([IdPartes], [IdDiscapacidad]) 
-            VALUES 
-            (@IdPartes, @IdDiscapacidad)";
+                ([IdPartes], [IdDiscapacidad]) 
+                VALUES 
+                (@IdPartes, @IdDiscapacidad)";
                 foreach (string idDiscapacidad in idsDiscapacidades)
                 {
                     using (SqlCommand cmd = new SqlCommand(queryIdDiscapacidadPartes, conn, transaction))
@@ -181,7 +181,6 @@ public class InsertarVictima
                     }
                 }
 
-                // Ejecutar el procedimiento almacenado LlenarCedulaImputado
                 using (SqlCommand cmd = new SqlCommand("LlenarCedulaVictima", conn, transaction))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;

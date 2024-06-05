@@ -27,7 +27,8 @@ namespace SIPOH.Controllers.AC_Digitalizacion
            Label lblinfo,
            Label lblAdjuntar,
            System.Web.UI.WebControls.FileUpload UploadFileDigit,
-           Button btnDigitalizar
+           Button btnDigitalizar,
+           Button MostrarPort
           )
         {
             // Obtén el CheckBox que disparó el evento
@@ -151,6 +152,7 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                         lblAdjuntar.Visible = true;
                         UploadFileDigit.Visible = true;
                         btnDigitalizar.Visible = true;
+                        MostrarPort.Visible = true;
 
                     }
                     else
@@ -179,6 +181,7 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                         lblAdjuntar.Visible = false;
                         UploadFileDigit.Visible = false;
                         btnDigitalizar.Visible = false;
+                        MostrarPort.Visible = false;
                     }
 
 
