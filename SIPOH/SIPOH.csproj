@@ -2210,6 +2210,7 @@
     <Content Include="RegistroUsuario.aspx" />
     <Content Include="ReportesCtrl.aspx" />
     <Content Include="ReportesEjec.aspx" />
+    <Content Include="Scripts\Agenda\agenda.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -2693,6 +2694,7 @@
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatModalidadController.cs" />
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CatMunicipiosController.cs" />
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_CrudClasiDelitosController.cs" />
+    <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_DeleteClasiDelitosController.cs" />
     <Compile Include="Controllers\AC_JefeUnidadCausa\JUC_GeneralesController.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -3202,7 +3204,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\JUC_CrudClasiDelitos\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

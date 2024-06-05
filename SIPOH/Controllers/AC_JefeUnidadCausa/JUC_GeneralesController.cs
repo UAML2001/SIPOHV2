@@ -1,6 +1,8 @@
 ﻿using SIPOH.Controllers.AC_CatalogosCompartidos;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -124,10 +126,11 @@ namespace SIPOH.Controllers.AC_JefeUnidadCausa
                 ddl.Items.Insert(0, new ListItem("-- Seleccione --", "0"));
             }
 
+
             public void LoadModalidadPorIdDelDetalle(DropDownList ddl, int idDelito, int? idDelDetalle)
             {
-                var detalles = JUC_CatDelitoDetalleController.GetDelitoDetallesPorId(idDelito, idDelDetalle);
-                ddl.Items.Clear();  // Limpia primero el DropDownList para asegurar que no haya elementos residuales.
+                var detalles = JUC_CatDelitoDetalleController.GetDelitoDetallesPorId(idDelito, null);
+                ddl.Items.Clear();
 
                 if (detalles != null && detalles.Count > 0)
                 {
@@ -137,12 +140,46 @@ namespace SIPOH.Controllers.AC_JefeUnidadCausa
                     ddl.DataBind();
                 }
 
-                // Insertar la opción "-- SELECCIONAR --" al principio independientemente de si se recuperan datos o no
                 ddl.Items.Insert(0, new ListItem("-- SELECCIONAR --", "0"));
-                ddl.SelectedIndex = 0; // Asegúrate de que la opción predeterminada esté seleccionada por defecto.
+
+                if (idDelDetalle.HasValue && ddl.Items.FindByValue(idDelDetalle.Value.ToString()) != null)
+                {
+                    ddl.SelectedValue = idDelDetalle.Value.ToString();
+                }
+                else
+                {
+                    ddl.SelectedIndex = 0;
+                }
             }
 
 
+            public void LoadModalidadesPorIdDelito(DropDownList ddl, int idDelito)
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
+
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    string query = "SELECT IdDelDetalle, DelitoDetalle FROM P_CatDelitoDetalle WHERE IdDelito = @IdDelito";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@IdDelito", idDelito);
+                        conn.Open();
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            ddl.Items.Clear();
+                            while (reader.Read())
+                            {
+                                ddl.Items.Add(new ListItem(reader["DelitoDetalle"].ToString(), reader["IdDelDetalle"].ToString()));
+                            }
+                        }
+                    }
+                }
+
+                if (ddl.Items.Count > 0)
+                {
+                    ddl.Items.Insert(0, new ListItem("-- SELECCIONAR --", "0"));
+                }
+            }
 
 
             //

@@ -13,5 +13,23 @@ namespace SIPOH
 
     public partial class Agenda
     {
+
+        /// <summary>
+        /// Control ScriptManagerAgenda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManagerAgenda;
+
+        /// <summary>
+        /// Control UpdatePanelAgenda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelAgenda;
     }
 }

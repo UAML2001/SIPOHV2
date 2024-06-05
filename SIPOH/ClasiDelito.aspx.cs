@@ -1,7 +1,9 @@
 ﻿using SIPOH.Controllers.AC_JefeUnidadCausa;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -70,6 +72,15 @@ namespace SIPOH
         }
         protected void reclasificacionSi_CheckedChanged(object sender, EventArgs e)
         {
+            if (reclasificacionSi.Checked)
+            {
+                ViewState["Reclasificado"] = "R";
+            }
+            else
+            {
+                ViewState.Remove("Reclasificado");
+            }
+
             divFechaReclasificacion.Style["display"] = reclasificacionSi.Checked ? "" : "none";
             divAgregarClasificacion.Style["display"] = reclasificacionSi.Checked ? "" : "none";
             CargarCatDelitos();
@@ -106,30 +117,50 @@ namespace SIPOH
         protected void ddDelitos_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idDelito = Convert.ToInt32(ddDelitos.SelectedValue);
-            if (idDelito == 405)
+            CargarCatalogos cargarCatalogos = new CargarCatalogos();
+
+            // Limpiar el DropDownList y ocultarlo inicialmente
+            ddlModDelito.Items.Clear();
+            ddlModDelito.Visible = false;
+            divModalidad.Style["display"] = "none";
+
+            // Cargar modalidades (detalles del delito) para el IdDelito seleccionado
+            cargarCatalogos.LoadModalidadesPorIdDelito(ddlModDelito, idDelito);
+
+            // Verificar si hay modalidades para mostrar
+            if (ddlModDelito.Items.Count > 1) // Más de un item incluyendo "-- SELECCIONAR --"
             {
                 ddlModDelito.Visible = true;
                 divModalidad.Style["display"] = "block";
-                ddlModDelito.Items.Clear();
-                ddlModDelito.Items.Insert(0, new ListItem("-- SELECCIONAR --", "0"));
-                new CargarCatalogos().LoadModalidadPorIdDelDetalle(ddlModDelito, idDelito, null);
+               
                 ddlModDelito.SelectedIndex = 0;
             }
-            else
+        }
+        protected string ConvertPersecucion(object value)
+        {
+            if (value == null || value == DBNull.Value)
+                return string.Empty;
+
+            string persecucion = value.ToString();
+            switch (persecucion)
             {
-                ddlModDelito.Visible = false;
-                divModalidad.Style["display"] = "none";
-                ddlModDelito.Items.Clear();
-                ddlModDelito.Items.Insert(0, new ListItem("-- SELECCIONAR --", "0"));
+                case "Q":
+                    return "Querella";
+                case "D":
+                    return "Denuncia";
+                case "N":
+                    return "No Identificado";
+                default:
+                    return persecucion;
             }
         }
         protected void Limpiar()
         {
             DropDownList[] dropdowns = new DropDownList[] {
-                ddlModDelito, ddlCatMunicipios, ddlGradoConsumacion, ddlConcurso,
-                ddlFormaAccion, ddlCalificacion, ddlOrdenResultado,
-                ddlComision, ddlFormaComision, ddlModalidad, ddlModDelito
-            };
+        ddlModDelito, ddlCatMunicipios, ddlGradoConsumacion, ddlConcurso,
+        ddlFormaAccion, ddlCalificacion, ddlOrdenResultado,
+        ddlComision, ddlFormaComision, ddlModalidad, ddlModDelito
+    };
             foreach (var ddl in dropdowns)
             {
                 if (ddl.Items.Count > 0)
@@ -156,6 +187,38 @@ namespace SIPOH
                 }
                 ViewState["SelectedRowIndex"] = -1; // Resetear el índice seleccionado
             }
+
+            // Mantener los ViewState importantes
+            var accion = ViewState["Accion"];
+            var idAsunto = ViewState["IdAsunto"];
+            ViewState.Clear();
+            ViewState["Accion"] = accion;
+            ViewState["IdAsunto"] = idAsunto;
+            // Limpiar el ViewState de Reclasificado
+            ViewState.Remove("Reclasificado");
+        }
+        protected void LimpiarFormulario()
+        {
+            DropDownList[] dropdowns = new DropDownList[] {
+                ddlModDelito, ddlCatMunicipios, ddlGradoConsumacion, ddlConcurso,
+                ddlFormaAccion, ddlCalificacion, ddlOrdenResultado,
+                ddlComision, ddlFormaComision, ddlModalidad, ddlModDelito
+            };
+            foreach (var ddl in dropdowns)
+            {
+                if (ddl.Items.Count > 0)
+                    ddl.SelectedIndex = 0;
+            }
+            ddlModDelito.Visible = false;
+            divModalidad.Style["display"] = "none";
+            ddDelitos.Enabled = true;
+            rbQuerella.Checked = false;
+            rbDenuncia.Checked = false;
+            rbNoIdentificado.Checked = false;
+            txtLocalidad.Text = "";
+            CargarCatalogos cargarCatalogos = new CargarCatalogos();
+            cargarCatalogos.LoadDelitos(ddDelitos);
+            FechaDelito.Text = "";
         }
         protected void btnAgregarClasiDelito_Click(object sender, EventArgs e)
         {
@@ -164,7 +227,13 @@ namespace SIPOH
                 MensajeAdvertencia("Necesitas buscar un asunto para poder agregar más delitos.");
                 return;
             }
-            Limpiar();
+
+            // Limpiar los campos del formulario
+            LimpiarFormulario();
+
+            // Establecer el valor del ViewState para la acción después de limpiar
+            ViewState["Accion"] = "AG";
+
             divAgregarClasificacion.Style["display"] = "block";
             divCheckReclasificar.Style["display"] = "none";
             divFechaReclasificacion.Style["display"] = "none";
@@ -196,11 +265,10 @@ namespace SIPOH
             divAgregarClasificacion.Style["display"] = "none";
             string tipoAsunto = ddlTipoAsunto.SelectedValue;
             string numeroAsunto = txtNumeroAsunto.Text;
-            // Recuperar el ID del juzgado desde la sesión
+
             int idJuzgado;
             if (HttpContext.Current.Session["IDJuzgado"] != null && int.TryParse(HttpContext.Current.Session["IDJuzgado"].ToString(), out idJuzgado))
             {
-                // Continúa con la lógica si el IDJuzgado es válido
                 if (string.IsNullOrWhiteSpace(tipoAsunto) || string.IsNullOrWhiteSpace(numeroAsunto))
                 {
                     MensajeError("Por favor, selecciona un tipo de asunto e ingresa un número de asunto.");
@@ -216,9 +284,17 @@ namespace SIPOH
                     GridViewClasificacionDelitos.DataBind();
                     return;
                 }
+
                 GridViewClasificacionDelitos.DataSource = dt;
                 GridViewClasificacionDelitos.DataBind();
                 MensajeExito("Delitos encontrados con éxito.");
+
+                // Guardar IdAsunto, de la primera fila, si hay cambios mdificar el storage y aqui
+                if (dt.Rows.Count > 0)
+                {
+                    ViewState["IdAsunto"] = dt.Rows[0]["IdAsunto"];
+                }
+
                 divCheckReclasificar.Style["display"] = "none";
             }
             else
@@ -226,6 +302,7 @@ namespace SIPOH
                 MensajeError("No se ha podido identificar el juzgado correspondiente. Por favor, inicie sesión nuevamente.");
             }
         }
+        //FUNCION DE SELECTED GRID
         protected void GridViewClasificacionDelitos_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -244,6 +321,7 @@ namespace SIPOH
                 {
                     row.CssClass = "table-success";
                     ViewState["SelectedRowIndex"] = row.RowIndex;
+
                     // Carga detalles del delito seleccionado
                     int idDeliAsunto = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDeliAsunto"]);
                     JUC_CatDelitosController controller = new JUC_CatDelitosController();
@@ -253,15 +331,19 @@ namespace SIPOH
                         controller.LoadDelitoByDeliAsunto(ddDelitos, idDeliAsunto);
                         ddDelitos.Enabled = true;
                         ddDelitos.SelectedValue = delito.IdDelito.ToString();
-                        // Manejo específico para delitos con IdDelito 405
-                        if (delito.IdDelito == 405)
+
+                        // Obtener el IdDelDetalle de la fila seleccionada
+                        int? idDelDetalle = GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDelDetalle"] as int?;
+
+                        CargarCatalogos cargarCatalogos = new CargarCatalogos();
+
+                        // Cargar todas las modalidades y seleccionar la específica si existe
+                        cargarCatalogos.LoadModalidadPorIdDelDetalle(ddlModDelito, delito.IdDelito, idDelDetalle);
+
+                        if (ddlModDelito.Items.Count > 1)
                         {
                             ddlModDelito.Visible = true;
                             divModalidad.Style["display"] = "block";
-                            int idDelDetalle = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDelDetalle"] ?? 0);
-                            CargarCatalogos cargarCatalogos = new CargarCatalogos();
-                            cargarCatalogos.LoadModalidadPorIdDelDetalle(ddlModDelito, delito.IdDelito, idDelDetalle);
-                            ddlModDelito.SelectedValue = idDelDetalle.ToString();
                         }
                         else
                         {
@@ -269,15 +351,26 @@ namespace SIPOH
                             divModalidad.Style["display"] = "none";
                         }
                     }
+                    else
+                    {
+                        ddlModDelito.Visible = false;
+                        divModalidad.Style["display"] = "none";
+                    }
+
                     // Verificar si hay datos esenciales vacíos
                     if (GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdMunicipio"] == DBNull.Value ||
                         GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Persecucion"] == DBNull.Value)
                     {
+                        ViewState["Accion"] = "I";
                         MensajeAdvertencia("Hay datos vacíos en la tabla, te recomendamos actualizar el delito con su información");
                         divAgregarClasificacion.Style["display"] = "block";
                         return;
                     }
-                    // Actualización de DropDownList y detalles de localización
+                    else
+                    {
+                        ViewState["Accion"] = "U";
+                    }
+
                     UpdateDropDownLists(row);
                     SetLocationDetails(row);
                     string tipoPersecucion = GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Persecucion"].ToString();
@@ -292,9 +385,12 @@ namespace SIPOH
                 divAgregarClasificacion.Style["display"] = "none";
             }
         }
-        //Actualiza los dropdown 
+
+
+
         private void UpdateDropDownLists(GridViewRow row)
         {
+            // Actualiza los dropdown 
             SetDropDownValue(ddlCatMunicipios, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdMunicipio"]));
             SetDropDownValue(ddlGradoConsumacion, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatConsumacion"]));
             SetDropDownValue(ddlConcurso, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatConcurso"]));
@@ -305,25 +401,25 @@ namespace SIPOH
             SetDropDownValue(ddlFormaComision, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatComision"]));
             SetDropDownValue(ddlModalidad, Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Id_CatModalidad"]));
         }
-        //Agrega un valor a el item de un dll por parametro
         private void SetDropDownValue(DropDownList ddl, int value)
         {
+            // Agrega un valor a el item de un ddl por parámetro
             if (ddl.Items.FindByValue(value.ToString()) != null)
             {
                 ddl.SelectedValue = value.ToString();
             }
         }
-        //Actualiza los campos de texto relacionados con la localización y fecha del delito basado en la fila seleccionada del GridView.
         private void SetLocationDetails(GridViewRow row)
         {
+            // Actualiza los campos de texto relacionados con la localización y fecha del delito basado en la fila seleccionada del GridView.
             string fechaDelito = Convert.ToDateTime(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["FeDelito"]).ToString("yyyy-MM-dd");
             string domicilio = GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["Domicilio"].ToString();
             txtLocalidad.Text = domicilio;
             FechaDelito.Text = fechaDelito;
         }
-        //Configura el estado de los radio buttons relacionados con el tipo de persecución del delito.
         private void SeleccionarTipoPersecucion(string tipoPersecucion)
         {
+            // Configura el estado de los radio buttons relacionados con el tipo de persecución del delito.
             rbQuerella.Checked = false;
             rbDenuncia.Checked = false;
             rbNoIdentificado.Checked = false;
@@ -342,15 +438,97 @@ namespace SIPOH
                     break;
             }
         }
-        //INICIA GUARDADO la funcion es sobre el update bajo el valor U
+        //FUNCION DE GUARDADO
+        private DateTime? ObtenerFechaIngreso(int idAsunto)
+        {
+            //funcion para obtener la fecha de ingreso del asunto
+            DateTime? fechaIngreso = null;
+            string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT FeIngreso FROM P_Asunto WHERE IdAsunto = @IdAsunto";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@IdAsunto", idAsunto);
+
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        fechaIngreso = reader["FeIngreso"] as DateTime?;
+                    }
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error al obtener FeIngreso: " + ex.Message);
+                }
+            }
+
+            return fechaIngreso;
+        }
         protected void btnGuardarClasiDeli_Click(object sender, EventArgs e)
         {
-            if (GridViewClasificacionDelitos.SelectedIndex == -1)
+            string accion = ViewState["Accion"] != null ? ViewState["Accion"].ToString() : string.Empty;
+
+            if (accion == string.Empty)
             {
-                MensajeError("Selecciona un delito de la lista para actualizar.");
+                MensajeError("No se ha definido la acción a realizar.");
                 return;
             }
-            int idDeliAsunto = Convert.ToInt32(GridViewClasificacionDelitos.SelectedDataKey.Values["IdDeliAsunto"]);
+
+            // Validaciones de campos obligatorios
+            if (ddlGradoConsumacion.SelectedValue == "0" || ddlCalificacion.SelectedValue == "0" || ddlConcurso.SelectedValue == "0" ||
+                ddlOrdenResultado.SelectedValue == "0" || ddlFormaComision.SelectedValue == "0" || ddlFormaAccion.SelectedValue == "0" ||
+                ddlModalidad.SelectedValue == "0" || ddlComision.SelectedValue == "0" || ddlCatMunicipios.SelectedValue == "0" ||
+                string.IsNullOrWhiteSpace(FechaDelito.Text))
+            {
+                MensajeError("Por favor, completa todos los campos obligatorios.");
+                return;
+            }
+
+            DateTime feDelito;
+            if (!DateTime.TryParse(FechaDelito.Text, out feDelito))
+            {
+                MensajeError("Fecha de delito no válida.");
+                return;
+            }
+
+            int idAsunto = Convert.ToInt32(ViewState["IdAsunto"]);
+            DateTime? feIngreso = ObtenerFechaIngreso(idAsunto);
+
+            if (feIngreso == null)
+            {
+                MensajeError("No se pudo obtener la fecha de ingreso.");
+                return;
+            }
+
+            if (feDelito > feIngreso)
+            {
+                MensajeError("La fecha del delito no puede ser mayor a la fecha de captura.");
+                return;
+            }
+
+            int? idDelitoC = null;
+            int? idDeliAsunto = null;
+
+            if (accion == "U")
+            {
+                if (GridViewClasificacionDelitos.SelectedDataKey.Values["IdDelitoC"] != null)
+                {
+                    idDelitoC = Convert.ToInt32(GridViewClasificacionDelitos.SelectedDataKey.Values["IdDelitoC"]);
+                }
+            }
+
+            if (accion != "AG")
+            {
+                if (GridViewClasificacionDelitos.SelectedDataKey.Values["IdDeliAsunto"] != null)
+                {
+                    idDeliAsunto = Convert.ToInt32(GridViewClasificacionDelitos.SelectedDataKey.Values["IdDeliAsunto"]);
+                }
+            }
+
             int consumacion = Convert.ToInt32(ddlGradoConsumacion.SelectedValue);
             int calificacion = Convert.ToInt32(ddlCalificacion.SelectedValue);
             int concurso = Convert.ToInt32(ddlConcurso.SelectedValue);
@@ -362,25 +540,85 @@ namespace SIPOH
             int idMunicipio = Convert.ToInt32(ddlCatMunicipios.SelectedValue);
             string domicilio = txtLocalidad.Text;
             string persecucion = rbQuerella.Checked ? "Q" : rbDenuncia.Checked ? "D" : rbNoIdentificado.Checked ? "N" : "";
-            if (DateTime.TryParse(FechaDelito.Text, out DateTime fechaDelito))
+
+            // Obtener el IdDelDetalle si está visible
+            int idDelDetalle = ddlModDelito.Visible && ddlModDelito.SelectedValue != "0" ? Convert.ToInt32(ddlModDelito.SelectedValue) : 0;
+
+            JUC_CrudClasiDelitosController controller = new JUC_CrudClasiDelitosController();
+            bool resultado = false;
+
+            if (accion == "AG")
             {
-                JUC_CrudClasiDelitosController controller = new JUC_CrudClasiDelitosController();
-                bool resultado = controller.ActualizarClasificacionDelito(idDeliAsunto, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, fechaDelito, domicilio);
-                if (resultado)
+                int idDelito = Convert.ToInt32(ddDelitos.SelectedValue);
+                resultado = controller.ActualizarClasificacionDelito(accion, null, null, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, feDelito, domicilio, idDelDetalle, idAsunto, idDelito);
+            }
+            else // Maneja "U" e "I"
+            {
+                resultado = controller.ActualizarClasificacionDelito(accion, idDelitoC, idDeliAsunto, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, feDelito, domicilio, idDelDetalle);
+            }
+
+            if (resultado)
+            {
+                MensajeExito("La clasificación del delito ha sido procesada correctamente.");
+                btnBuscarClasiDelito_Click(sender, e);
+            }
+            else
+            {
+                MensajeError("Error al procesar la clasificación del delito.");
+            }
+        }
+
+        //FUNCION DE BORRAR
+        protected void btnModalBorrar_Click(object sender, EventArgs e)
+        {
+             ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "abrirModal", "abrirModalConfirmar();", true);
+        }
+        protected void btnBorrarClasiDelito_Click(object sender, EventArgs e)
+        {
+            if (GridViewClasificacionDelitos.SelectedIndex >= 0)
+            {
+                // Verificar si la cantidad de filas en la GridView es mayor que 1
+                if (GridViewClasificacionDelitos.Rows.Count > 1)
                 {
-                    MensajeExito("La clasificación del delito ha sido actualizada correctamente.");
+                    GridViewRow row = GridViewClasificacionDelitos.SelectedRow;
+                    int idDeliAsunto = Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDeliAsunto"]);
+
+                    // Verificar si IdDelitoC es DBNull antes de convertir
+                    int idDelitoC = GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDelitoC"] != DBNull.Value
+                                    ? Convert.ToInt32(GridViewClasificacionDelitos.DataKeys[row.RowIndex].Values["IdDelitoC"])
+                                    : 0;
+
+                    // Verificar si el checkbox de reclasificación está marcado
+                    string accion = ViewState["Reclasificado"] != null ? ViewState["Reclasificado"].ToString() : string.Empty;
+
+                    JUC_DeleteClasiDelitosController controller = new JUC_DeleteClasiDelitosController();
+                    bool resultado = controller.EliminarClasificacionDelito(accion, idDeliAsunto, idDelitoC);
+
+                    if (resultado)
+                    {
+                        // Mostrar mensaje de éxito
+                        MensajeExito("Se eliminó la clasificación del delito exitosamente");
+                        // Refrescar el GridView después de la eliminación
+                        btnBuscarClasiDelito_Click(sender, e);
+                    }
+                    else
+                    {
+                        // Mostrar mensaje de error
+                        MensajeError("Error al eliminar la clasificación del delito.");
+                    }
                 }
                 else
                 {
-                    MensajeError("Error al actualizar la clasificación del delito. No se modificó ningún registro.");
+                    // Mostrar mensaje de advertencia si solo queda una fila en la GridView
+                    MensajeError("No se puede eliminar la última fila. Debe haber al menos un delito asociado al asunto.");
                 }
             }
             else
             {
-                MensajeError("Formato de fecha inválido.");
+                // Mostrar mensaje de advertencia si no hay una fila seleccionada
+                MensajeError("Por favor seleccione una fila de delito para eliminarlo.");
             }
         }
-
         //
     }
 }

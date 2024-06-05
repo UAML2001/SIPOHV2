@@ -15,6 +15,15 @@ namespace SIPOH
     {
 
         /// <summary>
+        /// Control btnBorrarClasiDelito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBorrarClasiDelito;
+
+        /// <summary>
         /// Control ScriptManagerClasiDeli.
         /// </summary>
         /// <remarks>
@@ -303,12 +312,12 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.Button btnGuardarClasiDeli;
 
         /// <summary>
-        /// Control Button1.
+        /// Control btnModalBorrar.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnModalBorrar;
     }
 }

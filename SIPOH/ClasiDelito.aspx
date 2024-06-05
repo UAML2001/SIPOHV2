@@ -13,11 +13,34 @@
             background-color: #a1d99b !important;
         }
     </style>
+
+    <div class="modal fade" id="confirmacionBorrar" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <i class="bi bi-exclamation-diamond-fill superpermisoGuardarCambios text-warning text-center"></i>
+                <h1 class="modal-title fs-5 text-center" id="lblTituloConfirmacionModal">¿Seguro que quiere Eliminar esta clasificacion del delito?</h1>
+                <div class="modal-body">
+                    <span>Recuerda que estaras eliminando la relacion entre el asunto y el delito.</span>
+                </div>
+                <div class="modal-footer">
+                     <button type="button" class="btn btn-warning" onclick="CerrarModalConfirmar()" data-bs-dismiss="modal">No</button>
+                     <asp:Button ID="btnBorrarClasiDelito" runat="server" Text="Si"
+                        CssClass="btn btn-success ml-2" OnClick="btnBorrarClasiDelito_Click" />
+
+                </div>
+            </div>
+        </div>
+      </div>
+
     <asp:ScriptManager ID="ScriptManagerClasiDeli" runat="server"></asp:ScriptManager>
     <link href="Conteffnt/css/Consignaciones.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <link href="Content/css/Iniciales.css" rel="stylesheet" />
+    <link href="Content/css/Permiso.css" rel="stylesheet" />
     <div>
         <h1 style="margin-left: 5%" class="h5">Clasificación de delitos <i class="fas fa-angle-right"></i><span
             id="dataSplash" class="text-primary fw-bold"></span></h1>
@@ -64,7 +87,7 @@
                                                 <asp:GridView ID="GridViewClasificacionDelitos" ShowHeaderWhenEmpty="true" EmptyDataText="No hay datos disponibles"
                                                     runat="server" CssClass="table table-sm table-bordered custom-gridview" AutoGenerateColumns="False"
                                                     OnSelectedIndexChanged="GridViewClasificacionDelitos_SelectedIndexChanged"
-                                                    DataKeyNames="IdDeliAsunto,IdMunicipio,Id_CatConsumacion,Id_CatConcurso,Id_CatAccion,Id_CatCalificacion,Id_CatClasificacion,Id_CatComision,Id_CatElemComision,Id_CatModalidad,IdDelDetalle,Persecucion,FeDelito,Domicilio">
+                                                    DataKeyNames="IdDelitoC,IdDeliAsunto,IdMunicipio,Id_CatConsumacion,Id_CatConcurso,Id_CatAccion,Id_CatCalificacion,Id_CatClasificacion,Id_CatComision,Id_CatElemComision,Id_CatModalidad,IdDelDetalle,Persecucion,FeDelito,Domicilio">
                                                     <Columns>
                                                         <asp:TemplateField>
                                                             <ItemTemplate>
@@ -83,7 +106,11 @@
                                                         <asp:BoundField DataField="Modalidad" HeaderText="Modalidad" HeaderStyle-CssClass="bg-success text-white" />
                                                         <asp:BoundField DataField="ElemComision" HeaderText="Elementos de comisión" HeaderStyle-CssClass="bg-success text-white" />
                                                         <asp:BoundField DataField="Municipio" HeaderText="Lugar de ocurrencia del delito" HeaderStyle-CssClass="bg-success text-white" />
-                                                        <asp:BoundField DataField="Persecucion" HeaderText="Persecucion del delito" HeaderStyle-CssClass="bg-success text-white" />
+                                                        <asp:TemplateField HeaderText="Persecución del delito" HeaderStyle-CssClass="bg-success text-white">
+                                                            <ItemTemplate>
+                                                                <%# ConvertPersecucion(Eval("Persecucion")) %>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
                                                         <asp:BoundField DataField="FeDelito" HeaderText="Fecha delito" HeaderStyle-CssClass="bg-success text-white" />
                                                         <asp:BoundField DataField="Domicilio" HeaderText="Domicilio" HeaderStyle-CssClass="bg-success text-white" />
                                                         <asp:BoundField DataField="IdDelDetalle" HeaderText="IdDelDetalle" Visible="false" />
@@ -187,7 +214,7 @@
                                                     </asp:DropDownList>
                                                 </div>
                                                 <div class="col-md-12 col-lg-12 col-xl-12 col-xxl-12 col-sm-12">
-                                                    <label class="form-label text-secondary">*Localidad:</label>
+                                                    <label class="form-label text-secondary">*Lugar de ocurrencia:</label>
                                                     <div class="input-group">
                                                         <asp:TextBox runat="server" type="text" ID="txtLocalidad" class="form-control form-control-sm mayusculas" />
                                                     </div>
@@ -245,7 +272,7 @@
                                                     <asp:Button ID="btnGuardarClasiDeli" runat="server" Text="Guardar o Modificar" CssClass="btn btn-sm btn-outline-primary" OnClick="btnGuardarClasiDeli_Click"/>
                                                 </div>
                                                 <div class="col col-lg-2">
-                                                    <asp:Button ID="Button1" runat="server" Text="Eliminar" CssClass="btn btn-sm btn-outline-danger" />
+                                                    <asp:Button OnClick="btnModalBorrar_Click" ID="btnModalBorrar" runat="server" Text="Eliminar" CssClass="btn btn-sm btn-outline-danger" />
                                                 </div>
                                             </div>
 
@@ -259,6 +286,7 @@
             </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
@@ -298,6 +326,15 @@
             });
         });
 
+        function abrirModalConfirmar() {
+            $('#confirmacionBorrar').modal('show');
+        }
+
+        function CerrarModalConfirmar() {
+            $('#confirmacionBorrar').modal('hide');
+            $('body').removeClass('modal-open').css('overflow', ''); // Restablece el overflow
+            $('.modal-backdrop').remove();
+        }
     </script>
 
 </asp:Content>
