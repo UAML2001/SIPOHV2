@@ -84,15 +84,15 @@ namespace SIPOH.Views
                 //Session["NombresDelitos"] = new List<string>();
                 Session["Anexos"] = new List<Anexos>();
 
+                CleanEtiquetasForm();
                 CleanEtiquetaFormImputado();
                 CleanEtiquetaFormAnexo();
                 CleanEtiquetaFormDelito();
                 CleanEtiquetaFormVictima();
-                CleanEtiquetasForm();
                 
             }
 
-
+            
 
         }
 
@@ -104,6 +104,7 @@ namespace SIPOH.Views
             public string Delitos { get; set; }
             public string Victimas { get; set; }
         }
+
         protected void btnFiltrarInicial(object sender, EventArgs e)
         {
             string VFiltradoPor = ddlTipoFiltrado.SelectedValue;
@@ -284,10 +285,11 @@ namespace SIPOH.Views
         protected void inputTipoAsunto_SelectedIndexChanged(object sender, EventArgs e)
         {
             TicketDiv.Style["display"] = "none";
-            string valorSeleccionado = inputTipoAsunto.SelectedValue;
-
+            string valorSeleccionado = inputTipoDocumento.SelectedValue;
             // Limpia el DropDownList antes de agregar nuevas opciones
-            inputRadicacion.Items.Clear();
+            inputTipoSolicitud.Items.Clear();
+            ListItem staticItem = new ListItem("Selecciona una opción", "0");
+            inputTipoSolicitud.Items.Add(staticItem);
 
             if (valorSeleccionado == "C" || valorSeleccionado == "CP")
             {
@@ -296,8 +298,8 @@ namespace SIPOH.Views
                 for (int i = 0; i < solicitudes.Count; i++)
                 {
                     ListItem item = new ListItem(solicitudes[i], ids[i]);
-                    inputRadicacion.Items.Add(item);
-                    //Debug.WriteLine("solicitud: " + solicitudes[i], "IDS: " + ids[i]);
+                    inputTipoSolicitud.Items.Add(item);
+                    
                 }
             }
 
@@ -314,8 +316,8 @@ namespace SIPOH.Views
         protected void inputRadicacion_SelectedIndexChanged(object sender, EventArgs e)
         {
 
-            string valorSeleccionado = inputRadicacion.SelectedItem.Text;
-            copyDropDownTipoSolicitud.Text = valorSeleccionado.ToUpper();
+            string valorSeleccionado = inputTipoSolicitud.SelectedItem.Text;
+            copyDropDownTipoSolicitud.Text = valorSeleccionado.ToUpper();                        
             updPanel.Update();
         }
 
@@ -626,14 +628,15 @@ namespace SIPOH.Views
 
         private bool CamposIncompletos(out string[] camposFaltantes)
         {
-            string TipoAsunto = inputTipoAsunto.SelectedValue;
+            string TipoAsunto = inputTipoDocumento.SelectedValue;
             string TipoRadicacion = inpuTipoRadicacion.SelectedValue;
             string Observaciones = inputObservaciones.Text;
             string QuienIngresa = inputQuienIngresa.SelectedValue;
             string MP = inputNombreParticular.Text;
             string Prioridad = inputPrioridad.SelectedValue;
             string Fojas = inputNumeroFojas.Text;
-            string IdAudiencia = inputRadicacion.SelectedValue;
+            string IdAudiencia = inputTipoSolicitud.SelectedValue;
+            
             DateTime FeIngreso = DateTime.Parse(inputFechaRecepcion.Text);
             string NUC = inputNUC.Text;
 
@@ -645,7 +648,7 @@ namespace SIPOH.Views
         string.IsNullOrWhiteSpace(MP) ? "Nombre Particular" : "",
         string.IsNullOrWhiteSpace(Prioridad) ? "Prioridad" : "",
         string.IsNullOrWhiteSpace(Fojas) ? "Número de Fojas" : "",
-        string.IsNullOrWhiteSpace(IdAudiencia) ? "Tipo de solicitud" : "",
+        (IdAudiencia == "0") ? "Tipo de solicitud" : "",
         FeIngreso == DateTime.MinValue ? "Fecha de Ingreso" : "",
             string.IsNullOrWhiteSpace(NUC) ? "NUC" : "",
             };
@@ -665,7 +668,7 @@ namespace SIPOH.Views
         {
             try
             {
-                string tipoAsunto = inputTipoAsunto.SelectedValue;
+                string tipoAsunto = inputTipoDocumento.SelectedValue;
                 string tipoRadicacion = inpuTipoRadicacion.SelectedValue;
                 string observaciones = inputObservaciones.Text;
                 string quienIngresa = inputQuienIngresa.SelectedValue;
@@ -695,7 +698,7 @@ namespace SIPOH.Views
                     actividad = 3;
                     Digitalizado = "S";
                     int idSolicitudBuzon = int.Parse(Session["IdSolicitudBuzon"].ToString());
-                    transaccionExitosa = RegistroIniciales.SendRegistroIniciales(fechaActual, actividad, DateTime.Parse(inputFechaRecepcion.Text), tipoAsunto, Digitalizado, inputRadicacion.SelectedValue, observaciones, quienIngresa, mp, prioridad, inputNumeroFojas.Text, tipoRadicacion, inputNUC.Text, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
+                    transaccionExitosa = RegistroIniciales.SendRegistroIniciales(fechaActual, actividad, DateTime.Parse(inputFechaRecepcion.Text), tipoAsunto, Digitalizado, inputTipoSolicitud.SelectedValue, observaciones, quienIngresa, mp, prioridad, inputNumeroFojas.Text, tipoRadicacion, inputNUC.Text, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
                     bool result = RegistroIniciales.UpdateBuzonSalida(idSolicitudBuzon, fechaActual, estatus);
 
                     mensaje = result ? "Se actualizó correctamente la solicitud de buzón." : "Problemas al actualizar el buzón de salida.";
@@ -705,7 +708,7 @@ namespace SIPOH.Views
                 {
                     actividad = 1;
                     Digitalizado = "N";
-                    transaccionExitosa = RegistroIniciales.SendRegistroIniciales(fechaActual, actividad, DateTime.Parse(inputFechaRecepcion.Text), tipoAsunto, Digitalizado, inputRadicacion.SelectedValue, observaciones, quienIngresa, mp, prioridad, inputNumeroFojas.Text, tipoRadicacion, inputNUC.Text, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
+                    transaccionExitosa = RegistroIniciales.SendRegistroIniciales(fechaActual, actividad, DateTime.Parse(inputFechaRecepcion.Text), tipoAsunto, Digitalizado, inputTipoSolicitud.SelectedValue, observaciones, quienIngresa, mp, prioridad, inputNumeroFojas.Text, tipoRadicacion, inputNUC.Text, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
                     mensaje = transaccionExitosa ? "Envío exitoso. Tu registro se ha hecho correctamente." : "¡Ocurrió un error en la transacción! El folio ha sido asignado, consulta a soporte.";
                     scriptToast = transaccionExitosa ? $"toastInfo('{mensaje}');" : $"toastError('{mensaje}');";
                 }
@@ -731,7 +734,7 @@ namespace SIPOH.Views
             }
             finally
             {
-                inputRadicacion.Items.Clear();
+                inputTipoSolicitud.Items.Clear();
             }
         }
 
@@ -817,7 +820,7 @@ namespace SIPOH.Views
 
         public string CrearTicketSELLO()
         {
-            string TipoAsunto = inputTipoAsunto.SelectedValue;
+            string TipoAsunto = inputTipoDocumento.SelectedValue;
 
             StringBuilder ticket = new StringBuilder();
             string nombreJuzgado = Session["NombreJuzgado"] as string;
@@ -856,6 +859,7 @@ namespace SIPOH.Views
 
                 ticket.AppendLine($"{AsuntoIncial}:{Causa}");
             }
+            ticket.AppendLine($"FOLIO: {Session["UserId"]}");
             ticket.AppendLine($"FECHA RECEPCIÒN:{GetFechaYHora()}");
             ticket.AppendLine($"NUC:{NUC.ToUpper()}");
 
@@ -1064,7 +1068,7 @@ namespace SIPOH.Views
         private void CleanEtiquetasForm()
         {
 
-            inputTipoAsunto.SelectedIndex = 0;
+            inputTipoDocumento.SelectedIndex = 0;
             inpuTipoRadicacion.SelectedIndex = 0;
             inputObservaciones.Text = "";
             inputQuienIngresa.SelectedIndex = 0;
@@ -1074,7 +1078,7 @@ namespace SIPOH.Views
             inputNumeroFojas.Text = "";
             //inputRadicacion.SelectedValue = "";
             inputFechaRecepcion.Text = "";
-            inputNUC.Text = "";
+            inputNUC.Text = "";            
         }
         private void CleanTablas()
         {

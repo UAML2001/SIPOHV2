@@ -114,39 +114,19 @@ public class PersonalUsuariosController
     }
     
     //Obtener perfil de logeos
-    public static List<DataCatPerfil> GetCatPerfil()
-    {
-        List<DataCatPerfil> resultados = new List<DataCatPerfil>();
-        using(SqlConnection connection = new ConexionBD().Connection)
-        {
-            connection.Open();
-            using(SqlCommand command = new SqlCommand("SELECT IdPerfil, Perfil, TipoCircuito FROM P_CatPerfiles", connection))
-            {
-                
-                using(SqlDataReader reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        DataCatPerfil perfil = new DataCatPerfil();
-                        perfil.IdPerfil = Convert.ToInt32(reader["IdPerfil"]);
-                        perfil.Perfil = reader["Perfil"].ToString();
-                        perfil.tipoCircuito = reader["TipoCircuito"].ToString();
-                        resultados.Add(perfil);
-                    }
-                }
-            }
-        }
-        return resultados;
-    }
-    public static List<DataCatPerfil> GetCatPerfilAtencionCiudadana()
+    
+    public static List<DataCatPerfil> GetCatPerfilAtencionCiudadana(int IdJuzgado)
     {
         List<DataCatPerfil> resultados = new List<DataCatPerfil>();
         using (SqlConnection connection = new ConexionBD().Connection)
         {
             connection.Open();
-            using (SqlCommand command = new SqlCommand("SELECT IdPerfil, Perfil, TipoCircuito FROM P_CatPerfiles WHERE TipoCircuito != 'a' AND TipoCircuito != 'e'", connection))
+            SqlTransaction transaction = connection.BeginTransaction();
+            using (SqlCommand command = new SqlCommand("AC_Obtener_CatPerfiles", connection, transaction))
             {
-
+                command.Parameters.Add("@IdJuzgado", SqlDbType.Int).Value = IdJuzgado;
+                command.CommandType = CommandType.StoredProcedure;
+                command.ExecuteNonQuery();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())

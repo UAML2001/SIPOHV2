@@ -15,6 +15,7 @@ using System.Net.NetworkInformation;
 using System.Diagnostics;
 using SIPOH.Views;
 using Microsoft.Ajax.Utilities;
+using SIPOH.Controllers.AC_Digitalizacion;
 
 namespace SIPOH
 {
@@ -113,7 +114,7 @@ namespace SIPOH
             }
             return true;
         }
-
+        public static int Equipo;
         public static bool SendRegistroPromocion( List<DataPromocion> InfoPromocion, List<AnexosPromocion> AnexosP)
         {
             using(SqlConnection connection = new ConexionBD().Connection)
@@ -122,6 +123,24 @@ namespace SIPOH
                 SqlTransaction transaction = connection.BeginTransaction();
                 try
                 {
+                    using (SqlConnection Connection = new ConexionBD().Connection)
+                    {
+                        using (SqlCommand command = new SqlCommand("AC_AsignacionCargaTrabajo", connection, transaction))
+                        {
+                            command.Parameters.Add("@IdJuzgado", SqlDbType.Int).Value = Session["IDJuzgado"].ToString();
+                            command.Parameters.Add("@TipoAsunto", SqlDbType.VarChar).Value = InfoPromocion.Select(b => b.TipoDocumento).FirstOrDefault().ToUpper();
+                            //command.Parameters.Add("@TipoAsunto", SqlDbType.VarChar).Value = "C";
+                            command.CommandType = CommandType.StoredProcedure;
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    Equipo = int.Parse(reader["Equipo"].ToString());
+                                    Debug.WriteLine("EQUIPO: " + Equipo);
+                                }
+                            }
+                        }
+                    }
                     using (SqlCommand command = new SqlCommand())
                     {
                         command.Connection = connection;
@@ -143,8 +162,8 @@ namespace SIPOH
                         command.Parameters.AddWithValue("@IdPerfil", Session["IdPerfil"]);
                         command.Parameters.AddWithValue("@FeAsunto", InfoPromocion.Select(b => b.FeAsunto).FirstOrDefault());                        
                         command.Parameters.AddWithValue("@Estado", InfoPromocion.Select(b => b.EstadoPromocion).FirstOrDefault().ToUpper());
-
-    
+                        //asignar carga de trabjo 
+                        command.Parameters.AddWithValue("@Equipo", SqlDbType.Int).Value = Equipo;
 	
                         SqlParameter idPosteriorParam = new SqlParameter("@IDPosterior", SqlDbType.Int);
                         idPosteriorParam.Direction = ParameterDirection.Output;
@@ -169,6 +188,7 @@ namespace SIPOH
 
 
                     }
+
                     transaction.Commit();
                     Debug.WriteLine("Registro de promocion fue correcta!");
                     return true;

@@ -499,7 +499,7 @@ namespace SIPOH
                             commandTrayecto.Parameters.Add("@IdPerfil", SqlDbType.Int).Value = Session["IdPerfil"];
                             commandTrayecto.Parameters.Add("@IdUsuario", SqlDbType.Int).Value = Session["IdUsuario"];
                             commandTrayecto.Parameters.Add("@FeAsunto", SqlDbType.DateTime).Value = FeIngresoAsunto;
-                            commandTrayecto.Parameters.Add("@Tipo", SqlDbType.VarChar).Value = "NULL";
+                            commandTrayecto.Parameters.Add("@Tipo", SqlDbType.VarChar).Value = "I";
                             commandTrayecto.Parameters.Add("@Estado", SqlDbType.VarChar).Value = "A";
                             commandTrayecto.Parameters.Add("@IdEquipo", SqlDbType.Int).Value = Equipo;
                             commandTrayecto.CommandType = CommandType.StoredProcedure;

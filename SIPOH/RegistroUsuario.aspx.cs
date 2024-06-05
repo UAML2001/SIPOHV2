@@ -37,7 +37,7 @@ namespace SIPOH
                 ModulosSistemas(PermisoSistemas);
                 ModulosAdministrador(PermisoAdministrador);
                 ModulosEliminar(PermisoEliminar);
-                CargarCatPerfil(PermisoSistemas, PermisoUsuario);
+                
             }
             else
             {
@@ -136,7 +136,7 @@ namespace SIPOH
             {
                 int IdJuzgado = int.Parse(Session["IDJuzgado"]as string);
                 int Idperfil = int.Parse(Session["IdPerfil"]as string);
-
+                
                 obtnerPermisos(IdPermiso , Idperfil);
                 Actions();
                 
@@ -145,9 +145,11 @@ namespace SIPOH
                 formRegistroUsuario.Visible = false;
                 inputBuscarusuario.Text = "";
                 GetCircuito(Idperfil);
-                CatCargaTrabajo(IdJuzgado, Idperfil);
+                CargarCatPerfil(IdJuzgado);
 
-                
+
+                CatCargaTrabajo(IdJuzgado, Idperfil);
+            
             }
                 
             
@@ -155,7 +157,6 @@ namespace SIPOH
         }
         protected void InfoInputCargaTrabajo(int IdJuzgado, int Perfil)
         {
-            
             List<DataCatEquipoTrabajo> data = GetCatEquipoTrabajo(IdJuzgado, Perfil);
             inputEquipoTrabajo.Items.Clear();
             inputEquipoTrabajo.Items.Add(new ListItem("Selecciona una opción", "0"));
@@ -165,14 +166,13 @@ namespace SIPOH
             inputEquipoTrabajo.DataBind();
         }
         protected void CatCargaTrabajo(int IdJuzgado, int Perfil)
-        {
-           
-            string isCabecera = GetCabeceraCircuito(IdJuzgado);
-            if(isCabecera == "S")
+        {            
+            string isCabecera = GetCabeceraCircuito(IdJuzgado);            
+            if (isCabecera == "S")
             {
                 EquipoTrabajo.Visible = true;
                 InfoInputCargaTrabajo(IdJuzgado, Perfil);
-                
+            
             }
             else
             {
@@ -180,6 +180,8 @@ namespace SIPOH
                 EquipoTrabajo.Visible = false;
                 inputEquipoTrabajo.Items.Clear();
             }
+
+
         }
         protected void grdVwBusquedaUsuarios_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
@@ -460,34 +462,41 @@ namespace SIPOH
         
         protected void inputCatPerfil_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string perfil = inputPerfil.SelectedItem.Text.ToUpper();
-            int idpefil = int.Parse(inputPerfil.SelectedValue);
-            int idJuzgado = int.Parse(inputJuzgado.SelectedValue);
-            CatCargaTrabajo(idJuzgado, idpefil);
+            try
+            {
+                string perfil = inputPerfil.SelectedItem.Text.ToUpper();
+                int idpefil = int.Parse(inputPerfil.SelectedValue);
+                int idJuzgado = int.Parse(inputJuzgado.SelectedValue);
+                CatCargaTrabajo(idJuzgado, idpefil);
+                copyPerfil.Text = perfil;
 
-            copyPerfil.Text = perfil;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error: " + ex.Message);
+            }
         }
         
-        private void CargarCatPerfil(bool sistemas, bool usuario)
+        private void CargarCatPerfil(int IdJuzgado)
         {
-            
-            if (sistemas)
-            {
-                List<DataCatPerfil> catPerfil = GetCatPerfil();
-                    inputPerfil.DataSource = catPerfil;
-                    inputPerfil.DataValueField = "IdPerfil";
-                    inputPerfil.DataTextField = "Perfil";
-                    inputPerfil.DataBind();
-            }
-            else if(usuario)
-            {
-
-            List<DataCatPerfil> catPerfil = GetCatPerfilAtencionCiudadana();
+            try {    
+                if(inputPerfil != null)
+                {
+                    new Exception("Ocurrio un error al mostrar el catalogo de perfil.");
+                }
+                inputPerfil.Items.Clear();
+                List<DataCatPerfil> catPerfil = GetCatPerfilAtencionCiudadana(IdJuzgado);            
                 inputPerfil.DataSource = catPerfil;
                 inputPerfil.DataValueField = "IdPerfil";
                 inputPerfil.DataTextField = "Perfil";
+                ListItem staticItem = new ListItem("Selecciona una opción", "0");
+                inputPerfil.Items.Add(staticItem);
                 inputPerfil.DataBind();     
+            } catch (Exception ex)
+            {
+                MensajeError("Error: " + ex.Message);
             }
+            
             
         }
         private void CargarCatJuzgado(bool sistemas)
@@ -514,7 +523,9 @@ namespace SIPOH
         
         protected void inputCatJuzgado_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string juzgado = inputJuzgado.SelectedItem.Text;                                 
+            string juzgado = inputJuzgado.SelectedItem.Text;
+            int idJuzgado = int.Parse(inputJuzgado.SelectedValue);
+            CargarCatPerfil(idJuzgado);
             copyJuzgado.Text = juzgado;            
 
         }
@@ -522,10 +533,11 @@ namespace SIPOH
         {
             
         }
+
         
         protected void btnEnviarUsuario_Click(object sender, EventArgs e)
         {
-            //NOTA: CADENA DE TIPO DE EQUIPO UNDEFINIDO
+            //REGISTRO DE UN USUARIO SIPOH
             try
             {
                 string Nombre = inputNombre.Text;
@@ -533,34 +545,58 @@ namespace SIPOH
                 string AMaterno = inputApellidoMaterno.Text;
                 string Usuario = inputUsuario.Text;
                 string Contrasena = inputContraseña.Text;
+                //ENCRIPTACION DE CONTRASEÑA
                 string contraseñaCifrada = CryptographyController.EncryptString(Contrasena);
-                int Perfil = int.Parse(inputPerfil.SelectedValue);
+                int Perfil = 0;
+                //EXCEPCION DE PERFIL
+                try
+                {
+                    Perfil = int.Parse(inputPerfil.SelectedValue);
+                }
+                catch
+                {
+                    throw new Exception("Perfil no válido");
+                }
+
                 string TipoCircuito = Session["TCircuito"] != null ? Session["TCircuito"].ToString() : string.Empty;
-                int Juzgado;
-                 //si es de sistemas(superadmin) cambiara el juzgado
-                if (TipoCircuito != "a" || TipoCircuito.IsEmpty()) Juzgado = int.Parse(Session["IDJuzgado"] != null ? Session["IDJuzgado"].ToString() : string.Empty);
-                else Juzgado = int.Parse(inputJuzgado.SelectedValue);// sistemas (SUPER ADMINISTRADOR)                    
+                int Juzgado = 0;
+                try
+                {
+                    if (TipoCircuito != "a" || TipoCircuito.IsEmpty())
+                    {
+                        Juzgado = int.Parse(Session["IDJuzgado"] != null ? Session["IDJuzgado"].ToString() : string.Empty);
+                    }
+                    else
+                    {
+                        Juzgado = int.Parse(inputJuzgado.SelectedValue); // sistemas 
+                    }
+                }
+                catch
+                {
+                    throw new Exception("Juzgado no válido");
+                }
 
                 int EquipoTrabajo = !string.IsNullOrEmpty(inputEquipoTrabajo.SelectedValue) ? int.Parse(inputEquipoTrabajo.SelectedValue) : 0;
-
 
                 string Telefono = inputTelefono.Text;
                 string Domicilio = inputDomicilio.Text;
                 string Email = inputEmail.Text;
-                if(string.IsNullOrEmpty(Nombre) ||
-                    string.IsNullOrEmpty(APaterno) ||
-                    string.IsNullOrEmpty(AMaterno) ||
-                    string.IsNullOrEmpty(Usuario) ||
-                    string.IsNullOrEmpty(Contrasena) ||
-                    string.IsNullOrEmpty(Telefono) ||
-                    string.IsNullOrEmpty(Domicilio) ||
-                    string.IsNullOrEmpty(Email) ||
-                    string.IsNullOrEmpty(inputPerfil.SelectedValue) ||
-                    (Juzgado <= 0)
-                    )
+
+                if (string.IsNullOrEmpty(Nombre) ||
+                   Perfil == 0 ||
+                   string.IsNullOrEmpty(APaterno) ||
+                   string.IsNullOrEmpty(AMaterno) ||
+                   string.IsNullOrEmpty(Usuario) ||
+                   string.IsNullOrEmpty(Contrasena) ||
+                   string.IsNullOrEmpty(Telefono) ||
+                   string.IsNullOrEmpty(Domicilio) ||
+                   string.IsNullOrEmpty(Email) ||
+                   Juzgado <= 0)
                 {
-                    if(string.IsNullOrEmpty(Nombre))
+                    if (string.IsNullOrEmpty(Nombre))
                         throw new Exception("Nombre de usuario");
+                    else if (Perfil == 0)
+                        throw new Exception("Perfil");
                     else if (string.IsNullOrEmpty(APaterno))
                         throw new Exception("Apellido paterno");
                     else if (string.IsNullOrEmpty(AMaterno))
@@ -575,12 +611,10 @@ namespace SIPOH
                         throw new Exception("Dirección");
                     else if (string.IsNullOrEmpty(Email))
                         throw new Exception("Correo electrónico");
-                    else if (string.IsNullOrEmpty(inputPerfil.SelectedValue))
-                        throw new Exception("Perfil");
-                    else if ((Juzgado <= 0))
+                    else if (Juzgado == 0)
                         throw new Exception("Juzgado");
-
                 }
+
                 DataInsertUsuario infoUser = new DataInsertUsuario
                 {
                     Nombre = Nombre,
@@ -597,6 +631,7 @@ namespace SIPOH
                     Pass = "0",
                     IdEquipoTrabajo = EquipoTrabajo
                 };
+
                 List<DataInsertUsuario> listaInfoUser = new List<DataInsertUsuario> { infoUser };
 
                 RespuestaInsertUsuario data = InsertUsuario(listaInfoUser);
@@ -610,17 +645,16 @@ namespace SIPOH
                 {
                     MensajeExito(data.mensaje);
                     LimpiarCampos();
-                    Debug.WriteLine("Error:" + data.mensaje);
+                    Debug.WriteLine("Éxito:" + data.mensaje);
                     UpdatePanelPersonal.Update();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MensajeError($"Error: {ex.Message}");
             }
-            
-                
         }
+
         protected void MensajeExito(string Mensaje)
         {
             ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", $"toastInfo('{Mensaje}');", true);

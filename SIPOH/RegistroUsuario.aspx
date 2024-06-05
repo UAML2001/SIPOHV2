@@ -78,7 +78,7 @@
                                     <asp:Label ID="lblUsuario" runat="server" Text='<%# Eval("Usuario") %>'></asp:Label>
                                 </ItemTemplate>
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="txtUsuario" runat="server" Text='<%# Bind("Usuario") %>' CssClass="form-control"></asp:TextBox>
+                                    <asp:TextBox ID="txtUsuario" runat="server" Text='<%# Bind("Usuario") %>' CssClass="form-control" MaxLength="35"></asp:TextBox>
                                 </EditItemTemplate>
                             </asp:TemplateField>
                             <%--<asp:BoundField DataField="Contraseña" HeaderText="Contraseña" ItemStyle-CssClass="text-success fw-bold text-center " HeaderStyle-CssClass="bg-success text-white text-center" />--%>
@@ -121,11 +121,11 @@
                                     <asp:Label ID="lbltelefono" runat="server" Text='<%# Eval("telefono") %>'></asp:Label>
                                 </ItemTemplate>
                                 <EditItemTemplate>
-                                    <asp:TextBox ID="txttelefono" runat="server" Text='<%# Bind("telefono") %>' CssClass="form-control"></asp:TextBox>
+                                    <asp:TextBox ID="txttelefono" runat="server" Text='<%# Bind("telefono") %>' CssClass="form-control" MaxLength="10"></asp:TextBox>
                                 </EditItemTemplate>
                             </asp:TemplateField>  
                                                      
-                             <asp:CommandField ShowEditButton="True" EditText="✏️" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="bg-light border-0 rounded text-center" HeaderText="Actions" CausesValidation="false"   />                                                       
+                             <asp:CommandField ShowEditButton="True" EditText="✏️" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="bg-light border-0 rounded text-center" HeaderText="Actions" CausesValidation="false"    />                                                       
                                  <asp:TemplateField HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="text-secondary text-center d-flex justify-content-center align-content-center"  >
                                     <ItemTemplate>
                                         <asp:Button ID="btnAlta" runat="server" Text="🔓" OnClick="btnCustom_AltaUsuario"  CssClass="bg-light border-0 rounded" CommandArgument='<%# Eval("IdUsuario") %>' data-bs-toggle="tooltip" data-bs-placement="button" title="Dar de ALTA a un usuario" />                                       
@@ -159,13 +159,14 @@
                                 <asp:ListItem Text="Selecciona una opción" Value="" Selected="True"  />                                
                             </asp:DropDownList>
                         </div>
+                        
                                  <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4 " id="EquipoTrabajo" runat="server" visble="false">
                                     <label for="inputTipoAsunto" class="form-label text-secondary">Equipo de trabajo: </label>
                                     <asp:DropDownList runat="server" ID="inputEquipoTrabajo" AutoPostBack="true" CssClass="form-select form-select-sm text-secondary" OnSelectedIndexChanged="inputCatEquipoTrabajo_SelectedIndexChanged" AppendDataBoundItems="true"  >
                                         <asp:ListItem Text="Selecciona una opción" Value="0" Selected="True" />                                
                                     </asp:DropDownList>
-                                </div>                            
-                           
+                                </div>  
+            
                         <div class="row mt-4">
                             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                 <label for="inputNUC" class="form-label text-secondary">Nombre:</label>
@@ -173,11 +174,11 @@
                             </div>
                             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                 <label for="inpuTipoSolicitud" class="form-label text-secondary">Apellido paterno: </label>
-                                <asp:TextBox runat="server" ID="inputApellidoPaterno" CssClass="form-control form-control-sm " MaxLength="150"/>
+                                <asp:TextBox runat="server" ID="inputApellidoPaterno" CssClass="form-control form-control-sm " MaxLength="100"/>
                             </div>
                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                 <label for="inpuTipoSolicitud" class="form-label text-secondary">Apellido materno: </label>
-                                <asp:TextBox runat="server" ID="inputApellidoMaterno" CssClass="form-control form-control-sm " MaxLength="30"/>
+                                <asp:TextBox runat="server" ID="inputApellidoMaterno" CssClass="form-control form-control-sm " MaxLength="100"/>
                             </div>
                             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4 col-xxl-4">
                                 <label for="inpuTipoSolicitud" class="form-label text-secondary">Usuario: </label>

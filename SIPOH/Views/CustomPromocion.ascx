@@ -51,14 +51,17 @@
         var inputFechaRecepcion = document.getElementById('<%= inputFechaRecepcion.ClientID %>');
         var fechaSeleccionada = new Date(inputFechaRecepcion.value);
         var fechaActual = new Date();
-        fechaActual.setHours(0, 0, 0, 0);
 
-        if (fechaSeleccionada > fechaActual) {
+        // No ajustamos las horas a 0, 0, 0, 0 para incluir la comparación con horas, minutos, y segundos
+        // fechaActual.setHours(0, 0, 0, 0); 
+
+        if (fechaSeleccionada >= fechaActual) {
             //toastError("!Estas loco!, o ¿Vives en el futuro?");
             toastError("No se puede seleccionar una fecha posterior a hoy.");
             inputFechaRecepcion.value = "";
         }
     }
+
     function seleccionarVictima(victima) {
         var inputPromovente = document.getElementById('<%= inputPromovente.ClientID %>');
         inputPromovente.value +=victima + ", ";

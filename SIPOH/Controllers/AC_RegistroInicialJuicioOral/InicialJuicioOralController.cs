@@ -112,6 +112,7 @@ namespace SIPOH.Controllers.AC_RegistroInicialJuicioOral
             public bool HayError { get; set; }
             public string MensajeError { get; set; }
             public string NumeroJO { get; set; }
+            public int IdAsunto { get; set; }
         }
         
         //CONTROLADORES JUICIO ORAL
@@ -378,6 +379,7 @@ namespace SIPOH.Controllers.AC_RegistroInicialJuicioOral
                                     if (readerJOI.Read())
                                     {
                                         infoInsertJO.InsertedIdAsunto = int.Parse(readerJOI["IdAsunto"].ToString());
+                                        resultado.IdAsunto = infoInsertJO.InsertedIdAsunto;
                                     }
                                 }
                             }

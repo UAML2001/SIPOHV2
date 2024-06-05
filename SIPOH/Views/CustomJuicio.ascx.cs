@@ -56,6 +56,7 @@ namespace SIPOH.Views
             }
 
         }
+
         protected void btnGenerarRelacion_Click(object sender, EventArgs e)
         {
             
@@ -205,7 +206,7 @@ namespace SIPOH.Views
 
 
 
-
+        public static int IdAsunto;
         protected void btnGuardarJO_Click(object sender, EventArgs e)
         {
             try
@@ -284,7 +285,8 @@ namespace SIPOH.Views
                 List<DataRelacionesVI> listaPartes = Session["Partes"] as List<DataRelacionesVI> ?? new List<DataRelacionesVI>();
                 
                     DatosJO infoJOs = InsertJuicioOral(listaInfoJO, listaAnexos, listaPartes);
-                    // Inserción del juicio oral y sus datos relacionados
+                // Inserción del juicio oral y sus datos relacionados
+                IdAsunto = infoJOs.IdAsunto;
                     if (infoJOs.HayError)
                     {
                     
@@ -404,6 +406,7 @@ namespace SIPOH.Views
             
             
                 ticket.AppendLine($"{TipoAsunto}:{Causa}");
+            ticket.AppendLine($"FOLIO: {IdAsunto}");
             
             ticket.AppendLine($"FECHA RECEPCIÒN:{GetFechaYHora()}");
             //ticket.AppendLine($"NUC:{NUC.ToUpper()}");

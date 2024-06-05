@@ -133,13 +133,13 @@
     }
 
     function copiarTipoAsunto() {
-        var inputTipoAsunto = $("#<%= inputTipoAsunto.ClientID %>");
+        var inputTipoAsunto = $("#<%= inputTipoDocumento.ClientID %>");
         var copyDropDownTipoAsunto = $("#<%= copyDropDownTipoAsunto.ClientID %>");
         
         copyDropDownTipoAsunto.val(inputTipoAsunto.val() === 'C' ? 'CAUSA' : (inputTipoAsunto.val() === 'CP' ? 'CUPRE' : '') );
     }
     function copiarRadicacion() {
-        var inputRadicacion = $("#<%= inputRadicacion.ClientID %>");
+        var inputRadicacion = $("#<%= inputTipoSolicitud.ClientID %>");
         var copyDropDownTipoSolicitud = $("#<%= copyDropDownTipoSolicitud.ClientID %>");
         copyDropDownTipoSolicitud.val(inputRadicacion.text());
     }
@@ -178,20 +178,14 @@
     function validarFecha() {
         var inputFechaRecepcion = document.getElementById('<%= inputFechaRecepcion.ClientID %>');
         var fechaSeleccionada = new Date(inputFechaRecepcion.value);
-        var fechaActual = new Date();
-        fechaActual.setHours(0, 0, 0, 0); 
+        var fechaActual = new Date();       
 
-        if (fechaSeleccionada > fechaActual) {
+        if (fechaSeleccionada >= fechaActual) {
             //toastError("!Estas loco!, o ¿Vives en el futuro?");
             toastError("No se puede seleccionar una fecha posterior a hoy.");
-            inputFechaRecepcion.value = ""; 
+            inputFechaRecepcion.value = "";
         }
     }
-
-
-
-
-
 </script>
 
 
@@ -255,7 +249,7 @@
                 </div>
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3 ">
                     <label for="inputTipoAsunto" class="form-label text-secondary">Tipo de asunto: </label>
-                    <asp:DropDownList runat="server" ID="inputTipoAsunto" AutoPostBack="true" CssClass="form-select form-select-sm text-secondary" OnSelectedIndexChanged="inputTipoAsunto_SelectedIndexChanged">
+                    <asp:DropDownList runat="server" ID="inputTipoDocumento" AutoPostBack="true" CssClass="form-select form-select-sm text-secondary" OnSelectedIndexChanged="inputTipoAsunto_SelectedIndexChanged">
                         <asp:ListItem Text="Selecciona una opción" Value="" />
                         <asp:ListItem Text="Causa" Value="C" />
                         <asp:ListItem Text="Cupre" Value="CP" />
@@ -265,7 +259,7 @@
                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <label for="inpuTipoSolicitud" class="form-label text-secondary">Tipo solicitud: </label>
 
-                    <asp:DropDownList runat="server" ID="inputRadicacion" CssClass="form-select form-select-sm text-secondary" AppendDataBoundItems="true" OnSelectedIndexChanged="inputRadicacion_SelectedIndexChanged" >
+                    <asp:DropDownList runat="server" ID="inputTipoSolicitud" CssClass="form-select form-select-sm text-secondary" AppendDataBoundItems="true" OnSelectedIndexChanged="inputRadicacion_SelectedIndexChanged" >
                         <asp:ListItem Text="Selecciona una opción" Value="" />
                     </asp:DropDownList>
 

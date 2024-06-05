@@ -22,6 +22,18 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 </head>
+         <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                <div id="liveToast" class="toast hide bg-light" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <i class="bi bi-emoji-laughing rounded text-success mr-2 fs-5" data-bs-dismiss="toast" aria-label="Close"></i>                       
+                        
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        <asp:Label ID="lblMensajeBienvenida" runat="server" Text="" class="text-capitalize text-danger" />
+                    </div>
+                </div>
+            </div>
 <body  class="fade-in container-fluid custom-bg door-wrapper">            
     <div class="door"></div>
     <div class="vw-100 vh-100 d-flex justify-content-center align-content-center contenido">
@@ -39,15 +51,22 @@
           </div>
         </div>
         <asp:Button ID="BotonLogin" OnClick="BotonLogin_Click" Style="background-color: #3F5259; font-weight: bold; color: #ffffff;" runat="server" Text="SIPOH" CssClass="btn fade-in btn-rebote" />
-        <asp:Label ID="MensajeErrorLabel" runat="server" Text="" ForeColor="Red" class="fade-in" />
+        <asp:Label ID="MensajeErrorLabel" runat="server" Text=""  class="fade-in" CssClass="text-danger my-2  fw-bold"/>
+        
       </form>
       <div class="col-auto pb-3 fade-in">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Sello_del_Poder_Judicial_de_Hidalgo.svg/1080px-Sello_del_Poder_Judicial_de_Hidalgo.svg.png" alt="logo PJEH" style="height: 120px;" class="desvanecer img-fluid" />
       </div>
     </div>
   </div>
-</body>
+    </body>
+       
     <script>
+        //$(document).ready(function () {
+        //    $('.toast').toast('show');
+        //});
+
+
         $(document).ready(function () {
             $('#show_password').hover(function show() {
                 //Cambiar el atributo a texto

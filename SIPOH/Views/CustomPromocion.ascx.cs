@@ -18,6 +18,7 @@ namespace SIPOH.Views
     //}
     public class DataPromocion
     {
+        public string TipoDocumento { get; set; }
         public string Promovente { get; set; }
         public string Digitalizado { get; set; }
         public string TipoPromocion { get; set; }
@@ -162,6 +163,7 @@ namespace SIPOH.Views
 
                 DataPromocion registro = new DataPromocion
                 {
+                    TipoDocumento = DrpLstTipoDocumento.SelectedValue,
                     Promovente = promovente,
                     Digitalizado = Digitalizado,
                     TipoPromocion = "P",
