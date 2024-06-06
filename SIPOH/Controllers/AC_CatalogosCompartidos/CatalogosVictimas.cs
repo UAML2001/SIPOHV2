@@ -104,6 +104,9 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
                     cmd.Parameters.AddWithValue("@IdContinente", idContinente);
                     SqlDataReader dr = cmd.ExecuteReader();
                     dropdown.Items.Clear(); // Limpiar los elementos anteriores
+                                            // Agregar "No aplica" como un elemento seleccionado
+                    ListItem noAplicaItem = new ListItem("----- SELECCIONE -----", "S");
+                    dropdown.Items.Add(noAplicaItem);
                     while (dr.Read())
                     {
                         ListItem listItem = new ListItem();
