@@ -8,7 +8,9 @@ namespace SIPOH.Controllers.AC_JefeUnidadCausa
 {
     public class JUC_CrudClasiDelitosController : Controller
     {
-        public bool ActualizarClasificacionDelito(string accion, int? idDelitoC, int? idDeliAsunto, int consumacion, int calificacion, int concurso, int clasificacion, int fComision, int fAccion, int modalidad, int elemComision, string persecucion, int idMunicipio, DateTime feDelito, string domicilio, int idDelDetalle, int? idAsunto = null, int? idDelito = null)
+
+
+        public bool ActualizarClasificacionDelito(string accion, int? idDelitoC, int? idDeliAsunto, int consumacion, int calificacion, int concurso, int clasificacion, int fComision, int fAccion, int modalidad, int elemComision, string persecucion, int idMunicipio, DateTime feDelito, string domicilio, int idDelDetalle, DateTime? feReclasificacion = null, DateTime? feCaptura = null, char? reclasificar = null, int? idAsunto = null, int? idDelito = null)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
             using (SqlConnection con = new SqlConnection(connectionString))
@@ -36,6 +38,33 @@ namespace SIPOH.Controllers.AC_JefeUnidadCausa
                     if (accion == "U")
                     {
                         cmd.Parameters.AddWithValue("@IdDelitoC", idDelitoC);
+                        cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+                        if (feReclasificacion.HasValue)
+                        {
+                            cmd.Parameters.AddWithValue("@FeReclasificacion", feReclasificacion.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@FeReclasificacion", DBNull.Value);
+                        }
+
+                        if (feCaptura.HasValue)
+                        {
+                            cmd.Parameters.AddWithValue("@FeCaptura", feCaptura.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@FeCaptura", DBNull.Value);
+                        }
+
+                        if (reclasificar.HasValue)
+                        {
+                            cmd.Parameters.AddWithValue("@Reclasificar", reclasificar.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@Reclasificar", DBNull.Value);
+                        }
                     }
                     else if (accion == "AG")
                     {
@@ -61,5 +90,10 @@ namespace SIPOH.Controllers.AC_JefeUnidadCausa
                 }
             }
         }
+
+
+
+
+        //
     }
 }

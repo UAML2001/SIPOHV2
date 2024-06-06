@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using static SIPOH.Controllers.AC_JefeUnidadCausa.JUC_CatDelitosController;
 
 namespace SIPOH
 {
@@ -363,6 +364,8 @@ namespace SIPOH
                     {
                         ViewState["Accion"] = "I";
                         MensajeAdvertencia("Hay datos vacíos en la tabla, te recomendamos actualizar el delito con su información");
+                        divFechaReclasificacion.Style["display"] = "none";
+                        divCheckReclasificar.Style["display"] = "none";
                         divAgregarClasificacion.Style["display"] = "block";
                         return;
                     }
@@ -385,9 +388,6 @@ namespace SIPOH
                 divAgregarClasificacion.Style["display"] = "none";
             }
         }
-
-
-
         private void UpdateDropDownLists(GridViewRow row)
         {
             // Actualiza los dropdown 
@@ -468,9 +468,11 @@ namespace SIPOH
 
             return fechaIngreso;
         }
+
         protected void btnGuardarClasiDeli_Click(object sender, EventArgs e)
         {
             string accion = ViewState["Accion"] != null ? ViewState["Accion"].ToString() : string.Empty;
+            char? reclasificar = ViewState["Reclasificado"] != null ? (char?)ViewState["Reclasificado"].ToString()[0] : null;
 
             if (accion == string.Empty)
             {
@@ -479,12 +481,81 @@ namespace SIPOH
             }
 
             // Validaciones de campos obligatorios
-            if (ddlGradoConsumacion.SelectedValue == "0" || ddlCalificacion.SelectedValue == "0" || ddlConcurso.SelectedValue == "0" ||
-                ddlOrdenResultado.SelectedValue == "0" || ddlFormaComision.SelectedValue == "0" || ddlFormaAccion.SelectedValue == "0" ||
-                ddlModalidad.SelectedValue == "0" || ddlComision.SelectedValue == "0" || ddlCatMunicipios.SelectedValue == "0" ||
-                string.IsNullOrWhiteSpace(FechaDelito.Text))
+            if (ddlGradoConsumacion.SelectedValue == "0")
             {
-                MensajeError("Por favor, completa todos los campos obligatorios.");
+                MensajeError("El campo Grado de Consumación es obligatorio.");
+                return;
+            }
+
+            if (ddlCalificacion.SelectedValue == "0")
+            {
+                MensajeError("El campo Calificación es obligatorio.");
+                return;
+            }
+
+            if (ddlConcurso.SelectedValue == "0")
+            {
+                MensajeError("El campo Concurso es obligatorio.");
+                return;
+            }
+
+            if (ddlOrdenResultado.SelectedValue == "0")
+            {
+                MensajeError("El campo Orden de Resultado es obligatorio.");
+                return;
+            }
+
+            if (ddlFormaComision.SelectedValue == "0")
+            {
+                MensajeError("El campo Forma de Comisión es obligatorio.");
+                return;
+            }
+
+            if (ddlFormaAccion.SelectedValue == "0")
+            {
+                MensajeError("El campo Forma de Acción es obligatorio.");
+                return;
+            }
+
+            if (ddlModalidad.SelectedValue == "0")
+            {
+                MensajeError("El campo Modalidad es obligatorio.");
+                return;
+            }
+
+            if (ddlComision.SelectedValue == "0")
+            {
+                MensajeError("El campo Comisión es obligatorio.");
+                return;
+            }
+
+            if (ddlCatMunicipios.SelectedValue == "0")
+            {
+                MensajeError("El campo Municipio es obligatorio.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(FechaDelito.Text))
+            {
+                MensajeError("El campo Fecha del Delito es obligatorio.");
+                return;
+            }
+
+            if (!rbQuerella.Checked && !rbDenuncia.Checked && !rbNoIdentificado.Checked)
+            {
+                MensajeError("Debe seleccionar un tipo de persecución del delito.");
+                return;
+            }
+
+            if (ddDelitos.SelectedValue == "0")
+            {
+                MensajeError("El campo Delito es obligatorio.");
+                return;
+            }
+
+            if (ddlModDelito.Visible && ddlModDelito.SelectedValue == "0")
+            {
+                MensajeError("El campo Modalidad es obligatorio.");
                 return;
             }
 
@@ -495,7 +566,21 @@ namespace SIPOH
                 return;
             }
 
-            int idAsunto = Convert.ToInt32(ViewState["IdAsunto"]);
+            int idAsunto;
+            if (ViewState["IdAsunto"] != null)
+            {
+                idAsunto = Convert.ToInt32(ViewState["IdAsunto"]);
+            }
+            else if (GridViewClasificacionDelitos.SelectedDataKey != null && GridViewClasificacionDelitos.SelectedDataKey.Values["IdAsunto"] != null)
+            {
+                idAsunto = Convert.ToInt32(GridViewClasificacionDelitos.SelectedDataKey.Values["IdAsunto"]);
+            }
+            else
+            {
+                MensajeError("No se pudo obtener el IdAsunto.");
+                return;
+            }
+
             DateTime? feIngreso = ObtenerFechaIngreso(idAsunto);
 
             if (feIngreso == null)
@@ -547,26 +632,73 @@ namespace SIPOH
             JUC_CrudClasiDelitosController controller = new JUC_CrudClasiDelitosController();
             bool resultado = false;
 
-            if (accion == "AG")
-            {
-                int idDelito = Convert.ToInt32(ddDelitos.SelectedValue);
-                resultado = controller.ActualizarClasificacionDelito(accion, null, null, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, feDelito, domicilio, idDelDetalle, idAsunto, idDelito);
-            }
-            else // Maneja "U" e "I"
-            {
-                resultado = controller.ActualizarClasificacionDelito(accion, idDelitoC, idDeliAsunto, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, feDelito, domicilio, idDelDetalle);
-            }
+            int? idDelito = null;
+            DateTime? feReclasificacion = null;
+            DateTime? feCaptura = null;
 
-            if (resultado)
+            try
             {
-                MensajeExito("La clasificación del delito ha sido procesada correctamente.");
-                btnBuscarClasiDelito_Click(sender, e);
+                if (accion == "AG")
+                {
+                    idDelito = Convert.ToInt32(ddDelitos.SelectedValue);
+                    resultado = controller.ActualizarClasificacionDelito(accion, null, null, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, feDelito, domicilio, idDelDetalle, null, null, null, idAsunto, idDelito);
+                }
+                else if (accion == "U" && reclasificar == 'R')
+                {
+                    feReclasificacion = DateTime.Now;  // Puedes ajustar cómo obtienes esta fecha
+                    feCaptura = DateTime.Now;          // Puedes ajustar cómo obtienes esta fecha
+                    resultado = controller.ActualizarClasificacionDelito("U", idDelitoC, idDeliAsunto, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, feDelito, domicilio, idDelDetalle, feReclasificacion, feCaptura, reclasificar, idAsunto);
+                }
+                else // Maneja "U" e "I"
+                {
+                    resultado = controller.ActualizarClasificacionDelito(accion, idDelitoC, idDeliAsunto, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, feDelito, domicilio, idDelDetalle, null, null, reclasificar, idAsunto);
+                }
+
+                if (resultado)
+                {
+                    MensajeExito("La clasificación del delito ha sido procesada correctamente.");
+                    rbNoIdentificado.Checked = false;
+                    reclasificacionSi.Checked = false;
+                    btnBuscarClasiDelito_Click(sender, e);
+                }
+                else
+                {
+                    MensajeError("Error al procesar la clasificación del delito.");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MensajeError("Error al procesar la clasificación del delito.");
+                // Registro detallado del error
+                System.Diagnostics.Debug.WriteLine("Error en btnGuardarClasiDeli_Click: " + ex.Message);
+                System.Diagnostics.Debug.WriteLine("Accion: " + accion);
+                System.Diagnostics.Debug.WriteLine("IdDelitoC: " + idDelitoC);
+                System.Diagnostics.Debug.WriteLine("IdDeliAsunto: " + idDeliAsunto);
+                System.Diagnostics.Debug.WriteLine("Consumacion: " + consumacion);
+                System.Diagnostics.Debug.WriteLine("Calificacion: " + calificacion);
+                System.Diagnostics.Debug.WriteLine("Concurso: " + concurso);
+                System.Diagnostics.Debug.WriteLine("Clasificacion: " + clasificacion);
+                System.Diagnostics.Debug.WriteLine("FComision: " + fComision);
+                System.Diagnostics.Debug.WriteLine("FAccion: " + fAccion);
+                System.Diagnostics.Debug.WriteLine("Modalidad: " + modalidad);
+                System.Diagnostics.Debug.WriteLine("ElemComision: " + elemComision);
+                System.Diagnostics.Debug.WriteLine("Persecucion: " + persecucion);
+                System.Diagnostics.Debug.WriteLine("IdMunicipio: " + idMunicipio);
+                System.Diagnostics.Debug.WriteLine("FeDelito: " + feDelito);
+                System.Diagnostics.Debug.WriteLine("Domicilio: " + domicilio);
+                System.Diagnostics.Debug.WriteLine("IdDelDetalle: " + idDelDetalle);
+                System.Diagnostics.Debug.WriteLine("FeReclasificacion: " + feReclasificacion);
+                System.Diagnostics.Debug.WriteLine("FeCaptura: " + feCaptura);
+                System.Diagnostics.Debug.WriteLine("Reclasificar: " + reclasificar);
+                System.Diagnostics.Debug.WriteLine("IdAsunto: " + idAsunto);
+                System.Diagnostics.Debug.WriteLine("IdDelito: " + idDelito);
+
+                MensajeError("Ocurrió un error inesperado al procesar la clasificación del delito: " + ex.Message);
             }
         }
+
+
+
+
 
         //FUNCION DE BORRAR
         protected void btnModalBorrar_Click(object sender, EventArgs e)

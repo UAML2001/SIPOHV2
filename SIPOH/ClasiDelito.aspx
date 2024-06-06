@@ -87,7 +87,7 @@
                                                 <asp:GridView ID="GridViewClasificacionDelitos" ShowHeaderWhenEmpty="true" EmptyDataText="No hay datos disponibles"
                                                     runat="server" CssClass="table table-sm table-bordered custom-gridview" AutoGenerateColumns="False"
                                                     OnSelectedIndexChanged="GridViewClasificacionDelitos_SelectedIndexChanged"
-                                                    DataKeyNames="IdDelitoC,IdDeliAsunto,IdMunicipio,Id_CatConsumacion,Id_CatConcurso,Id_CatAccion,Id_CatCalificacion,Id_CatClasificacion,Id_CatComision,Id_CatElemComision,Id_CatModalidad,IdDelDetalle,Persecucion,FeDelito,Domicilio">
+                                                    DataKeyNames="IdDelitoC,IdAsunto,IdDeliAsunto,IdMunicipio,Id_CatConsumacion,Id_CatConcurso,Id_CatAccion,Id_CatCalificacion,Id_CatClasificacion,Id_CatComision,Id_CatElemComision,Id_CatModalidad,IdDelDetalle,Persecucion,FeDelito,Domicilio">
                                                     <Columns>
                                                         <asp:TemplateField>
                                                             <ItemTemplate>
