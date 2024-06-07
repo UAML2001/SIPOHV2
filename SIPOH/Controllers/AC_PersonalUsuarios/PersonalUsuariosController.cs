@@ -75,7 +75,7 @@ public class PersonalUsuariosController
         public string usuario { get; set; }
         public string pass { get; set; }
         
-        public int telefono { get; set; }
+        public string telefono { get; set; }
        
         
     }

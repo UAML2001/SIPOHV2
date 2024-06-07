@@ -17,7 +17,7 @@ function padLeadingZeros(num) {
     const anioIngresado = parseInt(valor.split('/')[1], 10);
     if (anioIngresado > anioActual || anioIngresado < 1800) {
         num.value = "";
-        toastError('La fecha ingresada no es correcta no debe de ser mayor a la fecha anual actual tampoco una fecha muy antigua');
+        toastError('El valor del documento es incorrecto');
         return;
     } else {
         num.value = valor;

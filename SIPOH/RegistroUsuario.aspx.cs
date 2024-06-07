@@ -320,12 +320,12 @@ namespace SIPOH
                 }
                 DataUpdateUsuario datos = new DataUpdateUsuario
                 {
-                    
+
                     usuario = nuevoUsuario,
                     pass = CryptographyController.EncryptString(nuevoContrasena),
-                   
-                    telefono = int.Parse(nuevoTelefono)
-                    
+
+                    telefono = nuevoTelefono
+
                 };
                 var valor = ActualizarUsuario(IdUsuarioSelected, datos);
                 if (valor)

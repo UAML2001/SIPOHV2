@@ -23,6 +23,28 @@ namespace SIPOH
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        //protected void Session_End(object sender, EventArgs e)
+        //{
+        //    // Redirigir a la página de inicio de sesión            
+        //    Response.Redirect("~/Error");
+        //}
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception exception = Server.GetLastError();
+            HttpException httpException = exception as HttpException;
+
+            if (httpException != null && httpException.GetHttpCode() == 500)
+            {
+                // Verifica si el error está relacionado con la expiración de la sesión
+                if (exception.Message.Contains("Your session has expired"))
+                {
+                    Server.ClearError();
+                    Response.Redirect("~/Default.aspx");
+                }
+            }
+        }
+
+
         ///PERMITE SABER SI LA IP QUE HA SIDO CARGADA CUANDO EL USUARIO INGRESA AL SITIO ESTA BLOQUEDA
         private static bool IPBloqueadaUser(string ip)
         {
@@ -74,5 +96,9 @@ namespace SIPOH
                 return ;
             }
         }
+       
+
+
+
     }
 }
