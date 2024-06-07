@@ -9,7 +9,6 @@ namespace SIPOH.Controllers.AC_JefeUnidadCausa
     public class JUC_CrudClasiDelitosController : Controller
     {
 
-
         public bool ActualizarClasificacionDelito(string accion, int? idDelitoC, int? idDeliAsunto, int consumacion, int calificacion, int concurso, int clasificacion, int fComision, int fAccion, int modalidad, int elemComision, string persecucion, int idMunicipio, DateTime feDelito, string domicilio, int idDelDetalle, DateTime? feReclasificacion = null, DateTime? feCaptura = null, char? reclasificar = null, int? idAsunto = null, int? idDelito = null)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
@@ -39,6 +38,7 @@ namespace SIPOH.Controllers.AC_JefeUnidadCausa
                     {
                         cmd.Parameters.AddWithValue("@IdDelitoC", idDelitoC);
                         cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+
                         if (feReclasificacion.HasValue)
                         {
                             cmd.Parameters.AddWithValue("@FeReclasificacion", feReclasificacion.Value);
@@ -64,6 +64,15 @@ namespace SIPOH.Controllers.AC_JefeUnidadCausa
                         else
                         {
                             cmd.Parameters.AddWithValue("@Reclasificar", DBNull.Value);
+                        }
+
+                        if (idDelito.HasValue)
+                        {
+                            cmd.Parameters.AddWithValue("@IdDelito", idDelito.Value);
+                        }
+                        else
+                        {
+                            cmd.Parameters.AddWithValue("@IdDelito", DBNull.Value);
                         }
                     }
                     else if (accion == "AG")

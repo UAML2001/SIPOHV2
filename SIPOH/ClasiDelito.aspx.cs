@@ -647,7 +647,8 @@ namespace SIPOH
                 {
                     feReclasificacion = DateTime.Now;  // Puedes ajustar cómo obtienes esta fecha
                     feCaptura = DateTime.Now;          // Puedes ajustar cómo obtienes esta fecha
-                    resultado = controller.ActualizarClasificacionDelito("U", idDelitoC, idDeliAsunto, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, feDelito, domicilio, idDelDetalle, feReclasificacion, feCaptura, reclasificar, idAsunto);
+                    idDelito = Convert.ToInt32(ddDelitos.SelectedValue);
+                    resultado = controller.ActualizarClasificacionDelito("U", idDelitoC, idDeliAsunto, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, feDelito, domicilio, idDelDetalle, feReclasificacion, feCaptura, reclasificar, idAsunto, idDelito);
                 }
                 else // Maneja "U" e "I"
                 {

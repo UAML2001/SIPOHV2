@@ -19,7 +19,7 @@
             })
         })
     }
-
+   
     ini_events($('#external-events div.external-event'))
 
     /* inicializar el calendario */
