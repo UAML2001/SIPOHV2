@@ -6,6 +6,43 @@
             text-transform: uppercase;
         }
     </style>
+    <div class="modal fade" id="modalAudiencias" aria-hidden="true" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <i class="bi bi-calendar-check superpermisoGuardarCambios text-success text-center"></i>
+                <h1 class="modal-title fs-5 text-center" id="lblTituloConfirmacionModal">Agregar Audiencia</h1>
+                <div class="modal-body">
+                   
+                      <div class="form-group">
+                        <label for="lblTituloAgenda">Titulo de la audiencia</label>
+                        <input type="text" class="form-control form-control-sm" id="TituloAudiencia">
+                      </div>
+                    
+                      <div class="form-group">
+                        <label for="lblJuez">Asignar Juez</label>
+                              <asp:DropDownList runat="server" ID="ddlJuecesAgenda" CssClass="form-select form-select-sm" AutoPostBack="true">
+                                <asp:ListItem Value="">-- SELECCIONAR --</asp:ListItem>
+                            </asp:DropDownList>
+                      </div>
+                     <div class="form-group">
+                        <label for="lblDescripcion">Descripcion de la Audiencia</label>
+                        <textarea class="form-control" id="descripcionAgenda" rows="3"></textarea>
+                      </div>
+
+                </div>
+                <div class="modal-footer">
+                     <button type="button" class="btn btn-danger" onclick="CerrarModalAudiencias()" data-bs-dismiss="modal">Cancelar</button>
+                     <asp:Button ID="btnBorrarClasiDelito" runat="server" Text="Agregar"
+                        CssClass="btn btn-success ml-2" />
+
+                </div>
+            </div>
+        </div>
+      </div>
+
     <asp:ScriptManager ID="ScriptManagerAgenda" runat="server"></asp:ScriptManager>
     <!-- BASE MASTER -->
     <link href="Conteffnt/css/Consignaciones.css" rel="stylesheet" />
@@ -79,6 +116,11 @@
                                                                                 <div class="input-group-append">
                                                                                     <button id="add-new-event" type="button" class="btn btn-success">➕</button>
                                                                                 </div>
+                                                                                <p></p>
+                                                                                <div class="input-group-append">
+                                                                                    <button id="abrirModalAgenda" type="button" class="btn btn-success" onclick="abrirModalAudiencias()">Agregar Auiencia</button>
+                                                                                </div>
+
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -126,8 +168,18 @@
     <script src="Scripts/consignaciones/toast.js"></script>
     <!-- AGENDA -->
     <script src="Scripts/Agenda/agenda.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.1/locales/es.js"></script>
+    <script src="Scripts/Agenda/index.global.js"></script>
+    <script src="Scripts/Agenda/index.global.min.js"></script>
 
+    <script>
+        function abrirModalAudiencias() {
+            $('#modalAudiencias').modal('show');
+        }
 
-
+        function CerrarModalAudiencias() {
+            $('#modalAudiencias').modal('hide');
+            $('body').removeClass('modal-open').css('overflow', '');
+            $('.modal-backdrop').remove();
+        }
+    </script>
 </asp:Content>

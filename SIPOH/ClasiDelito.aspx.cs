@@ -58,6 +58,7 @@ namespace SIPOH
                 //checar esto que inicialice en invisible
                 divFechaReclasificacion.Style["display"] = "none";
                 divCheckReclasificar.Style["display"] = "none";
+                reclasificacionSi.Checked = false;
             }
         }
         protected void checkNoIdentificado_CheckedChanged(object sender, EventArgs e)
@@ -76,10 +77,13 @@ namespace SIPOH
             if (reclasificacionSi.Checked)
             {
                 ViewState["Reclasificado"] = "R";
+                FechaReclasificacion.Enabled = true;
             }
             else
             {
                 ViewState.Remove("Reclasificado");
+                FechaReclasificacion.Enabled = false;
+                FechaReclasificacion.Text = string.Empty;
             }
 
             divFechaReclasificacion.Style["display"] = reclasificacionSi.Checked ? "" : "none";
@@ -90,6 +94,7 @@ namespace SIPOH
             ddlModDelito.Items.Insert(0, new ListItem("-- SELECCIONAR --", "0"));
             divModalidad.Style["display"] = "none";
         }
+
         protected void CargarCatDelitos()
         {
             CargarCatalogos cargarCatalogos = new CargarCatalogos();
@@ -469,6 +474,7 @@ namespace SIPOH
             return fechaIngreso;
         }
 
+
         protected void btnGuardarClasiDeli_Click(object sender, EventArgs e)
         {
             string accion = ViewState["Accion"] != null ? ViewState["Accion"].ToString() : string.Empty;
@@ -566,6 +572,31 @@ namespace SIPOH
                 return;
             }
 
+            if (reclasificar == 'R' && string.IsNullOrWhiteSpace(FechaReclasificacion.Text))
+            {
+                MensajeError("El campo Fecha de Reclasificación es obligatorio.");
+                return;
+            }
+
+            DateTime? feReclasificacion = null;
+            if (reclasificar == 'R')
+            {
+                DateTime tempFechaReclasificacion;
+                if (!DateTime.TryParse(FechaReclasificacion.Text, out tempFechaReclasificacion))
+                {
+                    MensajeError("Fecha de reclasificación no válida.");
+                    return;
+                }
+
+                if (tempFechaReclasificacion > DateTime.Now)
+                {
+                    MensajeError("La fecha de reclasificación no puede ser mayor a la fecha de hoy.");
+                    return;
+                }
+
+                feReclasificacion = tempFechaReclasificacion;
+            }
+
             int idAsunto;
             if (ViewState["IdAsunto"] != null)
             {
@@ -633,7 +664,6 @@ namespace SIPOH
             bool resultado = false;
 
             int? idDelito = null;
-            DateTime? feReclasificacion = null;
             DateTime? feCaptura = null;
 
             try
@@ -645,8 +675,7 @@ namespace SIPOH
                 }
                 else if (accion == "U" && reclasificar == 'R')
                 {
-                    feReclasificacion = DateTime.Now;  // Puedes ajustar cómo obtienes esta fecha
-                    feCaptura = DateTime.Now;          // Puedes ajustar cómo obtienes esta fecha
+                    feCaptura = DateTime.Now;  // Puedes ajustar cómo obtienes esta fecha
                     idDelito = Convert.ToInt32(ddDelitos.SelectedValue);
                     resultado = controller.ActualizarClasificacionDelito("U", idDelitoC, idDeliAsunto, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, feDelito, domicilio, idDelDetalle, feReclasificacion, feCaptura, reclasificar, idAsunto, idDelito);
                 }
@@ -696,7 +725,6 @@ namespace SIPOH
                 MensajeError("Ocurrió un error inesperado al procesar la clasificación del delito: " + ex.Message);
             }
         }
-
 
 
 

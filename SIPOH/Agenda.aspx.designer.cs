@@ -15,6 +15,24 @@ namespace SIPOH
     {
 
         /// <summary>
+        /// Control ddlJuecesAgenda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlJuecesAgenda;
+
+        /// <summary>
+        /// Control btnBorrarClasiDelito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBorrarClasiDelito;
+
+        /// <summary>
         /// Control ScriptManagerAgenda.
         /// </summary>
         /// <remarks>
