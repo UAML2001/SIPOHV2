@@ -51,14 +51,17 @@
         var inputFechaRecepcion = document.getElementById('<%= inputFechaRecepcion.ClientID %>');
         var fechaSeleccionada = new Date(inputFechaRecepcion.value);
         var fechaActual = new Date();
-        fechaActual.setHours(0, 0, 0, 0);
 
-        if (fechaSeleccionada > fechaActual) {
+        // No ajustamos las horas a 0, 0, 0, 0 para incluir la comparación con horas, minutos, y segundos
+        // fechaActual.setHours(0, 0, 0, 0); 
+
+        if (fechaSeleccionada >= fechaActual) {
             //toastError("!Estas loco!, o ¿Vives en el futuro?");
             toastError("No se puede seleccionar una fecha posterior a hoy.");
             inputFechaRecepcion.value = "";
         }
     }
+
     function seleccionarVictima(victima) {
         var inputPromovente = document.getElementById('<%= inputPromovente.ClientID %>');
         inputPromovente.value +=victima + ", ";
@@ -187,7 +190,7 @@
                     
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                         <label for="inputFechaRecepcion" class="form-label text-secondary"><b>Fecha de Recepción:</b></label>                                        
-                        <asp:TextBox runat="server" ID="inputFechaRecepcion" CssClass="form-control form-control-sm" TextMode="Date" onblur="validarFecha()"></asp:TextBox>
+                        <asp:TextBox runat="server" ID="inputFechaRecepcion" CssClass="form-control form-control-sm" TextMode="DateTimeLocal" onblur="validarFecha()"></asp:TextBox>
                     </div>
                 </div>
 

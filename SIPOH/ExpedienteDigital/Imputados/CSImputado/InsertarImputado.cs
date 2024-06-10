@@ -9,15 +9,15 @@ using System.Web.UI;
 
 public class InsertarImputado
 {
-    public void InsertImputData(int idAsunto, string apPaterno, string apMaterno, string nombre, string genero, string tipoParte, string rfc, string curp, string edad, DateTime feNacimiento, string aliasImp, int idContNacido, int idPaisNacido,
+    public void InsertImputData(int idAsunto, string apPaterno, string apMaterno, string nombre, string genero, string tipoParte, string rfc, string curp, int edad, DateTime feNacimiento, string aliasImp, int idContNacido, int idPaisNacido,
         int idEstadoNacido, string idMunicipioNacido, int idNacionalidad, int idCondicion, int idEstadoCivil,
         int idGradoEstudios, int idAlfabet, int idiomaEspañol, int idPueblo, int hablaIndigena,
-        int idDialecto, int idOcupacion, int idProfesion, string domOcupacion, int discapacidad, int idContiResidencia, int idPaisResidencia,
+        int idDialecto, int idOcupacion, int idProfesion, string domOcupacion, int discapacidad, int idLengExtra, int idRelacImput, int idAsisMigra, int idContiResidencia, int idPaisResidencia,
         int idEstadoResidencia, string idMunicipioResidencia, string domResidencia, int idDefensor, int interprete,
         int ordenProteccion, DateTime feIndividualizacion, int idDocIdentificador, string numDocumento, string privacidad,
         string telefono, string correo, string fax, string domNotificacion, string otroTipo, int idUser, List<string> idsDiscapacidades,
         Page page, int idEstadoPsi, int idaccipenal, int idReinci, int idTipoDeten, int idOrdenJudi, int idCondFamiliar, int depEcon, int idSustancias)
-    { 
+    {
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
 
         using (SqlConnection conn = new SqlConnection(connectionString))
@@ -97,7 +97,7 @@ public class InsertarImputado
                     [IdUser], [TipoConsignacion], [IdTipoDetencion], [IdOrdenJudicial], [IdPsicofisico], 
                     [IdReincidente], [DeclaracionP], [FechaDeclaracionP], [FechaUltAudiencia], [FehaImputacion], 
                     [FechaCierreInv], [TotAudiencias], [TiempoCierreInv], [CalifDetencion], [FechaCalifDetencion], 
-                    [Tramite]
+                    [Tramite], [AsistMigratoria], [IdRelacInput], [IdLengExtra]
                 )
                 VALUES
                 (
@@ -112,7 +112,7 @@ public class InsertarImputado
                     @IdUser, @TipoConsignacion, @IdTipoDetencion, @IdOrdenJudicial, @IdPsicofisico, 
                     @IdReincidente, @DeclaracionP, @FechaDeclaracionP, @FechaUltAudiencia, @FehaImputacion, 
                     @FechaCierreInv, @TotAudiencias, @TiempoCierreInv, @CalifDetencion, @FechaCalifDetencion, 
-                    @Tramite
+                    @Tramite, @AsistMigratoria, @IdRelacInput, @IdLengExtra
                 );";
 
 
@@ -178,6 +178,9 @@ public class InsertarImputado
                 command.Parameters.AddWithValue("@CalifDetencion", 0); // Nueva columna
                 command.Parameters.AddWithValue("@FechaCalifDetencion", DateTime.Today); // Nueva columna
                 command.Parameters.AddWithValue("@Tramite", 0); // Nueva columna
+                command.Parameters.AddWithValue("@AsistMigratoria", idAsisMigra);
+                command.Parameters.AddWithValue("@IdRelacInput", idRelacImput);
+                command.Parameters.AddWithValue("@IdLengExtra", idLengExtra);
 
                 command.ExecuteNonQuery();
 
@@ -264,11 +267,11 @@ public class InsertarImputado
                     // Llama al método en el archivo .aspx para mostrar el PDF
                     ((Imputados)page).MostrarPDFInsertar("~/ExpedienteDigital/Imputados/CedulaImputados.pdf");
 
-                    // Registro del script de Toastr después de la inserción
-                    ScriptManager.RegisterStartupScript(page, page.GetType(), "alertMessage", "toastr.success('Imputado agregado correctamente.', 'Éxito');", true);
+                // Registro del script de Toastr después de la inserción
+                ScriptManager.RegisterStartupScript(page, page.GetType(), "alertMessage", "toastr.success('Imputado agregado correctamente.', 'Éxito');", true);
 
-                    // Confirmar la transacción
-                    transaction.Commit();
+                // Confirmar la transacción
+                transaction.Commit();
             }
 
             catch (SqlException ex)
@@ -283,8 +286,7 @@ public class InsertarImputado
                     errorMessage += $"{error.Message}<br/>";
                 }
 
-                // Mostrar un Toastr con el mensaje de error
-                ScriptManager.RegisterStartupScript(page, page.GetType(), "showerror", $"toastr.error('{errorMessage}', 'Error');", true);
+
             }
             finally
             {

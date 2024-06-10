@@ -97,10 +97,12 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                         dtNoDigit.Columns.Add("Descripcion");
                         dtNoDigit.Columns.Add("Cantidad");
                         dtNoDigit.Columns.Add("Digitalizado");
+                        dtNoDigit.Columns.Add("IdAsunto"); // Nueva columna
+                        dtNoDigit.Columns.Add("IdAnexoC"); // Nueva columna
 
                         HashSet<string> victimas = new HashSet<string>();
                         HashSet<string> imputados = new HashSet<string>();
-                        HashSet<string> descripcionesAnexos = new HashSet<string>(); // Nuevo HashSet para descripciones de anexos
+                        HashSet<string> descripcionesAnexos = new HashSet<string>();
 
                         using (SqlDataReader dr = cmd.ExecuteReader())
                         {
@@ -118,10 +120,13 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                                 string descripcion = dr["Descripcion"].ToString();
                                 string cantidad = dr["Cantidad"].ToString();
                                 string digit = dr["Digitalizado"].ToString();
+                                string idAsuntos = dr["IdAsunto"].ToString();
+                                string idAnexoC = dr["IdAnexoC"].ToString();
+
 
                                 if (!descripcionesAnexos.Contains(descripcion))
                                 {
-                                    dtNoDigit.Rows.Add(descripcion, cantidad, digit);
+                                    dtNoDigit.Rows.Add(descripcion, cantidad, digit, idAsuntos, idAnexoC);
                                     descripcionesAnexos.Add(descripcion);
                                 }
 

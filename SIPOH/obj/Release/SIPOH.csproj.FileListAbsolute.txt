@@ -218,3 +218,10 @@ C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialCont
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\InicialEjecucion.cs
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorControl.cs
 C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Reportes\PosteriorEjecucion.cs
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\ExpedienteDigital\Victimas\CedulaVictimas.pdf
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\ExpedienteDigital\Imputados\CedulaImputados.rpt
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\ExpedienteDigital\Victimas\CedulaVictimas.rpt
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\ConsultaPortada1.cs
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\Controllers\AC_Digitalizacion\PortadaDigitalizacion.cs
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\ExpedienteDigital\Imputados\CedulaImputados.cs
+C:\Users\uriel\OneDrive\Documentos\GitHub\SIPOHV2\SIPOH\bin\ExpedienteDigital\Victimas\CedulaVictimas.cs

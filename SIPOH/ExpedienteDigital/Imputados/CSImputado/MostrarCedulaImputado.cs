@@ -14,7 +14,7 @@ public class MostrarCedulaImputado
     public void MostrarCedula(int idAsunto, int idPartes, string apPaterno, string apMaterno, string nombre, string genero, string tipoParte, string rfc, string curp, string edad, DateTime feNacimiento, string aliasImp, int idContNacido, int idPaisNacido,
             int idEstadoNacido, string idMunicipioNacido, int idNacionalidad, int idCondicion, int idEstadoCivil,
             int idGradoEstudios, int idAlfabet, int idiomaEspañol, int idPueblo, int hablaIndigena,
-            int idDialecto, int idOcupacion, int idProfesion, string domOcupacion, int discapacidad, int idContiResidencia, int idPaisResidencia,
+            int idDialecto, int idOcupacion, int idProfesion, string domOcupacion, int discapacidad, int idLengExtra, int idRelacImput, int idAsisMigra, int idContiResidencia, int idPaisResidencia,
             int idEstadoResidencia, string idMunicipioResidencia, string domResidencia, int idDefensor, int interprete,
             int ordenProteccion, DateTime feIndividualizacion, int idDocIdentificador, string numDocumento, string privacidad,
             string telefono, string correo, string fax, string domNotificacion, string otroTipo, int idUser, List<string> idsDiscapacidades,

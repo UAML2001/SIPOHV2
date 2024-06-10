@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -64,6 +65,8 @@ namespace SIPOH
                 dropdownFiller.DropdownPreguntas(HablEsp);
                 dropdownFiller.DropdownPreguntas(HablLengIndi);
                 dropdownFiller.DropdownPreguntas(ReqInter);
+                dropdownFiller.DropdownPreguntas(CuenFeNac);
+                dropdownFiller.DropdownPreguntas(AsisMigra);
             }
         }
 
@@ -81,7 +84,7 @@ namespace SIPOH
                         { "TAsunto", TAsunto.SelectedValue }, { "numexpe", numexpe.Text }, { "Apellido Paterno", APVic.Text }, { "Apellido Materno", AMVic.Text },
                         { "Nombre", NomVic.Text }, { "Genero", GeneVicti.SelectedValue == "SG" ? "SG" : GeneVicti.SelectedValue },
                         { "Tipo Victima", TipoVict.SelectedValue },{ "Clasificacion de Victima", ClasifVicti.SelectedValue },{ "Tipo de Sector", SectorVicti.SelectedValue },
-                        { "Tipo Sociedad", TipoSocie.SelectedValue }, { "CURP", CURPVicti.Text }, { "RFC", RFCVicti.Text }, { "Fecha de Nacimiento", FeNacVic.Text }, { "Edad", EdadVicti.Text },
+                        { "Tipo Sociedad", TipoSocie.SelectedValue }, { "CURP", CURPVicti.Text }, { "RFC", RFCVicti.Text }, { "Edad", EdadVicti.Text },
                         { "Continente", ContiNac.SelectedValue }, { "Pais", PaisNac.SelectedValue }, { "Estado", EstNaci.SelectedValue }, { "Municipio", MuniNac.SelectedValue },
 
 
@@ -89,11 +92,11 @@ namespace SIPOH
                         { "Habla Lengua Extranjera", HabLenExtra.SelectedValue }, { "Condicion de Alfabetismo", CondAlfVic.SelectedValue }, { "Ocupacion", OcupaVicti.SelectedValue }, { "Profesion", DetaOcupaVic.SelectedValue },
                         { "Habla Español", HablEsp.SelectedValue }, { "Habla Lengua Indigena", HablLengIndi.SelectedValue }, { "Cuenta con discapacidad", CuenDisca.SelectedValue },
                         { "Lengua Indigena", LengIndi.SelectedValue },{ "Pueblo Indigena", PuebloIndi.SelectedValue },
-                        { "Domicilio de trabajo", DomiTrabVicti.Text }, { "Vulnerabilidad", VicVulne.SelectedValue },
+                        { "Domicilio de trabajo", DomiTrabVicti.Text }, { "Vulnerabilidad", VicVulne.SelectedValue }, { "Asistencia Migratoria", AsisMigra.SelectedValue },
 
 
                         { "Continente de Residencia", ContiRes.SelectedValue }, { "Pais de Residencia", PaisRes.SelectedValue }, { "Estado de Residencia", EstaRes.SelectedValue }, { "Municipio de Residencia", MuniRes.SelectedValue },
-                        { "Domicilio Personal", DomicPersonVicti.Text }, { "Asesor Juridico", AseJur.SelectedValue }, { "Requiere Interprete", ReqInter.SelectedValue }, { "Hora Individualizacion", IDVicti.SelectedValue }, { "Identificación", IDVicti.SelectedValue },
+                        { "Relacion con el Imputado", RelacVic.SelectedValue }, { "Domicilio Personal", DomicPersonVicti.Text }, { "Asesor Juridico", AseJur.SelectedValue }, { "Requiere Interprete", ReqInter.SelectedValue }, { "Hora Individualizacion", HoraIndivi.Text }, { "Identificación", IDVicti.SelectedValue },
                         { "Telefono de contacto", TelCont.Text }, { "Correo Electronico", EmailCont.Text }, { "Acepta Publicacion de Datos", AceptaDatos.SelectedValue }
                         // Agrega tantos campos como necesites...
                     };
@@ -115,6 +118,12 @@ namespace SIPOH
                             else if (campo.Value == "S")
                             {
                                 ShowToastr($"Por favor, selecciona un valor válido para {campo.Key}.", "Error", "error");
+                                return;
+                            }
+                            // Verifica que la edad no sea mayor a 99
+                            else if (campo.Key == "Edad" && int.TryParse(campo.Value, out int age) && age > 99)
+                            {
+                                ShowToastr("La edad no puede ser mayor a 99.", "Error", "error");
                                 return;
                             }
                         }
@@ -157,16 +166,20 @@ namespace SIPOH
                     string rfc = TipoVict.SelectedValue == "1" ? RFCVicti.Text.ToUpper() : string.Empty;
                     string curp = TipoVict.SelectedValue == "1" ? CURPVicti.Text.ToUpper() : string.Empty;
                     string edad = TipoVict.SelectedValue == "1" ? EdadVicti.Text.ToUpper() : string.Empty;
-                    DateTime feNacimiento = DateTime.Now; // Fecha válida por defecto
+                    // En tu método existente, actualiza la lógica para manejar la fecha predeterminada
+                    DateTime feNacimiento = DateTime.ParseExact("09/09/1899 00:00:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
-                    if (TipoVict.SelectedValue == "1")
+                    // Comprueba si el input está habilitado antes de intentar parsear la fecha
+                    if (FeNacVic.Enabled)
                     {
-                        if (!DateTime.TryParse(FeNacVic.Text.ToUpper(), out DateTime fecha))
+                        if (!DateTime.TryParse(FeNacVic.Text, out feNacimiento))
                         {
+                            // Maneja el error de formato aquí
                             throw new FormatException("La fecha ingresada no tiene el formato correcto.");
                         }
-                        feNacimiento = fecha.Date; // Esto será solo la fecha, la hora se establecerá a medianoche (00:00:00)
                     }
+                    // No es necesario un else aquí, ya que la fecha predeterminada ya está establecida
+
 
                     int idContNacido = TipoVict.SelectedValue == "1" ? int.Parse(ContiNac.SelectedValue.ToUpper()) : 7;
                     int idPaisNacido = TipoVict.SelectedValue == "1" ? int.Parse(PaisNac.SelectedValue.ToUpper()) : 227;
@@ -176,9 +189,12 @@ namespace SIPOH
                     int idCondicion = TipoVict.SelectedValue == "1" ? int.Parse(CondMigVic.SelectedValue.ToUpper()) : 12;
                     int idEstadoCivil = TipoVict.SelectedValue == "1" ? int.Parse(EstCivil.SelectedValue.ToUpper()) : 9;
                     int idGradoEstudios = TipoVict.SelectedValue == "1" ? int.Parse(GradEst.SelectedValue.ToUpper()) : -2;
+                    int idLengExtra = TipoVict.SelectedValue == "1" ? int.Parse(HabLenExtra.SelectedValue.ToUpper()) : 3;
+                    int idRelacImput = TipoVict.SelectedValue == "1" ? int.Parse(RelacVic.SelectedValue.ToUpper()) : 11;
                     int idAlfabet = TipoVict.SelectedValue == "1" ? int.Parse(CondAlfVic.SelectedValue.ToUpper()) : 9;
                     int idiomaEspañol = TipoVict.SelectedValue == "1" ? int.Parse(HablEsp.SelectedValue.ToUpper()) : 3;
                     int idVulnerabilidad = TipoVict.SelectedValue == "1" ? int.Parse(VicVulne.SelectedValue.ToUpper()) : 99;
+                    int idAsisMigra = TipoVict.SelectedValue == "1" ? int.Parse(AsisMigra.SelectedValue.ToUpper()) : 3;
                     int idPueblo = TipoVict.SelectedValue == "1" ? int.Parse(PuebloIndi.SelectedValue.ToUpper()) : 99;
                     int hablaIndigena = TipoVict.SelectedValue == "1" ? int.Parse(HablLengIndi.SelectedValue.ToUpper()) : 3;
                     int idDialecto = TipoVict.SelectedValue == "1" ? int.Parse(LengIndi.SelectedValue.ToUpper()) : 15;
@@ -213,7 +229,7 @@ namespace SIPOH
                     insertador.UpdateVictimData(
                         idPartes, idAsunto, apPaterno, apMaterno, nombre, genero, tipoParte, tipoVictima, victima, rfc, curp, edad, feNacimiento, idContNacido, idPaisNacido,
                         idEstadoNacido, idMunicipioNacido, idNacionalidad, idCondicion, idEstadoCivil,
-                        idGradoEstudios, idAlfabet, idiomaEspañol, idVulnerabilidad, idPueblo, hablaIndigena,
+                        idGradoEstudios, idLengExtra, idRelacImput, idAlfabet, idiomaEspañol, idVulnerabilidad, idAsisMigra, idPueblo, hablaIndigena,
                         idDialecto, idOcupacion, idProfesion, domOcupacion, discapacidad, idContiResidencia, idPaisResidencia,
                         idEstadoResidencia, idMunicipioResidencia, domResidencia, idDefensor, interprete,
                         ordenProteccion, feIndividualizacion, idDocIdentificador, numDocumento, privacidad,
@@ -232,7 +248,7 @@ namespace SIPOH
                         { "TAsunto", TAsunto.SelectedValue }, { "numexpe", numexpe.Text }, { "Apellido Paterno", APVic.Text }, { "Apellido Materno", AMVic.Text },
                         { "Nombre", NomVic.Text }, { "Genero", GeneVicti.SelectedValue == "SG" ? "SG" : GeneVicti.SelectedValue },
                         { "Tipo Victima", TipoVict.SelectedValue },{ "Clasificacion de Victima", ClasifVicti.SelectedValue },{ "Tipo de Sector", SectorVicti.SelectedValue },
-                        { "Tipo Sociedad", TipoSocie.SelectedValue }, { "CURP", CURPVicti.Text }, { "RFC", RFCVicti.Text }, { "Fecha de Nacimiento", FeNacVic.Text }, { "Edad", EdadVicti.Text },
+                        { "Tipo Sociedad", TipoSocie.SelectedValue }, { "CURP", CURPVicti.Text }, { "RFC", RFCVicti.Text }, { "Edad", EdadVicti.Text },
                         { "Continente", ContiNac.SelectedValue }, { "Pais", PaisNac.SelectedValue }, { "Estado", EstNaci.SelectedValue }, { "Municipio", MuniNac.SelectedValue },
 
 
@@ -240,11 +256,11 @@ namespace SIPOH
                         { "Habla Lengua Extranjera", HabLenExtra.SelectedValue }, { "Condicion de Alfabetismo", CondAlfVic.SelectedValue }, { "Ocupacion", OcupaVicti.SelectedValue }, { "Profesion", DetaOcupaVic.SelectedValue },
                         { "Habla Español", HablEsp.SelectedValue }, { "Habla Lengua Indigena", HablLengIndi.SelectedValue }, { "Cuenta con discapacidad", CuenDisca.SelectedValue },
                         { "Lengua Indigena", LengIndi.SelectedValue },{ "Pueblo Indigena", PuebloIndi.SelectedValue },
-                        { "Domicilio de trabajo", DomiTrabVicti.Text }, { "Vulnerabilidad", VicVulne.Text },
+                        { "Domicilio de trabajo", DomiTrabVicti.Text }, { "Vulnerabilidad", VicVulne.Text }, { "Asistencia Migratoria", AsisMigra.SelectedValue },
 
 
                         { "Continente de Residencia", ContiRes.SelectedValue }, { "Pais de Residencia", PaisRes.SelectedValue }, { "Estado de Residencia", EstaRes.SelectedValue }, { "Municipio de Residencia", MuniRes.SelectedValue },
-                        { "Domicilio Personal", DomicPersonVicti.Text }, { "Asesor Juridico", AseJur.SelectedValue }, { "Requiere Interprete", ReqInter.SelectedValue }, { "Hora Individualizacion", HoraIndivi.Text }, { "Identificación", IDVicti.SelectedValue },
+                        { "Relacion con el Imputado", RelacVic.SelectedValue }, { "Domicilio Personal", DomicPersonVicti.Text }, { "Asesor Juridico", AseJur.SelectedValue }, { "Requiere Interprete", ReqInter.SelectedValue }, { "Hora Individualizacion", HoraIndivi.Text }, { "Identificación", IDVicti.SelectedValue },
                         { "Telefono de contacto", TelCont.Text }, { "Correo Electronico", EmailCont.Text }, { "Acepta Publicacion de Datos", AceptaDatos.SelectedValue }
                         // Agrega tantos campos como necesites...
                     };
@@ -267,6 +283,12 @@ namespace SIPOH
                     else if (campo.Value == "S")
                     {
                         ShowToastr($"Por favor, selecciona un valor válido para {campo.Key}.", "Error", "error");
+                        return;
+                    }
+                    // Verifica que la edad no sea mayor a 99
+                    else if (campo.Key == "Edad" && int.TryParse(campo.Value, out int age) && age > 99)
+                    {
+                        ShowToastr("La edad no puede ser mayor a 99.", "Error", "error");
                         return;
                     }
                 }
@@ -309,16 +331,21 @@ namespace SIPOH
             string rfc = TipoVict.SelectedValue == "1" ? RFCVicti.Text.ToUpper() : string.Empty;
             string curp = TipoVict.SelectedValue == "1" ? CURPVicti.Text.ToUpper() : string.Empty;
             string edad = TipoVict.SelectedValue == "1" ? EdadVicti.Text.ToUpper() : string.Empty;
-            DateTime feNacimiento = DateTime.Now; // Fecha válida por defecto
 
-            if (TipoVict.SelectedValue == "1")
+            // En tu método existente, actualiza la lógica para manejar la fecha predeterminada
+            DateTime feNacimiento = DateTime.ParseExact("09/09/1899 00:00:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
+
+            // Comprueba si el input está habilitado antes de intentar parsear la fecha
+            if (FeNacVic.Enabled)
             {
-                if (!DateTime.TryParse(FeNacVic.Text.ToUpper(), out DateTime fecha))
+                if (!DateTime.TryParse(FeNacVic.Text, out feNacimiento))
                 {
+                    // Maneja el error de formato aquí
                     throw new FormatException("La fecha ingresada no tiene el formato correcto.");
                 }
-                feNacimiento = fecha.Date; // Esto será solo la fecha, la hora se establecerá a medianoche (00:00:00)
             }
+            // No es necesario un else aquí, ya que la fecha predeterminada ya está establecida
+
 
             int idContNacido = TipoVict.SelectedValue == "1" ? int.Parse(ContiNac.SelectedValue.ToUpper()) : 7;
             int idPaisNacido = TipoVict.SelectedValue == "1" ? int.Parse(PaisNac.SelectedValue.ToUpper()) : 227;
@@ -328,9 +355,12 @@ namespace SIPOH
             int idCondicion = TipoVict.SelectedValue == "1" ? int.Parse(CondMigVic.SelectedValue.ToUpper()) : 12;
             int idEstadoCivil = TipoVict.SelectedValue == "1" ? int.Parse(EstCivil.SelectedValue.ToUpper()) : 9;
             int idGradoEstudios = TipoVict.SelectedValue == "1" ? int.Parse(GradEst.SelectedValue.ToUpper()) : -2;
-            int idAlfabet = TipoVict.SelectedValue == "1" ? int.Parse(CondAlfVic.SelectedValue.ToUpper()) : 9;
+            int idLengExtra = TipoVict.SelectedValue == "1" ? int.Parse(HabLenExtra.SelectedValue.ToUpper()) : 3;
+            int idRelacImput = TipoVict.SelectedValue == "1" ? int.Parse(RelacVic.SelectedValue.ToUpper()) : 3;
+            int idAlfabet = TipoVict.SelectedValue == "1" ? int.Parse(CondAlfVic.SelectedValue.ToUpper()) : 11;
             int idiomaEspañol = TipoVict.SelectedValue == "1" ? int.Parse(HablEsp.SelectedValue.ToUpper()) : 3;
             int idVulnerabilidad = TipoVict.SelectedValue == "1" ? int.Parse(VicVulne.SelectedValue.ToUpper()) : 99;
+            int idAsisMigra = TipoVict.SelectedValue == "1" ? int.Parse(AsisMigra.SelectedValue.ToUpper()) : 3;
             int idPueblo = TipoVict.SelectedValue == "1" ? int.Parse(PuebloIndi.SelectedValue.ToUpper()) : 99;
             int hablaIndigena = TipoVict.SelectedValue == "1" ? int.Parse(HablLengIndi.SelectedValue.ToUpper()) : 3;
             int idDialecto = TipoVict.SelectedValue == "1" ? int.Parse(LengIndi.SelectedValue.ToUpper()) : 15;
@@ -365,7 +395,7 @@ namespace SIPOH
             insertador.InsertVictimData(
                 idAsunto, apPaterno, apMaterno, nombre, genero, tipoParte, tipoVictima, victima, rfc, curp, edad, feNacimiento, idContNacido, idPaisNacido,
                 idEstadoNacido, idMunicipioNacido, idNacionalidad, idCondicion, idEstadoCivil,
-                idGradoEstudios, idAlfabet, idiomaEspañol, idVulnerabilidad, idPueblo, hablaIndigena,
+                idGradoEstudios, idLengExtra, idRelacImput, idAlfabet, idiomaEspañol, idVulnerabilidad, idAsisMigra, idPueblo, hablaIndigena,
                 idDialecto, idOcupacion, idProfesion, domOcupacion, discapacidad, idContiResidencia, idPaisResidencia,
                 idEstadoResidencia, idMunicipioResidencia, domResidencia, idDefensor, interprete,
                 ordenProteccion, feIndividualizacion, idDocIdentificador, numDocumento, privacidad,
@@ -381,7 +411,7 @@ namespace SIPOH
             reiniciarFormulario.Reiniciar(UpVict, LimpVicti, SvVicti, SectorVicti, TipoSocie, APVic, AMVic, NomVic, GeneVicti, ClasifVicti, CURPVicti, RFCVicti, FeNacVic, EdadVicti, ContiNac,
                 PaisNac, EstNaci, MuniNac, NacVicti, HabLenExtra, HablEsp, LengIndi, VicVulne, CondMigVic, CondAlfVic, HablLengIndi, PuebloIndi, DomiTrabVicti, EstCivil, GradEst, OcupaVicti,
                 DetaOcupaVic, CuenDisca, TipoDisca, DiscaEspe, ContiRes, PaisRes, EstaRes, MuniRes, DomicPersonVicti, AseJur, ReqInter, TelCont, EmailCont, Fax, RelacVic, HoraIndivi, IDVicti,
-                Domici, OtroMed, AceptaDatos);
+                Domici, OtroMed, AceptaDatos, AsisMigra);
         }
 
         protected void btnBuscar_Click1(object sender, EventArgs e)
@@ -405,7 +435,7 @@ namespace SIPOH
             handler.TipoVictChanged(sender, e, TipoVict, SectorVicti, TipoSocie, AMVic, NomVic, GeneVicti, ClasifVicti, CURPVicti, RFCVicti, FeNacVic, EdadVicti, ContiNac,
                 PaisNac, EstNaci, MuniNac, NacVicti, HabLenExtra, HablEsp, LengIndi, VicVulne, CondMigVic, CondAlfVic, HablLengIndi, PuebloIndi, DomiTrabVicti, EstCivil, GradEst, OcupaVicti,
                 DetaOcupaVic, CuenDisca, TipoDisca, DiscaEspe, ContiRes, PaisRes, EstaRes, MuniRes, DomicPersonVicti, AseJur, ReqInter, TelCont, EmailCont, Fax, RelacVic, HoraIndivi, IDVicti,
-                Domici, OtroMed, AceptaDatos);
+                Domici, OtroMed, AceptaDatos, AsisMigra);
         }
 
         protected void gvVictimas_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -474,7 +504,28 @@ namespace SIPOH
             EstablecerValorTextBox(APVic, info.APaterno);
             EstablecerValorTextBox(AMVic, info.AMaterno);
             EstablecerValorTextBox(NomVic, info.Nombre);
-            EstablecerValorDropDownList(GeneVicti, info.GeneroNumerico);
+            if (GeneVicti.Items.FindByValue(info.GeneroNumerico) != null)
+            {
+                GeneVicti.SelectedValue = info.GeneroNumerico;
+            }
+            else
+            {
+                GeneVicti.Items.Add(new ListItem(info.GeneroNumerico, info.GeneroNumerico));
+                GeneVicti.SelectedValue = info.GeneroNumerico;
+            }
+
+
+            EstablecerValorDropDownList(TipoVict, info.TipoVictima);
+            if (TipoVict.SelectedValue == "1")
+            {
+                SectorVicti.SelectedValue = "9";
+                TipoSocie.SelectedValue = "9";
+
+                SectorVicti.Enabled = false;
+                TipoSocie.Enabled = false;
+            }
+            EstablecerValorDropDownList(ClasifVicti, info.Victima);
+
             EstablecerValorTextBox(RFCVicti, info.RFC);
             EstablecerValorTextBox(CURPVicti, info.CURP);
             if (info.FeNacimiento.HasValue)
@@ -526,8 +577,8 @@ namespace SIPOH
 
             // Repite el proceso para los DropDownList de residencia
 
-            dropdownFiller.DropdownContinentes(ContiNac);
             dropdownFiller.DropdownContinentes(ContiRes);
+            dropdownFiller.DropdownContinentes(ContiNac);
 
             if (info.IdContinenteNacido != null)
             {
@@ -562,23 +613,64 @@ namespace SIPOH
 
             if (info.IdOcupacion != null)
             {
-                OcupaVicti.SelectedValue = info.IdOcupacion;
+                // Verificar si el valor existe en la lista antes de asignarlo
+                if (OcupaVicti.Items.FindByValue(info.IdOcupacion) != null)
+                {
+                    OcupaVicti.SelectedValue = info.IdOcupacion;
+                }
+                else
+                {
+                    OcupaVicti.Items.Add(new ListItem(info.IdOcupacion, info.IdOcupacion));
+                    OcupaVicti.SelectedValue = info.IdOcupacion;
+                }
                 dropdownFiller.DropdownProfesiones(DetaOcupaVic, info.IdOcupacion);
             }
 
             EstablecerValorDropDownList(NacVicti, info.IdNacionalidad);
             EstablecerValorDropDownList(HablEsp, info.IdiomaEspañol);
+            EstablecerValorDropDownList(HabLenExtra, info.IdLengExtra);
+            EstablecerValorDropDownList(RelacVic, info.IdRelacVicti);
             EstablecerValorDropDownList(LengIndi, info.IdDialecto);
-            EstablecerValorDropDownList(CondMigVic, info.IdCondicion);
+            if (CondMigVic.Items.FindByValue(info.IdCondicion) != null)
+            {
+                CondMigVic.SelectedValue = info.IdCondicion;
+            }
+            else
+            {
+                CondMigVic.Items.Add(new ListItem(info.IdCondicion, info.IdCondicion));
+                CondMigVic.SelectedValue = info.IdCondicion;
+            }
+
             EstablecerValorDropDownList(CondAlfVic, info.IdAlfabet);
             EstablecerValorDropDownList(HablLengIndi, info.HablaIndigena);
             EstablecerValorDropDownList(PuebloIndi, info.IdPueblo);
             EstablecerValorTextBox(DomiTrabVicti, info.DomiTrabVicti);
             EstablecerValorDropDownList(EstCivil, info.IdEstadoCivil);
-            EstablecerValorDropDownList(OcupaVicti, info.IdOcupacion);
-            EstablecerValorDropDownList(GradEst, info.IdGradoEstudios);
 
+            if (OcupaVicti.Items.FindByValue(info.IdOcupacion) != null)
+            {
+                OcupaVicti.SelectedValue = info.IdOcupacion;
+            }
+            else
+            {
+                OcupaVicti.Items.Add(new ListItem(info.IdOcupacion, info.IdOcupacion));
+                OcupaVicti.SelectedValue = info.IdOcupacion;
+            }
+
+            EstablecerValorDropDownList(GradEst, info.IdGradoEstudios);
             EstablecerValorDropDownList(CuenDisca, info.Discapacidad);
+            EstablecerValorDropDownList(VicVulne, info.IdVulnerabilidad);
+
+            if (AsisMigra.Items.FindByValue(info.AsistMigratoria) != null)
+            {
+                AsisMigra.SelectedValue = info.AsistMigratoria;
+            }
+            else
+            {
+                AsisMigra.Items.Add(new ListItem(info.AsistMigratoria, info.AsistMigratoria));
+                AsisMigra.SelectedValue = info.AsistMigratoria;
+            }
+
             EstablecerValorTextBox(DomicPersonVicti, info.DomResidencia);
             EstablecerValorDropDownList(AseJur, info.IdDefensor);
             EstablecerValorDropDownList(ReqInter, info.Interprete);
@@ -597,7 +689,7 @@ namespace SIPOH
                 IDVicti.ClearSelection();
             }
 
-            HoraIndivi.Text = info.FeIndividualización;
+            EstablecerValorTextBox(HoraIndivi, info.FeIndividualización);
             Domici.Text = info.DomNotificacion;
             AceptaDatos.SelectedValue = info.Privacidad;
 
@@ -606,6 +698,7 @@ namespace SIPOH
             gvDiscapacidades2.DataSource = dtDiscapacidades;
             gvDiscapacidades2.DataBind();
         }
+
 
         protected void ContiNac_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -956,7 +1049,7 @@ namespace SIPOH
             reiniciarFormulario.Reiniciar(UpVict, LimpVicti, SvVicti, APVic, AMVic, NomVic, GeneVicti, CURPVicti, RFCVicti, FeNacVic, EdadVicti, ContiNac,
                 PaisNac, EstNaci, MuniNac, NacVicti, HabLenExtra, HablEsp, LengIndi, CondMigVic, CondAlfVic, HablLengIndi, PuebloIndi, DomiTrabVicti, EstCivil, GradEst, OcupaVicti,
                 DetaOcupaVic, CuenDisca, TipoDisca, DiscaEspe, ContiRes, PaisRes, EstaRes, MuniRes, DomicPersonVicti, AseJur, ReqInter, TelCont, EmailCont, Fax, RelacVic, HoraIndivi, IDVicti,
-                Domici, OtroMed, AceptaDatos);
+                Domici, OtroMed, AceptaDatos, AsisMigra);
         }
 
         protected void ImprCedula_Click(object sender, EventArgs e)
@@ -979,8 +1072,9 @@ namespace SIPOH
                         { "Profesion", DetaOcupaVic.SelectedValue }, { "Domicilio de trabajo", DomiTrabVicti.Text }, { "Cuenta con discapacidad", CuenDisca.SelectedValue },
                         { "Continente de Residencia", ContiRes.SelectedValue }, { "Pais de Residencia", PaisRes.SelectedValue }, { "Estado de Residencia", EstaRes.SelectedValue },
                         { "Municipio de Residencia", MuniRes.SelectedValue }, { "Domicilio Personal", DomicPersonVicti.Text }, { "Asesor Juridico", AseJur.SelectedValue },
-                        { "Requiere Interprete", ReqInter.SelectedValue }, { "Identificación", IDVicti.SelectedValue },
+                        { "Requiere Interprete", ReqInter.SelectedValue }, { "Identificación", IDVicti.SelectedValue },{ "Asistencia Migratoria", AsisMigra.SelectedValue },
                         { "Acepta Publicacion de Datos", AceptaDatos.SelectedValue }, { "Telefono de contacto", TelCont.Text }, { "Correo Electronico", EmailCont.Text },
+                        { "Habla Lengua Extranjera", HabLenExtra.SelectedValue }, { "Relacion con el Imputado", RelacVic.SelectedValue }, 
                         // Agrega tantos campos como necesites...
                     };
 
@@ -1048,16 +1142,19 @@ namespace SIPOH
                 string rfc = TipoVict.SelectedValue == "1" ? RFCVicti.Text.ToUpper() : string.Empty;
                 string curp = TipoVict.SelectedValue == "1" ? CURPVicti.Text.ToUpper() : string.Empty;
                 string edad = TipoVict.SelectedValue == "1" ? EdadVicti.Text.ToUpper() : string.Empty;
-                DateTime feNacimiento = DateTime.Now; // Fecha válida por defecto
+                // En tu método existente, actualiza la lógica para manejar la fecha predeterminada
+                DateTime feNacimiento = DateTime.ParseExact("09/09/1899 00:00:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
-                if (TipoVict.SelectedValue == "1")
+                // Comprueba si el input está habilitado antes de intentar parsear la fecha
+                if (FeNacVic.Enabled)
                 {
-                    if (!DateTime.TryParse(FeNacVic.Text.ToUpper(), out DateTime fecha))
+                    if (!DateTime.TryParse(FeNacVic.Text, out feNacimiento))
                     {
+                        // Maneja el error de formato aquí
                         throw new FormatException("La fecha ingresada no tiene el formato correcto.");
                     }
-                    feNacimiento = fecha.Date; // Esto será solo la fecha, la hora se establecerá a medianoche (00:00:00)
                 }
+                // No es necesario un else aquí, ya que la fecha predeterminada ya está establecida
 
                 int idContNacido = TipoVict.SelectedValue == "1" ? int.Parse(ContiNac.SelectedValue.ToUpper()) : 7;
                 int idPaisNacido = TipoVict.SelectedValue == "1" ? int.Parse(PaisNac.SelectedValue.ToUpper()) : 227;
@@ -1067,9 +1164,12 @@ namespace SIPOH
                 int idCondicion = TipoVict.SelectedValue == "1" ? int.Parse(CondMigVic.SelectedValue.ToUpper()) : 12;
                 int idEstadoCivil = TipoVict.SelectedValue == "1" ? int.Parse(EstCivil.SelectedValue.ToUpper()) : 9;
                 int idGradoEstudios = TipoVict.SelectedValue == "1" ? int.Parse(GradEst.SelectedValue.ToUpper()) : -2;
+                int idLengExtra = TipoVict.SelectedValue == "1" ? int.Parse(HabLenExtra.SelectedValue.ToUpper()) : 3;
+                int idRelacImput = TipoVict.SelectedValue == "1" ? int.Parse(RelacVic.SelectedValue.ToUpper()) : 11;
                 int idAlfabet = TipoVict.SelectedValue == "1" ? int.Parse(CondAlfVic.SelectedValue.ToUpper()) : 9;
                 int idiomaEspañol = TipoVict.SelectedValue == "1" ? int.Parse(HablEsp.SelectedValue.ToUpper()) : 3;
                 int idVulnerabilidad = TipoVict.SelectedValue == "1" ? int.Parse(VicVulne.SelectedValue.ToUpper()) : 99;
+                int idAsisMigra = TipoVict.SelectedValue == "1" ? int.Parse(AsisMigra.SelectedValue.ToUpper()) : 3;
                 int idPueblo = TipoVict.SelectedValue == "1" ? int.Parse(PuebloIndi.SelectedValue.ToUpper()) : 99;
                 int hablaIndigena = TipoVict.SelectedValue == "1" ? int.Parse(HablLengIndi.SelectedValue.ToUpper()) : 3;
                 int idDialecto = TipoVict.SelectedValue == "1" ? int.Parse(LengIndi.SelectedValue.ToUpper()) : 15;
@@ -1104,7 +1204,7 @@ namespace SIPOH
                 insertador.MostrarCedula(
                     idAsunto, idPartes, apPaterno, apMaterno, nombre, genero, tipoParte, tipoVictima, victima, rfc, curp, edad, feNacimiento, idContNacido, idPaisNacido,
                     idEstadoNacido, idMunicipioNacido, idNacionalidad, idCondicion, idEstadoCivil,
-                    idGradoEstudios, idAlfabet, idiomaEspañol, idVulnerabilidad, idPueblo, hablaIndigena,
+                    idGradoEstudios, idRelacImput, idLengExtra, idAlfabet, idiomaEspañol, idVulnerabilidad, idAsisMigra, idPueblo, hablaIndigena,
                     idDialecto, idOcupacion, idProfesion, domOcupacion, discapacidad, idContiResidencia, idPaisResidencia,
                     idEstadoResidencia, idMunicipioResidencia, domResidencia, idDefensor, interprete,
                     ordenProteccion, feIndividualizacion, idDocIdentificador, numDocumento, privacidad,
@@ -1121,6 +1221,23 @@ namespace SIPOH
             panelPdfMostrar.Style["display"] = "none";
         }
 
+        protected void CuenFeNac_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Comprueba si el valor seleccionado es '3' o '2'
+            if (CuenFeNac.SelectedValue == "3" || CuenFeNac.SelectedValue == "2")
+            {
+                // Deshabilita el input y establece el valor predeterminado
+                FeNacVic.Enabled = false;
+                // Usa "HH" para el formato de 24 horas
+                FeNacVic.Text = DateTime.ParseExact("09/09/1899", "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                // Habilita el input si se selecciona otro valor
+                FeNacVic.Enabled = true;
+            }
+
+        }
 
     }
 }

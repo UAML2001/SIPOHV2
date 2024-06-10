@@ -58,6 +58,9 @@ public class InformacionFormularioImputados
     public string TipoConsignacion { get; set; }
     public string IdTipoDetencion { get; set; }
     public string IdOrdenJudicial { get; set; }
+    public string IdAsisMigra { get; set; }
+    public string IdLengExtra { get; set; }
+    public string IdRelacVicti { get; set; }
 }
 
 public class LlenarFormularioTrasConsultaImputados
@@ -136,6 +139,9 @@ public class LlenarFormularioTrasConsultaImputados
                         info.TipoConsignacion = reader["TipoConsignacion"].ToString();
                         info.IdTipoDetencion = reader["IdTipoDetencion"].ToString();
                         info.IdOrdenJudicial = reader["IdOrdenJudicial"].ToString();
+                        info.IdRelacVicti = reader["IdRelacInput"].ToString();
+                        info.IdLengExtra = reader["IdLengExtra"].ToString();
+                        info.IdAsisMigra = reader["AsistMigratoria"].ToString();
 
                         if (reader["IdProfesion"] != DBNull.Value)
                         {
@@ -170,19 +176,26 @@ public class LlenarFormularioTrasConsultaImputados
                         info.Correo = reader["Correo"].ToString();
                         info.Fax = reader["Fax"].ToString();
                         info.IdDocIdentificador = reader["IdDocIdentificador"].ToString();
-                        info.FeIndividualización = reader["FeIndividualización"].ToString();
+                        if (reader["FeIndividualización"] != DBNull.Value)
+                        {
+                            info.FeIndividualización = ((DateTime)reader["FeIndividualización"]).ToString("HH:mm");
+                        }
+                        else
+                        {
+                            info.FeIndividualización = string.Empty; // o cualquier valor predeterminado que consideres adecuado
+                        }
                         info.DomNotificacion = reader["DomNotificacion"].ToString();
                         info.Privacidad = reader["Privacidad"].ToString();
 
-                        // Crear un DataTable y agregar las columnas necesarias
                         info.dtDiscapacidades = new DataTable();
                         info.dtDiscapacidades.Columns.Add("DiscapacidadAgregada", typeof(string));
+                        info.dtDiscapacidades.Columns.Add("IdDiscapacidad", typeof(int));
 
-                        // Mover el lector al siguiente registro y llenar el DataTable directamente
                         while (reader.Read())
                         {
                             DataRow row = info.dtDiscapacidades.NewRow();
                             row["DiscapacidadAgregada"] = reader["DiscapacidadAgregada"].ToString();
+                            row["IdDiscapacidad"] = Convert.ToInt32(reader["IdDiscapacidad"]);
                             info.dtDiscapacidades.Rows.Add(row);
                         }
                     }

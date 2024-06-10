@@ -26,6 +26,7 @@ public class InformacionFormulario
     public string IdCondicion { get; set; }
     public string IdAlfabet { get; set; }
     public string HablaIndigena { get; set; }
+    //public string HablaExtra { get; set; }
     public string IdPueblo { get; set; }
     public string DomiTrabVicti { get; set; }
     public string DomOcupacion { get; set; }
@@ -49,6 +50,9 @@ public class InformacionFormulario
     public string IdPaisResidencia { get; set; }
     public string IdEstadoResidencia { get; set; }
     public string IdMunicipioResidencia { get; set; }
+    public string AsistMigratoria { get; set; }
+    public string IdLengExtra { get; set; }
+    public string IdRelacVicti { get; set; }
 }
 
 public class LlenarFormularioTrasConsulta
@@ -109,6 +113,7 @@ public class LlenarFormularioTrasConsulta
                     info.IdiomaEspañol = reader["IdiomaEspañol"].ToString();
                     info.IdDialecto = reader["IdDialecto"].ToString();
                     info.IdVulnerabilidad = reader["IdVulnerabilidad"].ToString();
+                    info.AsistMigratoria = reader["AsistMigratoria"].ToString();
                     info.IdCondicion = reader["IdCondicion"].ToString();
                     info.IdAlfabet = reader["IdAlfabet"].ToString();
                     info.HablaIndigena = reader["HablaIndigena"].ToString();
@@ -117,6 +122,8 @@ public class LlenarFormularioTrasConsulta
                     info.IdEstadoCivil = reader["IdEstadoCivil"].ToString();
                     info.IdOcupacion = reader["IdOcupacion"].ToString();
                     info.IdGradoEstudios = reader["IdGradoEstudios"].ToString();
+                    info.IdRelacVicti = reader["IdRelacInput"].ToString();
+                    info.IdLengExtra = reader["IdLengExtra"].ToString();
                     if (reader["IdProfesion"] != DBNull.Value)
                     {
                         info.IdProfesion = reader["IdProfesion"].ToString();
@@ -150,7 +157,15 @@ public class LlenarFormularioTrasConsulta
                     info.Correo = reader["Correo"].ToString();
                     info.Fax = reader["Fax"].ToString();
                     info.IdDocIdentificador = reader["IdDocIdentificador"].ToString();
-                    info.FeIndividualización = reader["FeIndividualización"].ToString();
+                    if (reader["FeIndividualización"] != DBNull.Value)
+                    {
+                        info.FeIndividualización = ((DateTime)reader["FeIndividualización"]).ToString("HH:mm");
+                    }
+                    else
+                    {
+                        info.FeIndividualización = string.Empty; // o cualquier valor predeterminado que consideres adecuado
+                    }
+
                     info.DomNotificacion = reader["DomNotificacion"].ToString();
                     info.Privacidad = reader["Privacidad"].ToString();
 

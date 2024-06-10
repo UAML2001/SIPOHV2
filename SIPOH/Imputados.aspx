@@ -229,7 +229,13 @@
                                                                     <label for="" class="form-label text-secondary">RFC con Homoclave:</label>
                                                                     <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Ingrese el RFC del Imputado" ID="RFCVicti" onchange="formatoRFC(this)" MaxLength="13"></asp:TextBox>
                                                                 </div>
-                                                                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-6 col-xxl-6">
+                                                                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                                                                    <label for="fecha1" class="form-label text-secondary">Tiene Fecha Nacimiento: </label>
+                                                                     <asp:DropDownList ID="CuenFeNac" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CuenFeNac_SelectedIndexChanged">
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
+                                                                </asp:DropDownList>
+                                                                </div>
+                                                                <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                     <label for="fecha1" class="form-label text-secondary">Fecha de nacimiento: </label>
                                                                     <asp:TextBox runat="server" ID="FeNacVic" CssClass="form-control form-control-sm mayusculas" placeholder="Fecha" TextMode="Date"></asp:TextBox>
                                                                 </div>
@@ -457,15 +463,16 @@
                                                                                             </asp:TemplateField>
                                                                                         </Columns>
                                                                                     </asp:GridView>
+                                                                                </div>
 
-
-                                                                                    <asp:GridView ID="gvDiscapacidades2" Visible="false" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="GridView1_RowCommand" ShowHeaderWhenEmpty="true">
+                                                                                 <div class="table-responsive mt-2">
+                                                                                    <asp:GridView ID="gvDiscapacidades2" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="GridView1_RowCommand" ShowHeaderWhenEmpty="true">
                                                                                         <Columns>
-                                                                                            <asp:BoundField DataField="DiscapacidadAgregada" HeaderText="Discapacidad" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="mayusculas" />
+                                                                                            <asp:BoundField DataField="Discapacidad" HeaderText="Discapacidad" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="mayusculas" />
                                                                                             <asp:BoundField DataField="IdDiscapacidad" Visible="false" />
                                                                                             <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
                                                                                                 <ItemTemplate>
-                                                                                                    <asp:Button ID="Button1" runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" CommandName="Eliminar" CommandArgument='<%# ((GridViewRow)Container).RowIndex %>' />
+                                                                                                    <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" CommandName="Eliminar" CommandArgument='<%# ((GridViewRow)Container).RowIndex %>' />
                                                                                                 </ItemTemplate>
                                                                                             </asp:TemplateField>
                                                                                         </Columns>
@@ -477,6 +484,16 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        <div class="row">
+                                                            <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-6 col-xxl-6">
+                                                                <label for="" class="form-label text-secondary">Requiere asistencia migratoria:</label>
+                                                                <asp:DropDownList ID="AsisMigra" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
+                                                                </asp:DropDownList>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </ContentTemplate>
                                             </asp:UpdatePanel>

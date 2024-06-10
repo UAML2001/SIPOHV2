@@ -23,21 +23,20 @@ public class DigitalizarInicial
     {
         try
         {
-            // Validación: No avanzar si no se selecciona ningún archivo en el FileUpload
             if (!UploadFileDigit.HasFile)
             {
                 ShowToastr("Por favor, selecciona un archivo para subir", "error");
                 return;
             }
 
-            // Validación: No avanzar si los elementos en "chkSelect" de la tabla "noDigit" están seleccionados
+            List<int> desmarcados = new List<int>();
             foreach (GridViewRow row in noDigit.Rows)
             {
                 CheckBox chkSelect = (CheckBox)row.FindControl("chkSelect");
-                if (chkSelect != null && chkSelect.Checked)
+                if (chkSelect != null && !chkSelect.Checked)
                 {
-                    ShowToastr("Por favor, desmarca los elementos seleccionados en la de la lista de documentos no digitalizados", "error");
-                    return;
+                    int idAnexoC = Convert.ToInt32(noDigit.DataKeys[row.RowIndex].Value);
+                    desmarcados.Add(idAnexoC);
                 }
             }
 
@@ -47,7 +46,6 @@ public class DigitalizarInicial
             string tipoAsunto = HttpContext.Current.Session["TipoAsunto"]?.ToString();
             string folio = HttpContext.Current.Session["Folio"]?.ToString();
 
-            // Crear las carpetas
             string[] carpetas = { "DocsDigitalizados", noDistrito, idJuzgado, tipoAsunto, idAsunto };
             string rutaDestino = "";
 
@@ -57,10 +55,9 @@ public class DigitalizarInicial
                 ArchivosFTP.CrearDirectorioFTP(rutaDestino);
             }
 
-            // Subir el archivo PDF
             Stream fileStream = UploadFileDigit.FileContent;
-            string guid = Guid.NewGuid().ToString(); // Genera un GUID.
-            string nuevoNombre = $"I_{folio}_{DateTime.Now.ToString("yyyyMMdd")}.pdf"; // Agrega el GUID al nombre del archivo.
+            string guid = Guid.NewGuid().ToString();
+            string nuevoNombre = $"I_{idAsunto}_{DateTime.Now.ToString("yyyyMMdd")}.pdf";
             string fileName = Path.Combine(rutaDestino, nuevoNombre);
 
             if (!ArchivosFTP.VerificarArchivoFTP(fileName))
@@ -69,11 +66,9 @@ public class DigitalizarInicial
 
                 if (isUploaded)
                 {
-                    // Actualizar el estado de digitalización
                     UpdateDigitalizado updateDigitalizado = new UpdateDigitalizado();
-                    updateDigitalizado.Update(int.Parse(idAsunto));
+                    updateDigitalizado.Update(int.Parse(idAsunto), desmarcados);
 
-                    // Insertar registro en la tabla P_Documentos
                     InsertarDocumentoEnBaseDeDatos(idAsunto, fileName, nuevoNombre, tipoAsunto);
 
                     HttpContext.Current.Session["ToastrMessage"] = "Inicial digitalizada con éxito";
@@ -86,7 +81,6 @@ public class DigitalizarInicial
                 }
 
                 HttpContext.Current.Response.Redirect(HttpContext.Current.Request.RawUrl);
-
             }
             else
             {
@@ -110,16 +104,16 @@ public class DigitalizarInicial
                 connection.Open();
 
                 string query = @"
-                    INSERT INTO [SIPOH].[dbo].[P_Documentos]
-                        ([IdAsunto], [FechaDigitaliza], [IdUsuarios], [URL], [NombrePDF], [Descripcion])
-                    VALUES
-                        (@IdAsunto, @FechaDigitaliza, @IdUsuarios, @URL, @NombrePDF, @Descripcion)";
+                INSERT INTO [SIPOH].[dbo].[P_Documentos]
+                    ([IdAsunto], [FechaDigitaliza], [IdUsuarios], [URL], [NombrePDF], [Descripcion])
+                VALUES
+                    (@IdAsunto, @FechaDigitaliza, @IdUsuarios, @URL, @NombrePDF, @Descripcion)";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@IdAsunto", idAsunto);
                     command.Parameters.AddWithValue("@FechaDigitaliza", DateTime.Now);
-                    command.Parameters.AddWithValue("@IdUsuarios", HttpContext.Current.Session["IdUsuario"]?.ToString()); // Suponiendo que tienes el IdUsuario en la sesión
+                    command.Parameters.AddWithValue("@IdUsuarios", HttpContext.Current.Session["IdUsuario"]?.ToString());
                     command.Parameters.AddWithValue("@URL", url);
                     command.Parameters.AddWithValue("@NombrePDF", nombrePDF);
                     command.Parameters.AddWithValue("@Descripcion", tipoAsunto);
@@ -134,9 +128,8 @@ public class DigitalizarInicial
         }
     }
 
-private void ShowToastr(string message, string type)
-        {
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "Toastr", $"toastr.{type}('{message}');", true);
-        }
-
+    private void ShowToastr(string message, string type)
+    {
+        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "Toastr", $"toastr.{type}('{message}');", true);
+    }
 }

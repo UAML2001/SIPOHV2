@@ -9,7 +9,7 @@ using System.Web.UI;
 
 public class ActualizarImputado
 {
-    public void UpdateImputData(int idAsunto, int idPartes, string apPaterno, string apMaterno, string nombre, string genero, string tipoParte, string rfc, string curp, string edad, DateTime feNacimiento, string aliasImp, int idContNacido, int idPaisNacido, int idEstadoNacido, string idMunicipioNacido, int idNacionalidad, int idCondicion, int idEstadoCivil, int idGradoEstudios, int idAlfabet, int idiomaEspañol, int idPueblo, int hablaIndigena, int idDialecto, int idOcupacion, int idProfesion, string domOcupacion, int discapacidad, int idContiResidencia, int idPaisResidencia, int idEstadoResidencia, string idMunicipioResidencia, string domResidencia, int idDefensor, int interprete, int ordenProteccion, DateTime feIndividualizacion, int idDocIdentificador, string numDocumento, string privacidad, string telefono, string correo, string fax, string domNotificacion, string otroTipo, int idUser, List<string> idsDiscapacidades, Page page, int idEstadoPsi, int idaccipenal, int idReinci, int idTipoDeten, int idOrdenJudi, int idCondFamiliar, int depEcon, int idSustancias)
+    public void UpdateImputData(int idAsunto, int idPartes, string apPaterno, string apMaterno, string nombre, string genero, string tipoParte, string rfc, string curp, string edad, DateTime feNacimiento, string aliasImp, int idContNacido, int idPaisNacido, int idEstadoNacido, string idMunicipioNacido, int idNacionalidad, int idCondicion, int idEstadoCivil, int idGradoEstudios, int idAlfabet, int idiomaEspañol, int idPueblo, int hablaIndigena, int idDialecto, int idOcupacion, int idProfesion, string domOcupacion, int discapacidad, int idLengExtra, int idRelacImput, int idAsisMigra, int idContiResidencia, int idPaisResidencia, int idEstadoResidencia, string idMunicipioResidencia, string domResidencia, int idDefensor, int interprete, int ordenProteccion, DateTime feIndividualizacion, int idDocIdentificador, string numDocumento, string privacidad, string telefono, string correo, string fax, string domNotificacion, string otroTipo, int idUser, List<string> idsDiscapacidades, Page page, int idEstadoPsi, int idaccipenal, int idReinci, int idTipoDeten, int idOrdenJudi, int idCondFamiliar, int depEcon, int idSustancias)
     {
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
 
@@ -65,7 +65,7 @@ public class ActualizarImputado
                             [IdUser] = @IdUser, [TipoConsignacion] = @TipoConsignacion, [IdTipoDetencion] = @IdTipoDetencion, [IdOrdenJudicial] = @IdOrdenJudicial, [IdPsicofisico] = @IdPsicofisico,
                             [IdReincidente] = @IdReincidente, [DeclaracionP] = @DeclaracionP, [FechaDeclaracionP] = @FechaDeclaracionP, [FechaUltAudiencia] = @FechaUltAudiencia, [FehaImputacion] = @FehaImputacion,
                             [FechaCierreInv] = @FechaCierreInv, [TotAudiencias] = @TotAudiencias, [TiempoCierreInv] = @TiempoCierreInv, [CalifDetencion] = @CalifDetencion, [FechaCalifDetencion] = @FechaCalifDetencion,
-                            [Tramite] = @Tramite
+                            [Tramite] = @Tramite, [AsistMigratoria] = @AsistMigratoria, [IdRelacInput] = @IdRelacInput, [IdLengExtra] = @IdLengExtra
                             WHERE [IdInculpado] = @IdInculpado";
 
                         using (SqlCommand cmd = new SqlCommand(queryImputado, conn, transaction))
@@ -127,6 +127,9 @@ public class ActualizarImputado
                             cmd.Parameters.AddWithValue("@CalifDetencion", DBNull.Value);
                             cmd.Parameters.AddWithValue("@FechaCalifDetencion", DBNull.Value);
                             cmd.Parameters.AddWithValue("@Tramite", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@IdRelacInput", idRelacImput);
+                            cmd.Parameters.AddWithValue("@IdLengExtra", idLengExtra);
+                            cmd.Parameters.AddWithValue("@AsistMigratoria", idAsisMigra);
                             cmd.ExecuteNonQuery();
                         }
                     }
@@ -146,7 +149,7 @@ public class ActualizarImputado
                                 [IdUser], [TipoConsignacion], [IdTipoDetencion], [IdOrdenJudicial], [IdPsicofisico],
                                 [IdReincidente], [DeclaracionP], [FechaDeclaracionP], [FechaUltAudiencia], [FehaImputacion],
                                 [FechaCierreInv], [TotAudiencias], [TiempoCierreInv], [CalifDetencion], [FechaCalifDetencion],
-                                [Tramite]
+                                [Tramite], [AsistMigratoria], [IdRelacInput], [IdLengExtra]
                             ) VALUES (
                                 @IdInculpado, @CURP, @RFC, @Edad, @FeNacimiento, @IdNacionalidad,
                                 @IdContinenteNacido, @IdPaisNacido, @IdEstadoNacido, @IdMunicipioNacido, @IdCondicion,
@@ -159,7 +162,7 @@ public class ActualizarImputado
                                 @IdUser, @TipoConsignacion, @IdTipoDetencion, @IdOrdenJudicial, @IdPsicofisico,
                                 @IdReincidente, @DeclaracionP, @FechaDeclaracionP, @FechaUltAudiencia, @FehaImputacion,
                                 @FechaCierreInv, @TotAudiencias, @TiempoCierreInv, @CalifDetencion, @FechaCalifDetencion,
-                                @Tramite
+                                @Tramite, @AsistMigratoria, @IdRelacInput, @IdLengExtra
                             )";
                         using (SqlCommand cmd = new SqlCommand(queryImputado, conn, transaction))
                         {
@@ -220,17 +223,12 @@ public class ActualizarImputado
                             cmd.Parameters.AddWithValue("@CalifDetencion", DBNull.Value);
                             cmd.Parameters.AddWithValue("@FechaCalifDetencion", DBNull.Value);
                             cmd.Parameters.AddWithValue("@Tramite", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@AsistMigratoria", idAsisMigra);
+                            cmd.Parameters.AddWithValue("@IdRelacInput", idRelacImput);
+                            cmd.Parameters.AddWithValue("@IdLengExtra", idLengExtra);
                             cmd.ExecuteNonQuery();
                         }
                     }
-
-                        // Actualizar los datos en la tabla P_Discapacidades
-                        string queryDeleteDiscapacidades = @"DELETE FROM [SIPOH].[dbo].[P_Discapacidades] WHERE [IdPartes] = @IdPartes";
-                        using (SqlCommand cmd = new SqlCommand(queryDeleteDiscapacidades, conn, transaction))
-                        {
-                            cmd.Parameters.AddWithValue("@IdPartes", idPartes);
-                            cmd.ExecuteNonQuery();
-                        }
 
                         string queryInsertDiscapacidades = @"INSERT INTO [SIPOH].[dbo].[P_Discapacidades] 
                             ([IdPartes], [IdDiscapacidad]) 

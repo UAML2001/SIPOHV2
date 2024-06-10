@@ -8,8 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>SIPOH PJEH - Ingreso</title>
     <link rel="shortcut icon" href="https://www.aseh.gob.mx/Shared/img/anticorrupcion/3.png" />
-    <link href="~/Content/css/Default.css" rel="stylesheet" />
-
+    <link href="../Content/css/loginexterno.css" rel="stylesheet" />
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -21,11 +20,7 @@
         integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-
-
-       
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
  <script src="../Scripts/Firma/Conexion.js" type="text/javascript"></script>
     <script src="../Scripts/Firma/Firma.js" type="text/javascript"></script>
     <script src="../Scripts/Firma/FirmaLogin.js" type="text/javascript"></script>

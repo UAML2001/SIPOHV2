@@ -231,9 +231,9 @@
                                                         <label for="fojas1" class="form-label text-secondary">Tipo de Sector: </label>
                                                         <asp:DropDownList ID="SectorVicti" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
                                                             <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
-                                                            <asp:ListItem runat="server" Value="PUB" Text="PUBLICO"></asp:ListItem>
-                                                            <asp:ListItem runat="server" Value="PRI" Text="PRIVADO"></asp:ListItem>
-                                                            <asp:ListItem runat="server" Value="NID" Text="NO IDENTIFICADO"></asp:ListItem>
+                                                            <asp:ListItem runat="server" Value="1" Text="PUBLICO"></asp:ListItem>
+                                                            <asp:ListItem runat="server" Value="2" Text="PRIVADO"></asp:ListItem>
+                                                            <asp:ListItem runat="server" Value="9" Text="NO IDENTIFICADO"></asp:ListItem>
                                                         </asp:DropDownList>
                                                     </div>
 
@@ -254,15 +254,21 @@
                                                         <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Ingrese el RFC de la victima" ID="RFCVicti" onchange="formatoRFC(this)" MaxLength="13"></asp:TextBox>
                                                     </div>
 
-                                                    <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                                                        <label for="fecha1" class="form-label text-secondary">Fecha de nacimiento: </label>
-                                                        <asp:TextBox runat="server" ID="FeNacVic" CssClass="form-control form-control-sm mayusculas" placeholder="Fecha" TextMode="Date"></asp:TextBox>
-                                                    </div>
+                                                            <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-6 col-xxl-6">
+                                                                <label for="" class="form-label text-secondary">Edad:</label>
+                                                                <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" Text="0" Type="Number" placeholder="Ingrese la edad de la victima" ID="EdadVicti"></asp:TextBox>
+                                                            </div>
 
-                                                    <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                                                        <label for="" class="form-label text-secondary">Edad:</label>
-                                                        <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" Text="0" Type="Number" placeholder="Ingrese la edad de la victima" ID="EdadVicti"></asp:TextBox>
-                                                    </div>
+                                                            <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-6 col-xxl-6">
+                                                                <label for="fecha1" class="form-label text-secondary">Tiene Fecha Nacimiento: </label>
+                                                                <asp:DropDownList ID="CuenFeNac" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CuenFeNac_SelectedIndexChanged">
+                                                                    <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
+                                                                </asp:DropDownList>
+                                                            </div>
+                                                            <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-6 col-xxl-6">
+                                                                <label for="fecha1" class="form-label text-secondary">Fecha de nacimiento: </label>
+                                                                <asp:TextBox runat="server" ID="FeNacVic" CssClass="form-control form-control-sm mayusculas" placeholder="Fecha" TextMode="Date"></asp:TextBox>
+                                                            </div>
 
                                                         </div>
                                                     </ContentTemplate>
@@ -472,6 +478,16 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    <div class="row">
+                                                    <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-6 col-xxl-6">
+                                                        <label for="" class="form-label text-secondary">Requiere asistencia migratoria:</label>
+                                                        <asp:DropDownList ID="AsisMigra" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
+                                                            <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
+                                                        </asp:DropDownList>
+                                                    </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                          </div>
@@ -558,7 +574,7 @@
                                                             </asp:DropDownList>
                                                             <br />
 
-                                                            <label for="" class="form-label text-secondary">Hora de individualizacion:</label>
+                                                            <label for="HoraIndivi" class="form-label text-secondary">Hora de individualización:</label>
                                                             <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" ID="HoraIndivi" TextMode="Time"></asp:TextBox>
                                                             <br />
 

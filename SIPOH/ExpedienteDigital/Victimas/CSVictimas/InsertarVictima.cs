@@ -11,8 +11,8 @@ public class InsertarVictima
 {
     public void InsertVictimData(int idAsunto, string apPaterno, string apMaterno, string nombre, string genero, string tipoParte, int tipoVictima,
         string victima, string rfc, string curp, string edad, DateTime feNacimiento, int idContNacido, int idPaisNacido, int idEstadoNacido,
-        string idMunicipioNacido, int idNacionalidad, int idCondicion, int idEstadoCivil, int idGradoEstudios, int idAlfabet, int idiomaEspañol,
-        int idVulnerabilidad, int idPueblo, int hablaIndigena, int idDialecto, int idOcupacion, int idProfesion, string domOcupacion,
+        string idMunicipioNacido, int idLengExtra, int idRelacImput, int idNacionalidad, int idCondicion, int idEstadoCivil, int idGradoEstudios, int idAlfabet, int idiomaEspañol,
+        int idVulnerabilidad, int idAsisMigra, int idPueblo, int hablaIndigena, int idDialecto, int idOcupacion, int idProfesion, string domOcupacion,
         int discapacidad, int idContiResidencia, int idPaisResidencia, int idEstadoResidencia, string idMunicipioResidencia, string domResidencia,
         int idDefensor, int interprete, int ordenProteccion, DateTime feIndividualizacion, int idDocIdentificador, string numDocumento, string privacidad,
         string telefono, string correo, string fax, string domNotificacion, string otroTipo, int idUser, List<string> idsDiscapacidades, Page page)
@@ -90,7 +90,7 @@ public class InsertarVictima
             [IdDialecto], [IdOcupacion], [IdProfesion], [DomOcupacion], [Discapacidad], [IdContinenteResidencia], [IdPaisResidencia], 
             [IdEstadoResidencia], [IdMunicipioResidencia], [DomResidencia], [IdDefensor], [Interprete], 
             [OrdenProteccion], [FeIndividualización], [IdDocIdentificador], [NumDocumento], [Privacidad], 
-            [Telefono], [Correo], [Fax], [DomNotificacion], [OtroTipo], [IdUser])
+            [Telefono], [Correo], [Fax], [DomNotificacion], [OtroTipo], [IdUser], [AsistMigratoria], [IdRelacInput], [IdLengExtra])
             VALUES
             (@IdVictima, @TipoVictima, @Victima, @RFC, @CURP, @Edad, @FeNacimiento, @IdContinenteNacido, @IdPaisNacido, 
             @IdEstadoNacido, @IdMunicipioNacido, @IdNacionalidad, @IdCondicion, @IdEstadoCivil, 
@@ -98,7 +98,7 @@ public class InsertarVictima
             @IdDialecto, @IdOcupacion, @IdProfesion, @DomOcupacion, @Discapacidad, @IdContinenteResidencia, @IdPaisResidencia, 
             @IdEstadoResidencia, @IdMunicipioResidencia, @DomResidencia, @IdDefensor, @Interprete, 
             @OrdenProteccion, @FeIndividualización, @IdDocIdentificador, @NumDocumento, @Privacidad, 
-            @Telefono, @Correo, @Fax, @DomNotificacion, @OtroTipo, @IdUser);";
+            @Telefono, @Correo, @Fax, @DomNotificacion, @OtroTipo, @IdUser, @AsistMigratoria, @IdRelacInput, @IdLengExtra);";
 
                 using (SqlCommand cmd = new SqlCommand(queryVictima, conn, transaction))
                 {
@@ -145,6 +145,9 @@ public class InsertarVictima
                     cmd.Parameters.AddWithValue("@DomNotificacion", domNotificacion);
                     cmd.Parameters.AddWithValue("@OtroTipo", otroTipo);
                     cmd.Parameters.AddWithValue("@IdUser", idUser);
+                    cmd.Parameters.AddWithValue("@AsistMigratoria", idAsisMigra);
+                    cmd.Parameters.AddWithValue("@IdRelacInput", idRelacImput);
+                    cmd.Parameters.AddWithValue("@IdLengExtra", idLengExtra);
 
                     cmd.ExecuteNonQuery();
                 }

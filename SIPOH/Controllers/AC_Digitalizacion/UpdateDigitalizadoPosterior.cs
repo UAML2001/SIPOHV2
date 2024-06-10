@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -8,24 +9,23 @@ namespace SIPOH.Controllers.AC_Digitalizacion
 {
     public class UpdateDigitalizadoPosterior
     {
-        // Conectar con la base de datos
-        string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
-
-        public void Update(int idAsunto)
+        public void Update(int idPosterior, List<int> desmarcados)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            string desmarcadosString = string.Join(",", desmarcados);
+            string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = @"EXEC UpdateDigitalizadoPosterior @Id_Asunto";
-
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Id_Asunto", idAsunto);
-
-                // Abrir la conexión
-                conn.Open();
-
-                // Ejecutar el procedimiento almacenado
-                cmd.ExecuteNonQuery();
+                using (SqlCommand cmd = new SqlCommand("UpdateDigitalizadoPosterior", connection))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdPosterior", idPosterior);
+                    cmd.Parameters.AddWithValue("@Desmarcados", desmarcadosString);
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
     }
+
 }

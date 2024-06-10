@@ -40,7 +40,7 @@
                                     $("[id*='btnIngresar']").trigger("click");
                                 }
                                 else {
-                                    toastError("Usuario no identificado, intente con credenciales validas.");
+                                    toastError("No cuenta con usuario activo favor de crear cuenta.");
 
                                 }
                             }

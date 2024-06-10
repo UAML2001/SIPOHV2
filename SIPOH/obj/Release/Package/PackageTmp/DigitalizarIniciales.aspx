@@ -3,7 +3,7 @@
 <asp:Content ID="ContentDigitInici" ContentPlaceHolderID="ContentDigitInici" runat="server">
 
     <div>
-        <h1 class="h5"><i class="fas fa-angle-right"></i><span id="dataSplash" class="text-primary fw-bold"> Digitalización de Iniciales</span> </h1>
+        <h1 class="h5"><i class="fas fa-angle-right"></i><span id="dataSplash" class="text-success fw-bold"> Digitalización de Iniciales</span> </h1>
     </div>
 
     <link href="Content/css/Consignaciones.css" rel="stylesheet" />
@@ -63,7 +63,7 @@
                                 <h6 class="help-block text-muted small-font"><b>Pendientes de digitalizar (Seleccione la inicial a digitalizar): </b></h6>
                                 <br />
                                 <div class="scrollable">
-                                    <asp:GridView ID="PDigitalizar" CssClass="table table-striped text-center table-hover table-sm" runat="server" AutoGenerateColumns="False" AllowPaging="True" PageSize="3" OnPageIndexChanging="PDigitalizar_PageIndexChanging">
+                                    <asp:GridView ID="PDigitalizar" CssClass="table table-striped text-center table-hover table-sm" runat="server" AutoGenerateColumns="False" AllowPaging="True" PageSize="10" OnPageIndexChanging="PDigitalizar_PageIndexChanging">
                                         <Columns>
                                             <asp:TemplateField HeaderStyle-CssClass="bg-success text-white">
                                                 <ItemTemplate>
@@ -76,16 +76,16 @@
                                                 </ItemTemplate>
                                                 <HeaderStyle CssClass="bg-success text-white" />
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="Numero" HeaderText="Folio" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
+                                            <asp:BoundField DataField="Numero" HeaderText="Número" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
                                             <asp:BoundField DataField="TipoAsunto" HeaderText="Tipo de Asunto" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
-                                            <asp:BoundField DataField="FeCaptura" HeaderText="Fecha de Ingreso" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
+                                            <asp:BoundField DataField="FeCaptura" HeaderText="Fecha de Captura" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
                                             <asp:BoundField DataField="Digitalizado" HeaderText="Digitalizado" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
                                         </Columns>
                                         <PagerTemplate>
-                                            <asp:Button ID="btnFirst" CssClass="btn btn-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="First" Text=" Primero" />
-                                            <asp:Button ID="btnPrev" CssClass="btn btn-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Prev" Text="⏮️ Anterior" />
-                                            <asp:Button ID="btnNext" CssClass="btn btn-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Next" Text="⏭️ Siguiente" />
-                                            <asp:Button ID="btnLast" CssClass="btn btn-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Last" Text=" Ultimo" />
+                                            <asp:Button ID="btnFirst" CssClass="btn btn-outline-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="First" Text=" Primero" />
+                                            <asp:Button ID="btnPrev" CssClass="btn btn-outline-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Prev" Text="⏮️ Anterior" />
+                                            <asp:Button ID="btnNext" CssClass="btn btn-outline-success btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Next" Text="⏭️ Siguiente" />
+                                            <asp:Button ID="btnLast" CssClass="btn btn-outline-primary btn-sm mayusculas" runat="server" CommandName="Page" CommandArgument="Last" Text=" Ultimo" />
                                         </PagerTemplate>
                                     </asp:GridView>
                                 </div>
@@ -155,11 +155,11 @@
                                 <br />
 
                                 <div class="row ">
-                                    <div class="col-md-16 col-sm-12 col-xs-12">
+                                    <div class="col-md-16 col-sm-6 col-xs-6">
                                         <asp:Label ID="lblDocsNoDigit" runat="server" CssClass="help-block text-muted small-font" Visible="false"><b>*Documentos no digitalizados:</b></asp:Label>
                                         <br />
                                         <br />
-                                        <asp:GridView ID="noDigit" CssClass="table table-striped text-center table-hover table-sm" runat="server" AutoGenerateColumns="False">
+                                        <asp:GridView ID="noDigit" CssClass="table table-striped text-center table-hover table-sm mayusculas" runat="server" AutoGenerateColumns="False">
                                             <Columns>
                                                 <asp:TemplateField HeaderStyle-CssClass="bg-success text-white">
                                                     <ItemTemplate>
@@ -180,17 +180,7 @@
                                     
                                     <br />
 
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <asp:Label ID="PortadaInicial" runat="server" CssClass="help-block text-muted small-font" Visible="false"><b>Portada de la inical:</b>
-                                        </asp:Label>
-                                        <br />
-                                        <br />
 
-                                        <div>
-                                            <iframe id="VPPortada" runat="server" width="100%" height="500px" visible="false" frameborder="0"></iframe>
-                                            <br />
-                                        </div>
-                                    </div>
 
                                     <div class="col-md-6 col-sm-6 col-xs-6">
                                         <asp:Label ID="lblAdjuntar" runat="server" CssClass="help-block text-muted small-font" Visible="false"><b>Adjuntar documentos:</b>
@@ -210,14 +200,28 @@
                                         </div>
                                     </div>
 
+
                                     <center>
                                         <div class="row">
                                             <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 10px;">
                                                 <%--<asp:Button ID="btnImpresionPort" Visible="true" runat="server" Text="🖨️ Imprimir Portada" CssClass="btn btn-success btn-sm mayusculas" />--%>
-                                                <asp:Button ID="btnDigitalizar" Visible="false" runat="server" Text="💻 Digitalizar" CssClass="btn btn-success btn-sm mayusculas" OnClick="btnDigitalizar_Click" />
+                                                <asp:Button ID="btnDigitalizar" Visible="false" runat="server" Text="💻 Digitalizar" CssClass="btn btn-outline-success btn-sm mayusculas" OnClick="btnDigitalizar_Click" />
+                                                <asp:Button ID="MostrarPort" Visible="false" runat="server" Text="📄 Mostrar Portada" CssClass="btn btn-outline-info btn-sm mayusculas" OnClick="MostrarPort_Click" />
                                             </div>
                                         </div>
                                     </center>
+
+                                    
+                                     <center>
+                                            <div class="center-panel" runat="server" id="panelPdfPortadas" style="display: none;">
+                                                <br />
+                                                <br />
+                                                <asp:Label ID="PortadaExito" runat="server" CssClass="h4" Text="¡Portada de la inicial generada con exito! 🎉" Visible="true" />
+                                                <br />
+                                                <br />
+                                                <iframe id="portInicial" runat="server" style="width: 100%; height: 500px;" src=""></iframe>
+                                            </div>
+                                        </center>
 
                                 </div>
                             </div>

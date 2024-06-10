@@ -1,7 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Consignacion.master.cs" Inherits="SIPOH.Consignacion" %>
 
-
-
 <!DOCTYPE html>
 
 <html>
@@ -42,137 +40,141 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <li class="nav-item">
-                <a class="nav-link" href="Error.aspx">
-                <div class="row text-center">
-                    <div class="col-12" >
-                        <asp:Label CssClass="text-break text-capitalize fs-9" ID="NombreJuzgado" runat="server"></asp:Label>
-                        <br />
-                        
-                        <asp:Label CssClass="text-break text-capitalize text-success fs-7 fw-bolder" ID="tipoCircuito" runat="server"></asp:Label>
-                    </div>
-                </div>
+                    <a class="nav-link" href="/Error.aspx">
+                        <div class="row text-center">
+                            <div class="col-12">
+                                <asp:Label CssClass="text-break text-capitalize fs-9 small" ID="NombreJuzgado" runat="server"></asp:Label>
+                                <br />
+
+                                <asp:Label CssClass="text-break text-capitalize text-success fs-7 fw-bolder" ID="tipoCircuito" runat="server"></asp:Label>
+                            </div>
+                        </div>
                     </a>
                 </li>
                 <!-- Divider -->
-                <hr class="sidebar-divider my-0">
+                <div class="sidebar-heading text-success mb-3">
+                    INICIO
+                </div>
                 <!-- Nav Item - Dashboard -->
-                <asp:Panel ID="OpcionesConjunto" runat="server"  CssClass="nav-item active">
-                    <a class="nav-link" href="Estadistica.aspx">
-                        <i class="fas fa-fw fa-chart-bar"></i>
-                        <span>Estadística</span>
+                <div  class="nav-item active" >
+                     <asp:Panel ID="PanelCatCompartidos" runat="server" CssClass="nav-item">
+                
+                    <a class="nav-link collapsed py-2 text-white " style="background-color: #3F5259;" href="#" data-toggle="collapse" data-target="#collapseCompartido"
+                        aria-expanded="true" aria-controls="collapseTwo"> 
+                        <i class="bi bi-chat-left-quote-fill text-success"></i>
+                        <span class="text-light">Umbral</span>
                     </a>
-
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
-                        aria-expanded="true" aria-controls="collapseOne">
-                        <i class="fas fa-fw fa-print"></i>
-                        <span>Digitalización</span>
-                    </a>
-                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                    <div id="collapseCompartido" class="collapse  px-0 m-0 " aria-labelledby="headingTwo"
                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Opciones de Digitalización:</h6>
-                            <a class="collapse-item" href="DigitalizarIniciales.aspx">Iniciales</a>
-                            <a class="collapse-item" href="DigitalizarPosteriores.aspx">Posteriores</a>
-                            <a class="collapse-item" href="PortadasDigitalizacion.aspx">Portadas</a>
+                        <div class="bg-white collapse-inner rounded">
+                            <h6 class="collapse-header">Opciones:</h6>    
+                             <asp:Repeater ID="RepeaterCatCompartidos" runat="server">
+                                <ItemTemplate>
+                                    <a class="collapse-item text-secondary" href=" <%# ObtenerLinkConServidor(Eval("linkEnlace").ToString()) %>.aspx"><i class="<%# Eval("Nombreicono") %>  text-success"></i> <%# Eval("Nombre") %></a>                            
+                                </ItemTemplate>
+                            </asp:Repeater> 
+                          
                         </div>
                     </div>
-                </asp:Panel>
+                </asp:Panel>                   
+
+                    
+                </div>               
                 <!-- Divider -->
-                <hr class="sidebar-divider">
+                
                 <!-- Heading -->
                 <div class="sidebar-heading text-success">
                     MODULOS
                 </div>
+               
+               
                 <!-- Nav Item - Pages Collapse Menu Control Distrito-->
                  <asp:Panel ID="OpcionesControl" runat="server" CssClass="nav-item">
-                
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
+                                    
+                     <a class="nav-link collapsed py-3" href="#" data-toggle="collapse" data-target="#collapseControl"
+                        aria-expanded="true" aria-controls="collapseTwo">                        
                         <i class="fas fa-fw fa-landmark "></i>
-                        <span>Control</span>
+                        <span >Control</span>
                     </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                    
+                     <div id="collapseControl" class="collapse  px-0 m-0 " aria-labelledby="headingTwo"
                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Opciones de Control:</h6>                         
-                            <a class="collapse-item" href="Agenda.aspx">Agenda</a>
-                            <a class="collapse-item" href="Consulta.aspx">Consultas</a>
-                            <a class="collapse-item" href="HistoricosCtrl.aspx">Históricos</a>
-                            <a class="collapse-item" href="Consignaciones.aspx">Consignaciones</a>
-                            <a class="collapse-item" href="PromocionesCtrl.aspx">Promociones</a>
-                            <a class="collapse-item" href="ReportesCtrl.aspx">Reportes</a>
-                            <a class="collapse-item" href="SolicitudCDs.aspx">Solicitud de CDs</a>
-                            <a class="collapse-item" href="libro.aspx">Libro Índice</a>
+                        <div class="bg-white collapse-inner rounded">
+                            <h6 class="collapse-header">Opciones de Control:</h6>    
+                             <asp:Repeater ID="RepeaterCatControl" runat="server">
+                                <ItemTemplate>
+                                    <a class="collapse-item text-secondary " href=" <%# ObtenerLinkConServidor(Eval("linkEnlace").ToString()) %>.aspx"><i class="<%# Eval("Nombreicono") %>  text-success"></i> <%# Eval("Nombre") %></a>                            
+                                </ItemTemplate>
+                            </asp:Repeater> 
+                          
                         </div>
                     </div>
                 </asp:Panel>
                 <!-- FIN Nav Item - Pages Collapse Menu Control Circuito--><!-- Nav Item - Pages Collapse Menu Control Distrito-->
-                 <asp:Panel ID="OpcionesControlCircuito" runat="server" CssClass="nav-item">
                 
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-landmark "></i>
-                        <span>Control</span>
-                    </a>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Opciones de Control:</h6>                         
-                            <a class="collapse-item" href="Agenda.aspx">Agenda</a>
-                            <a class="collapse-item" href="Consulta.aspx">Consultas</a>
-                            <a class="collapse-item" href="HistoricosCtrl.aspx">Históricos</a>
-                            <a class="collapse-item" href="Consignaciones.aspx">Consignaciones</a>
-                            <a class="collapse-item" href="PromocionesCtrl.aspx">Promociones</a>
-                            <a class="collapse-item" href="ReportesCtrl.aspx">Reportes</a>
-                            <a class="collapse-item" href="SolicitudCDs.aspx">Solicitud de CDs</a>
-                            <a class="collapse-item" href="libro.aspx">Libro Índice</a>
-                        </div>
-                    </div>
-                      <li ID="Panel1" runat="server" CssClass="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                        aria-expanded="true" aria-controls="collapseUtilities">
-                        <i class="fas fa-fw fa-gavel"></i>
-                        <span>Ejecucion</span>
-                    </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                        data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Opciones de Ejecucion:</h6>
-                            <a class="collapse-item" href="Iniciales.aspx">Iniciales</a>
-                            <a class="collapse-item" href="Promociones.aspx">Promociones</a>
-                            <a class="collapse-item" href="Busqueda.aspx">Búsquedas</a>
-                            <a class="collapse-item" href="ConsignacionesHistorica.aspx">Consignaciones Históricas</a>
-                            <a class="collapse-item" href="ReportesEjec.aspx">Reportes</a>
-                        </div>
-                    </div>
-                </li>
-                </asp:Panel>
-                <!-- FIN Nav Item - Pages Collapse Menu Control Circuito-->
 
                 <!-- Nav Item - Utilities Collapse Menu -->
                 <asp:Panel ID="OpcionesEjecucion" runat="server" CssClass="nav-item">
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    <a class="nav-link collapsed py-3" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                         aria-expanded="true" aria-controls="collapseUtilities">
                         <i class="fas fa-fw fa-gavel"></i>
                         <span>Ejecucion</span>
                     </a>
-                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    <div id="collapseUtilities" class="collapse px-0 m-0" aria-labelledby="headingUtilities"
                         data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
+                        <div class="bg-white collapse-inner rounded">
                             <h6 class="collapse-header">Opciones de Ejecucion:</h6>
-                            <a class="collapse-item" href="Iniciales.aspx">Iniciales</a>
-                            <a class="collapse-item" href="Promociones.aspx">Promociones</a>
-                            <a class="collapse-item" href="Busqueda.aspx">Búsquedas</a>
-                            <a class="collapse-item" href="ConsignacionesHistorica.aspx">Consignaciones Históricas</a>
-                            <a class="collapse-item" href="ReportesEjec.aspx">Reportes</a>
+                            <asp:Repeater ID="RepeaterCatEjecucion" runat="server">
+                                <ItemTemplate>
+                                    <a class="collapse-item text-secondary" href=" <%# ObtenerLinkConServidor(Eval("linkEnlace").ToString()) %>.aspx"><i class="<%# Eval("Nombreicono") %> text-success"></i> <%# Eval("Nombre") %></a>                            
+                                </ItemTemplate>
+                            </asp:Repeater> 
+                            
                         </div>
                     </div>
                 </asp:Panel>
                 <hr class="sidebar-divider">
+                <div class="sidebar-heading text-success">
+                    OTROS
+                </div>
+
+                <div  class="nav-item active">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">
+                            <i class="fas fa-fw fa-print"></i>
+                            <span>Digitalización</span>
+                        </a>
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                            data-parent="#accordionSidebar">
+                            <div class="bg-white py-2 collapse-inner rounded">
+                                <h6 class="collapse-header">Opciones de Digitalización:</h6>
+                            
+                                <a class="collapse-item" href="DigitalizarIniciales.aspx">Iniciales</a>
+                                <a class="collapse-item" href="DigitalizarPosteriores.aspx">Posteriores</a>
+                                <a class="collapse-item" href="PortadasDigitalizacion.aspx">Portadas</a>
+                            </div>
+                        </div>
+
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa fa-folder-open"></i>
+                        <span>Expediente Digital</span>
+                    </a>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Expediente Digital</h6>
+                            <a class="collapse-item" href="Victimas.aspx">Victimas</a>
+                            <a class="collapse-item" href="Imputados.aspx">Imputados</a>
+                        </div>
+                    </div>
+                    
+                    </div>
             <!-- Heading -->
             <div class="sidebar-heading text-success">
                 SOPORTE TÉCNICO
             </div>
+               
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link" href="Error.aspx">
@@ -205,7 +207,7 @@
                 <!-- Main Content -->
                 <div id="content">
                     <!-- Topbar -->
-                    <nav class="navbar navbar-expand navbar-light  topbar mb-4 static-top shadow" style="background-color: #3F5259;">
+                    <nav class="navbar navbar-expand navbar-light  topbar mb-4 static-top shadow" style="background-color: #3F5259;"  id="headerWitdh">
                         <!-- Sidebar Toggle (Topbar) -->
                         <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                             <i class="fa fa-bars"></i>
@@ -247,6 +249,7 @@
                                     </div>
                                 </div>
                             </li>
+                            
                             <!-- Nav Item - Alerts -->
                             <li class="nav-item dropdown no-arrow mx-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
@@ -255,6 +258,7 @@
                                     <!-- Counter - Alerts -->
                                     <span class="badge badge-danger badge-counter">3+</span>
                                 </a>
+                                
                                 <!-- Dropdown - Alerts -->
                                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in "
                                     aria-labelledby="alertsDropdown">
@@ -296,6 +300,7 @@
                                     <a class="dropdown-item text-center small text-gray-500" href="#">Mostrar Todo</a>
                                 </div>
                             </li>
+
                             <!-- Nav Item - Messages -->
                             <li class="nav-item dropdown no-arrow mx-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
@@ -350,6 +355,39 @@
                                             Messages</a>
                                 </div>
                             </li>
+                             <%--onclick="toggleFullScreen()"--%>
+                            <li class="nav-item dropdown no-arrow mx-1" data-bs-toggle="tooltip" data-bs-placement="top" title="¡Accesibilidad!">
+                                <a class="nav-link dropdown-toggle" href="#" id="accesibilidadDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="bi bi-person-wheelchair text-white"></i>                                                                       
+                                </a>
+                                
+                                <!-- Dropdown - Alerts -->
+                                 
+                                        <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in "
+                                            aria-labelledby="accesibilidadDropdown" style="max-width: 200px;">
+                                            <h6 class="dropdown-header" style="background-color: #3F5259;">Opciones:
+                                            </h6>
+                                            <a class="dropdown-item d-flex align-items-center justify-content-around" href="#" id="sidebarToggle" onclick="toggleFullScreen()" id="accesibilidadDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                                                                                    
+                                                <i class="bi bi-arrows-fullscreen small"></i> 
+                                                <span class="font-weight-bold small"> Pantalla completa</span>                                                                                                                                                                     
+                                            </a>
+                                            <a class="dropdown-item d-flex align-items-center justify-content-around">                                                                                    
+                                                <i class="bi bi-dash small btn btn-sm btn-outline-dark border-0" onclick="disminuirLetra()" ></i> 
+                                                <i class="bi bi-plus small btn btn-sm btn-outline-dark border-0" onclick="aumentarLetra()"></i> 
+                                                <span class="font-weight-bold small">  Tamaño de letra</span>                                                                                                                                                                     
+                                                
+                                            </a>
+                                            <a class="dropdown-item d-flex align-items-center justify-content-around" onclick="toggleSeguimiento()">                                                                                    
+                                               <i class="bi bi-arrows-collapse"></i>                                                
+                                                <span class="font-weight-bold small"> Seguimiento de lineas</span>                                                                                                                                                                                                                     
+                                            </a>
+                                    
+                                            <a class="dropdown-item text-center small text-gray-500" href="#" >Mostrar Todo</a>
+                                        </div>
+                                        
+                            </li>
                             <div class="topbar-divider d-none d-sm-block"></div>
                             <!-- Nav Item - User Information -->
                             <li class="nav-item dropdown no-arrow">
@@ -381,9 +419,15 @@
                         </ul>
                     </nav>
                     <!-- End of Topbar -->
+                    <div id="linea-seguimiento"></div>
                     <%--Main--%>
-                    <form id="form1" runat="server" class="main  section">
+                    <form id="main" runat="server" class="main  section">
                         <div>
+                            
+                            <asp:ContentPlaceHolder ID="RegistroUsuario" runat="server">
+                            </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentError" runat="server">
+                            </asp:ContentPlaceHolder>
                             <asp:ContentPlaceHolder ID="ContentCausa" runat="server">
                             </asp:ContentPlaceHolder>
                             <asp:ContentPlaceHolder ID="ContentCupre" runat="server">
@@ -408,13 +452,23 @@
                             </asp:ContentPlaceHolder>
                              <asp:ContentPlaceHolder ID="Contentlibroindice" runat="server">
                             </asp:ContentPlaceHolder>
+                              <asp:ContentPlaceHolder ID="ContentBuzonControl" runat="server">
+                             </asp:ContentPlaceHolder>
+                               <asp:ContentPlaceHolder ID="ContentClasiDelito" runat="server">
+                             </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentRecepcionExpedientes" runat="server">
+                             </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentImputados" runat="server">
+                            </asp:ContentPlaceHolder>
+                            
+                            
                             <!-- Estilos de admin lte agregue para el calendario by brayan -->
-                            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="CerrarSesionModalLabel"
                                 aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">¿Seguro de cerrar sesion?</h5>
+                                            <h5 class="modal-title" id="CerrarSesionModalLabel">¿Seguro de cerrar sesion?</h5>
                                             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">×</span>
                                             </button>
@@ -533,169 +587,77 @@
                 <script src="Scripts/js/main.min.js"></script>
                 <script src="Scripts/js/jquery.min.js"></script>
                 <script src="Scripts/js/jquery-ui.min.js"></script>
-                
-                
-                
+                <style>
+                    .header__headerWitdh{
+                        height:3rem;
+                        
+                    }
+                    #linea-seguimiento {
+                      position: fixed;
+                      top: 50%;
+                      left: 0;
+                      width: 100%;
+                      height: 5px;
+                      background-color:yellow;
+                      z-index: 1000;
+                      pointer-events: none; 
+                      display: none; 
+                    }
 
 
+                </style>
                 <script>
-          $(function () {
+                    
+                    function toggleSeguimiento() {
+                        var lineaSeguimiento = document.getElementById('linea-seguimiento');
+                        
+                        lineaSeguimiento.style.display = (lineaSeguimiento.style.display === 'none') ? 'block' : 'none';
+                    }
 
-            /* initialize the external events
-             -----------------------------------------------------------------*/
-            function ini_events(ele) {
-              ele.each(function () {
+                    // Función para seguir el puntero del mouse
+                    document.addEventListener('mousemove', function (event) {
+                        var lineaSeguimiento = document.getElementById('linea-seguimiento');
+                        if (lineaSeguimiento.style.display === 'block') {
+                            lineaSeguimiento.style.top = (event.clientY - lineaSeguimiento.offsetHeight / 2) + 'px';
+                        }
+                    });
 
-                // create an Event Object (https://fullcalendar.io/docs/event-object)
-                // it doesn't need to have a start or end
-                var eventObject = {
-                  title: $.trim($(this).text()) // use the element's text as the event title
-                }
 
-                // store the Event Object in the DOM element so we can get to it later
-                $(this).data('eventObject', eventObject)
+                    // Función para aumentar el tamaño de la letra
+                    function aumentarLetra() {                        
+                        var tamañoActual = parseInt(window.getComputedStyle(document.body).fontSize);                       
+                        var nuevoTamaño = tamañoActual + 2;
+                        // Establecer el nuevo tamaño de la letra en el cuerpo del documento
+                        document.body.style.fontSize = nuevoTamaño + 'px';
+                    }
 
-                // make the event draggable using jQuery UI
-                $(this).draggable({
-                  zIndex        : 1070,
-                  revert        : true, // will cause the event to go back to its
-                  revertDuration: 0  //  original position after the drag
-                })
+                    // Función para disminuir el tamaño de la letra
+                    function disminuirLetra() {
+                        
+                        var tamañoActual = parseInt(window.getComputedStyle(document.body).fontSize);                        
+                        var nuevoTamaño = tamañoActual - 2;
+                        // Establecer el nuevo tamaño de la letra en el cuerpo del documento
+                        document.body.style.fontSize = nuevoTamaño + 'px';
+                    }
 
-              })
-            }
+                    function toggleFullScreen() {
+                        var doc = window.document;
+                        var docEl = doc.documentElement;
+                        var headerWitdh = document.getElementById('headerWitdh');
+                        var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+                        var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
 
-            ini_events($('#external-events div.external-event'))
+                        if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                            requestFullScreen.call(docEl);
+                            headerWitdh.classList.add('header__headerWitdh');
+                        } else {
+                            cancelFullScreen.call(doc);                            
+                            headerWitdh.classList.remove('header__headerWitdh');
+                        }
+                    }
 
-            /* initialize the calendar
-             -----------------------------------------------------------------*/
-            //Date for the calendar events (dummy data)
-            var date = new Date()
-            var d    = date.getDate(),
-                m    = date.getMonth(),
-                y    = date.getFullYear()
 
-            var Calendar = FullCalendar.Calendar;
-            var Draggable = FullCalendar.Draggable;
 
-            var containerEl = document.getElementById('external-events');
-            var checkbox = document.getElementById('drop-remove');
-            var calendarEl = document.getElementById('calendar');
-
-            // initialize the external events
-            // -----------------------------------------------------------------
-
-            new Draggable(containerEl, {
-              itemSelector: '.external-event',
-              eventData: function(eventEl) {
-                return {
-                  title: eventEl.innerText,
-                  backgroundColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
-                  borderColor: window.getComputedStyle( eventEl ,null).getPropertyValue('background-color'),
-                  textColor: window.getComputedStyle( eventEl ,null).getPropertyValue('color'),
-                };
-              }
-            });
-
-            var calendar = new Calendar(calendarEl, {
-              headerToolbar: {
-                left  : 'prev,next today',
-                center: 'title',
-                right : 'dayGridMonth,timeGridWeek,timeGridDay'
-              },
-              themeSystem: 'bootstrap',
-              //Random default events
-              events: [
-                {
-                  title          : 'Audiencia 1023/2023',
-                  start          : new Date(y, m, 1),
-                  backgroundColor: '#f56954', //red
-                  borderColor    : '#f56954', //red
-                  allDay         : true
-                },
-                {
-                  title          : 'Audiencia 0356/2023',
-                  start          : new Date(y, m, d - 5),
-                  end            : new Date(y, m, d - 2),
-                  backgroundColor: '#f39c12', //yellow
-                  borderColor    : '#f39c12' //yellow
-                },
-                {
-                  title          : 'Audiencia 0896/2023',
-                  start          : new Date(y, m, d, 10, 30),
-                  allDay         : false,
-                  backgroundColor: '#0073b7', //Blue
-                  borderColor    : '#0073b7' //Blue
-                },
-                {
-                  title          : 'Audiencia 0489/2023',
-                  start          : new Date(y, m, d, 12, 0),
-                  end            : new Date(y, m, d, 14, 0),
-                  allDay         : false,
-                  backgroundColor: '#00c0ef', //Info (aqua)
-                  borderColor    : '#00c0ef' //Info (aqua)
-                },
-                {
-                  title          : 'Audiencia 0265/2023',
-                  start          : new Date(y, m, d + 1, 19, 0),
-                  end            : new Date(y, m, d + 1, 22, 30),
-                  allDay         : false,
-                  backgroundColor: '#00a65a', //Success (green)
-                  borderColor    : '#00a65a' //Success (green)
-                }
-              ],
-              editable  : true,
-              droppable : true, // this allows things to be dropped onto the calendar !!!
-              drop      : function(info) {
-                // is the "remove after drop" checkbox checked?
-                if (checkbox.checked) {
-                  // if so, remove the element from the "Draggable Events" list
-                  info.draggedEl.parentNode.removeChild(info.draggedEl);
-                }
-              }
-            });
-
-            calendar.render();
-            // $('#calendar').fullCalendar()
-
-            /* ADDING EVENTS */
-            var currColor = '#3c8dbc' //Red by default
-            // Color chooser button
-            $('#color-chooser > li > a').click(function (e) {
-              e.preventDefault()
-              // Save color
-              currColor = $(this).css('color')
-              // Add color effect to button
-              $('#add-new-event').css({
-                'background-color': currColor,
-                'border-color'    : currColor
-              })
-            })
-            $('#add-new-event').click(function (e) {
-              e.preventDefault()
-              // Get value and make sure it is not null
-              var val = $('#new-event').val()
-              if (val.length == 0) {
-                return
-              }
-
-              // Create events
-              var event = $('<div />')
-              event.css({
-                'background-color': currColor,
-                'border-color'    : currColor,
-                'color'           : '#fff'
-              }).addClass('external-event')
-              event.text(val)
-              $('#external-events').prepend(event)
-
-              // Add draggable funtionality
-              ini_events(event)
-
-              // Remove event from text input
-              $('#new-event').val('')
-            })
-          })
-    </script>
+                </script>
     </body>
 </html>

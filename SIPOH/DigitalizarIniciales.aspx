@@ -63,7 +63,7 @@
                                 <h6 class="help-block text-muted small-font"><b>Pendientes de digitalizar (Seleccione la inicial a digitalizar): </b></h6>
                                 <br />
                                 <div class="scrollable">
-                                    <asp:GridView ID="PDigitalizar" CssClass="table table-striped text-center table-hover table-sm" runat="server" AutoGenerateColumns="False" AllowPaging="True" PageSize="3" OnPageIndexChanging="PDigitalizar_PageIndexChanging">
+                                    <asp:GridView ID="PDigitalizar" CssClass="table table-striped text-center table-hover table-sm" runat="server" AutoGenerateColumns="False" AllowPaging="True" PageSize="10" OnPageIndexChanging="PDigitalizar_PageIndexChanging">
                                         <Columns>
                                             <asp:TemplateField HeaderStyle-CssClass="bg-success text-white">
                                                 <ItemTemplate>
@@ -76,9 +76,9 @@
                                                 </ItemTemplate>
                                                 <HeaderStyle CssClass="bg-success text-white" />
                                             </asp:TemplateField>
-                                            <asp:BoundField DataField="Numero" HeaderText="Folio" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
+                                            <asp:BoundField DataField="Numero" HeaderText="Número" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
                                             <asp:BoundField DataField="TipoAsunto" HeaderText="Tipo de Asunto" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
-                                            <asp:BoundField DataField="FeCaptura" HeaderText="Fecha de Ingreso" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
+                                            <asp:BoundField DataField="FeCaptura" HeaderText="Fecha de Captura" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
                                             <asp:BoundField DataField="Digitalizado" HeaderText="Digitalizado" HeaderStyle-CssClass="bg-success text-white" HeaderStyle-HorizontalAlign="Center" HeaderStyle-VerticalAlign="Middle" />
                                         </Columns>
                                         <PagerTemplate>
@@ -159,7 +159,7 @@
                                         <asp:Label ID="lblDocsNoDigit" runat="server" CssClass="help-block text-muted small-font" Visible="false"><b>*Documentos no digitalizados:</b></asp:Label>
                                         <br />
                                         <br />
-                                        <asp:GridView ID="noDigit" CssClass="table table-striped text-center table-hover table-sm mayusculas" runat="server" AutoGenerateColumns="False">
+                                        <asp:GridView ID="noDigit" CssClass="table table-striped text-center table-hover table-sm mayusculas" runat="server" AutoGenerateColumns="False" DataKeyNames="IdAnexoC">
                                             <Columns>
                                                 <asp:TemplateField HeaderStyle-CssClass="bg-success text-white">
                                                     <ItemTemplate>
@@ -168,9 +168,10 @@
                                                 </asp:TemplateField>
                                                 <asp:BoundField DataField="Descripcion" HeaderText="Anexo" HeaderStyle-CssClass="bg-success text-white" />
                                                 <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" HeaderStyle-CssClass="bg-success text-white" />
+                                                <asp:BoundField DataField="IdAsunto" HeaderText="IdAsunto" Visible="False" />
+                                                <asp:BoundField DataField="IdAnexoC" HeaderText="IdAnexoC" Visible="False" />
                                             </Columns>
                                         </asp:GridView>
-
                                         <asp:Label ID="lblinfo" runat="server" CssClass="help-block text-muted small-font" Style="text-align: justify" Visible="false"><b>(*) Los elementos seleccionados estan en estatus "NO DIGITALIZADOS", quite la seleccion si el anexo ya esta digitalizado.</b></asp:Label>
                                         <br />
                                         <br />

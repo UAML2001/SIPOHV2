@@ -54,7 +54,7 @@
             }
 
             // Patrón de entrada, en este caso solo acepta numeros y letras
-            patron = /[A-Za-z0-9:,]/;
+            patron = /[A-Za-z0-9:, ]/;
             tecla_final = String.fromCharCode(tecla);
             return patron.test(tecla_final);
         }
@@ -112,7 +112,7 @@
 
         <div class="form-outline mb-4">
             <asp:TextBox runat="server" type="text" ID="txtHechos" onkeypress="return check(event)" class="form-control" TextMode="MultiLine" Height="20px" />
-            <label class="form-label" for="txtHechos">Posibles hechos</label>
+            <label class="form-label" for="txtHechos">Hechos posiblemente constitutivos del delito de</label>
         </div>
 
         <div class="form-outline mb-4">

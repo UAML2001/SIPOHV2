@@ -28,14 +28,14 @@ namespace SIPOH.Controllers.AC_Digitalizacion
                     return;
                 }
 
-                // Validación: No avanzar si los elementos en "chkSelect" de la tabla "noDigit" están seleccionados
+                List<int> desmarcados = new List<int>();
                 foreach (GridViewRow row in noDigit.Rows)
                 {
                     CheckBox chkSelect = (CheckBox)row.FindControl("chkSelect");
-                    if (chkSelect != null && chkSelect.Checked)
+                    if (chkSelect != null && !chkSelect.Checked)
                     {
-                        ShowToastr("Por favor, desmarca los elementos seleccionados en la lista de documentos no digitalizados", "error");
-                        return;
+                        int idAnexoC = Convert.ToInt32(noDigit.DataKeys[row.RowIndex].Value);
+                        desmarcados.Add(idAnexoC);
                     }
                 }
 
@@ -67,9 +67,8 @@ namespace SIPOH.Controllers.AC_Digitalizacion
 
                     if (isUploaded)
                     {
-                        // Actualizar el estado de digitalización
                         UpdateDigitalizadoPosterior updateDigitalizado = new UpdateDigitalizadoPosterior();
-                        updateDigitalizado.Update(idPosterior);
+                        updateDigitalizado.Update(idPosterior, desmarcados);
 
                         // Insertar registro en la tabla P_Documentos
                         InsertarDocumentoEnBaseDeDatos(idAsunto, fileName, nuevoNombre, tipoAsunto, idPosterior);

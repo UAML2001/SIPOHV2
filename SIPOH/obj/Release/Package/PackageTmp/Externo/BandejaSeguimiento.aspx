@@ -90,7 +90,7 @@
                                 <ItemStyle CssClass="p-2" />
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="FeIngresoMostrar" HeaderText="Fecha de Aceptación">
+                            <asp:BoundField DataField="FeIngresoMostrar" HeaderText="Fecha">
                                 <ItemStyle CssClass="p-2" />
                                 <HeaderStyle CssClass="bg-success text-white" />
                             </asp:BoundField>

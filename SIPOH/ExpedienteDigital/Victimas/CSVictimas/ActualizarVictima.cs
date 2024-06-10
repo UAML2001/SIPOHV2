@@ -12,8 +12,9 @@ public class ActualizarVictima
     public void UpdateVictimData(
         int idPartes, int idAsunto, string apPaterno, string apMaterno, string nombre, string genero, string tipoParte, int tipoVictima,
         string victima, string rfc, string curp, string edad, DateTime feNacimiento, int idContNacido, int idPaisNacido, int idEstadoNacido,
-        string idMunicipioNacido, int idNacionalidad, int idCondicion, int idEstadoCivil, int idGradoEstudios, int idAlfabet, int idiomaEspañol,
-        int idVulnerabilidad, int idPueblo, int hablaIndigena, int idDialecto, int idOcupacion, int idProfesion, string domOcupacion,
+        string idMunicipioNacido, int idLengExtra, int idRelacImput, int idNacionalidad, int idCondicion, int idEstadoCivil, int idGradoEstudios, 
+        int idAlfabet, int idiomaEspañol,
+        int idVulnerabilidad, int idAsisMigra, int idPueblo, int hablaIndigena, int idDialecto, int idOcupacion, int idProfesion, string domOcupacion,
         int discapacidad, int idContiResidencia, int idPaisResidencia, int idEstadoResidencia, string idMunicipioResidencia, string domResidencia,
         int idDefensor, int interprete, int ordenProteccion, DateTime feIndividualizacion, int idDocIdentificador, string numDocumento, string privacidad,
         string telefono, string correo, string fax, string domNotificacion, string otroTipo, int idUser, List<string> idsDiscapacidades, Page page)
@@ -112,7 +113,10 @@ public class ActualizarVictima
                             [Fax] = @Fax,
                             [DomNotificacion] = @DomNotificacion,
                             [OtroTipo] = @OtroTipo,
-                            [IdUser] = @IdUser
+                            [IdUser] = @IdUser,
+                            [AsistMigratoria] = @AsistMigratoria,
+                            [IdRelacInput] = @IdRelacInput,
+                            [IdLengExtra] = @IdLengExtra
                         WHERE [IdVictima] = @IdVictima;";
 
                         using (SqlCommand cmd = new SqlCommand(queryUpdateVictima, conn, transaction))
@@ -135,6 +139,7 @@ public class ActualizarVictima
                             cmd.Parameters.AddWithValue("@IdAlfabet", idAlfabet);
                             cmd.Parameters.AddWithValue("@IdiomaEspañol", idiomaEspañol);
                             cmd.Parameters.AddWithValue("@IdVulnerabilidad", idVulnerabilidad);
+                            cmd.Parameters.AddWithValue("@AsistMigratoria", idAsisMigra);
                             cmd.Parameters.AddWithValue("@IdPueblo", idPueblo);
                             cmd.Parameters.AddWithValue("@HablaIndigena", hablaIndigena);
                             cmd.Parameters.AddWithValue("@IdDialecto", idDialecto);
@@ -160,6 +165,8 @@ public class ActualizarVictima
                             cmd.Parameters.AddWithValue("@DomNotificacion", domNotificacion);
                             cmd.Parameters.AddWithValue("@OtroTipo", otroTipo);
                             cmd.Parameters.AddWithValue("@IdUser", idUser);
+                            cmd.Parameters.AddWithValue("@IdRelacInput", idRelacImput);
+                            cmd.Parameters.AddWithValue("@IdLengExtra", idLengExtra);
 
                             cmd.ExecuteNonQuery();
                         }
@@ -210,7 +217,10 @@ public class ActualizarVictima
                             [Fax],
                             [DomNotificacion],
                             [OtroTipo],
-                            [IdUser]
+                            [IdUser],
+                            [AsistMigratoria],
+                            [IdRelacInput],
+                            [IdLengExtra]
                         ) VALUES (
                             @IdVictima,
                             @TipoVictima,
@@ -254,7 +264,10 @@ public class ActualizarVictima
                             @Fax,
                             @DomNotificacion,
                             @OtroTipo,
-                            @IdUser
+                            @IdUser,
+                            @AsistMigratoria,
+                            @IdRelacInput,
+                            @IdLengExtra
                         );";
 
                         using (SqlCommand cmd = new SqlCommand(queryInsertVictima, conn, transaction))
@@ -302,19 +315,14 @@ public class ActualizarVictima
                             cmd.Parameters.AddWithValue("@DomNotificacion", domNotificacion);
                             cmd.Parameters.AddWithValue("@OtroTipo", otroTipo);
                             cmd.Parameters.AddWithValue("@IdUser", idUser);
+                            cmd.Parameters.AddWithValue("@AsistMigratoria", idAsisMigra);
+                            cmd.Parameters.AddWithValue("@IdRelacInput", idRelacImput);
+                            cmd.Parameters.AddWithValue("@IdLengExtra", idLengExtra);
 
                             cmd.ExecuteNonQuery();
                         }
                     }
                     
-                    // Actualizar los datos en la tabla P_Discapacidades
-                    string queryDeleteDiscapacidades = @"DELETE FROM [SIPOH].[dbo].[P_Discapacidades] WHERE [IdPartes] = @IdPartes";
-                    using (SqlCommand cmd = new SqlCommand(queryDeleteDiscapacidades, conn, transaction))
-                    {
-                        cmd.Parameters.AddWithValue("@IdPartes", idPartes);
-                        cmd.ExecuteNonQuery();
-                    }
-
                     string queryInsertDiscapacidades = @"INSERT INTO [SIPOH].[dbo].[P_Discapacidades] 
                         ([IdPartes], [IdDiscapacidad]) 
                         VALUES 

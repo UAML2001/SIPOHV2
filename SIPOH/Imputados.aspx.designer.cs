@@ -249,6 +249,15 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.TextBox RFCVicti;
 
         /// <summary>
+        /// Control CuenFeNac.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CuenFeNac;
+
+        /// <summary>
         /// Control FeNacVic.
         /// </summary>
         /// <remarks>
@@ -535,6 +544,15 @@ namespace SIPOH
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView gvDiscapacidades2;
+
+        /// <summary>
+        /// Control AsisMigra.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList AsisMigra;
 
         /// <summary>
         /// Control UpdatePanel7.

@@ -13,7 +13,7 @@ namespace SIPOH
                 DropDownList HablEsp, DropDownList LengIndi, DropDownList CondMigVic, DropDownList CondAlfVic, DropDownList HablLengIndi, DropDownList PuebloIndi, TextBox DomiTrabVicti,
                 DropDownList EstCivil, DropDownList GradEst, DropDownList OcupaVicti, DropDownList DetaOcupaVic, DropDownList CuenDisca, DropDownList TipoDisca, DropDownList DiscaEspe, DropDownList ContiRes, DropDownList PaisRes,
                 DropDownList EstaRes, DropDownList MuniRes, TextBox DomicPersonVicti, DropDownList AseJur, DropDownList ReqInter, TextBox TelCont, TextBox EmailCont, TextBox Fax, DropDownList RelacVic, TextBox HoraIndivi,
-                DropDownList IDVicti, TextBox Domici, TextBox OtroMed, RadioButtonList AceptaDatos)
+                DropDownList IDVicti, TextBox Domici, TextBox OtroMed, RadioButtonList AceptaDatos, DropDownList AsisMigra)
             {
                 UpVict.Visible = true;
                 LimpVicti.Visible = true;
@@ -63,6 +63,7 @@ namespace SIPOH
                 Domici.Text = String.Empty;
                 OtroMed.Text = String.Empty;
                 AceptaDatos.SelectedValue = "";
+                AsisMigra.ClearSelection();
             }
 
         }
