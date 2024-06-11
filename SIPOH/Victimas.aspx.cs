@@ -541,9 +541,11 @@ namespace SIPOH
             // Llenar los DropDownList y establecer valores
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
 
+            // Llenar Continentes
             dropdownFiller.DropdownContinentes(ContiNac);
             dropdownFiller.DropdownContinentes(ContiRes);
 
+            // Llenar y seleccionar valores de Nacimiento
             if (info.IdContinenteNacido != null)
             {
                 ContiNac.SelectedValue = info.IdContinenteNacido;
@@ -560,12 +562,11 @@ namespace SIPOH
                 else
                 {
                     EstNaci.Items.Clear();
+                    EstNaci.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                    EstNaci.Items.Add(new ListItem("No aplica", "-2"));
                     MuniNac.Items.Clear();
-                    ListItem listItem = new ListItem();
-                    listItem.Text = "No aplica";
-                    listItem.Value = "-2";
-                    EstNaci.Items.Add(listItem);
-                    MuniNac.Items.Add(listItem);
+                    MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                    MuniNac.Items.Add(new ListItem("No aplica", "-2"));
                 }
             }
 
@@ -575,41 +576,49 @@ namespace SIPOH
                 dropdownFiller.DropdownMunicipios(MuniNac, info.IdEstadoNacido);
             }
 
-            // Repite el proceso para los DropDownList de residencia
-
-            dropdownFiller.DropdownContinentes(ContiRes);
-            dropdownFiller.DropdownContinentes(ContiNac);
-
-            if (info.IdContinenteNacido != null)
+            // Verificar si hay municipio de nacimiento y seleccionarlo
+            if (info.IdMunicipioNacido != null)
             {
-                ContiRes.SelectedValue = info.IdContinenteNacido;
-                dropdownFiller.DropdownPaises(PaisRes, int.Parse(info.IdContinenteNacido));
+                MuniNac.SelectedValue = info.IdMunicipioNacido;
             }
 
-            if (info.IdPaisNacido != null)
+            // Llenar y seleccionar valores de Residencia
+            if (info.IdContinenteResidencia != null)
             {
-                PaisRes.SelectedValue = info.IdPaisNacido;
-                if (int.Parse(info.IdPaisNacido) == 141)
+                ContiRes.SelectedValue = info.IdContinenteResidencia;
+                dropdownFiller.DropdownPaises(PaisRes, int.Parse(info.IdContinenteResidencia));
+            }
+
+            if (info.IdPaisResidencia != null)
+            {
+                PaisRes.SelectedValue = info.IdPaisResidencia;
+                if (int.Parse(info.IdPaisResidencia) == 141)
                 {
                     dropdownFiller.DropdownEntidades(EstaRes);
                 }
                 else
                 {
                     EstaRes.Items.Clear();
+                    EstaRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                    EstaRes.Items.Add(new ListItem("No aplica", "-2"));
                     MuniRes.Items.Clear();
-                    ListItem listItem = new ListItem();
-                    listItem.Text = "No aplica";
-                    listItem.Value = "-2";
-                    EstaRes.Items.Add(listItem);
-                    MuniRes.Items.Add(listItem);
+                    MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                    MuniRes.Items.Add(new ListItem("No aplica", "-2"));
                 }
             }
 
-            if (info.IdEstadoNacido != null)
+            if (info.IdEstadoResidencia != null)
             {
-                EstaRes.SelectedValue = info.IdEstadoNacido;
-                dropdownFiller.DropdownMunicipios(MuniRes, info.IdEstadoNacido);
+                EstaRes.SelectedValue = info.IdEstadoResidencia;
+                dropdownFiller.DropdownMunicipios(MuniRes, info.IdEstadoResidencia);
             }
+
+            // Verificar si hay municipio de residencia y seleccionarlo
+            if (info.IdMunicipioResidencia != null)
+            {
+                MuniRes.SelectedValue = info.IdMunicipioResidencia;
+            }
+
 
             if (info.IdOcupacion != null)
             {
