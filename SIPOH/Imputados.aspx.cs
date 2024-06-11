@@ -762,6 +762,13 @@ namespace SIPOH
         {
             int idContinente = Convert.ToInt32(ContiNac.SelectedValue);
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+            PaisNac.SelectedValue = "S";
+            EstNaci.Items.Clear();
+            EstNaci.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            EstNaci.SelectedValue = "S";
+            MuniNac.Items.Clear();
+            MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            MuniNac.SelectedValue = "S";
             dropdownFiller.DropdownPaises(PaisNac, idContinente);
         }
 
@@ -769,58 +776,59 @@ namespace SIPOH
         {
             int idPais = Convert.ToInt32(PaisNac.SelectedValue);
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+            EstNaci.Items.Clear();
+            EstNaci.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            EstNaci.SelectedValue = "S";
+            MuniNac.Items.Clear();
+            MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            MuniNac.SelectedValue = "S";
+
             if (idPais == 141)
             {
-                EstNaci.Items.Clear();
-                MuniNac.Items.Clear();
                 dropdownFiller.DropdownEntidades(EstNaci);
             }
             else
             {
-                EstNaci.Items.Clear();
-                MuniNac.Items.Clear();
-                ListItem listItem = new ListItem();
-                listItem.Text = "No aplica";
-                listItem.Value = "-2";
+                ListItem listItem = new ListItem("No aplica", "-2");
                 EstNaci.Items.Add(listItem);
                 MuniNac.Items.Add(listItem);
-
             }
         }
 
         protected void EstNaci_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Obtén el IdEstado seleccionado
             string selectedIdEstado = EstNaci.SelectedValue;
-
-            // Limpia los elementos existentes en el control DropDownList de los municipios
             MuniNac.Items.Clear();
+            MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            MuniNac.SelectedValue = "S";
 
-            // Llena el control DropDownList de los municipios basado en el IdEstado seleccionado
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
-            dropdownFiller.DropdownMunicipios(MuniNac, selectedIdEstado);
-
             int idPais = Convert.ToInt32(PaisNac.SelectedValue);
-            CatalogosVictimas dropdownFiller2 = new CatalogosVictimas();
+
             if (idPais == 141)
             {
-                MuniNac.Items.Clear(); // Cambia MuniNac a MuniRes aquí
-                dropdownFiller2.DropdownMunicipios(MuniNac, selectedIdEstado);
+                dropdownFiller.DropdownMunicipios(MuniNac, selectedIdEstado);
             }
             else
             {
-                MuniNac.Items.Clear();
-                ListItem listItem = new ListItem();
-                listItem.Text = "No aplica";
-                listItem.Value = "-2";
+                ListItem listItem = new ListItem("No aplica", "-2");
                 MuniNac.Items.Add(listItem);
             }
         }
+
+
 
         protected void ContiRes_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idContinente = Convert.ToInt32(ContiRes.SelectedValue);
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+            PaisRes.SelectedValue = "S";
+            EstaRes.Items.Clear();
+            EstaRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            EstaRes.SelectedValue = "S";
+            MuniRes.Items.Clear();
+            MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            MuniRes.SelectedValue = "S";
             dropdownFiller.DropdownPaises(PaisRes, idContinente);
         }
 
@@ -828,50 +836,42 @@ namespace SIPOH
         {
             int idPais = Convert.ToInt32(PaisRes.SelectedValue);
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+            EstaRes.Items.Clear();
+            EstaRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            EstaRes.SelectedValue = "S";
+            MuniRes.Items.Clear();
+            MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            MuniRes.SelectedValue = "S";
+
             if (idPais == 141)
             {
-                EstaRes.Items.Clear();
-                MuniRes.Items.Clear();
                 dropdownFiller.DropdownEntidades(EstaRes);
             }
             else
             {
-                EstaRes.Items.Clear();
-                MuniRes.Items.Clear();
-                ListItem listItem = new ListItem();
-                listItem.Text = "No aplica";
-                listItem.Value = "-2";
+                ListItem listItem = new ListItem("No aplica", "-2");
                 EstaRes.Items.Add(listItem);
                 MuniRes.Items.Add(listItem);
-
             }
         }
 
         protected void EstRes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Obtén el IdEstado seleccionado
             string selectedIdEstado = EstaRes.SelectedValue;
-
-            // Limpia los elementos existentes en el control DropDownList de los municipios
             MuniRes.Items.Clear();
+            MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            MuniRes.SelectedValue = "S";
 
-            // Llena el control DropDownList de los municipios basado en el IdEstado seleccionado
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
-            dropdownFiller.DropdownMunicipios(MuniRes, selectedIdEstado);
-
             int idPais = Convert.ToInt32(PaisRes.SelectedValue);
-            CatalogosVictimas dropdownFiller2 = new CatalogosVictimas();
+
             if (idPais == 141)
             {
-                MuniRes.Items.Clear(); // Cambia MuniNac a MuniRes aquí
-                dropdownFiller2.DropdownMunicipios(MuniRes, selectedIdEstado);
+                dropdownFiller.DropdownMunicipios(MuniRes, selectedIdEstado);
             }
             else
             {
-                MuniRes.Items.Clear();
-                ListItem listItem = new ListItem();
-                listItem.Text = "No aplica";
-                listItem.Value = "-2";
+                ListItem listItem = new ListItem("No aplica", "-2");
                 MuniRes.Items.Add(listItem);
             }
         }
@@ -1226,13 +1226,19 @@ namespace SIPOH
                     string rfc = RFCVicti.Text.ToUpper();
                     string curp = CURPVicti.Text.ToUpper();
                     string edad = EdadVicti.Text.ToUpper();
-                    DateTime feNacimiento = DateTime.Now; // Fecha válida por defecto
+                    // En tu método existente, actualiza la lógica para manejar la fecha predeterminada
+                    DateTime feNacimiento = DateTime.ParseExact("09/09/1899 00:00:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
-                    if (!DateTime.TryParse(FeNacVic.Text.ToUpper(), out DateTime fecha))
+                    // Comprueba si el input está habilitado antes de intentar parsear la fecha
+                    if (FeNacVic.Enabled)
                     {
-                        throw new FormatException("La fecha ingresada no tiene el formato correcto.");
+                        if (!DateTime.TryParse(FeNacVic.Text, out feNacimiento))
+                        {
+                            // Maneja el error de formato aquí
+                            throw new FormatException("La fecha ingresada no tiene el formato correcto.");
+                        }
                     }
-                    feNacimiento = fecha.Date; // Esto será solo la fecha, la hora se establecerá a medianoche (00:00:00)
+                    // No es necesario un else aquí, ya que la fecha predeterminada ya está establecida Esto será solo la fecha, la hora se establecerá a medianoche (00:00:00)
 
                     string aliasImp = AliasImp.Text.ToUpper();
                     int idContNacido = int.Parse(ContiNac.SelectedValue.ToUpper());
@@ -1323,7 +1329,6 @@ namespace SIPOH
             panelPdfMostrar.Style["display"] = "none";
         }
 
-        // Este código va en el evento SelectedIndexChanged del dropdown "CuenFeNac"
         protected void CuenFeNac_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Comprueba si el valor seleccionado es '3' o '2'

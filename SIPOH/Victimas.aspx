@@ -617,7 +617,7 @@
                                                         <asp:Button ID="UpVict" runat="server" Text="🔃 Actualizar" CssClass="btn btn-outline-primary btn-sm mayusculas" OnClick="UpVicti_Click" />
                                                         <asp:Button ID="SvVicti" runat="server" Text="💾 Guardar" CssClass="btn btn-outline-success btn-sm mayusculas" OnClick="SvVicti_Click" />
                                                         <asp:Button ID="LimpVicti" runat="server" Text="🧹 Limpiar" CssClass="btn btn-outline-danger btn-sm mayusculas" OnClick="LimpiarForm_Click" />
-                                                        <asp:Button ID="ImprCedula" runat="server" Text="🖨️ Imprimir Cedula" CssClass="btn btn-outline-info btn-sm mayusculas" OnClick="ImprCedula_Click" />
+                                                        <asp:Button ID="ImprCedula" runat="server" Text="🖨️ Imprimir Cedula" CssClass="btn btn-outline-info btn-sm mayusculas" OnClick="ImprCedula_Click1"/>
                                                     </div>
                                                 </center>
 

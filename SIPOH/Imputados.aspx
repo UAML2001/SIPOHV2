@@ -280,18 +280,22 @@
                                                             <div class="row">
                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                     <asp:DropDownList ID="ContiNac" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ContiNac_SelectedIndexChanged">
+                                                                        <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                     </asp:DropDownList>
                                                                 </div>
                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                     <asp:DropDownList ID="PaisNac" CssClass="form-select form-select-sm text-secondary mayusculas" AutoPostBack="true" OnSelectedIndexChanged="PaisNac_SelectedIndexChanged" runat="server">
+                                                                        <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                     </asp:DropDownList>
                                                                 </div>
                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                     <asp:DropDownList ID="EstNaci" AutoPostBack="true" OnSelectedIndexChanged="EstNaci_SelectedIndexChanged" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
+                                                                        <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                     </asp:DropDownList>
                                                                 </div>
                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                                                                     <asp:DropDownList ID="MuniNac" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
+                                                                        <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                     </asp:DropDownList>
                                                                 </div>
                                                             </div>
@@ -454,7 +458,7 @@
                                                                                 <div class="table-responsive mt-2">
                                                                                     <asp:GridView ID="gvDiscapacidades" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="GridView1_RowCommand" ShowHeaderWhenEmpty="true">
                                                                                         <Columns>
-                                                                                            <asp:BoundField DataField="Discapacidad" HeaderText="Discapacidad" HeaderStyle-CssClass="bg-outline-success text-white text-center" ItemStyle-CssClass="mayusculas" />
+                                                                                            <asp:BoundField DataField="Discapacidad" HeaderText="Discapacidad" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="mayusculas" />
                                                                                             <asp:BoundField DataField="IdDiscapacidad" Visible="false" />
                                                                                             <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
                                                                                                 <ItemTemplate>
@@ -466,17 +470,18 @@
                                                                                 </div>
 
                                                                                  <div class="table-responsive mt-2">
-                                                                                    <asp:GridView ID="gvDiscapacidades2" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="GridView1_RowCommand" ShowHeaderWhenEmpty="true">
-                                                                                        <Columns>
-                                                                                            <asp:BoundField DataField="Discapacidad" HeaderText="Discapacidad" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="mayusculas" />
-                                                                                            <asp:BoundField DataField="IdDiscapacidad" Visible="false" />
-                                                                                            <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
-                                                                                                <ItemTemplate>
-                                                                                                    <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" CommandName="Eliminar" CommandArgument='<%# ((GridViewRow)Container).RowIndex %>' />
-                                                                                                </ItemTemplate>
-                                                                                            </asp:TemplateField>
-                                                                                        </Columns>
-                                                                                    </asp:GridView>
+                                                                                     <asp:GridView ID="gvDiscapacidades2" runat="server" AutoGenerateColumns="False" CssClass="table table-striped text-center table-hover mb-0 table-sm" OnRowCommand="GridView1_RowCommand" ShowHeaderWhenEmpty="true">
+                                                                                         <Columns>
+                                                                                             <asp:BoundField DataField="DiscapacidadAgregada" HeaderText="Discapacidad" HeaderStyle-CssClass="bg-success text-white text-center" ItemStyle-CssClass="mayusculas" />
+                                                                                             <asp:BoundField DataField="IdDiscapacidad" Visible="false" />
+                                                                                             <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="bg-success text-white">
+                                                                                                 <ItemTemplate>
+                                                                                                     <asp:Button ID="btnEliminar" runat="server" CssClass="btn btn-sm m-0 p-0" Text="✖️" CommandName="Eliminar" CommandArgument='<%# ((GridViewRow)Container).RowIndex %>' />
+                                                                                                 </ItemTemplate>
+                                                                                             </asp:TemplateField>
+                                                                                         </Columns>
+                                                                                     </asp:GridView>
+
                                                                                 </div>
                                                                             </div>
                                                                         </ContentTemplate>

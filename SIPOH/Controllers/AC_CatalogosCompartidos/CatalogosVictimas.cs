@@ -81,16 +81,19 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
                 using (SqlCommand cmd = new SqlCommand("SELECT Continente, IdContinente FROM [SIPOH].[dbo].[P_CatContinentes]", conn))
                 {
                     SqlDataReader dr = cmd.ExecuteReader();
+                    dropdown.Items.Clear();
+                    dropdown.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
                     while (dr.Read())
                     {
-                        ListItem listItem = new ListItem();
-                        listItem.Text = dr["Continente"].ToString();
-                        listItem.Value = dr["IdContinente"].ToString();
+                        ListItem listItem = new ListItem
+                        {
+                            Text = dr["Continente"].ToString(),
+                            Value = dr["IdContinente"].ToString()
+                        };
                         dropdown.Items.Add(listItem);
                     }
                 }
             }
-
         }
 
         public void DropdownPaises(DropDownList dropdown, int idContinente)
@@ -103,21 +106,20 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
                 {
                     cmd.Parameters.AddWithValue("@IdContinente", idContinente);
                     SqlDataReader dr = cmd.ExecuteReader();
-                    dropdown.Items.Clear(); // Limpiar los elementos anteriores
-                                            // Agregar "No aplica" como un elemento seleccionado
-                    ListItem noAplicaItem = new ListItem("----- SELECCIONE -----", "S");
-                    dropdown.Items.Add(noAplicaItem);
+                    dropdown.Items.Clear();
+                    dropdown.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
                     while (dr.Read())
                     {
-                        ListItem listItem = new ListItem();
-                        listItem.Text = dr["Pais"].ToString();
-                        listItem.Value = dr["IdPais"].ToString();
+                        ListItem listItem = new ListItem
+                        {
+                            Text = dr["Pais"].ToString(),
+                            Value = dr["IdPais"].ToString()
+                        };
                         dropdown.Items.Add(listItem);
                     }
                 }
             }
         }
-
 
         public void DropdownEntidades(DropDownList dropdown)
         {
@@ -127,17 +129,20 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
                 using (SqlCommand cmd = new SqlCommand("SELECT Nombre, IdEstados FROM [SIPOH].[dbo].[P_CatEntidades]", conn))
                 {
                     SqlDataReader dr = cmd.ExecuteReader();
+                    dropdown.Items.Clear();
+                    dropdown.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
                     while (dr.Read())
                     {
-                        ListItem listItem = new ListItem();
-                        listItem.Text = dr["Nombre"].ToString();
-                        listItem.Value = dr["IdEstados"].ToString();
+                        ListItem listItem = new ListItem
+                        {
+                            Text = dr["Nombre"].ToString(),
+                            Value = dr["IdEstados"].ToString()
+                        };
                         dropdown.Items.Add(listItem);
                     }
                 }
             }
         }
-
 
         public void DropdownMunicipios(DropDownList dropdown, string IdEstado)
         {
@@ -148,16 +153,21 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
                 {
                     cmd.Parameters.AddWithValue("@IdEstado", IdEstado);
                     SqlDataReader dr = cmd.ExecuteReader();
+                    dropdown.Items.Clear();
+                    dropdown.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
                     while (dr.Read())
                     {
-                        ListItem listItem = new ListItem();
-                        listItem.Text = dr["Municipio"].ToString();
-                        listItem.Value = dr["IdMunicipio"].ToString();
+                        ListItem listItem = new ListItem
+                        {
+                            Text = dr["Municipio"].ToString(),
+                            Value = dr["IdMunicipio"].ToString()
+                        };
                         dropdown.Items.Add(listItem);
                     }
                 }
             }
         }
+
 
 
         // Dropdowns Datos Generales

@@ -657,7 +657,16 @@ namespace SIPOH
                 OcupaVicti.SelectedValue = info.IdOcupacion;
             }
 
-            EstablecerValorDropDownList(GradEst, info.IdGradoEstudios);
+            if (GradEst.Items.FindByValue(info.IdGradoEstudios) != null)
+            {
+                GradEst.SelectedValue = info.GeneroNumerico;
+            }
+            else
+            {
+                GradEst.Items.Add(new ListItem(info.IdGradoEstudios, info.IdGradoEstudios));
+                GradEst.SelectedValue = info.IdGradoEstudios;
+            }
+
             EstablecerValorDropDownList(CuenDisca, info.Discapacidad);
             EstablecerValorDropDownList(VicVulne, info.IdVulnerabilidad);
 
@@ -704,6 +713,13 @@ namespace SIPOH
         {
             int idContinente = Convert.ToInt32(ContiNac.SelectedValue);
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+            PaisNac.SelectedValue = "S";
+            EstNaci.Items.Clear();
+            EstNaci.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            EstNaci.SelectedValue = "S";
+            MuniNac.Items.Clear();
+            MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            MuniNac.SelectedValue = "S";
             dropdownFiller.DropdownPaises(PaisNac, idContinente);
         }
 
@@ -711,50 +727,42 @@ namespace SIPOH
         {
             int idPais = Convert.ToInt32(PaisNac.SelectedValue);
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+            EstNaci.Items.Clear();
+            EstNaci.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            EstNaci.SelectedValue = "S";
+            MuniNac.Items.Clear();
+            MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            MuniNac.SelectedValue = "S";
+
             if (idPais == 141)
             {
-                EstNaci.Items.Clear();
-                MuniNac.Items.Clear();
                 dropdownFiller.DropdownEntidades(EstNaci);
             }
             else
             {
-                EstNaci.Items.Clear();
-                MuniNac.Items.Clear();
-                ListItem listItem = new ListItem();
-                listItem.Text = "No aplica";
-                listItem.Value = "-2";
+                ListItem listItem = new ListItem("No aplica", "-2");
                 EstNaci.Items.Add(listItem);
                 MuniNac.Items.Add(listItem);
-
             }
         }
 
         protected void EstNaci_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Obtén el IdEstado seleccionado
             string selectedIdEstado = EstNaci.SelectedValue;
-
-            // Limpia los elementos existentes en el control DropDownList de los municipios
             MuniNac.Items.Clear();
+            MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            MuniNac.SelectedValue = "S";
 
-            // Llena el control DropDownList de los municipios basado en el IdEstado seleccionado
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
-            dropdownFiller.DropdownMunicipios(MuniNac, selectedIdEstado);
-
             int idPais = Convert.ToInt32(PaisNac.SelectedValue);
-            CatalogosVictimas dropdownFiller2 = new CatalogosVictimas();
+
             if (idPais == 141)
             {
-                MuniNac.Items.Clear(); // Cambia MuniNac a MuniRes aquí
-                dropdownFiller2.DropdownMunicipios(MuniNac, selectedIdEstado);
+                dropdownFiller.DropdownMunicipios(MuniNac, selectedIdEstado);
             }
             else
             {
-                MuniNac.Items.Clear();
-                ListItem listItem = new ListItem();
-                listItem.Text = "No aplica";
-                listItem.Value = "-2";
+                ListItem listItem = new ListItem("No aplica", "-2");
                 MuniNac.Items.Add(listItem);
             }
         }
@@ -763,6 +771,13 @@ namespace SIPOH
         {
             int idContinente = Convert.ToInt32(ContiRes.SelectedValue);
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+            PaisRes.SelectedValue = "S";
+            EstaRes.Items.Clear();
+            EstaRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            EstaRes.SelectedValue = "S";
+            MuniRes.Items.Clear();
+            MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            MuniRes.SelectedValue = "S";
             dropdownFiller.DropdownPaises(PaisRes, idContinente);
         }
 
@@ -770,50 +785,42 @@ namespace SIPOH
         {
             int idPais = Convert.ToInt32(PaisRes.SelectedValue);
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+            EstaRes.Items.Clear();
+            EstaRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            EstaRes.SelectedValue = "S";
+            MuniRes.Items.Clear();
+            MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            MuniRes.SelectedValue = "S";
+
             if (idPais == 141)
             {
-                EstaRes.Items.Clear();
-                MuniRes.Items.Clear();
                 dropdownFiller.DropdownEntidades(EstaRes);
             }
             else
             {
-                EstaRes.Items.Clear();
-                MuniRes.Items.Clear();
-                ListItem listItem = new ListItem();
-                listItem.Text = "No aplica";
-                listItem.Value = "-2";
+                ListItem listItem = new ListItem("No aplica", "-2");
                 EstaRes.Items.Add(listItem);
                 MuniRes.Items.Add(listItem);
-
             }
         }
 
         protected void EstRes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Obtén el IdEstado seleccionado
             string selectedIdEstado = EstaRes.SelectedValue;
-
-            // Limpia los elementos existentes en el control DropDownList de los municipios
             MuniRes.Items.Clear();
+            MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+            MuniRes.SelectedValue = "S";
 
-            // Llena el control DropDownList de los municipios basado en el IdEstado seleccionado
             CatalogosVictimas dropdownFiller = new CatalogosVictimas();
-            dropdownFiller.DropdownMunicipios(MuniRes, selectedIdEstado);
-
             int idPais = Convert.ToInt32(PaisRes.SelectedValue);
-            CatalogosVictimas dropdownFiller2 = new CatalogosVictimas();
+
             if (idPais == 141)
             {
-                MuniRes.Items.Clear(); // Cambia MuniNac a MuniRes aquí
-                dropdownFiller2.DropdownMunicipios(MuniRes, selectedIdEstado);
+                dropdownFiller.DropdownMunicipios(MuniRes, selectedIdEstado);
             }
             else
             {
-                MuniRes.Items.Clear();
-                ListItem listItem = new ListItem();
-                listItem.Text = "No aplica";
-                listItem.Value = "-2";
+                ListItem listItem = new ListItem("No aplica", "-2");
                 MuniRes.Items.Add(listItem);
             }
         }
@@ -1052,7 +1059,33 @@ namespace SIPOH
                 Domici, OtroMed, AceptaDatos, AsisMigra);
         }
 
-        protected void ImprCedula_Click(object sender, EventArgs e)
+        protected void OcultCedula_Click(object sender, EventArgs e)
+        {
+            GenCedula.Visible = false;
+            OcultCedula.Visible = false;
+            CedulaSinInsert.Style["display"] = "none";
+            panelPdfMostrar.Style["display"] = "none";
+        }
+
+        protected void CuenFeNac_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Comprueba si el valor seleccionado es '3' o '2'
+            if (CuenFeNac.SelectedValue == "3" || CuenFeNac.SelectedValue == "2")
+            {
+                // Deshabilita el input y establece el valor predeterminado
+                FeNacVic.Enabled = false;
+                // Usa "HH" para el formato de 24 horas
+                FeNacVic.Text = DateTime.ParseExact("09/09/1899", "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                // Habilita el input si se selecciona otro valor
+                FeNacVic.Enabled = true;
+            }
+
+        }
+
+        protected void ImprCedula_Click1(object sender, EventArgs e)
         {
             // Recuperar idPartes de la variable de sesión
             if (Session["idPartes"] != null)
@@ -1202,42 +1235,16 @@ namespace SIPOH
 
                 MostrarCedulaVictima insertador = new MostrarCedulaVictima();
                 insertador.MostrarCedula(
-                    idAsunto, idPartes, apPaterno, apMaterno, nombre, genero, tipoParte, tipoVictima, victima, rfc, curp, edad, feNacimiento, idContNacido, idPaisNacido,
+                    idAsunto, idPartes, apPaterno, apMaterno, nombre, genero, tipoParte, rfc, curp, edad, feNacimiento, idContNacido, idPaisNacido,
                     idEstadoNacido, idMunicipioNacido, idNacionalidad, idCondicion, idEstadoCivil,
-                    idGradoEstudios, idRelacImput, idLengExtra, idAlfabet, idiomaEspañol, idVulnerabilidad, idAsisMigra, idPueblo, hablaIndigena,
-                    idDialecto, idOcupacion, idProfesion, domOcupacion, discapacidad, idContiResidencia, idPaisResidencia,
+                    idGradoEstudios, idAlfabet, idiomaEspañol, idPueblo, hablaIndigena,
+                    idDialecto, idOcupacion, idProfesion, domOcupacion, discapacidad, idLengExtra, idRelacImput, idAsisMigra, idContiResidencia, idPaisResidencia,
                     idEstadoResidencia, idMunicipioResidencia, domResidencia, idDefensor, interprete,
                     ordenProteccion, feIndividualizacion, idDocIdentificador, numDocumento, privacidad,
                     telefono, correo, fax, domNotificacion, otroTipo, idUser, idsDiscapacidades, this.Page
-                  );
+                );
+
             }
         }
-
-        protected void OcultCedula_Click(object sender, EventArgs e)
-        {
-            GenCedula.Visible = false;
-            OcultCedula.Visible = false;
-            CedulaSinInsert.Style["display"] = "none";
-            panelPdfMostrar.Style["display"] = "none";
-        }
-
-        protected void CuenFeNac_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            // Comprueba si el valor seleccionado es '3' o '2'
-            if (CuenFeNac.SelectedValue == "3" || CuenFeNac.SelectedValue == "2")
-            {
-                // Deshabilita el input y establece el valor predeterminado
-                FeNacVic.Enabled = false;
-                // Usa "HH" para el formato de 24 horas
-                FeNacVic.Text = DateTime.ParseExact("09/09/1899", "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
-            }
-            else
-            {
-                // Habilita el input si se selecciona otro valor
-                FeNacVic.Enabled = true;
-            }
-
-        }
-
     }
 }

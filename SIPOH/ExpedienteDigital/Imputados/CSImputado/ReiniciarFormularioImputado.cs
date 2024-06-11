@@ -40,7 +40,7 @@ namespace SIPOH.ExpedienteDigital.Victimas.CSVictimas
             FeNacVic.Text = String.Empty;
             EdadVicti.Text = String.Empty;
             ContiNac.ClearSelection();
-            PaisNac.Items.Clear();
+            PaisNac.ClearSelection();
             EstNaci.ClearSelection();
             MuniNac.ClearSelection();
             NacVicti.ClearSelection();
@@ -60,7 +60,7 @@ namespace SIPOH.ExpedienteDigital.Victimas.CSVictimas
             TipoDisca.ClearSelection();
             DiscaEspe.ClearSelection();
             ContiRes.ClearSelection();
-            PaisRes.Items.Clear();
+            PaisRes.ClearSelection();
             EstaRes.ClearSelection();
             MuniRes.ClearSelection();
             DomicPersonVicti.Text = String.Empty;
