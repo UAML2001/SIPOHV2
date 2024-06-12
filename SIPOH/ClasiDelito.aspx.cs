@@ -59,6 +59,7 @@ namespace SIPOH
                 divFechaReclasificacion.Style["display"] = "none";
                 divCheckReclasificar.Style["display"] = "none";
                 reclasificacionSi.Checked = false;
+
             }
         }
         protected void checkNoIdentificado_CheckedChanged(object sender, EventArgs e)
@@ -66,10 +67,12 @@ namespace SIPOH
             if (checkNoIdentificado.Checked)
             {
                 FechaDelito.Text = "1899-09-09";
+                FechaDelito.Enabled = false; // Bloquear el campo de fecha
             }
             else
             {
                 FechaDelito.Text = "";
+                FechaDelito.Enabled = true; // Desbloquear el campo de fecha
             }
         }
         protected void reclasificacionSi_CheckedChanged(object sender, EventArgs e)
@@ -94,7 +97,6 @@ namespace SIPOH
             ddlModDelito.Items.Insert(0, new ListItem("-- SELECCIONAR --", "0"));
             divModalidad.Style["display"] = "none";
         }
-
         protected void CargarCatDelitos()
         {
             CargarCatalogos cargarCatalogos = new CargarCatalogos();
@@ -138,7 +140,7 @@ namespace SIPOH
             {
                 ddlModDelito.Visible = true;
                 divModalidad.Style["display"] = "block";
-               
+
                 ddlModDelito.SelectedIndex = 0;
             }
         }
@@ -243,6 +245,8 @@ namespace SIPOH
             divAgregarClasificacion.Style["display"] = "block";
             divCheckReclasificar.Style["display"] = "none";
             divFechaReclasificacion.Style["display"] = "none";
+            checkNoIdentificado.Checked = false;
+            FechaDelito.Enabled = true;
         }
         private DataTable InicializaTablaVaciaDelitos()
         {
@@ -293,6 +297,8 @@ namespace SIPOH
 
                 GridViewClasificacionDelitos.DataSource = dt;
                 GridViewClasificacionDelitos.DataBind();
+                checkNoIdentificado.Checked = false;
+                FechaDelito.Enabled = true;
                 MensajeExito("Delitos encontrados con éxito.");
 
                 // Guardar IdAsunto, de la primera fila, si hay cambios mdificar el storage y aqui
@@ -666,18 +672,33 @@ namespace SIPOH
             int? idDelito = null;
             DateTime? feCaptura = null;
 
+            // Validación previa para verificar si el delito ya existe en el GridView
+            if (accion == "AG")
+            {
+                string nombreDelito = ddDelitos.SelectedItem.Text;
+                if (DelitoExisteEnGrid(nombreDelito))
+                {
+                    MensajeError("No se puede insertar el delito porque ya existe en la clasificación.");
+                    return;
+                }
+            }
+
             try
             {
                 if (accion == "AG")
                 {
                     idDelito = Convert.ToInt32(ddDelitos.SelectedValue);
                     resultado = controller.ActualizarClasificacionDelito(accion, null, null, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, feDelito, domicilio, idDelDetalle, null, null, null, idAsunto, idDelito);
+                    checkNoIdentificado.Checked = false;
+                    FechaDelito.Enabled = true;
                 }
                 else if (accion == "U" && reclasificar == 'R')
                 {
                     feCaptura = DateTime.Now;  // Puedes ajustar cómo obtienes esta fecha
                     idDelito = Convert.ToInt32(ddDelitos.SelectedValue);
                     resultado = controller.ActualizarClasificacionDelito("U", idDelitoC, idDeliAsunto, consumacion, calificacion, concurso, clasificacion, fComision, fAccion, modalidad, elemComision, persecucion, idMunicipio, feDelito, domicilio, idDelDetalle, feReclasificacion, feCaptura, reclasificar, idAsunto, idDelito);
+                    checkNoIdentificado.Checked = false;
+                    FechaDelito.Enabled = true;
                 }
                 else // Maneja "U" e "I"
                 {
@@ -687,6 +708,8 @@ namespace SIPOH
                 if (resultado)
                 {
                     MensajeExito("La clasificación del delito ha sido procesada correctamente.");
+                    checkNoIdentificado.Checked = false;
+                    FechaDelito.Enabled = true;
                     rbNoIdentificado.Checked = false;
                     reclasificacionSi.Checked = false;
                     btnBuscarClasiDelito_Click(sender, e);
@@ -694,6 +717,17 @@ namespace SIPOH
                 else
                 {
                     MensajeError("Error al procesar la clasificación del delito.");
+                }
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Number == 50001 && ex.Message.Contains("Ya existe un registro con el IdDeliAsunto proporcionado"))
+                {
+                    MensajeError("No se puede insertar el delito porque ya existe en la clasificación.");
+                }
+                else
+                {
+                    MensajeError("Ocurrió un error inesperado al procesar la clasificación del delito: " + ex.Message);
                 }
             }
             catch (Exception ex)
@@ -727,12 +761,28 @@ namespace SIPOH
         }
 
 
+        private bool DelitoExisteEnGrid(string nombreDelito)
+        {
+            foreach (GridViewRow row in GridViewClasificacionDelitos.Rows)
+            {
+                if (row.RowType == DataControlRowType.DataRow)
+                {
+                    string delitoEnGrid = ((LinkButton)row.FindControl("LinkButtonSelect")).Text;
+                    if (delitoEnGrid.Equals(nombreDelito, StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
 
 
         //FUNCION DE BORRAR
         protected void btnModalBorrar_Click(object sender, EventArgs e)
         {
-             ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "abrirModal", "abrirModalConfirmar();", true);
+            ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "abrirModal", "abrirModalConfirmar();", true);
         }
         protected void btnBorrarClasiDelito_Click(object sender, EventArgs e)
         {
@@ -759,6 +809,8 @@ namespace SIPOH
                     {
                         // Mostrar mensaje de éxito
                         MensajeExito("Se eliminó la clasificación del delito exitosamente");
+                        checkNoIdentificado.Checked = false;
+                        FechaDelito.Enabled = true;
                         // Refrescar el GridView después de la eliminación
                         btnBuscarClasiDelito_Click(sender, e);
                     }

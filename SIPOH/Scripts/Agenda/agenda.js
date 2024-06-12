@@ -1,32 +1,19 @@
-﻿$(function () {
-
-    /* inicializar los eventos externos */
+﻿$(document).ready(function () {
     function ini_events(ele) {
         ele.each(function () {
-            // crear un Objeto Evento
             var eventObject = {
-                title: $.trim($(this).text()) // usar el texto del elemento como título del evento
-            }
-
-            // almacenar el Objeto Evento en el elemento DOM para poder acceder a él más tarde
-            $(this).data('eventObject', eventObject)
-
-            // hacer el evento arrastrable usando jQuery UI
+                title: $.trim($(this).text())
+            };
+            $(this).data('eventObject', eventObject);
             $(this).draggable({
                 zIndex: 1070,
-                revert: true, // hará que el evento vuelva a su
-                revertDuration: 0  // posición original después de arrastrar
-            })
-        })
+                revert: true,
+                revertDuration: 0
+            });
+        });
     }
-   
-    ini_events($('#external-events div.external-event'))
 
-    /* inicializar el calendario */
-    var date = new Date()
-    var d = date.getDate(),
-        m = date.getMonth(),
-        y = date.getFullYear()
+    ini_events($('#external-events div.external-event'));
 
     var Calendar = FullCalendar.Calendar;
     var Draggable = FullCalendar.Draggable;
@@ -35,7 +22,6 @@
     var checkbox = document.getElementById('drop-remove');
     var calendarEl = document.getElementById('calendar');
 
-    // inicializar los eventos externos
     new Draggable(containerEl, {
         itemSelector: '.external-event',
         eventData: function (eventEl) {
@@ -49,57 +35,101 @@
     });
 
     var calendar = new Calendar(calendarEl, {
+        initialView: 'timeGridDay',
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            right: 'timeGridDay'
         },
         themeSystem: 'bootstrap',
-        locale: 'es', // Establecer el idioma a español
-        buttonText: { // Traducir los botones
+        locale: 'es',
+        buttonText: {
             today: 'Hoy',
-            month: 'Mes',
-            week: 'Semana',
             day: 'Día'
         },
-        allDayText: 'Todo el día', // Traducir "all-day"
-        events: [
-            {
-                title: 'Audiencia 1023/2023',
-                start: new Date(y, m, 1),
-                backgroundColor: '#f56954', // rojo
-                borderColor: '#f56954', // rojo
-                allDay: true
-            },
-            {
-                title: 'Audiencia 0356/2023',
-                start: new Date(y, m, d - 5),
-                end: new Date(y, m, d - 2),
-                backgroundColor: '#f39c12', // amarillo
-                borderColor: '#f39c12' // amarillo
-            }
-         
-        ],
+        allDayText: 'Todo el día',
         editable: true,
-        droppable: true, // esto permite que cosas se arrastren al calendario
+        droppable: true,
         drop: function (info) {
-            // Verificar si la casilla "Remover después de asignar" está marcada
             if (checkbox.checked) {
-                // Si está marcada, eliminar el elemento de la lista de eventos externos
                 info.draggedEl.parentNode.removeChild(info.draggedEl);
             }
         },
         eventClick: function (info) {
-            if (confirm('¿Quieres eliminar esta audiencia?')) {
-                // Eliminar el evento del calendario
+            $('#modalAudiencias').modal('show');
+            $('#new-event').val(info.event.title);
+            $('#descripcionAgenda').val(info.event.extendedProps.description);
+            $('#ddlJuecesAgenda').val(info.event.extendedProps.judge);
+
+            $('#add-new-event').off('click').on('click', function () {
+                info.event.setProp('title', $('#new-event').val());
+                info.event.setExtendedProp('description', $('#descripcionAgenda').val());
+                info.event.setExtendedProp('judge', $('#ddlJuecesAgenda').val());
+                $('#modalAudiencias').modal('hide');
+            });
+
+            $('#delete-event').off('click').on('click', function () {
                 info.event.remove();
+                $('#modalAudiencias').modal('hide');
+            });
+        },
+        eventDidMount: function (info) {
+            if (info.view.type === 'timeGridDay') {
+                var tr = $(info.el).closest('tr');
+                if (!tr.find('.fc-name-cell').length) {
+                    for (var i = 1; i <= 9; i++) {
+                        tr.append('<td class="fc-name-cell">Sala ' + i + '</td>');
+                    }
+                }
             }
+        },
+        viewDidMount: function (view) {
+            addDummyRows(view);
         }
     });
 
-    calendar.render();
+    function addDummyRows(view) {
+        if (view.type === 'timeGridDay') {
+            var table = $(view.el).find('table');
+            if (!table.find('thead tr .fc-name-header').length) {
+                var headerRow = '<tr>';
+                headerRow += '<th></th>'; // Añadir una celda vacía para la primera columna
+                for (var i = 1; i <= 9; i++) {
+                    headerRow += '<th class="fc-name-header">Sala ' + i + '</th>';
+                }
+                headerRow += '</tr>';
+                table.find('thead').append(headerRow);
+            }
+            table.find('tbody tr').each(function () {
+                if (!$(this).find('.fc-name-cell').length) {
+                    var row = '';
+                    row += '<td></td>'; // Añadir una celda vacía para la primera columna
+                    for (var i = 1; i <= 9; i++) {
+                        row += '<td class="fc-name-cell"></td>';
+                    }
+                    $(this).append(row);
+                }
+            });
 
-    // Configurar el "basurero"
+            // Agregar filas dummy para mostrar las celdas incluso sin eventos
+            var tbody = table.find('tbody');
+            if (tbody.find('.fc-dummy-row').length === 0) {
+                for (var i = 0; i < 1; i++) {
+                    var tr = $('<tr class="fc-dummy-row"></tr>');
+                    tr.append('<td></td>'); // Añadir una celda vacía para la primera columna
+                    for (var j = 0; j < 9; j++) {
+                        tr.append('<td class="fc-name-cell">Sala ' + (j + 1) + '</td>');
+                    }
+                    tbody.append(tr);
+                }
+            }
+        }
+    }
+
+    // Inicializar el calendario y asegurar que las celdas se agreguen correctamente
+    calendar.render();
+    addDummyRows(calendar.view);
+
     $('#trash').droppable({
         accept: '.fc-event',
         drop: function (event, ui) {
@@ -111,41 +141,63 @@
         }
     });
 
-    /* AÑADIR EVENTOS */
-    var currColor = '#3c8dbc' // Rojo por defecto
-    // Botón del selector de color
+    var currColor = '#3c8dbc';
     $('#color-chooser > li > a').click(function (e) {
-        e.preventDefault()
-        // Guardar color
-        currColor = $(this).css('color')
-        // Añadir efecto de color al botón
+        e.preventDefault();
+        currColor = $(this).css('color');
         $('#add-new-event').css({
             'background-color': currColor,
             'border-color': currColor
-        })
-    })
+        });
+    });
     $('#add-new-event').click(function (e) {
-        e.preventDefault()
-        // Obtener valor y asegurarse de que no es nulo
-        var val = $('#new-event').val()
+        e.preventDefault();
+        var val = $('#new-event').val();
         if (val.length == 0) {
-            return
+            return;
         }
 
-        // Crear eventos
-        var event = $('<div />')
-            .css({
-                'background-color': currColor,
-                'border-color': currColor,
-                'color': '#fff'
-            }).addClass('external-event')
-            .text(val)
-        $('#external-events').prepend(event)
+        var newEvent = {
+            title: val,
+            start: new Date(),
+            backgroundColor: currColor,
+            borderColor: currColor,
+            textColor: '#fff'
+        };
 
-        // Añadir funcionalidad de arrastrar
-        ini_events(event)
+        calendar.addEvent(newEvent);
+        $('#new-event').val('');
+    });
 
-        // Eliminar evento del campo de texto
-        $('#new-event').val('')
-    })
+    $('#abrirModalAgenda').click(function () {
+        $('#modalAudiencias').modal('show');
+        $('#add-new-event').off('click').on('click', function () {
+            var title = $('#new-event').val();
+            var description = $('#descripcionAgenda').val();
+            var judge = $('#ddlJuecesAgenda').val();
+            var newEvent = {
+                title: title,
+                start: new Date(),
+                backgroundColor: currColor,
+                borderColor: currColor,
+                description: description,
+                judge: judge,
+                allDay: true
+            };
+            calendar.addEvent(newEvent);
+            $('#modalAudiencias').modal('hide');
+        });
+    });
+
+    // Asegurar que la vista se monte correctamente después de cualquier postback parcial
+    Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
+        calendar.changeView('timeGridDay');
+        addDummyRows(calendar.view);
+    });
+
+    // Asegurarse de que las celdas se inicialicen correctamente al cargar la página
+    window.onload = function () {
+        calendar.changeView('timeGridDay');
+        addDummyRows(calendar.view);
+    };
 });

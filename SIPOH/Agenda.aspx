@@ -6,42 +6,92 @@
             text-transform: uppercase;
         }
     </style>
-    <div class="modal fade" id="modalAudiencias" aria-hidden="true" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="modal fade" id="modalAudiencias" aria-hidden="true" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <i class="bi bi-calendar-check superpermisoGuardarCambios text-success text-center"></i>
+            <h1 class="modal-title fs-5 text-center" id="lblTituloConfirmacionModal">Agregar Audiencia</h1>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="lblTituloAgenda">Titulo de la audiencia</label>
+                    <input id="new-event" type="text" class="form-control form-control-sm">
                 </div>
-                <i class="bi bi-calendar-check superpermisoGuardarCambios text-success text-center"></i>
-                <h1 class="modal-title fs-5 text-center" id="lblTituloConfirmacionModal">Agregar Audiencia</h1>
-                <div class="modal-body">
-                   
-                      <div class="form-group">
-                        <label for="lblTituloAgenda">Titulo de la audiencia</label>
-                        <input type="text" class="form-control form-control-sm" id="TituloAudiencia">
-                      </div>
-                    
-                      <div class="form-group">
-                        <label for="lblJuez">Asignar Juez</label>
-                              <asp:DropDownList runat="server" ID="ddlJuecesAgenda" CssClass="form-select form-select-sm" AutoPostBack="true">
-                                <asp:ListItem Value="">-- SELECCIONAR --</asp:ListItem>
-                            </asp:DropDownList>
-                      </div>
-                     <div class="form-group">
-                        <label for="lblDescripcion">Descripcion de la Audiencia</label>
-                        <textarea class="form-control" id="descripcionAgenda" rows="3"></textarea>
-                      </div>
+                <div class="form-group">
+                    <label for="lblJuez">Asignar Juez</label>
+                    <asp:DropDownList runat="server" ID="ddlJuecesAgenda" CssClass="form-select form-select-sm" AutoPostBack="true">
+                        <asp:ListItem Value="">-- SELECCIONAR --</asp:ListItem>
+                        <asp:ListItem Value="Carlos">Juez Carlos</asp:ListItem>
+                        <asp:ListItem Value="David">Juez David</asp:ListItem>
+                        <asp:ListItem Value="Brayan">Juez Brayan</asp:ListItem>
+                        <asp:ListItem Value="Sofia">Jueza Sofia</asp:ListItem>
+                        <asp:ListItem Value="Martina">Jueza Martina</asp:ListItem>
+                    </asp:DropDownList>
+                </div>
+                <div class="form-group">
+                    <label for="lblDescripcion">Descripcion de la Audiencia</label>
+                    <textarea class="form-control" id="descripcionAgenda" rows="3"></textarea>
+                </div>
+                <div class="row">
+                <div class="col-md-12">
+                    <div class="sticky-top mb-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title text-center">Audiencias</h4>
+                        </div>
+                        <div class="card-body">
+                            <div id="external-events">
+                                <div class="external-event bg-success">Audiencia 1103/2023</div>
+                                <div class="external-event bg-warning">Audiencia 2023/2023</div>
+                                <div class="external-event bg-info">Audiencia 1024/2023</div>
+                                <div class="external-event bg-primary">Audiencia 0024/2023</div>
+                                <div class="external-event bg-danger">Audiencia 1423/2023</div>
+                                <div class="checkbox">
+                                    <label for="drop-remove">
+                                        <input type="checkbox" id="drop-remove" checked>
+                                        Remover después de asignar
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <!-- Fin Lista Audiencia -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Juez a turnar</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                                    <ul class="fc-color-picker" id="color-chooser">
+                                        <li><a class="text-primary" href="#"><i class="fas fa-square"></i> Juez Carlos</a></li>
+                                        <li><a class="text-warning" href="#"><i class="fas fa-square"></i> Juez David</a></li>
+                                        <li><a class="text-success" href="#"><i class="fas fa-square"></i> Juez Brayan</a></li>
+                                        <li><a class="text-danger" href="#"><i class="fas fa-square"></i> Jueza Sofia</a></li>
+                                        <li><a class="text-muted" href="#"><i class="fas fa-square"></i> Jueza Martina</a></li>
+                                    </ul>
+                                </div>
+                                <div class="input-group">
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                     <button type="button" class="btn btn-danger" onclick="CerrarModalAudiencias()" data-bs-dismiss="modal">Cancelar</button>
-                     <asp:Button ID="btnBorrarClasiDelito" runat="server" Text="Agregar"
-                        CssClass="btn btn-success ml-2" />
-
-                </div>
+          
+            </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" onclick="CerrarModalAudiencias()" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" id="delete-event" class="btn btn-danger">Eliminar</button>
+                <button type="button" id="add-new-event" class="btn btn-success">Agregar</button>
             </div>
         </div>
-      </div>
+    </div>
+</div>
+
+
 
     <asp:ScriptManager ID="ScriptManagerAgenda" runat="server"></asp:ScriptManager>
     <!-- BASE MASTER -->
@@ -56,6 +106,20 @@
         <h1 style="margin-left: 5%" class="h5">Agenda de audiencias <i class="fas fa-angle-right"></i><span
             id="dataSplash" class="text-primary fw-bold"></span></h1>
     </div>
+        <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <button id="abrirModalAgenda" type="button" class="btn btn-success" onclick="abrirModalAudiencias()">Agregar Auiencia</button>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
     <div class="m-0">
         <div class="row">
             <div class="col-md-10 ml-auto col-xl-11 mr-auto">
@@ -71,73 +135,16 @@
                                             <br />
                                                 <section class="content">
                                                     <div class="container-fluid">
-                                                        <div class="row">
-                                                            <div class="col-md-3">
-                                                                <div class="sticky-top mb-3">
-                                                                    <!-- Lista Audiencias -->
-                                                              <div class="card">
-                                                                    <div class="card-header">
-                                                                        <h4 class="card-title text-center">Audiencias</h4>
-                                                                    </div>
-                                                                    <div class="card-body">
-                                                                        <div id="external-events">
-                                                                            <div class="external-event bg-success">Audiencia 1103/2023</div>
-                                                                            <div class="external-event bg-warning">Audiencia 2023/2023</div>
-                                                                            <div class="external-event bg-info">Audiencia 1024/2023</div>
-                                                                            <div class="external-event bg-primary">Audiencia 0024/2023</div>
-                                                                            <div class="external-event bg-danger">Audiencia 1423/2023</div>
-                                                                            <div class="checkbox">
-                                                                                <label for="drop-remove">
-                                                                                    <input type="checkbox" id="drop-remove" checked>
-                                                                                    Remover después de asignar
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                    <!-- Fin Lista Audiencia -->
-                                                                    <div class="card">
-                                                                        <div class="card-header">
-                                                                            <h3 class="card-title">Juez a turnar</h3>
-                                                                        </div>
-                                                                        <div class="card-body">
-                                                                            <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                                                                                <ul class="fc-color-picker" id="color-chooser">
-                                                                                    <li><a class="text-primary" href="#"><i class="fas fa-square"></i> Juez Carlos</a></li>
-                                                                                    <li><a class="text-warning" href="#"><i class="fas fa-square"></i> Juez David</a></li>
-                                                                                    <li><a class="text-success" href="#"><i class="fas fa-square"></i> Juez Brayan</a></li>
-                                                                                    <li><a class="text-danger" href="#"><i class="fas fa-square"></i> Jueza Sofia</a></li>
-                                                                                    <li><a class="text-muted" href="#"><i class="fas fa-square"></i> Jueza Martina</a></li>
-                                                                                </ul>
-                                                                            </div>
-                                                                            <div class="input-group">
-                                                                                <input id="new-event" type="text" class="form-control" placeholder="Audiencia">
-
-                                                                                <div class="input-group-append">
-                                                                                    <button id="add-new-event" type="button" class="btn btn-success">➕</button>
-                                                                                </div>
-                                                                                <p></p>
-                                                                                <div class="input-group-append">
-                                                                                    <button id="abrirModalAgenda" type="button" class="btn btn-success" onclick="abrirModalAudiencias()">Agregar Auiencia</button>
-                                                                                </div>
-
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                         <!-- INICIO ROW -->
+                                                        <div class="col-md-12">
+                                                            <div class="card card-primary">
+                                                                <div class="card-body p-0">
+                                                                    <!-- THE CALENDAR -->
+                                                                    <div id="calendar"></div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-9">
-                                                                <div class="card card-primary">
-                                                                    <div class="card-body p-0">
-                                                                        <!-- THE CALENDAR -->
-                                                                        <div id="calendar"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- /.card -->
-                                                            </div>
-                                                            <!-- /.col -->
                                                         </div>
-                                                        <!-- /.row -->
+                                                        <!-- FIN ROW -->
                                                     </div>
                                                 </section>
                                             </div>
@@ -170,6 +177,7 @@
     <script src="Scripts/Agenda/agenda.js"></script>
     <script src="Scripts/Agenda/index.global.js"></script>
     <script src="Scripts/Agenda/index.global.min.js"></script>
+
 
     <script>
         function abrirModalAudiencias() {
