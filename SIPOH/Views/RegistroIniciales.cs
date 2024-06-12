@@ -235,33 +235,53 @@ namespace SIPOH
 
 
 
-        public static bool UpdateBuzonSalida(int IdSolicitudBuzon, DateTime CapturaActual, string Estatus)
+        public static bool UpdateBuzonSalida(int IdSolicitudBuzon, DateTime CapturaActual, string Estatus, string TipoDocumento)
         {
             using (SqlConnection connection = new ConexionBD().Connection)
             {
+                SqlTransaction transaction = null;
                 try
                 {
                     connection.Open();
-                    using (SqlCommand command = new SqlCommand("UPDATE P_BuzonSolicitud SET IdAsunto = @IdAsunto, FeAceptacion =  @FeAceptacion , Estatus = @Estatus WHERE IdSolicitudBuzon = @IdSolicitudBuzon", connection))
+                    transaction = connection.BeginTransaction();
+
+                    using (SqlCommand command = new SqlCommand("UPDATE P_BuzonSolicitud SET IdAsunto = @IdAsunto, FeAceptacion = @FeAceptacion, Estatus = @Estatus WHERE IdSolicitudBuzon = @IdSolicitudBuzon", connection, transaction))
                     {
                         command.Parameters.AddWithValue("@IdSolicitudBuzon", IdSolicitudBuzon);
                         command.Parameters.AddWithValue("@FeAceptacion", CapturaActual);
                         command.Parameters.AddWithValue("@Estatus", Estatus);
                         command.Parameters.AddWithValue("@IdAsunto", Session["UserId"]);
                         command.ExecuteNonQuery();
-
                     }
+
+                    using (SqlCommand command2 = new SqlCommand("INSERT INTO P_Documentos(IdAsunto, IdPosterior, FechaDigitaliza, IdUsuarios, URL, NombrePDF, Descripcion) VALUES(@IdAsunto, @IdPosterior, @FechaDigitaliza, @IdUsuarios, @URL, @NombrePDF, @Descripcion);", connection, transaction))
+                    {
+                        command2.Parameters.Add("@IdAsunto", SqlDbType.Int).Value = Session["UserId"];
+                        command2.Parameters.Add("@IdPosterior", SqlDbType.Int).Value = 0;
+                        command2.Parameters.Add("@FechaDigitaliza", SqlDbType.DateTime).Value = CapturaActual;
+                        command2.Parameters.Add("@IdUsuarios", SqlDbType.Int).Value = Session["IdUsuario"];
+                        command2.Parameters.Add("@URL", SqlDbType.NVarChar).Value = BuzonControl.urlBuzonDigital;
+                        command2.Parameters.Add("@NombrePDF", SqlDbType.NVarChar).Value = BuzonControl.documentoBuzonDigital;
+                        command2.Parameters.Add("@Descripcion", SqlDbType.NVarChar).Value = TipoDocumento.ToUpper();
+                        command2.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Surgio un problema en actualizar BuzonSalida: " + ex.Message);
+                    if (transaction != null)
+                    {
+                        transaction.Rollback();
+                    }
+                    throw new Exception("Surgió un problema en actualizar BuzonSalida: " + ex.Message);
                 }
-
             }
             return true;
         }
-        
-            public static int Equipo;
+
+
+        public static int Equipo;
         
         public static bool SendRegistroIniciales(DateTime FeCaptura, int Actividad, DateTime FeIngresoAsunto, string TipoAsunto, string Digitalizado, string IdAudiencia, string Observaciones, string QuienIngresa, string MP, string Prioridad, string Fojas, string TipoRadicacion, string NUC, List<CatDelito> listaIdDelito, List<Victima> usuarios, List<Imputado> culpados, List<Anexos> Anexos)
         {

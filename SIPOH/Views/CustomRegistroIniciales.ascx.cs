@@ -668,7 +668,8 @@ namespace SIPOH.Views
         {
             try
             {
-                string tipoAsunto = inputTipoDocumento.SelectedValue;
+                string tipoAsunto = inputTipoDocumento.SelectedValue;    
+                string tipoAsuntoText= inputTipoDocumento.SelectedItem.Text;
                 string tipoRadicacion = inpuTipoRadicacion.SelectedValue;
                 string observaciones = inputObservaciones.Text;
                 string quienIngresa = inputQuienIngresa.SelectedValue;
@@ -699,8 +700,7 @@ namespace SIPOH.Views
                     Digitalizado = "S";
                     int idSolicitudBuzon = int.Parse(Session["IdSolicitudBuzon"].ToString());
                     transaccionExitosa = RegistroIniciales.SendRegistroIniciales(fechaActual, actividad, DateTime.Parse(inputFechaRecepcion.Text), tipoAsunto, Digitalizado, inputTipoSolicitud.SelectedValue, observaciones, quienIngresa, mp, prioridad, inputNumeroFojas.Text, tipoRadicacion, inputNUC.Text, listaDeDelitos, listaDeUsuarios, listaDeImputados, listaDeAnexos);
-                    bool result = RegistroIniciales.UpdateBuzonSalida(idSolicitudBuzon, fechaActual, estatus);
-
+                    bool result = RegistroIniciales.UpdateBuzonSalida(idSolicitudBuzon, fechaActual, estatus, tipoAsuntoText);
                     mensaje = result ? "Se actualizó correctamente la solicitud de buzón." : "Problemas al actualizar el buzón de salida.";
                     scriptToast = result ? $"toastInfo('{mensaje}');" : $"toastError('{mensaje}');";
                 }

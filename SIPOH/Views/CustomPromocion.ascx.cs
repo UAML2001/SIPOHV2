@@ -7,6 +7,7 @@ using System.Linq;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Web;
+using System.Web.Services.Description;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using static SIPOH.Views.CustomRegistroIniciales;
@@ -67,6 +68,9 @@ namespace SIPOH.Views
                 Session.Remove("AutoridadResponsablePromocion");
                 Session.Remove("EstatusPromocion");
                 Session.Remove("EtapaPromocion");
+                
+                Session.Remove("IdAsuntoPromocion");
+                
             }
         }
         protected void DrpLstObtenerTipoDocumento(object sender, EventArgs e)
@@ -95,13 +99,23 @@ namespace SIPOH.Views
             itemNombre.Text = tipoDocumento;
             promocionPanel.Update();
         }
+        
+       
+         
+
         protected void btnEnviarPromocion(object sender, EventArgs e)
         {
             try
             {
-                string promovente = inputPromovente.Text;
-                DateTime fechaCaptura = DateTime.Parse(inputFechaRecepcion.Text);
+                int IdSolicitudBuzon;
+                string mensajes;
+                int Actividad;
+                string scriptToast;
                 string Digitalizado;
+                string TipoPromocion = itemNombre.Text;
+                string promovente = inputPromovente.Text;
+                bool ResultadoSolicitudPromocion;
+                DateTime fechaCaptura = DateTime.Parse(inputFechaRecepcion.Text);
 
                 if (Session["IdAsuntoPromocion"] == null || string.IsNullOrEmpty(Session["IdAsuntoPromocion"].ToString()))
                 {
@@ -110,6 +124,7 @@ namespace SIPOH.Views
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastError", script, true);
                     return;
                 }
+
                 if (string.IsNullOrEmpty(promovente) || fechaCaptura == DateTime.MinValue)
                 {
                     List<string> camposFaltantes = new List<string>();
@@ -129,70 +144,84 @@ namespace SIPOH.Views
                     ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastError", script, true);
                     return;
                 }
-                DateTime fechaActual = DateTime.Now;
-                
 
-                int Actividad;
+                DateTime fechaActual = DateTime.Now;
+
+                List<DataPromocion> listaPromocion = Session["promocion"] as List<DataPromocion> ?? new List<DataPromocion>();
+                List<AnexosPromocion> listaAnexos = Session["Anexos"] as List<AnexosPromocion> ?? new List<AnexosPromocion>();
+                Session["RegistroPromocion"] = listaPromocion;
+
                 if (Session["IdSolicitudBuzon"] != null)
                 {
-                    string Estatus = "A";
+                    string estado = "A";
                     Actividad = 5;
                     Digitalizado = "S";
-                    int IdSolicitudBuzon = int.Parse(Session["IdSolicitudBuzon"].ToString());
-                    bool Result = RegistroPromociones.UpdateBuzonSalidaPromocion(IdSolicitudBuzon, fechaActual, Estatus);
-                    if (Result)
+                    DataPromocion registro = new DataPromocion
                     {
-                        string mensajeTransaccion = "Se actualizo correctamente solicitud de buzon.";
-                        string scriptToastTransaccion = $"toastInfo('{mensajeTransaccion}');";
-                        ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToastTransaccion, true);
-                    }
-                    else
-                    {
-                        string mensaje = "Problemas con actualizar buzon salida";
-                        string script = $"toastError('{mensaje}');";
-                        ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "mostrarToastScript", script, true);
-                        return;
-                        
-                    }
+                        TipoDocumento = DrpLstTipoDocumento.SelectedValue,
+                        Promovente = promovente,
+                        Digitalizado = Digitalizado,
+                        TipoPromocion = "P",
+                        FechaIngreso = fechaActual,
+                        FechaRecepcion = fechaCaptura,
+                        Tipo = "P",
+                        IdActividad = Actividad,
+                        FeAsunto = fechaCaptura,
+                        EstadoPromocion = "A"
+                    };
+                    listaPromocion.Add(registro);
+                    IdSolicitudBuzon = int.Parse(Session["IdSolicitudBuzon"].ToString());
+                    ResultadoSolicitudPromocion = RegistroPromociones.SendRegistroPromocion(listaPromocion, listaAnexos);
+                    bool Result = RegistroPromociones.UpdateBuzonSalidaPromocion(IdSolicitudBuzon, fechaActual, "A", TipoPromocion);
+                    mensajes = Result ? "Se actualizó correctamente la solicitud de buzón." : "Problemas al actualizar el buzón de salida."; 
+                    scriptToast = Result ? $"toastInfo('{mensajes}');" : $"toastError('{mensajes}');";
+
                 }
                 else
                 {
                     Actividad = 1;
                     Digitalizado = "N";
+                    DataPromocion registro = new DataPromocion
+                    {
+                        TipoDocumento = DrpLstTipoDocumento.SelectedValue,
+                        Promovente = promovente,
+                        Digitalizado = Digitalizado,
+                        TipoPromocion = "P",
+                        FechaIngreso = fechaActual,
+                        FechaRecepcion = fechaCaptura,
+                        Tipo = "P",
+                        IdActividad = Actividad,
+                        FeAsunto = fechaCaptura,
+                        EstadoPromocion = "A"
+                    };
+                    listaPromocion.Add(registro);
+                    ResultadoSolicitudPromocion = RegistroPromociones.SendRegistroPromocion(listaPromocion, listaAnexos);
+                    mensajes = ResultadoSolicitudPromocion ? "Envío exitoso. Tu registro se ha hecho correctamente." : "¡Ocurrió un error en la transacción! El folio ha sido asignado, consulta a soporte."; 
+                    scriptToast = ResultadoSolicitudPromocion ? $"toastInfo('{mensajes}');" : $"toastError('{mensajes}');";
+                }
+                if (ResultadoSolicitudPromocion)
+                {
+                    string mensajeSuccess = "Tu peticion fue correcta!, tu registro se ha hecho correctamente.";
+                     scriptToast = $"toastInfo('{mensajeSuccess}');";
+                    ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
+                
+
+                    // CODIGOTICKET
+                    string ticket = CrearTicketSELLO();
+                    TicketDiv.Style["display"] = "block";
+                    ocultarBtnModal.Style["display"] = "none !important";
+                    TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
+                    ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
+                    tituloSello.Style["display"] = "block";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "mostrarTituloSello", "mostrarTituloSello();", true);
+                   
+
+                    Session.Remove("IdSolicitudBuzon");
+                    
                 }
 
-                DataPromocion registro = new DataPromocion
-                {
-                    TipoDocumento = DrpLstTipoDocumento.SelectedValue,
-                    Promovente = promovente,
-                    Digitalizado = Digitalizado,
-                    TipoPromocion = "P",
-                    FechaIngreso = fechaActual,
-                    FechaRecepcion = fechaCaptura,
-                    Tipo = "P",
-                    IdActividad = Actividad,
-                    FeAsunto = fechaCaptura,
-                    EstadoPromocion = "A"
-                };
-                List<DataPromocion> listaPromocion = Session["promocion"] as List<DataPromocion> ?? new List<DataPromocion>();
-                listaPromocion.Add(registro);
-                Session["RegistroPromocion"] = listaPromocion;
-                //verificar si el metodo funciona 
-                List<AnexosPromocion> listaAnexos = Session["Anexos"] as List<AnexosPromocion> ?? new List<AnexosPromocion>();
-                RegistroPromociones.SendRegistroPromocion(listaPromocion, listaAnexos);
-                string mensajeSuccess = "Tu peticion fue correcta!, tu registro se ha hecho correctamente. ";
 
-                string scriptToast = $"toastInfo('{mensajeSuccess}');";
-                ScriptManager.RegisterStartupScript(this.Page, this.Page.GetType(), "toastInfoScript", scriptToast, true);
-                // CODIGOTICKET
-                string ticket = CrearTicketSELLO();
-                TicketDiv.Style["display"] = "block";
-                ocultarBtnModal.Style["display"] = "none !important";
-                TicketDiv.InnerHtml = ticket.Replace(Environment.NewLine, "<br>");
-                ScriptManager.RegisterStartupScript(this, GetType(), "ImprimirScript", "imprimirTicket();", true);
-                tituloSello.Style["display"] = "block";
-                ScriptManager.RegisterStartupScript(this, GetType(), "mostrarTituloSello", "mostrarTituloSello();", true);
-                Session.Remove("IdSolicitudBuzon");
+
             }
             catch (Exception ex)
             {
@@ -221,9 +250,10 @@ namespace SIPOH.Views
             Session.Remove("AutoridadResponsablePromocion");
             Session.Remove("EstatusPromocion");
             Session.Remove("EtapaPromocion");
+            Session.Remove("IdSolicitudBuzon");
             promocionPanel.Update();
-
         }
+
 
 
         private List<string> DividirTextoEnLineas(string texto, int maxCaracteresPorLinea)
@@ -320,6 +350,7 @@ namespace SIPOH.Views
             }
             ticket.AppendLine($"FECHA RECEPCIÒN:{GetFechaYHora()}");
             ticket.AppendLine($"NUC:{NUC.ToUpper()}");
+            ticket.AppendLine($"FOLIO: {Session["IdAsuntoPromocion"]}");
 
             int maxLength = 36;
             int maxLengthT = 30;

@@ -90,66 +90,82 @@ namespace SIPOH
                     return true;
             }
         }
-        public static bool UpdateBuzonSalidaPromocion(int IdSolicitudBuzon, DateTime CapturaActual, string Estatus)
+
+        public static int Equipo;
+        public static int idPosterior;
+
+        public static bool UpdateBuzonSalidaPromocion(int IdSolicitudBuzon, DateTime CapturaActual, string Estatus, string TipoDocumento)
         {
-            using (SqlConnection connection = new ConexionBD().Connection)
-            {
-                try
+                using (SqlConnection connection = new ConexionBD().Connection)
                 {
+                SqlTransaction transaction = null;
+                    try
+                    {
                     connection.Open();
-                    using (SqlCommand command = new SqlCommand("UPDATE P_BuzonSolicitud SET  FeAceptacion =  @FeAceptacion , Estatus = @Estatus WHERE IdSolicitudBuzon = @IdSolicitudBuzon", connection))
+                    transaction = connection.BeginTransaction();
+                    using (SqlCommand command = new SqlCommand("UPDATE P_BuzonSolicitud SET IdAsunto = @IdAsunto, FeAceptacion = @FeAceptacion, Estatus = @Estatus WHERE IdSolicitudBuzon = @IdSolicitudBuzon", connection, transaction))
                     {
                         command.Parameters.AddWithValue("@IdSolicitudBuzon", IdSolicitudBuzon);
                         command.Parameters.AddWithValue("@FeAceptacion", CapturaActual);
-                        command.Parameters.AddWithValue("@Estatus", Estatus);                        
+                        command.Parameters.AddWithValue("@Estatus", Estatus);
+                        command.Parameters.AddWithValue("@IdAsunto", Session["IdAsuntoPromocion"]);
                         command.ExecuteNonQuery();
-
                     }
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception("Surgio un problema en actualizar BuzonSalida: " + ex.Message);
-                }
 
+
+                    using (SqlCommand command2 = new SqlCommand("INSERT INTO P_Documentos(IdAsunto, IdPosterior, FechaDigitaliza, IdUsuarios, URL, NombrePDF, Descripcion) VALUES(@IdAsunto, @IdPosterior, @FechaDigitaliza, @IdUsuarios, @URL, @NombrePDF, @Descripcion);", connection, transaction))
+                    {
+                        command2.Parameters.Add("@IdAsunto", SqlDbType.Int).Value = Session["IdAsuntoPromocion"];
+                        command2.Parameters.Add("@IdPosterior", SqlDbType.Int).Value = idPosterior;
+                        command2.Parameters.Add("@FechaDigitaliza", SqlDbType.DateTime).Value = CapturaActual;
+                        command2.Parameters.Add("@IdUsuarios", SqlDbType.Int).Value = Session["IdUsuario"];
+                        command2.Parameters.Add("@URL", SqlDbType.NVarChar).Value = BuzonControl.urlBuzonDigital;
+                        command2.Parameters.Add("@NombrePDF", SqlDbType.NVarChar).Value = BuzonControl.documentoBuzonDigital;
+                        command2.Parameters.Add("@Descripcion", SqlDbType.NVarChar).Value = TipoDocumento.ToUpper();
+                        command2.ExecuteNonQuery();
+                    }
+                    transaction.Commit();
+                }
+            catch (Exception ex)
+            {
+                    if (transaction != null)
+                    {
+                        transaction.Rollback();
+                    }
+                    throw new Exception("Surgió un problema en actualizar BuzonSalida: " + ex.Message);
+                }
             }
             return true;
         }
-        public static int Equipo;
-        public static bool SendRegistroPromocion( List<DataPromocion> InfoPromocion, List<AnexosPromocion> AnexosP)
+
+
+        public static bool SendRegistroPromocion(List<DataPromocion> InfoPromocion, List<AnexosPromocion> AnexosP)
         {
-            using(SqlConnection connection = new ConexionBD().Connection)
+            using (SqlConnection connection = new ConexionBD().Connection)
             {
                 connection.Open();
                 SqlTransaction transaction = connection.BeginTransaction();
                 try
                 {
-                    using (SqlConnection Connection = new ConexionBD().Connection)
+                    using (SqlCommand command = new SqlCommand("AC_AsignacionCargaTrabajo", connection, transaction))
                     {
-                        using (SqlCommand command = new SqlCommand("AC_AsignacionCargaTrabajo", connection, transaction))
+                        command.Parameters.Add("@IdJuzgado", SqlDbType.Int).Value = Session["IDJuzgado"].ToString();
+                        command.Parameters.Add("@TipoAsunto", SqlDbType.VarChar).Value = InfoPromocion.Select(b => b.TipoDocumento).FirstOrDefault().ToUpper();
+                        command.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            command.Parameters.Add("@IdJuzgado", SqlDbType.Int).Value = Session["IDJuzgado"].ToString();
-                            command.Parameters.Add("@TipoAsunto", SqlDbType.VarChar).Value = InfoPromocion.Select(b => b.TipoDocumento).FirstOrDefault().ToUpper();
-                            //command.Parameters.Add("@TipoAsunto", SqlDbType.VarChar).Value = "C";
-                            command.CommandType = CommandType.StoredProcedure;
-                            using (SqlDataReader reader = command.ExecuteReader())
+                            while (reader.Read())
                             {
-                                while (reader.Read())
-                                {
-                                    Equipo = int.Parse(reader["Equipo"].ToString());
-                                    Debug.WriteLine("EQUIPO: " + Equipo);
-                                }
+                                Equipo = int.Parse(reader["Equipo"].ToString());
+                                Debug.WriteLine("EQUIPO: " + Equipo);
                             }
                         }
                     }
-                    using (SqlCommand command = new SqlCommand())
-                    {
-                        command.Connection = connection;
-                        command.Transaction = transaction;
 
-                        command.CommandText = "AC_InsertarPromocion";
+                    using (SqlCommand command = new SqlCommand("AC_InsertarPromocion", connection, transaction))
+                    {
                         command.CommandType = CommandType.StoredProcedure;
 
-                        //modificacion de variables (BACKEND) app
                         command.Parameters.AddWithValue("@IdAsunto", Session["IdAsuntoPromocion"]);
                         command.Parameters.AddWithValue("@Promovente", InfoPromocion.Select(b => b.Promovente).FirstOrDefault().ToUpper());
                         command.Parameters.AddWithValue("@Digitalizado", InfoPromocion.Select(b => b.Digitalizado).FirstOrDefault().ToUpper());
@@ -157,51 +173,53 @@ namespace SIPOH
                         command.Parameters.AddWithValue("@FechaIngreso", InfoPromocion.Select(b => b.FechaIngreso).FirstOrDefault());
                         command.Parameters.AddWithValue("@TipoPromocion", InfoPromocion.Select(b => b.TipoPromocion).FirstOrDefault().ToUpper());
                         command.Parameters.AddWithValue("@FechaRecepcion", InfoPromocion.Select(b => b.FechaRecepcion).FirstOrDefault());
-                        command.Parameters.AddWithValue("@Tipo",InfoPromocion.Select(b => b.Tipo).FirstOrDefault().ToUpper());
+                        command.Parameters.AddWithValue("@Tipo", InfoPromocion.Select(b => b.Tipo).FirstOrDefault().ToUpper());
                         command.Parameters.AddWithValue("@IdActividad", InfoPromocion.Select(b => b.IdActividad).FirstOrDefault());
                         command.Parameters.AddWithValue("@IdPerfil", Session["IdPerfil"]);
-                        command.Parameters.AddWithValue("@FeAsunto", InfoPromocion.Select(b => b.FeAsunto).FirstOrDefault());                        
+                        command.Parameters.AddWithValue("@FeAsunto", InfoPromocion.Select(b => b.FeAsunto).FirstOrDefault());
                         command.Parameters.AddWithValue("@Estado", InfoPromocion.Select(b => b.EstadoPromocion).FirstOrDefault().ToUpper());
-                        //asignar carga de trabjo 
                         command.Parameters.AddWithValue("@Equipo", SqlDbType.Int).Value = Equipo;
-	
+
                         SqlParameter idPosteriorParam = new SqlParameter("@IDPosterior", SqlDbType.Int);
                         idPosteriorParam.Direction = ParameterDirection.Output;
                         command.Parameters.Add(idPosteriorParam);
                         command.ExecuteNonQuery();
-                        int idPosterior = Convert.ToInt32(idPosteriorParam.Value);
+                        idPosterior = Convert.ToInt32(idPosteriorParam.Value);
 
-                        Debug.WriteLine("Tarea 1 completada ✔️");
-                        command.CommandText = "AC_InsertarAnexo";
-                        foreach(var anexo in AnexosP)
+                        // Guardar idPosterior en la sesión
+                        Session["IdPosterior"] = idPosterior;
+                    }
+
+                    foreach (var anexo in AnexosP)
+                    {
+                        using (SqlCommand command = new SqlCommand("AC_InsertarAnexo", connection, transaction))
                         {
-                           command.Parameters.Clear();
-                           command.Parameters.AddWithValue("@IdAsunto", Session["IdAsuntoPromocion"]);
-                           SqlParameter paramsAnexoPromocion = command.Parameters.AddWithValue("@IdPosterior", idPosterior);
-                           command.Parameters.AddWithValue("@Descripcion", anexo.DescripcionAnexo.ToUpper());
-                           command.Parameters.AddWithValue("@Cantidad", anexo.CantidadAnexo);
+                            command.CommandType = CommandType.StoredProcedure;
+
+                            command.Parameters.AddWithValue("@IdAsunto", Session["IdAsuntoPromocion"]);
+                            command.Parameters.AddWithValue("@IdPosterior", idPosterior);
+                            command.Parameters.AddWithValue("@Descripcion", anexo.DescripcionAnexo.ToUpper());
+                            command.Parameters.AddWithValue("@Cantidad", anexo.CantidadAnexo);
                             command.Parameters.AddWithValue("@Digitalizado", anexo.DigitalizadoAnexo.ToUpper());
-                           command.ExecuteNonQuery();
+                            command.ExecuteNonQuery();
                         }
-                        Debug.WriteLine("Tarea 2 completada ✔️");
-
-
-
                     }
 
                     transaction.Commit();
-                    Debug.WriteLine("Registro de promocion fue correcta!");
+                    Debug.WriteLine("Registro de promoción fue correcta!");
                     return true;
-
-                }catch (Exception ex)
-                {
-                    Debug.WriteLine("Error SQL: " +  ex);
-                    
                 }
-
-                return true;
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Debug.WriteLine("Error SQL: " + ex.Message);
+                    throw new Exception("Surgió un problema en registrar la promoción: " + ex.Message);
+                }
             }
         }
+
+
+
         public static List<string> GetCatAnexo()
         {
             List<string> CatAnexos = new List<string>();
