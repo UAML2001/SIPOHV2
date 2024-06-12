@@ -10,6 +10,9 @@ using System.Web.Mvc;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Configuration;
+using System.Diagnostics;
+using System.Security.Policy;
+using System.Reflection;
 
 namespace SIPOH
 {
@@ -126,14 +129,16 @@ namespace SIPOH
             string inputUsuario = Session["BusquedaInput"] as string;
             if (!string.IsNullOrEmpty(tipoBusqueda) && !string.IsNullOrEmpty(inputUsuario))
             {
-                CargarDatosGridView(tipoBusqueda, inputUsuario);
+                CargarDatosGridView(tipoBusqueda, inputUsuario);                
             }
             else
             {
                 CargarDatosIniciales();
             }
         }
-
+        //PUBLIC VARIABLES: 
+        public static string urlBuzonDigital;
+        public static string documentoBuzonDigital;
 
         //FUNCION VER EL DOCUMENTO POR RUTA
         protected void gridBuzonControl_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -144,7 +149,7 @@ namespace SIPOH
                 GridViewRow selectedRow = gridBuzonControl.Rows[index];
                 string rutaDoc = gridBuzonControl.DataKeys[index].Values["RutaDoc"].ToString();
                 string baseUrl = "http://nas.pjhidalgo.gob.mx/SIPOH/Solicitudes/";
-                string urlCompleta = baseUrl + rutaDoc;
+                string urlCompleta = baseUrl + rutaDoc;         
                 string script = $"window.open('{urlCompleta}');";
                 ScriptManager.RegisterStartupScript(this, GetType(), "AbrirDocumento", script, true);
             }
@@ -192,10 +197,18 @@ namespace SIPOH
             //
             else if (e.CommandName == "Guardar")
             {
-                int rowIndex = Convert.ToInt32(e.CommandArgument);
+                int rowIndex = Convert.ToInt32(e.CommandArgument);                                
+                string rutaDoc = gridBuzonControl.DataKeys[rowIndex].Values["RutaDoc"].ToString();                
+                 //FORMATO DE DOCUMENTO               
+                string[] documentoParts = rutaDoc.Split('/');
+                string documentoPath = documentoParts[0] +"/"+ documentoParts[1]; // "documento"                                                                                                                                 
+                documentoBuzonDigital = documentoParts[2]; // "S_31_F.pdf"
+                urlBuzonDigital = "/" + documentoPath + "/";
+                
                 long idSolicitudBuzon = Convert.ToInt64(gridBuzonControl.DataKeys[rowIndex].Values["IdSolicitudBuzon"]);
-                string tipoAsunto = gridBuzonControl.Rows[rowIndex].Cells[3].Text; // Asegúrate de reemplazar IndiceDeTuColumnaTipoAsunto por el índice real de tu columna TipoAsunto
+                string tipoAsunto = gridBuzonControl.Rows[rowIndex].Cells[3].Text; 
                 Session["IdSolicitudBuzon"] = idSolicitudBuzon;
+                
                 if (tipoAsunto == "INICIAL")
                 {
                     Response.Redirect("Consignaciones.aspx");
