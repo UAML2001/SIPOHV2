@@ -249,13 +249,13 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.TextBox RFCVicti;
 
         /// <summary>
-        /// Control CuenFeNac.
+        /// Control DescFeNac.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CuenFeNac;
+        protected global::System.Web.UI.WebControls.CheckBox DescFeNac;
 
         /// <summary>
         /// Control FeNacVic.
@@ -751,6 +751,15 @@ namespace SIPOH
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList IDVicti;
+
+        /// <summary>
+        /// Control NumID.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NumID;
 
         /// <summary>
         /// Control Domici.

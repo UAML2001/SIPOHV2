@@ -53,6 +53,7 @@ public class InformacionFormulario
     public string AsistMigratoria { get; set; }
     public string IdLengExtra { get; set; }
     public string IdRelacVicti { get; set; }
+    public string NumeroDocumento { get; set; }
 }
 
 public class LlenarFormularioTrasConsulta
@@ -157,6 +158,7 @@ public class LlenarFormularioTrasConsulta
                     info.Correo = reader["Correo"].ToString();
                     info.Fax = reader["Fax"].ToString();
                     info.IdDocIdentificador = reader["IdDocIdentificador"].ToString();
+                    info.NumeroDocumento = reader["NumDocumento"].ToString();
                     if (reader["FeIndividualización"] != DBNull.Value)
                     {
                         info.FeIndividualización = ((DateTime)reader["FeIndividualización"]).ToString("HH:mm");

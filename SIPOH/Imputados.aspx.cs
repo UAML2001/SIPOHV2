@@ -73,7 +73,6 @@ namespace SIPOH
                 dropdownFiller.DropdownReincidente(Reinci);
                 dropdownFiller.DropdownDetencion(TipoDeten);
                 dropdownFiller.DropdownOrdenJud(OrdenJudi);
-                dropdownFiller.DropdownPreguntas(CuenFeNac);
                 dropdownFiller.DropdownPreguntas(AsisMigra);
             }
         }
@@ -114,6 +113,7 @@ namespace SIPOH
                         { "Requiere Interprete", ReqInter.SelectedValue },
                         { "Relacion con el Imputado", RelacVic.SelectedValue },
                         { "Identificación", IDVicti.SelectedValue },
+                        { "Numero de Documento", NumID.Text },
                         { "Telefono de contacto", TelCont.Text },
                         { "Correo Electronico", EmailCont.Text },
                         { "Acepta Publicacion de Datos", AceptaDatos.SelectedValue }, 
@@ -231,7 +231,7 @@ namespace SIPOH
                     int ordenProteccion = 0; // Valor predeterminado
                     DateTime feIndividualizacion = DateTime.Parse(HoraIndivi.Text.ToUpper());
                     int idDocIdentificador = int.Parse(IDVicti.SelectedValue.ToUpper());
-                    string numDocumento = "752552"; // Valor predeterminado
+                    string numDocumento = NumID.Text.ToUpper();
                     string privacidad = AceptaDatos.SelectedValue.ToUpper();
                     string telefono = TelCont.Text.ToUpper();
                     string correo = EmailCont.Text.ToUpper();
@@ -305,6 +305,7 @@ namespace SIPOH
                         { "Requiere Interprete", ReqInter.SelectedValue },
                         { "Relacion con el Imputado", RelacVic.SelectedValue },
                         { "Identificación", IDVicti.SelectedValue },
+                        { "Numero de Documento", NumID.Text },
                         { "Telefono de contacto", TelCont.Text },
                         { "Correo Electronico", EmailCont.Text },
                         { "Acepta Publicacion de Datos", AceptaDatos.SelectedValue }, 
@@ -424,7 +425,7 @@ namespace SIPOH
             int ordenProteccion = 0;
             DateTime feIndividualizacion = DateTime.Parse(HoraIndivi.Text.ToUpper());
             int idDocIdentificador = int.Parse(IDVicti.SelectedValue.ToUpper());
-            string numDocumento = "752552";
+            string numDocumento = NumID.Text.ToUpper();
             string privacidad = AceptaDatos.SelectedValue.ToUpper();
             string telefono = TelCont.Text.ToUpper();
             string correo = EmailCont.Text.ToUpper();
@@ -475,7 +476,7 @@ namespace SIPOH
             reiniciarFormulario.Reiniciar(UpVict, LimpVicti, SvVicti, APVic, AMVic, NomVic, GeneVicti, CURPVicti, RFCVicti, FeNacVic, EdadVicti, ContiNac,
                 PaisNac, EstNaci, MuniNac, NacVicti, HabLenExtra, HablEsp, LengIndi, CondMigVic, CondAlfVic, HablLengIndi, PuebloIndi, DomiTrabVicti, EstCivil, GradEst, OcupaVicti,
                 DetaOcupaVic, CuenDisca, TipoDisca, DiscaEspe, ContiRes, PaisRes, EstaRes, MuniRes, DomicPersonVicti, AseJur, ReqInter, TelCont, EmailCont, Fax, RelacVic, HoraIndivi, IDVicti,
-                Domici, OtroMed, AceptaDatos, AliasImp, CondiFam, ConsSus, DepEconom, EstPsi, Reinci, AcciPenal, TipoDeten, OrdenJudi, AsisMigra);
+                Domici, OtroMed, AceptaDatos, AliasImp, CondiFam, ConsSus, DepEconom, EstPsi, Reinci, AcciPenal, TipoDeten, OrdenJudi, AsisMigra, NumID);
         }
 
         protected void btnBuscar_Click(object sender, EventArgs e)
@@ -807,6 +808,7 @@ namespace SIPOH
             }
 
             EstablecerValorTextBox(HoraIndivi, info.FeIndividualización);
+            EstablecerValorTextBox(NumID, info.NumeroDocumento);
             Domici.Text = info.DomNotificacion;
             AceptaDatos.SelectedValue = info.Privacidad;
 
@@ -1297,7 +1299,7 @@ namespace SIPOH
             reiniciarFormulario.Reiniciar(UpVict, LimpVicti, SvVicti, APVic, AMVic, NomVic, GeneVicti, CURPVicti, RFCVicti, FeNacVic, EdadVicti, ContiNac,
                 PaisNac, EstNaci, MuniNac, NacVicti, HabLenExtra, HablEsp, LengIndi, CondMigVic, CondAlfVic, HablLengIndi, PuebloIndi, DomiTrabVicti, EstCivil, GradEst, OcupaVicti,
                 DetaOcupaVic, CuenDisca, TipoDisca, DiscaEspe, ContiRes, PaisRes, EstaRes, MuniRes, DomicPersonVicti, AseJur, ReqInter, TelCont, EmailCont, Fax, RelacVic, HoraIndivi, IDVicti,
-                Domici, OtroMed, AceptaDatos, AliasImp, CondiFam, ConsSus, DepEconom, EstPsi, Reinci, AcciPenal, TipoDeten, OrdenJudi, AsisMigra);
+                Domici, OtroMed, AceptaDatos, AliasImp, CondiFam, ConsSus, DepEconom, EstPsi, Reinci, AcciPenal, TipoDeten, OrdenJudi, AsisMigra, NumID);
         }
 
         protected void ImprCedula_Click(object sender, EventArgs e)
@@ -1335,6 +1337,7 @@ namespace SIPOH
                         { "Requiere Interprete", ReqInter.SelectedValue },
                         { "Relacion con el Imputado", RelacVic.SelectedValue },
                         { "Identificación", IDVicti.SelectedValue },
+                        { "Numero de Documento", NumID.Text },
                         { "Telefono de contacto", TelCont.Text },
                         { "Correo Electronico", EmailCont.Text },
                         { "Acepta Publicacion de Datos", AceptaDatos.SelectedValue }, 
@@ -1445,12 +1448,12 @@ namespace SIPOH
                     int ordenProteccion = 0;
                     DateTime feIndividualizacion = DateTime.Parse(HoraIndivi.Text.ToUpper());
                     int idDocIdentificador = int.Parse(IDVicti.SelectedValue.ToUpper());
-                    string numDocumento = "752552";
+                    string domNotificacion = DomicPersonVicti.Text.ToUpper();
                     string privacidad = AceptaDatos.SelectedValue.ToUpper();
                     string telefono = TelCont.Text.ToUpper();
                     string correo = EmailCont.Text.ToUpper();
                     string fax = Fax.Text.ToUpper();
-                    string domNotificacion = DomicPersonVicti.Text.ToUpper();
+                    string numDocumento = DomicPersonVicti.Text.ToUpper();
                     string otroTipo = "OtroTipo";
                     int idUser = IdUsuarioPorSesion.ObtenerIdUsuario();
 
@@ -1498,22 +1501,20 @@ namespace SIPOH
             panelPdfMostrar.Style["display"] = "none";
         }
 
-        protected void CuenFeNac_SelectedIndexChanged(object sender, EventArgs e)
+        protected void DescFeNac_CheckedChanged(object sender, EventArgs e)
         {
-            // Comprueba si el valor seleccionado es '3' o '2'
-            if (CuenFeNac.SelectedValue == "3" || CuenFeNac.SelectedValue == "2")
+            if (DescFeNac.Checked)
             {
-                // Deshabilita el input y establece el valor predeterminado
-                FeNacVic.Enabled = false;
-                // Usa "HH" para el formato de 24 horas
-                FeNacVic.Text = DateTime.ParseExact("09/09/1899", "dd/MM/yyyy", CultureInfo.InvariantCulture).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+                FeNacVic.Enabled = false; // Deshabilita el input si el checkbox está marcado
+                FeNacVic.Text = "1899-09-09"; // Establece la fecha automáticamente si el checkbox está marcado
             }
             else
             {
-                // Habilita el input si se selecciona otro valor
-                FeNacVic.Enabled = true;
+                FeNacVic.Enabled = true; // Habilita el input si el checkbox no está marcado
+                FeNacVic.Text = ""; // Reinicializa el valor del input
             }
-
         }
+
+
     }
 }

@@ -16,7 +16,7 @@ namespace SIPOH.ExpedienteDigital.Victimas.CSVictimas
             DropDownList HablEsp, DropDownList LengIndi, DropDownList VicVulne, DropDownList CondMigVic, DropDownList CondAlfVic, DropDownList HablLengIndi, DropDownList PuebloIndi, TextBox DomiTrabVicti,
             DropDownList EstCivil, DropDownList GradEst, DropDownList OcupaVicti, DropDownList DetaOcupaVic, DropDownList CuenDisca, DropDownList TipoDisca, DropDownList DiscaEspe, DropDownList ContiRes, DropDownList PaisRes,
             DropDownList EstaRes, DropDownList MuniRes, TextBox DomicPersonVicti, DropDownList AseJur, DropDownList ReqInter, TextBox TelCont, TextBox EmailCont, TextBox Fax, DropDownList RelacVic, TextBox HoraIndivi,
-            DropDownList IDVicti, TextBox Domici, TextBox OtroMed, RadioButtonList AceptaDatos, DropDownList AsisMigra)
+            DropDownList IDVicti, TextBox Domici, TextBox OtroMed, RadioButtonList AceptaDatos, DropDownList AsisMigra, TextBox NumId)
         {
             UpVict.Visible = false;
             LimpVicti.Visible = true;
@@ -71,6 +71,7 @@ namespace SIPOH.ExpedienteDigital.Victimas.CSVictimas
             OtroMed.Text = String.Empty;
             AceptaDatos.SelectedValue = "";
             AsisMigra.ClearSelection();
+            NumId.Text = String.Empty;
         }
     }
 }

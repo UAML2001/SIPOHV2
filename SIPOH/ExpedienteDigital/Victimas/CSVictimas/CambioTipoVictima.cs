@@ -14,7 +14,7 @@ namespace SIPOH.ExpedienteDigital.Victimas.CSVictimas
             DropDownList CondAlfVic, DropDownList HablLengIndi, DropDownList PuebloIndi, TextBox DomiTrabVicti, DropDownList EstCivil, DropDownList GradEst, DropDownList OcupaVicti, DropDownList DetaOcupaVic,
             DropDownList CuenDisca, DropDownList TipoDisca, DropDownList DiscaEspe, DropDownList ContiRes, DropDownList PaisRes, DropDownList EstaRes, DropDownList MuniRes, TextBox DomicPersonVicti,
             DropDownList AseJur, DropDownList ReqInter, TextBox TelCont, TextBox EmailCont, TextBox Fax, DropDownList RelacVic, TextBox HoraIndivi, DropDownList IDVicti, TextBox Domici, TextBox OtroMed, 
-            RadioButtonList AceptaDatos, DropDownList AsisVictima)
+            RadioButtonList AceptaDatos, DropDownList AsisVictima, TextBox NumId)
         {
             if (TipoVict.SelectedValue == "1" || TipoVict.SelectedValue == "SV")
             {
@@ -69,6 +69,7 @@ namespace SIPOH.ExpedienteDigital.Victimas.CSVictimas
                 OtroMed.Enabled = true;
                 AceptaDatos.Enabled = true;
                 AsisVictima.Enabled = true;
+                NumId.Enabled = true;
             }
             else
             {
@@ -124,6 +125,7 @@ namespace SIPOH.ExpedienteDigital.Victimas.CSVictimas
                 OtroMed.Enabled = false;
                 AceptaDatos.Enabled = true;
                 AsisVictima.Enabled = false;
+                NumId.Enabled = false;
             }
         }
     }
