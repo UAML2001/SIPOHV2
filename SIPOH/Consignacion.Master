@@ -460,6 +460,9 @@
                              </asp:ContentPlaceHolder>
                             <asp:ContentPlaceHolder ID="ContentImputados" runat="server">
                             </asp:ContentPlaceHolder>
+                            <asp:ContentPlaceHolder ID="ContentUbiExpe" runat="server">
+                            </asp:ContentPlaceHolder>
+                            
                             
                             
                             <!-- Estilos de admin lte agregue para el calendario by brayan -->

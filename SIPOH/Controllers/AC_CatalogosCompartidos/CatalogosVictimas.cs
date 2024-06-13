@@ -393,7 +393,15 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
 
         public void DropdownEspeDiscapacidad(DropDownList dropdown, string idDiscapacidad)
         {
+            // Limpiar el dropdown antes de agregar nuevas opciones
             dropdown.Items.Clear();
+
+            // Agregar el elemento de selección "----- SELECCIONE -----" con valor "S"
+            dropdown.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+
+            // Selecciona siempre "S" en el dropdown
+            dropdown.SelectedValue = "S";
+
             using (SqlConnection conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString))
             {
                 conn.Open();
@@ -411,6 +419,7 @@ namespace SIPOH.Controllers.AC_CatalogosCompartidos
                 }
             }
         }
+
 
 
         public void DropdownAsesorJuridico(DropDownList dropdown)

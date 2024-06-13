@@ -230,7 +230,7 @@
                                                                     <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" placeholder="Ingrese el RFC del Imputado" ID="RFCVicti" onchange="formatoRFC(this)" MaxLength="13"></asp:TextBox>
                                                                 </div>
                                                                 <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl-3">
-                                                                    <label for="fecha1" class="form-label text-secondary">Tiene Fecha Nacimiento: </label>
+                                                                    <label for="fecha1" class="form-label text-secondary">Se Conoce la Fecha Nacimiento: </label>
                                                                      <asp:DropDownList ID="CuenFeNac" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CuenFeNac_SelectedIndexChanged">
                                                                     <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                 </asp:DropDownList>

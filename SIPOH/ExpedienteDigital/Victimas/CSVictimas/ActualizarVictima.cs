@@ -12,7 +12,7 @@ public class ActualizarVictima
     public void UpdateVictimData(
         int idPartes, int idAsunto, string apPaterno, string apMaterno, string nombre, string genero, string tipoParte, int tipoVictima,
         string victima, string rfc, string curp, string edad, DateTime feNacimiento, int idContNacido, int idPaisNacido, int idEstadoNacido,
-        string idMunicipioNacido, int idLengExtra, int idRelacImput, int idNacionalidad, int idCondicion, int idEstadoCivil, int idGradoEstudios, 
+        string idMunicipioNacido, int idLengExtra, int idRelacImput, int idNacionalidad, int idCondicion, int idEstadoCivil, int idGradoEstudios,
         int idAlfabet, int idiomaEspañol,
         int idVulnerabilidad, int idAsisMigra, int idPueblo, int hablaIndigena, int idDialecto, int idOcupacion, int idProfesion, string domOcupacion,
         int discapacidad, int idContiResidencia, int idPaisResidencia, int idEstadoResidencia, string idMunicipioResidencia, string domResidencia,
@@ -322,7 +322,7 @@ public class ActualizarVictima
                             cmd.ExecuteNonQuery();
                         }
                     }
-                    
+
                     string queryInsertDiscapacidades = @"INSERT INTO [SIPOH].[dbo].[P_Discapacidades] 
                         ([IdPartes], [IdDiscapacidad]) 
                         VALUES 

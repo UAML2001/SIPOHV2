@@ -1,21 +1,24 @@
-﻿using CrystalDecisions.CrystalReports.Engine;
-using CrystalDecisions.Shared;
-using SIPOH;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
+using System.Web;
 using System.Web.UI;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using SIPOH;
 
 public class InsertarVictima
 {
-    public void InsertVictimData(int idAsunto, string apPaterno, string apMaterno, string nombre, string genero, string tipoParte, int tipoVictima,
-        string victima, string rfc, string curp, string edad, DateTime feNacimiento, int idContNacido, int idPaisNacido, int idEstadoNacido,
-        string idMunicipioNacido, int idLengExtra, int idRelacImput, int idNacionalidad, int idCondicion, int idEstadoCivil, int idGradoEstudios, int idAlfabet, int idiomaEspañol,
-        int idVulnerabilidad, int idAsisMigra, int idPueblo, int hablaIndigena, int idDialecto, int idOcupacion, int idProfesion, string domOcupacion,
-        int discapacidad, int idContiResidencia, int idPaisResidencia, int idEstadoResidencia, string idMunicipioResidencia, string domResidencia,
-        int idDefensor, int interprete, int ordenProteccion, DateTime feIndividualizacion, int idDocIdentificador, string numDocumento, string privacidad,
-        string telefono, string correo, string fax, string domNotificacion, string otroTipo, int idUser, List<string> idsDiscapacidades, Page page)
+    public void InsertVictimData(
+            int idAsunto, string apPaterno, string apMaterno, string nombre, string genero, string tipoParte, int tipoVictima,
+            string victima, string rfc, string curp, string edad, DateTime feNacimiento, int idContNacido, int idPaisNacido, int idEstadoNacido,
+            string idMunicipioNacido, int idLengExtra, int idRelacImput, int idNacionalidad, int idCondicion, int idEstadoCivil, int idGradoEstudios, int idAlfabet, int idiomaEspañol,
+            int idVulnerabilidad, int idAsisMigra, int idPueblo, int hablaIndigena, int idDialecto, int idOcupacion, int idProfesion, string domOcupacion,
+            int discapacidad, int idContiResidencia, int idPaisResidencia, int idEstadoResidencia, string idMunicipioResidencia, string domResidencia,
+            int idDefensor, int interprete, int ordenProteccion, DateTime feIndividualizacion, int idDocIdentificador, string numDocumento, string privacidad,
+            string telefono, string correo, string fax, string domNotificacion, string otroTipo, int idUser, List<string> idsDiscapacidades, Page page)
     {
         string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
 
@@ -44,13 +47,12 @@ public class InsertarVictima
                     }
                 }
 
-                // Insertar los datos en P_PartesAsunto
                 string queryPartesAsunto = @"
-            INSERT INTO [SIPOH].[dbo].[P_PartesAsunto] 
-            ([IdAsunto], [Nombre], [APaterno], [AMaterno], [Genero], [TipoParte], [Alias]) 
-            VALUES 
-            (@IdAsunto, @Nombre, @APaterno, @AMaterno, @Genero, @TipoParte, @Alias); 
-            SELECT SCOPE_IDENTITY();";
+        INSERT INTO [SIPOH].[dbo].[P_PartesAsunto] 
+        ([IdAsunto], [Nombre], [APaterno], [AMaterno], [Genero], [TipoParte], [Alias]) 
+        VALUES 
+        (@IdAsunto, @Nombre, @APaterno, @AMaterno, @Genero, @TipoParte, @Alias); 
+        SELECT SCOPE_IDENTITY();";
 
                 using (SqlCommand cmd = new SqlCommand(queryPartesAsunto, conn, transaction))
                 {
@@ -81,24 +83,23 @@ public class InsertarVictima
                     }
                 }
 
-                // Insertar los datos en la tabla P_Victima
                 string queryVictima = @"
-            INSERT INTO [SIPOH].[dbo].[P_Victima] 
-            ([IdVictima], [TipoVictima], [Victima], [RFC], [CURP], [Edad], [FeNacimiento], [IdContinenteNacido], [IdPaisNacido], 
-            [IdEstadoNacido], [IdMunicipioNacido], [IdNacionalidad], [IdCondicion], [IdEstadoCivil], 
-            [IdGradoEstudios], [IdAlfabet], [IdiomaEspañol], [IdVulnerabilidad], [IdPueblo], [HablaIndigena], 
-            [IdDialecto], [IdOcupacion], [IdProfesion], [DomOcupacion], [Discapacidad], [IdContinenteResidencia], [IdPaisResidencia], 
-            [IdEstadoResidencia], [IdMunicipioResidencia], [DomResidencia], [IdDefensor], [Interprete], 
-            [OrdenProteccion], [FeIndividualización], [IdDocIdentificador], [NumDocumento], [Privacidad], 
-            [Telefono], [Correo], [Fax], [DomNotificacion], [OtroTipo], [IdUser], [AsistMigratoria], [IdRelacInput], [IdLengExtra])
-            VALUES
-            (@IdVictima, @TipoVictima, @Victima, @RFC, @CURP, @Edad, @FeNacimiento, @IdContinenteNacido, @IdPaisNacido, 
-            @IdEstadoNacido, @IdMunicipioNacido, @IdNacionalidad, @IdCondicion, @IdEstadoCivil, 
-            @IdGradoEstudios, @IdAlfabet, @IdiomaEspañol, @IdVulnerabilidad, @IdPueblo, @HablaIndigena, 
-            @IdDialecto, @IdOcupacion, @IdProfesion, @DomOcupacion, @Discapacidad, @IdContinenteResidencia, @IdPaisResidencia, 
-            @IdEstadoResidencia, @IdMunicipioResidencia, @DomResidencia, @IdDefensor, @Interprete, 
-            @OrdenProteccion, @FeIndividualización, @IdDocIdentificador, @NumDocumento, @Privacidad, 
-            @Telefono, @Correo, @Fax, @DomNotificacion, @OtroTipo, @IdUser, @AsistMigratoria, @IdRelacInput, @IdLengExtra);";
+        INSERT INTO [SIPOH].[dbo].[P_Victima] 
+        ([IdVictima], [TipoVictima], [Victima], [RFC], [CURP], [Edad], [FeNacimiento], [IdContinenteNacido], [IdPaisNacido], 
+        [IdEstadoNacido], [IdMunicipioNacido], [IdNacionalidad], [IdCondicion], [IdEstadoCivil], 
+        [IdGradoEstudios], [IdAlfabet], [IdiomaEspañol], [IdVulnerabilidad], [IdPueblo], [HablaIndigena], 
+        [IdDialecto], [IdOcupacion], [IdProfesion], [DomOcupacion], [Discapacidad], [IdContinenteResidencia], [IdPaisResidencia], 
+        [IdEstadoResidencia], [IdMunicipioResidencia], [DomResidencia], [IdDefensor], [Interprete], 
+        [OrdenProteccion], [FeIndividualización], [IdDocIdentificador], [NumDocumento], [Privacidad], 
+        [Telefono], [Correo], [Fax], [DomNotificacion], [OtroTipo], [IdUser], [AsistMigratoria], [IdRelacInput], [IdLengExtra])
+        VALUES
+        (@IdVictima, @TipoVictima, @Victima, @RFC, @CURP, @Edad, @FeNacimiento, @IdContinenteNacido, @IdPaisNacido, 
+        @IdEstadoNacido, @IdMunicipioNacido, @IdNacionalidad, @IdCondicion, @IdEstadoCivil, 
+        @IdGradoEstudios, @IdAlfabet, @IdiomaEspañol, @IdVulnerabilidad, @IdPueblo, @HablaIndigena, 
+        @IdDialecto, @IdOcupacion, @IdProfesion, @DomOcupacion, @Discapacidad, @IdContinenteResidencia, @IdPaisResidencia, 
+        @IdEstadoResidencia, @IdMunicipioResidencia, @DomResidencia, @IdDefensor, @Interprete, 
+        @OrdenProteccion, @FeIndividualización, @IdDocIdentificador, @NumDocumento, @Privacidad, 
+        @Telefono, @Correo, @Fax, @DomNotificacion, @OtroTipo, @IdUser, @AsistMigratoria, @IdRelacInput, @IdLengExtra);";
 
                 using (SqlCommand cmd = new SqlCommand(queryVictima, conn, transaction))
                 {
@@ -168,21 +169,23 @@ public class InsertarVictima
                     }
                 }
 
-                // Insertar los datos en la tabla P_Discapacidad
-                string queryIdDiscapacidadPartes = @"INSERT INTO [SIPOH].[dbo].[P_Discapacidades] 
-                ([IdPartes], [IdDiscapacidad]) 
-                VALUES 
-                (@IdPartes, @IdDiscapacidad)";
+                string queryDiscapacidades = @"
+        INSERT INTO [SIPOH].[dbo].[P_Discapacidad] 
+        ([IdVictima], [IdDiscapacidad]) 
+        VALUES 
+        (@IdVictima, @IdDiscapacidad);";
+
                 foreach (string idDiscapacidad in idsDiscapacidades)
                 {
-                    using (SqlCommand cmd = new SqlCommand(queryIdDiscapacidadPartes, conn, transaction))
+                    using (SqlCommand cmd = new SqlCommand(queryDiscapacidades, conn, transaction))
                     {
-                        cmd.Parameters.AddWithValue("@IdPartes", idPartes);
+                        cmd.Parameters.AddWithValue("@IdVictima", idPartes);
                         cmd.Parameters.AddWithValue("@IdDiscapacidad", idDiscapacidad);
 
                         cmd.ExecuteNonQuery();
                     }
                 }
+
 
                 using (SqlCommand cmd = new SqlCommand("LlenarCedulaVictima", conn, transaction))
                 {
@@ -239,7 +242,7 @@ public class InsertarVictima
                 // Confirmar la transacción
                 transaction.Commit();
             }
-                
+
             catch (SqlException ex)
             {
                 // Revertir la transacción
@@ -262,3 +265,260 @@ public class InsertarVictima
         }
     }
 }
+
+//public class InsertarVictima
+//{
+//    public void InsertVictimData(
+//        int idAsunto, string apPaterno, string apMaterno, string nombre, string genero, string tipoParte, int tipoVictima,
+//        string victima, string rfc, string curp, string edad, DateTime feNacimiento, int idContNacido, int idPaisNacido, int idEstadoNacido,
+//        string idMunicipioNacido, int idLengExtra, int idRelacImput, int idNacionalidad, int idCondicion, int idEstadoCivil, int idGradoEstudios, int idAlfabet, int idiomaEspañol,
+//        int idVulnerabilidad, int idAsisMigra, int idPueblo, int hablaIndigena, int idDialecto, int idOcupacion, int idProfesion, string domOcupacion,
+//        int discapacidad, int idContiResidencia, int idPaisResidencia, int idEstadoResidencia, string idMunicipioResidencia, string domResidencia,
+//        int idDefensor, int interprete, int ordenProteccion, DateTime feIndividualizacion, int idDocIdentificador, string numDocumento, string privacidad,
+//        string telefono, string correo, string fax, string domNotificacion, string otroTipo, int idUser, List<string> idsDiscapacidades, Page page)
+//    {
+//        string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["SIPOHDB"].ConnectionString;
+//        int idPartes = 0;
+
+//        using (SqlConnection conn = new SqlConnection(connectionString))
+//        {
+//            conn.Open();
+//            SqlTransaction transaction = conn.BeginTransaction();
+
+//            try
+//            {
+//                // Insertar datos en la tabla P_PartesAsunto y obtener el ID generado
+//                idPartes = InsertPartesAsunto(conn, transaction, idAsunto, apPaterno, apMaterno, nombre, genero, tipoParte);
+
+//                // Insertar datos de la víctima utilizando el ID de partes obtenido anteriormente
+//                InsertVictimaData(conn, transaction, idPartes, tipoVictima, victima, rfc, curp, edad, feNacimiento, idContNacido, idPaisNacido, idEstadoNacido, idMunicipioNacido,
+//                    idNacionalidad, idCondicion, idEstadoCivil, idGradoEstudios, idAlfabet, idiomaEspañol, idVulnerabilidad, idPueblo, hablaIndigena,
+//                    idDialecto, idOcupacion, idProfesion, domOcupacion, discapacidad, idContiResidencia, idPaisResidencia,
+//                    idEstadoResidencia, idMunicipioResidencia, domResidencia, idDefensor, interprete, ordenProteccion, feIndividualizacion,
+//                    idDocIdentificador, numDocumento, privacidad, telefono, correo, fax, domNotificacion, otroTipo, idUser, idAsisMigra, idRelacImput, idLengExtra);
+
+//                // Insertar discapacidades utilizando el ID de partes
+//                InsertDiscapacidades(conn, transaction, idPartes, idsDiscapacidades);
+
+//                // Generar cédula de víctima utilizando el ID de partes
+//                GenerarCedulaVictima(conn, transaction, idUser, idAsunto, idPartes, page);
+
+//                transaction.Commit();
+//            }
+//            catch (SqlException ex)
+//            {
+//                transaction.Rollback();
+//                MostrarError(page, ex);
+//            }
+//            finally
+//            {
+//                conn.Close();
+//            }
+//        }
+//    }
+
+//        private int InsertPartesAsunto(SqlConnection conn, SqlTransaction transaction, int idAsunto, string apPaterno, string apMaterno, string nombre, string genero, string tipoParte)
+//    {
+//        int idPartes;
+
+//        VerificarYRestablecerID(conn, transaction, "P_PartesAsunto");
+
+//        string queryPartesAsunto = @"
+//        INSERT INTO [SIPOH].[dbo].[P_PartesAsunto] 
+//        ([IdAsunto], [Nombre], [APaterno], [AMaterno], [Genero], [TipoParte], [Alias]) 
+//        VALUES 
+//        (@IdAsunto, @Nombre, @APaterno, @AMaterno, @Genero, @TipoParte, @Alias); 
+//        SELECT SCOPE_IDENTITY();";
+
+//        using (SqlCommand cmd = new SqlCommand(queryPartesAsunto, conn, transaction))
+//        {
+//            cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+//            cmd.Parameters.AddWithValue("@Nombre", nombre);
+//            cmd.Parameters.AddWithValue("@APaterno", apPaterno);
+//            cmd.Parameters.AddWithValue("@AMaterno", apMaterno);
+//            cmd.Parameters.AddWithValue("@Genero", genero);
+//            cmd.Parameters.AddWithValue("@TipoParte", tipoParte);
+//            cmd.Parameters.AddWithValue("@Alias", "");
+
+//            idPartes = Convert.ToInt32(cmd.ExecuteScalar());
+//        }
+
+//        return idPartes;
+//    }
+
+//    private void InsertVictimaData(SqlConnection conn, SqlTransaction transaction, int idPartes, int tipoVictima, string victima, string rfc, string curp, string edad,
+//        DateTime feNacimiento, int idContNacido, int idPaisNacido, int idEstadoNacido, string idMunicipioNacido, int idNacionalidad, int idCondicion,
+//        int idEstadoCivil, int idGradoEstudios, int idAlfabet, int idiomaEspañol, int idVulnerabilidad, int idPueblo, int hablaIndigena, int idDialecto,
+//        int idOcupacion, int idProfesion, string domOcupacion, int discapacidad, int idContiResidencia, int idPaisResidencia, int idEstadoResidencia,
+//        string idMunicipioResidencia, string domResidencia, int idDefensor, int interprete, int ordenProteccion, DateTime feIndividualizacion, int idDocIdentificador,
+//        string numDocumento, string privacidad, string telefono, string correo, string fax, string domNotificacion, string otroTipo, int idUser, int idAsisMigra, int idRelacImput, int idLengExtra)
+//    {
+//        VerificarYRestablecerID(conn, transaction, "P_Victima");
+
+//        string queryVictima = @"
+//        INSERT INTO [SIPOH].[dbo].[P_Victima] 
+//        ([IdVictima], [TipoVictima], [Victima], [RFC], [CURP], [Edad], [FeNacimiento], [IdContinenteNacido], [IdPaisNacido], 
+//        [IdEstadoNacido], [IdMunicipioNacido], [IdNacionalidad], [IdCondicion], [IdEstadoCivil], 
+//        [IdGradoEstudios], [IdAlfabet], [IdiomaEspañol], [IdVulnerabilidad], [IdPueblo], [HablaIndigena], 
+//        [IdDialecto], [IdOcupacion], [IdProfesion], [DomOcupacion], [Discapacidad], [IdContinenteResidencia], [IdPaisResidencia], 
+//        [IdEstadoResidencia], [IdMunicipioResidencia], [DomResidencia], [IdDefensor], [Interprete], 
+//        [OrdenProteccion], [FeIndividualización], [IdDocIdentificador], [NumDocumento], [Privacidad], 
+//        [Telefono], [Correo], [Fax], [DomNotificacion], [OtroTipo], [IdUser], [AsistMigratoria], [IdRelacInput], [IdLengExtra])
+//        VALUES
+//        (@IdVictima, @TipoVictima, @Victima, @RFC, @CURP, @Edad, @FeNacimiento, @IdContinenteNacido, @IdPaisNacido, 
+//        @IdEstadoNacido, @IdMunicipioNacido, @IdNacionalidad, @IdCondicion, @IdEstadoCivil, 
+//        @IdGradoEstudios, @IdAlfabet, @IdiomaEspañol, @IdVulnerabilidad, @IdPueblo, @HablaIndigena, 
+//        @IdDialecto, @IdOcupacion, @IdProfesion, @DomOcupacion, @Discapacidad, @IdContinenteResidencia, @IdPaisResidencia, 
+//        @IdEstadoResidencia, @IdMunicipioResidencia, @DomResidencia, @IdDefensor, @Interprete, 
+//        @OrdenProteccion, @FeIndividualización, @IdDocIdentificador, @NumDocumento, @Privacidad, 
+//        @Telefono, @Correo, @Fax, @DomNotificacion, @OtroTipo, @IdUser, @AsistMigratoria, @IdRelacInput, @IdLengExtra);";
+
+//        using (SqlCommand cmd = new SqlCommand(queryVictima, conn, transaction))
+//        {
+//            cmd.Parameters.AddWithValue("@IdVictima", idPartes);
+//            cmd.Parameters.AddWithValue("@TipoVictima", tipoVictima);
+//            cmd.Parameters.AddWithValue("@Victima", victima);
+//            cmd.Parameters.AddWithValue("@RFC", rfc);
+//            cmd.Parameters.AddWithValue("@CURP", curp);
+//            cmd.Parameters.AddWithValue("@Edad", edad);
+//            cmd.Parameters.AddWithValue("@FeNacimiento", feNacimiento);
+//            cmd.Parameters.AddWithValue("@IdContinenteNacido", idContNacido);
+//            cmd.Parameters.AddWithValue("@IdPaisNacido", idPaisNacido);
+//            cmd.Parameters.AddWithValue("@IdEstadoNacido", idEstadoNacido);
+//            cmd.Parameters.AddWithValue("@IdMunicipioNacido", idMunicipioNacido);
+//            cmd.Parameters.AddWithValue("@IdNacionalidad", idNacionalidad);
+//            cmd.Parameters.AddWithValue("@IdCondicion", idCondicion);
+//            cmd.Parameters.AddWithValue("@IdEstadoCivil", idEstadoCivil);
+//            cmd.Parameters.AddWithValue("@IdGradoEstudios", idGradoEstudios);
+//            cmd.Parameters.AddWithValue("@IdAlfabet", idAlfabet);
+//            cmd.Parameters.AddWithValue("@IdiomaEspañol", idiomaEspañol);
+//            cmd.Parameters.AddWithValue("@IdVulnerabilidad", idVulnerabilidad);
+//            cmd.Parameters.AddWithValue("@IdPueblo", idPueblo);
+//            cmd.Parameters.AddWithValue("@HablaIndigena", hablaIndigena);
+//            cmd.Parameters.AddWithValue("@IdDialecto", idDialecto);
+//            cmd.Parameters.AddWithValue("@IdOcupacion", idOcupacion);
+//            cmd.Parameters.AddWithValue("@IdProfesion", idProfesion);
+//            cmd.Parameters.AddWithValue("@DomOcupacion", domOcupacion);
+//            cmd.Parameters.AddWithValue("@Discapacidad", discapacidad);
+//            cmd.Parameters.AddWithValue("@IdContinenteResidencia", idContiResidencia);
+//            cmd.Parameters.AddWithValue("@IdPaisResidencia", idPaisResidencia);
+//            cmd.Parameters.AddWithValue("@IdEstadoResidencia", idEstadoResidencia);
+//            cmd.Parameters.AddWithValue("@IdMunicipioResidencia", idMunicipioResidencia);
+//            cmd.Parameters.AddWithValue("@DomResidencia", domResidencia);
+//            cmd.Parameters.AddWithValue("@IdDefensor", idDefensor);
+//            cmd.Parameters.AddWithValue("@Interprete", interprete);
+//            cmd.Parameters.AddWithValue("@OrdenProteccion", ordenProteccion);
+//            cmd.Parameters.AddWithValue("@FeIndividualización", feIndividualizacion);
+//            cmd.Parameters.AddWithValue("@IdDocIdentificador", idDocIdentificador);
+//            cmd.Parameters.AddWithValue("@NumDocumento", numDocumento);
+//            cmd.Parameters.AddWithValue("@Privacidad", privacidad);
+//            cmd.Parameters.AddWithValue("@Telefono", telefono);
+//            cmd.Parameters.AddWithValue("@Correo", correo);
+//            cmd.Parameters.AddWithValue("@Fax", fax);
+//            cmd.Parameters.AddWithValue("@DomNotificacion", domNotificacion);
+//            cmd.Parameters.AddWithValue("@OtroTipo", otroTipo);
+//            cmd.Parameters.AddWithValue("@IdUser", idUser);
+//            cmd.Parameters.AddWithValue("@AsistMigratoria", idAsisMigra);
+//            cmd.Parameters.AddWithValue("@IdRelacInput", idRelacImput);
+//            cmd.Parameters.AddWithValue("@IdLengExtra", idLengExtra);
+
+//            cmd.ExecuteNonQuery();
+//        }
+//    }
+
+//    private void InsertDiscapacidades(SqlConnection conn, SqlTransaction transaction, int idPartes, List<string> idsDiscapacidades)
+//    {
+//        VerificarYRestablecerID(conn, transaction, "P_Discapacidad");
+
+//        string queryDiscapacidades = @"
+//        INSERT INTO [SIPOH].[dbo].[P_Discapacidad] 
+//        ([IdVictima], [IdDiscapacidad]) 
+//        VALUES 
+//        (@IdVictima, @IdDiscapacidad);";
+
+//        foreach (string idDiscapacidad in idsDiscapacidades)
+//        {
+//            using (SqlCommand cmd = new SqlCommand(queryDiscapacidades, conn, transaction))
+//            {
+//                cmd.Parameters.AddWithValue("@IdVictima", idPartes);
+//                cmd.Parameters.AddWithValue("@IdDiscapacidad", idDiscapacidad);
+
+//                cmd.ExecuteNonQuery();
+//            }
+//        }
+//    }
+
+//    private void GenerarCedulaVictima(SqlConnection conn, SqlTransaction transaction, int idUser, int idAsunto, int idPartes, Page page)
+//    {
+//        using (SqlCommand cmd = new SqlCommand("LlenarCedulaVictima", conn, transaction))
+//        {
+//            cmd.CommandType = CommandType.StoredProcedure;
+//            cmd.Parameters.AddWithValue("@IdUsuario", idUser);
+//            cmd.Parameters.AddWithValue("@IdAsunto", idAsunto);
+//            cmd.Parameters.AddWithValue("@IdPartes", idPartes); // Asegúrate de definir idPartes
+//            cmd.ExecuteNonQuery();
+
+//            // Crear un DataTable para almacenar los resultados
+//            DataTable dt = new DataTable();
+
+//            // Recoger los resultados
+//            using (SqlDataReader reader = cmd.ExecuteReader())
+//            {
+//                // Llenar el DataTable con los resultados
+//                dt.Load(reader);
+//            }
+
+//            // Configura la ruta del informe Crystal Reports (.rpt)
+//            string rutaInforme = System.Web.HttpContext.Current.Server.MapPath("~/ExpedienteDigital/Victimas/CedulaVictimas.rpt");
+
+//            // Crea el informe
+//            ReportDocument reporte = new ReportDocument();
+//            reporte.Load(rutaInforme);
+
+//            // Asignar el DataTable como fuente de datos del informe
+//            reporte.SetDataSource(dt);
+
+//            // Configura los parámetros del informe (asegúrate de que los nombres de los parámetros coincidan con los del informe)
+//            reporte.SetParameterValue("@IdUsuario", idUser);
+//            reporte.SetParameterValue("@IdAsunto", idAsunto);
+//            reporte.SetParameterValue("@IdPartes", idPartes);
+
+//            // Si el informe tiene más parámetros, configúralos también aquí
+//            // reporte.SetParameterValue("OtroParametro", otroValor);
+
+//            // Configura el formato de salida como PDF
+//            reporte.ExportOptions.ExportFormatType = ExportFormatType.PortableDocFormat;
+//            reporte.ExportOptions.ExportDestinationType = ExportDestinationType.DiskFile;
+//            string rutaArchivoPDF = System.Web.HttpContext.Current.Server.MapPath("~/ExpedienteDigital/Victimas/CedulaVictimas.pdf");
+//            reporte.ExportOptions.DestinationOptions = new DiskFileDestinationOptions { DiskFileName = rutaArchivoPDF };
+
+//            // Exporta el informe a PDF
+//            reporte.Export();
+//        }
+
+//                    // Llama al método en el archivo .aspx para mostrar el PDF
+//                    ((ExpeDigital)page).MostrarPDFInsertar("~/ExpedienteDigital/Victimas/CedulaVictimas.pdf");
+
+//        // Registro del script de Toastr después de la inserción
+//        ScriptManager.RegisterStartupScript(page, page.GetType(), "alertMessage", "toastr.success('Victima agregada correctamente', 'Éxito');", true);
+
+//    }
+
+
+//    private void VerificarYRestablecerID(SqlConnection conn, SqlTransaction transaction, string nombreTabla)
+//    {
+//        string consultaIdentidad = $"DBCC CHECKIDENT('{nombreTabla}', RESEED, 0)";
+
+//        using (SqlCommand cmd = new SqlCommand(consultaIdentidad, conn, transaction))
+//        {
+//            cmd.ExecuteNonQuery();
+//        }
+//    }
+
+//    private void MostrarError(Page page, SqlException ex)
+//    {
+//        string script = $"<script>alert('Ha ocurrido un error al insertar los datos: {ex.Message}');</script>";
+//        ScriptManager.RegisterStartupScript(page, page.GetType(), "ErrorAlert", script, false);
+//    }
+//}
+

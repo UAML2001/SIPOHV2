@@ -260,7 +260,7 @@
                                                             </div>
 
                                                             <div class="mb-4 col-12 col-sm-6 col-md-6 col-lg-4 col-xl-6 col-xxl-6">
-                                                                <label for="fecha1" class="form-label text-secondary">Tiene Fecha Nacimiento: </label>
+                                                                <label for="fecha1" class="form-label text-secondary">Se Conoce la Fecha Nacimiento: </label>
                                                                 <asp:DropDownList ID="CuenFeNac" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server" AutoPostBack="true" OnSelectedIndexChanged="CuenFeNac_SelectedIndexChanged">
                                                                     <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                                 </asp:DropDownList>
@@ -578,7 +578,7 @@
                                                             <asp:TextBox runat="server" CssClass="form-control form-control-sm mayusculas" ID="HoraIndivi" TextMode="Time"></asp:TextBox>
                                                             <br />
 
-                                                            <label for="" class="form-label text-secondary">Doumento de identificación:</label>
+                                                            <label for="" class="form-label text-secondary">Documento de identificación:</label>
                                                             <asp:DropDownList ID="IDVicti" CssClass="form-select form-select-sm text-secondary mayusculas" runat="server">
                                                                 <asp:ListItem runat="server" Index="0" Value="S" Selected="True" Text="----- SELECCIONE -----"></asp:ListItem>
                                                             </asp:DropDownList>

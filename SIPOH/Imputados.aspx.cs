@@ -135,9 +135,9 @@ namespace SIPOH
                             return;
                         }
                         // Verifica que la edad no sea mayor a 99
-                        else if (campo.Key == "Edad" && int.TryParse(campo.Value, out int age) && age > 99)
+                        else if (campo.Key == "Edad" && int.TryParse(campo.Value, out int age) && (age > 99 || age <= 0))
                         {
-                            ShowToastr("La edad no puede ser mayor a 99.", "Error", "error");
+                            ShowToastr("La edad no puede ser mayor a 99 ni menor a 0.", "Error", "error");
                             return;
                         }
                         // Verifica que los dependientes económicos no sean menores a 0
@@ -147,7 +147,7 @@ namespace SIPOH
                             return;
                         }
                     }
-
+                    // Crear una instancia de ConsultarIdAsunto
                     ConsultarIdAsunto consulta = new ConsultarIdAsunto();
                     int idAsunto = consulta.GetIdAsunto(TAsunto.SelectedValue, numexpe.Text, new GenerarIdJuzgadoPorSesion().ObtenerIdJuzgadoDesdeSesion());
 
@@ -158,6 +158,7 @@ namespace SIPOH
                     string selectedValue = GeneVicti.SelectedValue.ToUpper();
                     string genero;
 
+                    // Asignar valor a 'genero' según 'selectedValue'
                     switch (selectedValue)
                     {
                         case "1":
@@ -182,19 +183,18 @@ namespace SIPOH
                     string rfc = RFCVicti.Text.ToUpper();
                     string curp = CURPVicti.Text.ToUpper();
                     string edad = EdadVicti.Text.ToUpper();
-                    // En tu método existente, actualiza la lógica para manejar la fecha predeterminada
+
+                    // Fecha de nacimiento predeterminada
                     DateTime feNacimiento = DateTime.ParseExact("09/09/1899 00:00:00", "dd/MM/yyyy HH:mm:ss", CultureInfo.InvariantCulture);
 
-                    // Comprueba si el input está habilitado antes de intentar parsear la fecha
+                    // Comprobar si el input de fecha está habilitado
                     if (FeNacVic.Enabled)
                     {
                         if (!DateTime.TryParse(FeNacVic.Text, out feNacimiento))
                         {
-                            // Maneja el error de formato aquí
                             throw new FormatException("La fecha ingresada no tiene el formato correcto.");
                         }
                     }
-                    // No es necesario un else aquí, ya que la fecha predeterminada ya está establecida
 
                     string aliasImp = AliasImp.Text.ToUpper();
                     int idContNacido = int.Parse(ContiNac.SelectedValue.ToUpper());
@@ -218,7 +218,6 @@ namespace SIPOH
                     int idLengExtra = int.Parse(HabLenExtra.SelectedValue.ToUpper());
                     int idRelacImput = int.Parse(RelacVic.SelectedValue.ToUpper());
                     int idAsisMigra = int.Parse(AsisMigra.SelectedValue.ToUpper());
-
                     int idCondFamiliar = int.Parse(CondiFam.SelectedValue.ToUpper());
                     int depEcon = int.Parse(DepEconom.Text.ToUpper());
                     int idSustancias = int.Parse(ConsSus.SelectedValue.ToUpper());
@@ -229,16 +228,16 @@ namespace SIPOH
                     string domResidencia = DomicPersonVicti.Text.ToUpper();
                     int idDefensor = int.Parse(AseJur.SelectedValue.ToUpper());
                     int interprete = int.Parse(ReqInter.SelectedValue.ToUpper());
-                    int ordenProteccion = 0;
+                    int ordenProteccion = 0; // Valor predeterminado
                     DateTime feIndividualizacion = DateTime.Parse(HoraIndivi.Text.ToUpper());
                     int idDocIdentificador = int.Parse(IDVicti.SelectedValue.ToUpper());
-                    string numDocumento = "752552";
+                    string numDocumento = "752552"; // Valor predeterminado
                     string privacidad = AceptaDatos.SelectedValue.ToUpper();
                     string telefono = TelCont.Text.ToUpper();
                     string correo = EmailCont.Text.ToUpper();
                     string fax = Fax.Text.ToUpper();
                     string domNotificacion = DomicPersonVicti.Text.ToUpper();
-                    string otroTipo = "OtroTipo";
+                    string otroTipo = "OtroTipo"; // Valor predeterminado
                     int idUser = IdUsuarioPorSesion.ObtenerIdUsuario();
 
                     // Nuevos campos
@@ -249,6 +248,7 @@ namespace SIPOH
                     int idTipoDeten = 5; // Valor por defecto si el dropdown TipoDeten no está visible
                     int idOrdenJudi = 5; // Valor por defecto si el dropdown OrdenJudi no está visible
 
+                    // Asignar valores según la visibilidad de los dropdowns
                     if (TipoDeten.Visible)
                     {
                         idTipoDeten = int.Parse(TipoDeten.SelectedValue.ToUpper());
@@ -258,22 +258,18 @@ namespace SIPOH
                         idOrdenJudi = int.Parse(OrdenJudi.SelectedValue.ToUpper());
                     }
 
-                    // Datos para P_Discapacidad
                     // Obtener los IDs de las discapacidades agregadas en el GridView
                     List<string> idsDiscapacidades = ObtenerIdsDiscapacidades();
 
                     // Llamar al método que ejecuta el procedimiento almacenado y llena los elementos del formulario
-
                     ActualizarImputado insertador = new ActualizarImputado();
                     insertador.UpdateImputData(
-                    idAsunto, idPartes, apPaterno, apMaterno, nombre, genero, tipoParte, rfc, curp, edad, feNacimiento, aliasImp, idContNacido, idPaisNacido,
-                    idEstadoNacido, idMunicipioNacido, idNacionalidad, idCondicion, idEstadoCivil,
-                    idGradoEstudios, idAlfabet, idiomaEspañol, idPueblo, hablaIndigena,
-                    idDialecto, idOcupacion, idProfesion, domOcupacion, discapacidad, idLengExtra, idRelacImput, idAsisMigra, idContiResidencia, idPaisResidencia,
-                    idEstadoResidencia, idMunicipioResidencia, domResidencia, idDefensor, interprete,
-                    ordenProteccion, feIndividualizacion, idDocIdentificador, numDocumento, privacidad,
-                    telefono, correo, fax, domNotificacion, otroTipo, idUser, idsDiscapacidades, this, idEstadoPsi, idaccipenal, idReinci,
-                    idTipoDeten, idOrdenJudi, idCondFamiliar, depEcon, idSustancias
+                        idAsunto, idPartes, apPaterno, apMaterno, nombre, genero, tipoParte, rfc, curp, edad, feNacimiento, aliasImp, idContNacido, idPaisNacido,
+                        idEstadoNacido, idMunicipioNacido, idNacionalidad, idCondicion, idEstadoCivil, idGradoEstudios, idAlfabet, idiomaEspañol, idPueblo, hablaIndigena,
+                        idDialecto, idOcupacion, idProfesion, domOcupacion, discapacidad, idLengExtra, idRelacImput, idAsisMigra, idContiResidencia, idPaisResidencia,
+                        idEstadoResidencia, idMunicipioResidencia, domResidencia, idDefensor, interprete, ordenProteccion, feIndividualizacion, idDocIdentificador,
+                        numDocumento, privacidad, telefono, correo, fax, domNotificacion, otroTipo, idUser, idsDiscapacidades, this, idEstadoPsi, idaccipenal, idReinci,
+                        idTipoDeten, idOrdenJudi, idCondFamiliar, depEcon, idSustancias
                     );
                 }
             }
@@ -329,9 +325,9 @@ namespace SIPOH
                     return;
                 }
                 // Verifica que la edad no sea mayor a 99
-                else if (campo.Key == "Edad" && int.TryParse(campo.Value, out int age) && age > 99)
+                else if (campo.Key == "Edad" && int.TryParse(campo.Value, out int age) && (age > 99 || age <= 0))
                 {
-                    ShowToastr("La edad no puede ser mayor a 99.", "Error", "error");
+                    ShowToastr("La edad no puede ser mayor a 99 ni menor a 0.", "Error", "error");
                     return;
                 }
                 // Verifica que los dependientes económicos no sean menores a 0
@@ -551,7 +547,6 @@ namespace SIPOH
 
             LlenarFormularioTrasConsultaImputados llenador = new LlenarFormularioTrasConsultaImputados();
             InformacionFormularioImputados info = llenador.LlenarFormulario(idAsunto, idPartes);
-
             ContiNac.Items.Clear();
             PaisNac.Items.Clear();
             EstNaci.Items.Clear();
@@ -565,6 +560,7 @@ namespace SIPOH
             EstablecerValorTextBox(APVic, info.APaterno);
             EstablecerValorTextBox(AMVic, info.AMaterno);
             EstablecerValorTextBox(NomVic, info.Nombre);
+
             if (GeneVicti.Items.FindByValue(info.GeneroNumerico) != null)
             {
                 GeneVicti.SelectedValue = info.GeneroNumerico;
@@ -668,6 +664,7 @@ namespace SIPOH
                 MuniRes.SelectedValue = info.IdMunicipioResidencia;
             }
 
+
             if (info.IdOcupacion != null)
             {
                 // Verificar si el valor existe en la lista antes de asignarlo
@@ -677,25 +674,44 @@ namespace SIPOH
                 }
                 else
                 {
-                    OcupaVicti.Items.Add(new ListItem(info.IdOcupacion, info.IdOcupacion));
-                    OcupaVicti.SelectedValue = info.IdOcupacion;
+                    OcupaVicti.ClearSelection();
                 }
                 dropdownFiller.DropdownProfesiones(DetaOcupaVic, info.IdOcupacion);
             }
 
             EstablecerValorDropDownList(NacVicti, info.IdNacionalidad);
             EstablecerValorDropDownList(HablEsp, info.IdiomaEspañol);
-            EstablecerValorDropDownList(HabLenExtra, info.IdLengExtra);
-            EstablecerValorDropDownList(RelacVic, info.IdRelacVicti);
+            // Luego, verifica si el valor que deseas seleccionar existe en la lista de elementos
+            if (HabLenExtra.Items.FindByValue(info.IdLengExtra) != null)
+            {
+                // Si el valor existe, entonces establece el valor seleccionado
+                HabLenExtra.SelectedValue = info.IdLengExtra;
+            }
+            else
+            {
+                HabLenExtra.SelectedValue = "S";
+            }
+            // Primero, verifica si el valor que deseas seleccionar existe en la lista de elementos
+            if (RelacVic.Items.FindByValue(info.IdRelacVicti.ToString()) != null)
+            {
+                // Si el valor existe, entonces establece el valor seleccionado
+                RelacVic.SelectedValue = info.IdRelacVicti.ToString();
+            }
+            else
+            {
+                RelacVic.SelectedValue = "S";
+            }
+
             EstablecerValorDropDownList(LengIndi, info.IdDialecto);
-            if (CondMigVic.Items.FindByValue(info.IdCondicion) != null)
+
+            if (info.IdCondicion != null && CondMigVic.Items.FindByValue(info.IdCondicion) != null)
             {
                 CondMigVic.SelectedValue = info.IdCondicion;
             }
             else
             {
-                CondMigVic.Items.Add(new ListItem(info.IdCondicion, info.IdCondicion));
-                CondMigVic.SelectedValue = info.IdCondicion;
+                //CondMigVic.Items.Insert(0, new ListItem("--- SELECCIONE ---", "S"));
+                CondMigVic.SelectedValue = "S";
             }
 
             EstablecerValorDropDownList(CondAlfVic, info.IdAlfabet);
@@ -704,18 +720,61 @@ namespace SIPOH
             EstablecerValorTextBox(DomiTrabVicti, info.DomiTrabVicti);
             EstablecerValorDropDownList(EstCivil, info.IdEstadoCivil);
 
-            if (OcupaVicti.Items.FindByValue(info.IdOcupacion) != null)
+            if (info.IdOcupacion != null && OcupaVicti.Items.FindByValue(info.IdOcupacion) != null)
             {
                 OcupaVicti.SelectedValue = info.IdOcupacion;
             }
             else
             {
-                OcupaVicti.Items.Add(new ListItem(info.IdOcupacion, info.IdOcupacion));
-                OcupaVicti.SelectedValue = info.IdOcupacion;
+                //OcupaVicti.Items.Insert(0, new ListItem("--- SELECCIONE ---", "S"));
+                OcupaVicti.SelectedValue = "S";
+
+                DetaOcupaVic.Enabled = false;
+                DetaOcupaVic.Items.Insert(0, new ListItem("--- SELECCIONE ---", "S"));
+                DetaOcupaVic.SelectedValue = "S";
             }
 
-            EstablecerValorDropDownList(GradEst, info.IdGradoEstudios);
-            EstablecerValorDropDownList(CuenDisca, info.Discapacidad);
+
+            if (GradEst.Items.FindByValue(info.IdGradoEstudios) != null)
+            {
+                GradEst.SelectedValue = info.IdGradoEstudios;
+            }
+            else
+            {
+                GradEst.Items.Add(new ListItem(info.IdGradoEstudios, info.IdGradoEstudios));
+                GradEst.SelectedValue = "S";
+            }
+
+            // Asegúrate de que 'info' y 'info.Discapacidad' no sean null
+            if (info != null && info.Discapacidad != null)
+            {
+                // Asegúrate de que 'CuenDisca' no sea null y que los datos ya estén enlazados
+                if (CuenDisca != null && CuenDisca.Items.Count > 0)
+                {
+                    string discapacidadValue = info.Discapacidad.ToString();
+                    if (CuenDisca.Items.FindByValue(discapacidadValue) != null)
+                    {
+                        // Si el valor existe, entonces establece el valor seleccionado
+                        CuenDisca.SelectedValue = discapacidadValue;
+                    }
+                    else
+                    {
+                        // Si el valor no existe, establece un valor predeterminado
+                        CuenDisca.SelectedValue = "S";
+                    }
+                }
+                else
+                {
+                    // Maneja el caso donde 'CuenDisca' es null o no tiene elementos
+                    // Por ejemplo, podrías cargar los elementos aquí o mostrar un mensaje de error
+                }
+            }
+            else
+            {
+                // Maneja el caso donde 'info' o 'info.Discapacidad' son null
+                // Por ejemplo, podrías asignar valores predeterminados o mostrar un mensaje de error
+            }
+
 
             if (AsisMigra.Items.FindByValue(info.IdAsisMigra) != null)
             {
@@ -723,9 +782,11 @@ namespace SIPOH
             }
             else
             {
-                AsisMigra.Items.Add(new ListItem(info.IdAsisMigra, info.IdAsisMigra));
-                AsisMigra.SelectedValue = info.IdAsisMigra;
+                //AsisMigra.Items.Insert(0, new ListItem("--- SELECCIONE ---", "S"));
+                AsisMigra.SelectedValue = "S";
             }
+
+
 
             EstablecerValorTextBox(DomicPersonVicti, info.DomResidencia);
             EstablecerValorDropDownList(AseJur, info.IdDefensor);
@@ -754,7 +815,6 @@ namespace SIPOH
             gvDiscapacidades2.DataSource = dtDiscapacidades;
             gvDiscapacidades2.DataBind();
 
-
             EstablecerValorTextBox(AliasImp, info.Alias);
             EstablecerValorDropDownList(CondiFam, info.IdCondFamiliar);
             EstablecerValorDropDownList(ConsSus, info.IdSustancias);
@@ -766,121 +826,164 @@ namespace SIPOH
             EstablecerValorDropDownList(OrdenJudi, info.IdOrdenJudicial);
         }
 
+
         protected void ContiNac_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int idContinente = Convert.ToInt32(ContiNac.SelectedValue);
-            CatalogosVictimas dropdownFiller = new CatalogosVictimas();
-            PaisNac.SelectedValue = "S";
-            EstNaci.Items.Clear();
-            EstNaci.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
-            EstNaci.SelectedValue = "S";
-            MuniNac.Items.Clear();
-            MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
-            MuniNac.SelectedValue = "S";
-            dropdownFiller.DropdownPaises(PaisNac, idContinente);
+            if (ContiNac.SelectedValue != "S")
+            {
+                int idContinente = Convert.ToInt32(ContiNac.SelectedValue);
+                CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+                PaisNac.SelectedValue = "S";
+                EstNaci.Items.Clear();
+                EstNaci.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                EstNaci.SelectedValue = "S";
+                MuniNac.Items.Clear();
+                MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                MuniNac.SelectedValue = "S";
+                dropdownFiller.DropdownPaises(PaisNac, idContinente);
+            }
+            else
+            {
+                PaisNac.SelectedValue = "S";
+                PaisNac.Items.Clear();
+                PaisNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                EstNaci.Items.Clear();
+                EstNaci.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                EstNaci.SelectedValue = "S";
+                MuniNac.Items.Clear();
+                MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                MuniNac.SelectedValue = "S";
+            }
         }
 
         protected void PaisNac_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int idPais = Convert.ToInt32(PaisNac.SelectedValue);
-            CatalogosVictimas dropdownFiller = new CatalogosVictimas();
-            EstNaci.Items.Clear();
-            EstNaci.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
-            EstNaci.SelectedValue = "S";
-            MuniNac.Items.Clear();
-            MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
-            MuniNac.SelectedValue = "S";
+            if (PaisNac.SelectedValue != "S")
+            {
+                int idPais = Convert.ToInt32(PaisNac.SelectedValue);
+                CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+                EstNaci.Items.Clear();
+                EstNaci.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                EstNaci.SelectedValue = "S";
+                MuniNac.Items.Clear();
+                MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                MuniNac.SelectedValue = "S";
 
-            if (idPais == 141)
-            {
-                dropdownFiller.DropdownEntidades(EstNaci);
-            }
-            else
-            {
-                ListItem listItem = new ListItem("No aplica", "-2");
-                EstNaci.Items.Add(listItem);
-                MuniNac.Items.Add(listItem);
+                if (idPais == 141)
+                {
+                    dropdownFiller.DropdownEntidades(EstNaci);
+                }
+                else
+                {
+                    ListItem listItem = new ListItem("No aplica", "-2");
+                    EstNaci.Items.Add(listItem);
+                    MuniNac.Items.Add(listItem);
+                }
             }
         }
 
         protected void EstNaci_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedIdEstado = EstNaci.SelectedValue;
-            MuniNac.Items.Clear();
-            MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
-            MuniNac.SelectedValue = "S";
-
-            CatalogosVictimas dropdownFiller = new CatalogosVictimas();
-            int idPais = Convert.ToInt32(PaisNac.SelectedValue);
-
-            if (idPais == 141)
+            if (EstNaci.SelectedValue != "S")
             {
-                dropdownFiller.DropdownMunicipios(MuniNac, selectedIdEstado);
-            }
-            else
-            {
-                ListItem listItem = new ListItem("No aplica", "-2");
-                MuniNac.Items.Add(listItem);
+                string selectedIdEstado = EstNaci.SelectedValue;
+                MuniNac.Items.Clear();
+                MuniNac.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                MuniNac.SelectedValue = "S";
+
+                CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+                int idPais = Convert.ToInt32(PaisNac.SelectedValue);
+
+                if (idPais == 141)
+                {
+                    dropdownFiller.DropdownMunicipios(MuniNac, selectedIdEstado);
+                }
+                else
+                {
+                    ListItem listItem = new ListItem("No aplica", "-2");
+                    MuniNac.Items.Add(listItem);
+                }
             }
         }
 
-
+        // Repite el mismo patrón para los otros eventos ContiRes_SelectedIndexChanged, PaisRes_SelectedIndexChanged, y EstRes_SelectedIndexChanged
 
         protected void ContiRes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int idContinente = Convert.ToInt32(ContiRes.SelectedValue);
-            CatalogosVictimas dropdownFiller = new CatalogosVictimas();
-            PaisRes.SelectedValue = "S";
-            EstaRes.Items.Clear();
-            EstaRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
-            EstaRes.SelectedValue = "S";
-            MuniRes.Items.Clear();
-            MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
-            MuniRes.SelectedValue = "S";
-            dropdownFiller.DropdownPaises(PaisRes, idContinente);
+            if (ContiRes.SelectedValue != "S")
+            {
+                int idContinente = Convert.ToInt32(ContiRes.SelectedValue);
+                CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+                PaisRes.SelectedValue = "S";
+                EstaRes.Items.Clear();
+                EstaRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                EstaRes.SelectedValue = "S";
+                MuniRes.Items.Clear();
+                MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                MuniRes.SelectedValue = "S";
+                dropdownFiller.DropdownPaises(PaisRes, idContinente);
+            }
+            else
+            {
+                PaisRes.SelectedValue = "S";
+                PaisRes.Items.Clear();
+                PaisRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                EstaRes.Items.Clear();
+                EstaRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                EstaRes.SelectedValue = "S";
+                MuniRes.Items.Clear();
+                MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                MuniRes.SelectedValue = "S";
+            }
         }
 
         protected void PaisRes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int idPais = Convert.ToInt32(PaisRes.SelectedValue);
-            CatalogosVictimas dropdownFiller = new CatalogosVictimas();
-            EstaRes.Items.Clear();
-            EstaRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
-            EstaRes.SelectedValue = "S";
-            MuniRes.Items.Clear();
-            MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
-            MuniRes.SelectedValue = "S";
+            if (PaisRes.SelectedValue != "S")
+            {
+                int idPais = Convert.ToInt32(PaisRes.SelectedValue);
+                CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+                EstaRes.Items.Clear();
+                EstaRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                EstaRes.SelectedValue = "S";
+                MuniRes.Items.Clear();
+                MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                MuniRes.SelectedValue = "S";
 
-            if (idPais == 141)
-            {
-                dropdownFiller.DropdownEntidades(EstaRes);
-            }
-            else
-            {
-                ListItem listItem = new ListItem("No aplica", "-2");
-                EstaRes.Items.Add(listItem);
-                MuniRes.Items.Add(listItem);
+                if (idPais == 141)
+                {
+                    dropdownFiller.DropdownEntidades(EstaRes);
+                }
+                else
+                {
+                    ListItem listItem = new ListItem("No aplica", "-2");
+                    EstaRes.Items.Add(listItem);
+                    MuniRes.Items.Add(listItem);
+                }
             }
         }
 
         protected void EstRes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedIdEstado = EstaRes.SelectedValue;
-            MuniRes.Items.Clear();
-            MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
-            MuniRes.SelectedValue = "S";
-
-            CatalogosVictimas dropdownFiller = new CatalogosVictimas();
-            int idPais = Convert.ToInt32(PaisRes.SelectedValue);
-
-            if (idPais == 141)
+            if (EstaRes.SelectedValue != "S")
             {
-                dropdownFiller.DropdownMunicipios(MuniRes, selectedIdEstado);
-            }
-            else
-            {
-                ListItem listItem = new ListItem("No aplica", "-2");
-                MuniRes.Items.Add(listItem);
+                string selectedIdEstado = EstaRes.SelectedValue;
+                MuniRes.Items.Clear();
+                MuniRes.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+                MuniRes.SelectedValue = "S";
+
+                CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+                int idPais = Convert.ToInt32(PaisRes.SelectedValue);
+
+                if (idPais == 141)
+                {
+                    dropdownFiller.DropdownMunicipios(MuniRes, selectedIdEstado);
+                }
+                else
+                {
+                    ListItem listItem = new ListItem("No aplica", "-2");
+                    MuniRes.Items.Add(listItem);
+                }
             }
         }
 
@@ -892,38 +995,58 @@ namespace SIPOH
             // Limpia los elementos existentes en el dropdown Detalle Ocupación
             DetaOcupaVic.Items.Clear();
 
-            // Si el valor seleccionado es "SO", deshabilita el dropdown "DetaOcupaVic" y selecciona la opción "SDO"
+            // Si el valor seleccionado es "S", deshabilita el dropdown Detalle Ocupación y asigna el valor "S" seleccionado
             if (selectedIdOcupacion == "S")
             {
                 DetaOcupaVic.Enabled = false;
-                DetaOcupaVic.Items.Add(new ListItem("Seleccione el detalle de la ocupación...", "SDO"));
+                DetaOcupaVic.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
                 DetaOcupaVic.SelectedValue = "S";
             }
             else
             {
                 CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+
                 // Llama a la función para llenar el dropdown Detalle Ocupación con el IdOcupacion seleccionado
                 dropdownFiller.DropdownProfesiones(DetaOcupaVic, selectedIdOcupacion);
 
+                // Habilita el dropdown Detalle Ocupación
                 DetaOcupaVic.Enabled = true;
+
+                // Selecciona el valor "S" por defecto
+                DetaOcupaVic.Items.Insert(0, new ListItem("----- SELECCIONE -----", "S"));
+                DetaOcupaVic.SelectedValue = "S";
             }
         }
+
+
 
         protected void CuenDisca_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Obtén el valor seleccionado del dropdown CuenDisca
             string selectedValue = CuenDisca.SelectedValue;
 
-            // Si el valor seleccionado es "S", habilita los dropdowns TipoDisca y DiscaEspe
+            // Si el valor seleccionado es "1"
             if (selectedValue == "1")
             {
                 TipoDisca.Enabled = true;
                 DiscaEspe.Enabled = true;
+
+                // Establece los valores de los dropdowns TipoDisca y DiscaEspe en "S"
+                TipoDisca.SelectedValue = "S";
+                DiscaEspe.SelectedValue = "S";
+
+                // Llama a la función para llenar el dropdown DiscaEspe con opciones correspondientes al valor "S" seleccionado en TipoDisca
+                DropdownDiscapacidad_SelectedIndexChanged(sender, e);
             }
             else
             {
+                // Si el valor seleccionado es diferente de "1", deshabilita los dropdowns TipoDisca y DiscaEspe
                 TipoDisca.Enabled = false;
                 DiscaEspe.Enabled = false;
+
+                // Limpia los valores seleccionados en los dropdowns TipoDisca y DiscaEspe
+                TipoDisca.ClearSelection();
+                DiscaEspe.ClearSelection();
             }
         }
 
@@ -935,18 +1058,48 @@ namespace SIPOH
             // Limpia los elementos existentes en el dropdown Detalle Ocupación
             DiscaEspe.Items.Clear();
 
-            CatalogosVictimas dropdownFiller = new CatalogosVictimas();
-            // Llama a la función para llenar el dropdown Detalle Ocupación con el IdOcupacion seleccionado
-            dropdownFiller.DropdownEspeDiscapacidad(DiscaEspe, selectedIdDiscapacidad);
+            // Agrega el elemento de selección "----- SELECCIONE -----" con valor "S"
+            DiscaEspe.Items.Add(new ListItem("----- SELECCIONE -----", "S"));
+
+            // Selecciona siempre "S" en el dropdown DiscaEspe
+            DiscaEspe.SelectedValue = "S";
+
+            if (!string.IsNullOrEmpty(selectedIdDiscapacidad) && selectedIdDiscapacidad != "S")
+            {
+                CatalogosVictimas dropdownFiller = new CatalogosVictimas();
+                // Llama a la función para llenar el dropdown Detalle Ocupación con el IdOcupacion seleccionado
+                dropdownFiller.DropdownEspeDiscapacidad(DiscaEspe, selectedIdDiscapacidad);
+            }
         }
 
         protected void btnAgregarDiscapacidad_Click(object sender, EventArgs e)
         {
+            // Obtener el valor seleccionado del dropdown DiscaEspe
             string idDiscapacidad = DiscaEspe.SelectedValue;
+
+            // Verificar si el valor seleccionado es "S"
+            if (idDiscapacidad == "S")
+            {
+                // Generar el script de toastr para mostrar el mensaje de error
+                string script = "toastr.error('Por favor, seleccione una discapacidad válida.');";
+                // Registrar el script en el cliente
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "toastrError", script, true);
+                return; // Salir del método para evitar la inserción
+            }
+
+            // Obtener el texto del dropdown DiscaEspe
             string discapacidad = DiscaEspe.SelectedItem.Text;
+
+            // Llamar al método para agregar discapacidad
             AgregarDiscapacidad AgregarDisca = new AgregarDiscapacidad();
             AgregarDisca.AgregarDiscapacidades(gvDiscapacidades, DiscaEspe, TipoDisca, idDiscapacidad, discapacidad, HttpContext.Current.Session["Discapacidades"]);
+
+            // Limpiar la selección actual y seleccionar "S" con el texto "----- SELECCIONE -----" después de agregar la discapacidad
+            DiscaEspe.ClearSelection();
+            DiscaEspe.Items.Insert(0, new ListItem("----- SELECCIONE -----", "S"));
+            DiscaEspe.SelectedValue = "S";
         }
+
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
@@ -967,7 +1120,15 @@ namespace SIPOH
             }
             else
             {
+                // Si no se selecciona "1", establece el valor predeterminado "15" y deshabilita el control
                 LengIndi.SelectedValue = "15";
+                LengIndi.Enabled = false;
+            }
+
+            if (HablLengIndi.SelectedValue == "S")
+            {
+                // Si se selecciona "S", establece el valor "S" y deshabilita el control
+                LengIndi.SelectedValue = "S";
                 LengIndi.Enabled = false;
             }
         }

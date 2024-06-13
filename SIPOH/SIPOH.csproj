@@ -2528,6 +2528,7 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Site.Master" />
     <Content Include="SolicitudCDs.aspx" />
+    <Content Include="UbExpediente.aspx" />
     <Content Include="Victimas.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Views\ConsignacionElements\CerrarSesion.ascx" />
@@ -2994,6 +2995,13 @@
     </Compile>
     <Compile Include="SolicitudCDs.aspx.designer.cs">
       <DependentUpon>SolicitudCDs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UbExpediente.aspx.cs">
+      <DependentUpon>UbExpediente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UbExpediente.aspx.designer.cs">
+      <DependentUpon>UbExpediente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Victimas.aspx.cs">
       <DependentUpon>Victimas.aspx</DependentUpon>
