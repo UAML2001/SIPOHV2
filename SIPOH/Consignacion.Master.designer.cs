@@ -285,13 +285,21 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentUbiExpe;
 
         /// <summary>
+<<<<<<< Updated upstream
         /// Control BuzonAgenda.
+=======
+        /// Control ExpeOficios.
+>>>>>>> Stashed changes
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
+<<<<<<< Updated upstream
         protected global::System.Web.UI.WebControls.ContentPlaceHolder BuzonAgenda;
+=======
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder ExpeOficios;
+>>>>>>> Stashed changes
 
         /// <summary>
         /// Control CerrarSesion.
