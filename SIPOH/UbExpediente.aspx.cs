@@ -84,7 +84,6 @@ namespace SIPOH
 
                                 // Mostrar el panel de expediente
                                 PanelExpediente.Visible = true;
-                                AddComentario.Visible = true;
                                 BindGrid();
 
                                 // Ocultar el panel de búsqueda después de encontrar el expediente
@@ -245,13 +244,17 @@ namespace SIPOH
             {
                 // Mostrar mensaje de error si ya existen registros
                 ScriptManager.RegisterStartupScript(this, GetType(), "toastrMessage",
-                    "toastr.error('Ya existe un comentario registrado. No se puede agregar otro comentario.'); showGridView();", true);
+                    "toastr.error('Ya existe un comentario registrado. No se puede agregar otro comentario.');", true);
+                // Agregar este código para mantener visible el GridView
+                ubiExpe.DataBind();
             }
             else
             {
                 // Mostrar el panel para ingresar un nuevo comentario si no existen registros
                 //PanelIngComent.Visible = true;
                 PanelIngComent.Style["display"] = "block";
+                // Agregar este código para mantener visible el GridView
+                ubiExpe.DataBind();
             }
         }
 

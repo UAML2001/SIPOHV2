@@ -186,15 +186,6 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.GridView ubiExpe;
 
         /// <summary>
-        /// Control UpdatePanelComentario.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanelComentario;
-
-        /// <summary>
         /// Control PanelIngComent.
         /// </summary>
         /// <remarks>
@@ -229,15 +220,6 @@ namespace SIPOH
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button CancComent;
-
-        /// <summary>
-        /// Control UpdatePanelComentarioIngresado.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanelComentarioIngresado;
 
         /// <summary>
         /// Control PanelComentIng.

@@ -26,7 +26,7 @@ namespace SIPOH
             LabelProfile.Text = HttpContext.Current.Session["PerfilNombre"] as string;            
            
             
-          int IdPefil = int.Parse(HttpContext.Current.Session["IdPerfil"] as string);            
+            int IdPefil = int.Parse(HttpContext.Current.Session["IdPerfil"] as string);            
             LabelAddress.Text = HttpContext.Current.Session["Address"] as string;
             LabelPhoneNum.Text = HttpContext.Current.Session["PhoneNum"] as string;
             LabelEmail.Text = HttpContext.Current.Session["Email"] as string;

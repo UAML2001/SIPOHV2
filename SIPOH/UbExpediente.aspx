@@ -177,9 +177,9 @@
                                     <div class="scrollable" runat="server">
                                         <div class="mb-2" style="display: flex; justify-content: space-between; align-items: center;">
                                             <span class="text-success fw-bold m-2">
-                                                <i class="bi bi-geo-alt-fill"></i> Ubicación del Expediente:
+                                                <i class="bi bi-geo-alt-fill"></i>Ubicación del Expediente:
                                             </span>
-                                            <asp:Button ID="AddComentario" runat="server" AutoPostBack="True" Text="💬 Agregar Comentario" CssClass="btn btn-outline-primary btn-sm mayusculas button-width" OnClick="AddComentario_Click" />
+                                            <asp:Button ID="AddComentario" runat="server" Text="💬 Agregar Comentario" CssClass="btn btn-outline-primary btn-sm mayusculas button-width" OnClick="AddComentario_Click" />
                                         </div>
                                         <asp:GridView ID="ubiExpe" CssClass="table table-striped text-center table-hover table-sm" runat="server" AutoGenerateColumns="False" AllowPaging="True" PageSize="3">
                                             <Columns>
@@ -191,18 +191,12 @@
                                         </asp:GridView>
                                     </div>
                                 </asp:Panel>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
 
-                        <br />
-                        
-                        <!-- UpdatePanel for Adding Comments -->
-                        <asp:UpdatePanel ID="UpdatePanelComentario" runat="server">
-                            <ContentTemplate>
+
                                 <asp:Panel ID="PanelIngComent" runat="server" CssClass="center-panel" Style="display: none;">
                                     <div class="mb-2">
                                         <span class="text-success fw-bold m-2">
-                                            <i class="bi bi-chat-fill"></i> Ingrese su Comentario:
+                                            <i class="bi bi-chat-fill"></i>Ingrese su Comentario:
                                         </span>
                                     </div>
                                     <div class="form-floating">
@@ -215,17 +209,11 @@
                                         </div>
                                     </div>
                                 </asp:Panel>
-                            </ContentTemplate>
-                        </asp:UpdatePanel>
 
-                        <br />
-
-                        <asp:UpdatePanel ID="UpdatePanelComentarioIngresado" runat="server">
-                            <ContentTemplate>
                                 <asp:Panel ID="PanelComentIng" runat="server" CssClass="center-panel" Style="display: none;">
                                     <div class="mb-2">
                                         <span class="text-success fw-bold m-2 aliing">
-                                            <i class="bi bi-chat-fill"></i> Comentario Ingresado:
+                                            <i class="bi bi-chat-fill"></i>Comentario Ingresado:
                                         </span>
                                         <br />
                                     </div>
@@ -243,11 +231,11 @@
                                                 <asp:Label ID="Label9" Text="Usuario que comentó:" runat="server" CssClass="card-text fw-bold"></asp:Label>
                                                 <asp:Label ID="lblUsuario" Text=" Aquí va el usuario" runat="server" CssClass="card-text fst-italic"></asp:Label>
                                             </div>
-                                            
+
                                             <asp:Panel ID="ModificarComentario" runat="server" Style="display: none;">
                                                 <br />
                                                 <span class="text-success fw-bold m-2 aliing">
-                                                    <i class="bi bi-pencil-fill"></i> Modificar Comentario:
+                                                    <i class="bi bi-pencil-fill"></i>Modificar Comentario:
                                                 </span>
                                                 <div class="mt-3">
                                                     <asp:TextBox ID="ComentModificado" runat="server" TextMode="MultiLine" CssClass="form-control" Rows="3"></asp:TextBox>
@@ -308,36 +296,6 @@
                     input.value = numeroToca;
                 }
             </script>
-
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                    <script type="text/javascript">
-                        $(document).ready(function () {
-                            $("[id*=gvVictimas] input:checkbox").click(function () {
-                                var selected = $(this).is(":checked");
-                                $("[id*=gvVictimas] input:checkbox").prop("checked", false);
-                                if (selected) {
-                                    $(this).prop("checked", true);
-                                }
-                            });
-                        });
-               </script>
-
-    <script type="text/javascript">
-        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequestHandler);
-
-        function EndRequestHandler(sender, args) {
-            // Volver a mostrar el GridView después de que se complete el postback parcial
-            var gridView = document.getElementById('<%= ubiExpe.ClientID %>');
-            if (gridView.style.display === 'none') {
-                gridView.style.display = 'block';
-            }
-        }
-    </script>
-
-
-
-
-
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
