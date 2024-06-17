@@ -1,203 +1,164 @@
-﻿$(document).ready(function () {
-    function ini_events(ele) {
-        ele.each(function () {
-            var eventObject = {
-                title: $.trim($(this).text())
-            };
-            $(this).data('eventObject', eventObject);
-            $(this).draggable({
-                zIndex: 1070,
-                revert: true,
-                revertDuration: 0
-            });
-        });
+﻿var currentDateOfWeek = new Date();
+var getDates = function (startDate, endDate) {
+    var dates = [],
+        currentDate = startDate,
+        addDays = function (days) {
+            var date = new Date(this.valueOf());
+            date.setDate(date.getDate() + days);
+            return date;
+        };
+    while (currentDate <= endDate) {
+        dates.push(currentDate);
+        currentDate = addDays.call(currentDate, 1);
     }
+    return dates;
+};
 
-    ini_events($('#external-events div.external-event'));
-
-    var Calendar = FullCalendar.Calendar;
-    var Draggable = FullCalendar.Draggable;
-
-    var containerEl = document.getElementById('external-events');
-    var checkbox = document.getElementById('drop-remove');
+$(document).ready(function () {
     var calendarEl = document.getElementById('calendar');
 
-    new Draggable(containerEl, {
-        itemSelector: '.external-event',
-        eventData: function (eventEl) {
-            return {
-                title: eventEl.innerText,
-                backgroundColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
-                borderColor: window.getComputedStyle(eventEl, null).getPropertyValue('background-color'),
-                textColor: window.getComputedStyle(eventEl, null).getPropertyValue('color'),
-            };
-        }
-    });
-
-    var calendar = new Calendar(calendarEl, {
-        initialView: 'timeGridDay',
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+        editable: true,
+        initialView: 'resourceTimelineDay',
+        initialDate: new Date(),
+        locale: 'es',
+        customButtons: {
+            prev: {
+                text: 'Anterior',
+                click: function () {
+                    currentDateOfWeek.setDate(currentDateOfWeek.getDate() - 7);
+                    calendar.prev();
+                }
+            },
+            next: {
+                text: 'Siguiente',
+                click: function () {
+                    currentDateOfWeek.setDate(currentDateOfWeek.getDate() + 7);
+                    calendar.next();
+                }
+            },
+        },
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'timeGridDay'
+            right: 'resourceTimelineDay,resourceTimelineTwoDays,resourceTimelineMonth'
         },
-        themeSystem: 'bootstrap',
-        locale: 'es',
+        views: {
+            resourceTimelineDay: {
+                slotLabelFormat: {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                }
+            },
+            resourceTimelineTwoDays: {
+                type: 'resourceTimeline',
+                duration: { days: 2 },
+                buttonText: '2 días',
+                slotLabelFormat: {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                }
+            },
+            resourceTimelineMonth: {
+                type: 'resourceTimeline',
+                duration: { month: 1 },
+                buttonText: 'Mes',
+                slotLabelFormat: [
+                    { weekday: 'short' }, // Display day of the week
+                    { day: 'numeric', month: 'numeric' } // Display day and month
+                ]
+            }
+        },
         buttonText: {
             today: 'Hoy',
-            day: 'Día'
+            day: 'Día',
+            resourceTimelineDay: 'Día',
+            resourceTimelineTwoDays: '2 días',
+            resourceTimelineMonth: 'Mes'
         },
-        allDayText: 'Todo el día',
-        editable: true,
-        droppable: true,
-        drop: function (info) {
-            if (checkbox.checked) {
-                info.draggedEl.parentNode.removeChild(info.draggedEl);
+        height: 'auto',
+        contentHeight: 'auto',
+        slotMinWidth: 50,
+        refetchResourcesOnNavigate: true,
+        resourceAreaHeaderContent: 'Salas',
+        resources: [
+            { id: 'sala1', title: 'Sala 1' },
+            { id: 'sala2', title: 'Sala 2' },
+            { id: 'sala3', title: 'Sala 3' },
+            { id: 'sala4', title: 'Sala 4' },
+            { id: 'sala5', title: 'Sala 5' },
+            { id: 'sala6', title: 'Sala 6' },
+            { id: 'sala7', title: 'Sala 7' },
+            { id: 'sala8', title: 'Sala 8' },
+            { id: 'sala9', title: 'Sala 9' },
+            {
+                id: 'sala9F', title: 'Foráneos', children: [
+                    { id: 'subsalaA', title: 'Sub Sala A' },
+                    { id: 'subsalaB', title: 'Sub Sala B' }
+                ]
             }
-        },
-        eventClick: function (info) {
-            $('#modalAudiencias').modal('show');
-            $('#new-event').val(info.event.title);
-            $('#descripcionAgenda').val(info.event.extendedProps.description);
-            $('#ddlJuecesAgenda').val(info.event.extendedProps.judge);
-
-            $('#add-new-event').off('click').on('click', function () {
-                info.event.setProp('title', $('#new-event').val());
-                info.event.setExtendedProp('description', $('#descripcionAgenda').val());
-                info.event.setExtendedProp('judge', $('#ddlJuecesAgenda').val());
-                $('#modalAudiencias').modal('hide');
-            });
-
-            $('#delete-event').off('click').on('click', function () {
-                info.event.remove();
-                $('#modalAudiencias').modal('hide');
-            });
-        },
-        eventDidMount: function (info) {
-            if (info.view.type === 'timeGridDay') {
-                var tr = $(info.el).closest('tr');
-                if (!tr.find('.fc-name-cell').length) {
-                    for (var i = 1; i <= 9; i++) {
-                        tr.append('<td class="fc-name-cell">Sala ' + i + '</td>');
-                    }
-                }
+        ],
+        events: [
+            {
+                title: 'Evento Diario Sala 1',
+                start: new Date().toISOString().substr(0, 10) + 'T08:00:00',
+                resourceId: 'sala1'
+            },
+            {
+                title: 'Evento Diario Sala 2',
+                start: new Date().toISOString().substr(0, 10) + 'T10:00:00',
+                resourceId: 'sala2'
+            },
+            {
+                title: 'Evento Diario Sala 3',
+                start: new Date().toISOString().substr(0, 10) + 'T12:00:00',
+                resourceId: 'sala3'
+            },
+            {
+                title: 'Evento Diario Sala 4',
+                start: new Date().toISOString().substr(0, 10) + 'T14:00:00',
+                resourceId: 'sala4'
+            },
+            {
+                title: 'Evento Diario Sala 5',
+                start: new Date().toISOString().substr(0, 10) + 'T16:00:00',
+                resourceId: 'sala5'
+            },
+            {
+                title: 'Evento Diario Sala 6',
+                start: new Date().toISOString().substr(0, 10) + 'T18:00:00',
+                resourceId: 'sala6'
+            },
+            {
+                title: 'Evento Diario Sala 7',
+                start: new Date().toISOString().substr(0, 10) + 'T20:00:00',
+                resourceId: 'sala7'
+            },
+            {
+                title: 'Evento Diario Sala 8',
+                start: new Date().toISOString().substr(0, 10) + 'T22:00:00',
+                resourceId: 'sala8'
+            },
+            {
+                title: 'Evento Diario Sala 9',
+                start: new Date().toISOString().substr(0, 10) + 'T23:59:00',
+                resourceId: 'sala9'
+            },
+            {
+                title: 'Evento Diario Sub Sala A',
+                start: new Date().toISOString().substr(0, 10) + 'T15:00:00',
+                resourceId: 'subsalaA'
+            },
+            {
+                title: 'Evento Diario Sub Sala B',
+                start: new Date().toISOString().substr(0, 10) + 'T17:00:00',
+                resourceId: 'subsalaB'
             }
-        },
-        viewDidMount: function (view) {
-            addDummyRows(view);
-        }
+        ]
     });
 
-    function addDummyRows(view) {
-        if (view.type === 'timeGridDay') {
-            var table = $(view.el).find('table');
-            if (!table.find('thead tr .fc-name-header').length) {
-                var headerRow = '<tr>';
-                headerRow += '<th></th>'; // Añadir una celda vacía para la primera columna
-                for (var i = 1; i <= 9; i++) {
-                    headerRow += '<th class="fc-name-header">Sala ' + i + '</th>';
-                }
-                headerRow += '</tr>';
-                table.find('thead').append(headerRow);
-            }
-            table.find('tbody tr').each(function () {
-                if (!$(this).find('.fc-name-cell').length) {
-                    var row = '';
-                    row += '<td></td>'; // Añadir una celda vacía para la primera columna
-                    for (var i = 1; i <= 9; i++) {
-                        row += '<td class="fc-name-cell"></td>';
-                    }
-                    $(this).append(row);
-                }
-            });
-
-            // Agregar filas dummy para mostrar las celdas incluso sin eventos
-            var tbody = table.find('tbody');
-            if (tbody.find('.fc-dummy-row').length === 0) {
-                for (var i = 0; i < 1; i++) {
-                    var tr = $('<tr class="fc-dummy-row"></tr>');
-                    tr.append('<td></td>'); // Añadir una celda vacía para la primera columna
-                    for (var j = 0; j < 9; j++) {
-                        tr.append('<td class="fc-name-cell">Sala ' + (j + 1) + '</td>');
-                    }
-                    tbody.append(tr);
-                }
-            }
-        }
-    }
-
-    // Inicializar el calendario y asegurar que las celdas se agreguen correctamente
     calendar.render();
-    addDummyRows(calendar.view);
-
-    $('#trash').droppable({
-        accept: '.fc-event',
-        drop: function (event, ui) {
-            var eventId = ui.helper.data('fcSeg').eventRange.def.id;
-            var event = calendar.getEventById(eventId);
-            if (event) {
-                event.remove();
-            }
-        }
-    });
-
-    var currColor = '#3c8dbc';
-    $('#color-chooser > li > a').click(function (e) {
-        e.preventDefault();
-        currColor = $(this).css('color');
-        $('#add-new-event').css({
-            'background-color': currColor,
-            'border-color': currColor
-        });
-    });
-    $('#add-new-event').click(function (e) {
-        e.preventDefault();
-        var val = $('#new-event').val();
-        if (val.length == 0) {
-            return;
-        }
-
-        var newEvent = {
-            title: val,
-            start: new Date(),
-            backgroundColor: currColor,
-            borderColor: currColor,
-            textColor: '#fff'
-        };
-
-        calendar.addEvent(newEvent);
-        $('#new-event').val('');
-    });
-
-    $('#abrirModalAgenda').click(function () {
-        $('#modalAudiencias').modal('show');
-        $('#add-new-event').off('click').on('click', function () {
-            var title = $('#new-event').val();
-            var description = $('#descripcionAgenda').val();
-            var judge = $('#ddlJuecesAgenda').val();
-            var newEvent = {
-                title: title,
-                start: new Date(),
-                backgroundColor: currColor,
-                borderColor: currColor,
-                description: description,
-                judge: judge,
-                allDay: true
-            };
-            calendar.addEvent(newEvent);
-            $('#modalAudiencias').modal('hide');
-        });
-    });
-
-    // Asegurar que la vista se monte correctamente después de cualquier postback parcial
-    Sys.WebForms.PageRequestManager.getInstance().add_pageLoaded(function () {
-        calendar.changeView('timeGridDay');
-        addDummyRows(calendar.view);
-    });
-
-    // Asegurarse de que las celdas se inicialicen correctamente al cargar la página
-    window.onload = function () {
-        calendar.changeView('timeGridDay');
-        addDummyRows(calendar.view);
-    };
 });

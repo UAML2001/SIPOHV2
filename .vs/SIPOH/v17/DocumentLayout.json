@@ -1,14 +1,34 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\",
+  "WorkspaceRootPath": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\uriel\\onedrive\\documentos\\github\\sipohv2\\sipoh\\portadasdigitalizacion.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\portadasdigitalizacion.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|C:\\Users\\Usuario\\Documents\\SIPOHV2\\sipoh\\scripts\\agenda\\agenda.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\scripts\\agenda\\agenda.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\sipoh\\portadasdigitalizacion.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\portadasdigitalizacion.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\usuario\\documents\\sipohv2\\sipoh\\agendabandeja.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\agendabandeja.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\usuario\\documents\\sipohv2\\sipoh\\agenda.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\agenda.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\usuario\\documents\\sipohv2\\sipoh\\agendabandeja.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\agendabandeja.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\usuario\\documents\\sipohv2\\sipoh\\agenda.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\agenda.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\usuario\\documents\\sipohv2\\sipoh\\consignacion.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\consignacion.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|c:\\users\\usuario\\documents\\sipohv2\\sipoh\\content\\css\\agenda\\agenda.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{FC11ADA6-7DB4-4D3F-9CDC-F8ED9BEF52D1}|SIPOH\\SIPOH.csproj|solutionrelative:sipoh\\content\\css\\agenda\\agenda.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,32 +38,99 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PortadasDigitalizacion.aspx.cs",
-              "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\PortadasDigitalizacion.aspx.cs",
-              "RelativeDocumentMoniker": "SIPOH\\PortadasDigitalizacion.aspx.cs",
-              "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\PortadasDigitalizacion.aspx.cs",
-              "RelativeToolTip": "SIPOH\\PortadasDigitalizacion.aspx.cs",
-              "ViewState": "AQIAAIUAAAAAAAAAAAAiwNMAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-22T21:44:50.292Z",
+              "DocumentIndex": 4,
+              "Title": "Agenda.aspx",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\Agenda.aspx",
+              "RelativeDocumentMoniker": "SIPOH\\Agenda.aspx",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\Agenda.aspx",
+              "RelativeToolTip": "SIPOH\\Agenda.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2024-06-13T17:48:09.727Z",
+              "IsPinned": true,
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "PortadasDigitalizacion.aspx",
-              "DocumentMoniker": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\PortadasDigitalizacion.aspx",
-              "RelativeDocumentMoniker": "SIPOH\\PortadasDigitalizacion.aspx",
-              "ToolTip": "C:\\Users\\uriel\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\PortadasDigitalizacion.aspx",
-              "RelativeToolTip": "SIPOH\\PortadasDigitalizacion.aspx",
+              "Title": "AgendaBandeja.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\AgendaBandeja.aspx.cs",
+              "RelativeDocumentMoniker": "SIPOH\\AgendaBandeja.aspx.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\AgendaBandeja.aspx.cs",
+              "RelativeToolTip": "SIPOH\\AgendaBandeja.aspx.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAgwBoAAABaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-17T21:20:49.844Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Agenda.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\Agenda.aspx.cs",
+              "RelativeDocumentMoniker": "SIPOH\\Agenda.aspx.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\Agenda.aspx.cs",
+              "RelativeToolTip": "SIPOH\\Agenda.aspx.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-17T21:20:32.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AgendaBandeja.aspx",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\AgendaBandeja.aspx",
+              "RelativeDocumentMoniker": "SIPOH\\AgendaBandeja.aspx",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\AgendaBandeja.aspx",
+              "RelativeToolTip": "SIPOH\\AgendaBandeja.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-03-21T22:11:38.091Z"
+              "WhenOpened": "2024-06-17T21:09:26.56Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Consignacion.Master",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\Consignacion.Master",
+              "RelativeDocumentMoniker": "SIPOH\\Consignacion.Master",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\Consignacion.Master",
+              "RelativeToolTip": "SIPOH\\Consignacion.Master",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2024-06-17T20:54:13.401Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "agenda.js",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\Scripts\\Agenda\\agenda.js",
+              "RelativeDocumentMoniker": "SIPOH\\Scripts\\Agenda\\agenda.js",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\Scripts\\Agenda\\agenda.js",
+              "RelativeToolTip": "SIPOH\\Scripts\\Agenda\\agenda.js",
+              "ViewState": "AQIAAIcAAAAAAAAAAADwv6IAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-06-13T17:50:27.481Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Agenda.css",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\Content\\css\\agenda\\Agenda.css",
+              "RelativeDocumentMoniker": "SIPOH\\Content\\css\\agenda\\Agenda.css",
+              "ToolTip": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\Content\\css\\agenda\\Agenda.css",
+              "RelativeToolTip": "SIPOH\\Content\\css\\agenda\\Agenda.css",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-06-17T16:11:03.817Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\braya\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOHUT\\SIPOHUT.csproj": {}
+    "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOHUT\\SIPOHUT.csproj": {}
   },
   "projects": {
-    "C:\\Users\\braya\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOHUT\\SIPOHUT.csproj": {
+    "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOHUT\\SIPOHUT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\braya\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOHUT\\SIPOHUT.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOHUT\\SIPOHUT.csproj",
         "projectName": "SIPOHUT",
-        "projectPath": "C:\\Users\\braya\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOHUT\\SIPOHUT.csproj",
-        "packagesPath": "C:\\Users\\braya\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\braya\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOHUT\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOHUT\\SIPOHUT.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOHUT\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\braya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,14 +22,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\braya\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\SIPOH.csproj": {
-                "projectPath": "C:\\Users\\braya\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\SIPOH.csproj"
+              "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\SIPOH.csproj": {
+                "projectPath": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\SIPOH.csproj"
               }
             }
           }
@@ -38,6 +39,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -80,20 +86,34 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.30, 6.0.30]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.30, 6.0.30]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.30, 6.0.30]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\braya\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\SIPOH.csproj": {
+    "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\SIPOH.csproj": {
       "restore": {
-        "projectUniqueName": "C:\\Users\\braya\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\SIPOH.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\SIPOH.csproj",
         "projectName": "SIPOH",
-        "projectPath": "C:\\Users\\braya\\OneDrive\\Documentos\\GitHub\\SIPOHV2\\SIPOH\\SIPOH.csproj",
+        "projectPath": "C:\\Users\\Usuario\\Documents\\SIPOHV2\\SIPOH\\SIPOH.csproj",
         "frameworks": {
           "net472": {
             "projectReferences": {}

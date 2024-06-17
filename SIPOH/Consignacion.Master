@@ -10,16 +10,18 @@
     <link href="Content/css/sb-admin-2.css" rel="stylesheet" />
     <link href="Content/css/sb-admin-2.min.css" rel="stylesheet" />
     <link href="Content/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://rawgit.com/RobinHerbots/Inputmask/5.x/dist/jquery.inputmask.js"></script>
 
     <!-- Estilos de admin lte agregue para el calendario by brayan -->
     <link href="Content/css/main.css" rel="stylesheet" />
     <link href="Content/css/all.min.css" rel="stylesheet" />
     <link href="Content/css/Iniciales.css" rel="stylesheet" />
-    <!-- Estilos de admin lte agregue para el calendario by brayan -->
-
-    <link href="Content/css/Agenda.css" rel="stylesheet" />
+    <!-- Estilos de admin lte con dependecias a fullcalendar v5.5.1 -->
+    <script src="Scripts/js/adminlte.min.js"></script>
+    <script src="Scripts/js/moment.min.js"></script>
+    <script src="Scripts/js/jquery.min.js"></script>
+    <script src="Scripts/js/jquery-ui.min.js"></script>
+    <!-- otros estilos -->
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -462,7 +464,8 @@
                             </asp:ContentPlaceHolder>
                             <asp:ContentPlaceHolder ID="ContentUbiExpe" runat="server">
                             </asp:ContentPlaceHolder>
-                            
+                            <asp:ContentPlaceHolder ID="BuzonAgenda" runat="server">
+                            </asp:ContentPlaceHolder>
                             
                             
                             <!-- Estilos de admin lte agregue para el calendario by brayan -->
@@ -584,12 +587,7 @@
                 <script src="Scripts/js/demo/chart-area-demo.js"></script>
                 <script src="Scripts/js/demo/chart-pie-demo.js"></script>
                 <script src="Scripts/js/demo/chart-bar-demo.js"></script>
-                <!-- Estilos de admin lte agregue para el calendario by brayan -->
-                <script src="Scripts/js/adminlte.min.js"></script>
-                <script src="Scripts/js/moment.min.js"></script>
-                <script src="Scripts/js/main.min.js"></script>
-                <script src="Scripts/js/jquery.min.js"></script>
-                <script src="Scripts/js/jquery-ui.min.js"></script>
+
                 <style>
                     .header__headerWitdh{
                         height:3rem;

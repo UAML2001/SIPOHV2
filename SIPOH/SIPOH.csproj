@@ -200,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Agenda.aspx" />
+    <Content Include="AgendaBandeja.aspx" />
     <Content Include="Busqueda.aspx" />
     <Content Include="BuzonControl.aspx" />
     <Content Include="ClasiDelito.aspx" />
@@ -480,7 +481,8 @@
     <Content Include="Consignaciones.aspx" />
     <Content Include="ConsignacionesHistorica.aspx" />
     <Content Include="Consulta.aspx" />
-    <Content Include="Content\css\Agenda.css" />
+    <Content Include="Content\css\agenda\Agenda.css" />
+    <Content Include="Content\css\agenda\main.min.css" />
     <Content Include="Content\css\all.min.css" />
     <Content Include="Content\css\Consignaciones.css" />
     <Content Include="Content\bootstrap-grid.css" />
@@ -2211,7 +2213,7 @@
     <Content Include="ReportesCtrl.aspx" />
     <Content Include="ReportesEjec.aspx" />
     <Content Include="Scripts\Agenda\agenda.js" />
-    <Content Include="Scripts\Agenda\index.global.js" />
+    <Content Include="Scripts\Agenda\main.min.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -2417,7 +2419,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="ExpedienteDigital\Imputados\CedulaImputados.pdf" />
-    <Content Include="Scripts\Agenda\index.global.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\consignaciones\Consignaciones.js" />
     <Content Include="Scripts\consignaciones\RegistroIniciales.js" />
@@ -2580,6 +2581,13 @@
     <Compile Include="App_Start\RegistroPromociones.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Seguridad.cs" />
+    <Compile Include="AgendaBandeja.aspx.cs">
+      <DependentUpon>AgendaBandeja.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AgendaBandeja.aspx.designer.cs">
+      <DependentUpon>AgendaBandeja.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Busqueda.aspx.cs">
       <DependentUpon>Busqueda.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

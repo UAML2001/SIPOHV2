@@ -1,0 +1,11 @@
+﻿.fc-button {
+    background-color: #007bff !important; /* color al que prefieras */
+    color: white !important;
+    border: none !important;
+    border-radius: 4px !important;
+}
+
+    .fc-button:hover {
+        background-color: #0056b3 !important; /* color al que prefieras */
+        color: white !important;
+    }
