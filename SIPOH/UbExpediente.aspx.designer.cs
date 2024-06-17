@@ -186,6 +186,15 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.GridView ubiExpe;
 
         /// <summary>
+        /// Control UpdatePanelComentario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelComentario;
+
+        /// <summary>
         /// Control PanelIngComent.
         /// </summary>
         /// <remarks>
@@ -193,6 +202,15 @@ namespace SIPOH
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel PanelIngComent;
+
+        /// <summary>
+        /// Control IngresaComentario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea IngresaComentario;
 
         /// <summary>
         /// Control SvComent.
@@ -231,13 +249,13 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.Panel PanelComentIng;
 
         /// <summary>
-        /// Control Label6.
+        /// Control lblComent.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.Label lblComent;
 
         /// <summary>
         /// Control Label7.
@@ -249,13 +267,13 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.Label Label7;
 
         /// <summary>
-        /// Control Label8.
+        /// Control lblFecha.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label8;
+        protected global::System.Web.UI.WebControls.Label lblFecha;
 
         /// <summary>
         /// Control Label9.
@@ -267,30 +285,66 @@ namespace SIPOH
         protected global::System.Web.UI.WebControls.Label Label9;
 
         /// <summary>
-        /// Control Label10.
+        /// Control lblUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label10;
+        protected global::System.Web.UI.WebControls.Label lblUsuario;
 
         /// <summary>
-        /// Control Button1.
+        /// Control ModificarComentario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Panel ModificarComentario;
 
         /// <summary>
-        /// Control Button2.
+        /// Control ComentModificado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.TextBox ComentModificado;
+
+        /// <summary>
+        /// Control GuardarModificacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GuardarModificacion;
+
+        /// <summary>
+        /// Control CancelarModificacion.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CancelarModificacion;
+
+        /// <summary>
+        /// Control ModComent.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button ModComent;
+
+        /// <summary>
+        /// Control DelComent.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button DelComent;
     }
 }
