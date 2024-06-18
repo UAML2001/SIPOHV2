@@ -72,10 +72,8 @@ namespace SIPOH
                         {
                             if (reader.Read())
                             {
-                                lblFePresenta.Text = reader["FeIngreso"].ToString();
                                 lblNumeroAsunto.Text = reader["TipoAsunto"].ToString() + " / " + reader["Numero"].ToString();
                                 lblDelitos.Text = reader["Delitos"].ToString();
-                                lblJuc.Text = reader["JUC"].ToString();
                                 lblVictimas.Text = reader["Victimas"].ToString();
                                 lblImputados.Text = reader["Inculpados"].ToString();
                                 // Asignar el valor del IdAsunto a la variable global
