@@ -138,7 +138,7 @@
                                     <div class="row border border-top-0 border-1 my-3">
                                         <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4">
                                             <h5><b>Fecha de Presentación:</b></h5>
-                                            <asp:Label runat="server" CssClass="text-success" ID="lblFePresenta">Fecha de Presentación</asp:Label>
+                                            <asp:Label runat="server" CssClass="text-success" ID="lblVictimasPromocion">Fecha de Presentación</asp:Label>
                                         </div>
                                         <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-4 col-xxl-4">
                                             <h5><b>Número de Asunto:</b></h5>
@@ -153,11 +153,11 @@
                                     <div class="row border border-top-0 border-1 my-3">
                                         <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                             <h5><b>Juez:</b></h5>
-                                            <asp:Label runat="server" CssClass="text-success" ID="lblJuez">Juez (Pendiente)*</asp:Label>
+                                            <asp:Label runat="server" CssClass="text-success" ID="Label2">Juez</asp:Label>
                                         </div>
                                         <div class="mb-0 col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                             <h5><b>Jefe de Unidad de Causa:</b></h5>
-                                            <asp:Label runat="server" CssClass="text-success" ID="lblJuc">JUC</asp:Label>
+                                            <asp:Label runat="server" CssClass="text-success" ID="Label3">JUC</asp:Label>
                                         </div>
                                     </div>
 
@@ -211,7 +211,6 @@
                                 </asp:Panel>
 
                                 <asp:Panel ID="PanelComentIng" runat="server" CssClass="center-panel" Style="display: none;">
-                                    <br />
                                     <div class="mb-2">
                                         <span class="text-success fw-bold m-2 aliing">
                                             <i class="bi bi-chat-fill"></i>Comentario Ingresado:
